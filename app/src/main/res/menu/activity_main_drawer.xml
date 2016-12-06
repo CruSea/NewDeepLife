@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/nav_home_icon_grey"
+            android:title="Home" />
+        <item
+            android:id="@+id/nav_testimony"
+            android:icon="@drawable/nav_testimonials_icon_grey"
+            android:title="Testimony" />
+        <item
+            android:id="@+id/nav_news"
+            android:icon="@drawable/icon_nav_man"
+            android:title="NewsFeed" />
+
+        <item
+            android:id="@+id/nav_disciples"
+            android:icon="@drawable/icon_nav_man"
+            android:title="Disciples" />
+        <item
+            android:id="@+id/nav_schedules"
+            android:icon="@drawable/icon_nav_schedule"
+            android:title="Schedules" />
+        <item
+            android:id="@+id/nav_report"
+            android:icon="@drawable/icon_nav_share"
+            android:title="Share" />
+        <item
+            android:id="@+id/nav_learning"
+            android:icon="@drawable/icon_nav_learn"
+            android:title="Learning Tools" />
+    </group>
+
+
+
+    <item android:title="My Account">
+        <menu>
+            <item
+                android:id="@+id/nav_profile"
+                android:icon="@drawable/icon_nav_social"
+                android:title="Profiile" />
+            <item
+                android:id="@+id/nav_logout"
+                android:icon="@drawable/ic_menu_manage"
+                android:title="Log out" />
+        </menu>
+    </item>
+
+    <item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_send"
+                android:icon="@drawable/icon_nav_facebook"
+                android:title="Facebook" />
+            <item
+                android:id="@+id/nav_about"
+                android:icon="@android:drawable/ic_dialog_info"
+                android:title="About" />
+        </menu>
+    </item>
+
+</menu>
