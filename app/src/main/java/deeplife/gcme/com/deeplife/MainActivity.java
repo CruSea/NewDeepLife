@@ -1,11 +1,13 @@
 package deeplife.gcme.com.deeplife;
 
+import android.app.job.JobInfo;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -28,6 +30,7 @@ import deeplife.gcme.com.deeplife.Tabs.SlidingTabLayout;
 import deeplife.gcme.com.deeplife.Testimony.TestimonyFragment;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+    private static final String TAG = "MainActivity";
     private Toolbar myToolbar;
     private TabLayout myTabLayout;
 
@@ -41,7 +44,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         myToolbar = (Toolbar) findViewById(R.id.toolbar);
+
         setSupportActionBar(myToolbar);
+        Log.i(TAG,"Main Activity Started");
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, myToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
