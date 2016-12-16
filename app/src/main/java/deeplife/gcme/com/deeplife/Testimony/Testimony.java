@@ -5,7 +5,23 @@ package deeplife.gcme.com.deeplife.Testimony;
  */
 
 public class Testimony {
-    private String Title, Content;
+    private String ID,SerID,Title, Content;
+
+    public String getID() {
+        return ID;
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
+    }
+
+    public String getSerID() {
+        return SerID;
+    }
+
+    public void setSerID(String serID) {
+        SerID = serID;
+    }
 
     public String getTitle() {
         return Title;
