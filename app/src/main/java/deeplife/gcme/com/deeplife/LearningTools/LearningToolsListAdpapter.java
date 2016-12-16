@@ -28,7 +28,7 @@ public class LearningToolsListAdpapter extends RecyclerView.Adapter<LearningTool
 
     @Override
     public DataObjectHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.learning_fragment_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.abc_screen_simple, parent, false);
         LearningToolsListAdpapter.DataObjectHolder dataObjectHolder = new LearningToolsListAdpapter.DataObjectHolder(view);
         return dataObjectHolder;
     }
@@ -48,8 +48,8 @@ public class LearningToolsListAdpapter extends RecyclerView.Adapter<LearningTool
         ImageView LearningImage;
         public DataObjectHolder(View itemView) {
             super(itemView);
-            Title = (TextView) itemView.findViewById(R.id.txt_learning_title);
-            Content = (TextView) itemView.findViewById(R.id.txt_learning_content);
+            Title = (TextView) itemView.findViewById(R.id.nav_disciples);
+            Content = (TextView) itemView.findViewById(R.id.nav_learning);
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);
         }
