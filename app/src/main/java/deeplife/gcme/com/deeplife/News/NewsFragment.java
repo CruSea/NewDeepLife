@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
+import deeplife.gcme.com.deeplife.DeepLife;
 import deeplife.gcme.com.deeplife.R;
 import deeplife.gcme.com.deeplife.Testimony.Testimony;
 import deeplife.gcme.com.deeplife.Testimony.TestimonyListAdapter;
@@ -39,13 +40,7 @@ public class NewsFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(getActivity());
         myRecyclerView.setLayoutManager(mLayoutManager);
         myContext = getActivity();
-        ArrayList<News> items = new ArrayList<News>();
-        items.add(new News());
-        items.add(new News());
-        items.add(new News());
-        items.add(new News());
-        items.add(new News());
-        items.add(new News());
+        ArrayList<News> items = DeepLife.myDATABASE.getAllNews();
         mAdapter = new NewsListAdapter(items,getContext());
         myRecyclerView.setAdapter(mAdapter);
         return view;

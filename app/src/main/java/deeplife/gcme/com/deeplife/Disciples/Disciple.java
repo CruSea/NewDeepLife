@@ -5,21 +5,50 @@ package deeplife.gcme.com.deeplife.Disciples;
  */
 
 public class Disciple {
-    private String Name,Email,Phone,Country;
+    private int ID,SerID,MentorID;
+    private String FullName,DisplayName,Email,Phone,Country,Stage,Gender,ImageURL,ImagePath,Role,Created;
 
     public Disciple() {
-        Name = " ";
-        Email = " ";
-        Phone = " ";
-        Country = " ";
     }
 
-    public String getName() {
-        return Name;
+    public int getID() {
+        return ID;
     }
 
-    public void setName(String name) {
-        Name = name;
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+
+    public int getSerID() {
+        return SerID;
+    }
+
+    public void setSerID(int serID) {
+        SerID = serID;
+    }
+
+    public int getMentorID() {
+        return MentorID;
+    }
+
+    public void setMentorID(int mentorID) {
+        MentorID = mentorID;
+    }
+
+    public String getFullName() {
+        return FullName;
+    }
+
+    public void setFullName(String fullName) {
+        FullName = fullName;
+    }
+
+    public String getDisplayName() {
+        return DisplayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        DisplayName = displayName;
     }
 
     public String getEmail() {
@@ -44,5 +73,53 @@ public class Disciple {
 
     public void setCountry(String country) {
         Country = country;
+    }
+
+    public String getStage() {
+        return Stage;
+    }
+
+    public void setStage(String stage) {
+        Stage = stage;
+    }
+
+    public String getGender() {
+        return Gender;
+    }
+
+    public void setGender(String gender) {
+        Gender = gender;
+    }
+
+    public String getImageURL() {
+        return ImageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        ImageURL = imageURL;
+    }
+
+    public String getImagePath() {
+        return ImagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        ImagePath = imagePath;
+    }
+
+    public String getRole() {
+        return Role;
+    }
+
+    public void setRole(String role) {
+        Role = role;
+    }
+
+    public String getCreated() {
+        return Created;
+    }
+
+    public void setCreated(String created) {
+        Created = created;
     }
 }

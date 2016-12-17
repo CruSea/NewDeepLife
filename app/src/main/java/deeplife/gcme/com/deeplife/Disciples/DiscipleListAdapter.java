@@ -35,7 +35,9 @@ public class DiscipleListAdapter extends RecyclerView.Adapter<DiscipleListAdapte
 
     @Override
     public void onBindViewHolder(DataObjectHolder holder, int position) {
-
+        holder.FullName.setText(Disciples.get(position).getFullName());
+        holder.Email.setText(Disciples.get(position).getEmail());
+        holder.Phone.setText(Disciples.get(position).getPhone());
     }
 
     @Override
@@ -44,12 +46,13 @@ public class DiscipleListAdapter extends RecyclerView.Adapter<DiscipleListAdapte
     }
 
     public static class DataObjectHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
-        TextView Title,Content;
+        TextView FullName,Email,Phone;
         ImageView NewsImage;
         public DataObjectHolder(View itemView) {
             super(itemView);
-            Title = (TextView) itemView.findViewById(R.id.txt_newsfeed_title);
-            Content = (TextView) itemView.findViewById(R.id.txt_testimony_content);
+            FullName = (TextView) itemView.findViewById(R.id.txt_disciple_name);
+            Email = (TextView) itemView.findViewById(R.id.txt_disciple_email);
+            Phone = (TextView) itemView.findViewById(R.id.txt_disciple_phone);
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);
         }

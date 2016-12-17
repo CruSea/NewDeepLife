@@ -10,6 +10,7 @@ import android.util.Log;
 
 import java.util.List;
 
+import deeplife.gcme.com.deeplife.Database.Database;
 import deeplife.gcme.com.deeplife.SyncService.SyncService;
 
 /**
@@ -17,39 +18,25 @@ import deeplife.gcme.com.deeplife.SyncService.SyncService;
  */
 
 public class DeepLife extends Application {
+//    public static final String DEEP_URL  = "http://staging.deeplife.cc";
+    public static final String DEEP_URL  = "http://192.168.1.119/DeepLife_Web/public";
+    public static final String API_URL  = DEEP_URL+"/deep_api";
+    public static final String PROFILE_PIC_URL  = DEEP_URL+"/img/profile/";
+
+
     private static final String TAG = "DeepLifeApplication";
     private static final int JOB_ID = 10001;
-    private JobScheduler myJobScheduler;
+    public JobScheduler myJobScheduler;
+
+    public static Database myDATABASE;
+
+
     @Override
     public void onCreate() {
         super.onCreate();
         Log.i(TAG,"Application Started");
-        myJobScheduler  = (JobScheduler) getSystemService(Context.JOB_SCHEDULER_SERVICE);
-        JobConstr();
+        myDATABASE = new Database(this);
     }
 
-    public void JobConstr(){
-        JobInfo.Builder jobInfo;
-        jobInfo = new JobInfo.Builder(JOB_ID,  new ComponentName(this,SyncService.class))
-                .setMinimumLatency(1000)
-                .setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED)
-                .setRequiresCharging(false)
-                .setPersisted(true)
-                .setRequiresCharging(false);
-        myJobScheduler.cancelAll();
-        int x = myJobScheduler.schedule(jobInfo.build());
-//        JobInfo.Builder builder = new JobInfo.Builder(JOB_ID, new ComponentName(this,SyncService.class));
-//        builder.setPeriodic(5000);
-//        builder.setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED);
-//        builder.setRequiresCharging(false);
-//        myJobScheduler.cancelAll();
-//        int x = myJobScheduler.schedule(builder.build());
-        if(x == android.app.job.JobScheduler.RESULT_SUCCESS){
-//            List<JobInfo> xx = myJobScheduler.getAllPendingJobs();
-            Log.i(TAG,"The Job scheduler Constructed\n");
-        }else{
-            Log.i(TAG, "The Job scheduler Not Constructed");
-        }
 
-    }
 }

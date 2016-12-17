@@ -51,10 +51,15 @@
                         android:textColor="@color/colorPrimary"
                         android:text="Biniam Kassahun"/>
                     <TextView
-                        android:id="@+id/txt_testimony_time"
+                        android:id="@+id/txt_disciple_email"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="george.beng@gmail.com"/>
+                    <TextView
+                        android:id="@+id/txt_disciple_phone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="+251916417951"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"

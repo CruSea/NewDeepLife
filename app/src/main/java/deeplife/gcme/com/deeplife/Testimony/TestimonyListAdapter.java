@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -20,8 +21,8 @@ import deeplife.gcme.com.deeplife.R;
 
 public class TestimonyListAdapter extends RecyclerView.Adapter<TestimonyListAdapter.DataObjectHolder> {
 
-    private List<Testimony> Testimonies;
-    private Context myContext;
+    public static List<Testimony> Testimonies;
+    public static Context myContext;
 
     public TestimonyListAdapter(Context context,List<Testimony> testimonies) {
         Testimonies = testimonies;
@@ -37,7 +38,7 @@ public class TestimonyListAdapter extends RecyclerView.Adapter<TestimonyListAdap
 
     @Override
     public void onBindViewHolder(DataObjectHolder holder, int position) {
-
+        holder.Content.setText(Testimonies.get(position).getContent());
     }
 
     @Override
@@ -50,7 +51,6 @@ public class TestimonyListAdapter extends RecyclerView.Adapter<TestimonyListAdap
         ImageView NewsImage;
         public DataObjectHolder(View itemView) {
             super(itemView);
-            Title = (TextView) itemView.findViewById(R.id.txt_testimony_title);
             Content = (TextView) itemView.findViewById(R.id.txt_testimony_content);
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);
@@ -62,6 +62,7 @@ public class TestimonyListAdapter extends RecyclerView.Adapter<TestimonyListAdap
 
         @Override
         public boolean onLongClick(View v) {
+            Toast.makeText(myContext,"Long Clicked"+Testimonies.get(getAdapterPosition()).getID(),Toast.LENGTH_LONG).show();
             return true;
         }
     }

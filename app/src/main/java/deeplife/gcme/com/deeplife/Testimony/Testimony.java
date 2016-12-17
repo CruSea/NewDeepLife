@@ -5,30 +5,31 @@ package deeplife.gcme.com.deeplife.Testimony;
  */
 
 public class Testimony {
-    private String ID,SerID,Title, Content;
+    private int ID,SerID,User_ID,Status;
+    private String Content,PubDate;
 
-    public String getID() {
+    public int getID() {
         return ID;
     }
 
-    public void setID(String ID) {
+    public void setID(int ID) {
         this.ID = ID;
     }
 
-    public String getSerID() {
+    public int getSerID() {
         return SerID;
     }
 
-    public void setSerID(String serID) {
+    public void setSerID(int serID) {
         SerID = serID;
     }
 
-    public String getTitle() {
-        return Title;
+    public int getUser_ID() {
+        return User_ID;
     }
 
-    public void setTitle(String title) {
-        Title = title;
+    public void setUser_ID(int user_ID) {
+        User_ID = user_ID;
     }
 
     public String getContent() {
@@ -37,5 +38,21 @@ public class Testimony {
 
     public void setContent(String content) {
         Content = content;
+    }
+
+    public int getStatus() {
+        return Status;
+    }
+
+    public void setStatus(int status) {
+        Status = status;
+    }
+
+    public String getPubDate() {
+        return PubDate;
+    }
+
+    public void setPubDate(String pubDate) {
+        PubDate = pubDate;
     }
 }

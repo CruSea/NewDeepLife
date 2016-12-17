@@ -7,11 +7,14 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
+import deeplife.gcme.com.deeplife.DeepLife;
 import deeplife.gcme.com.deeplife.R;
 
 /**
@@ -19,13 +22,15 @@ import deeplife.gcme.com.deeplife.R;
  */
 
 public class TestimonyFragment extends Fragment {
-    private static RecyclerView myRecyclerView;
-    private static RecyclerView.Adapter mAdapter;
+    public static RecyclerView myRecyclerView;
+    public static RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private static Context myContext;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+        myContext = getContext();
     }
 
     @Nullable
@@ -36,17 +41,21 @@ public class TestimonyFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(getActivity());
         myRecyclerView.setLayoutManager(mLayoutManager);
         myContext = getActivity();
-        ArrayList<Testimony> items = new ArrayList<Testimony>();
-        items.add(new Testimony());
-        items.add(new Testimony());
-        items.add(new Testimony());
-        items.add(new Testimony());
-        items.add(new Testimony());
-        items.add(new Testimony());
-        items.add(new Testimony());
-        items.add(new Testimony());
+        ArrayList<Testimony> items = DeepLife.myDATABASE.getAllTestimonies();
         mAdapter = new TestimonyListAdapter(getActivity(),items);
         myRecyclerView.setAdapter(mAdapter);
         return view;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.testimony_menu,menu);
+    }
+
+    public static void UpdateList(){
+        ArrayList<Testimony> items = DeepLife.myDATABASE.getAllTestimonies();
+        mAdapter = new TestimonyListAdapter(myContext,items);
+        myRecyclerView.setAdapter(mAdapter);
     }
 }

@@ -36,7 +36,9 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.DataOb
 
     @Override
     public void onBindViewHolder(DataObjectHolder holder, int position) {
-
+        holder.Title.setText(Newses.get(position).getTitle());
+        holder.Content.setText(Newses.get(position).getContent());
+        holder.PubDate.setText(Newses.get(position).getPubDate());
     }
 
     @Override
@@ -45,12 +47,13 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.DataOb
     }
 
     public static class DataObjectHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
-        TextView Title,Content;
+        TextView Title,Content,PubDate;
         ImageView NewsImage;
         public DataObjectHolder(View itemView) {
             super(itemView);
             Title = (TextView) itemView.findViewById(R.id.txt_newsfeed_title);
-            Content = (TextView) itemView.findViewById(R.id.txt_testimony_content);
+            Content = (TextView) itemView.findViewById(R.id.txt_newsfeed_content);
+            PubDate = (TextView) itemView.findViewById(R.id.txt_newsfeed_pubdate);
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);
         }

@@ -7,14 +7,19 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
+import deeplife.gcme.com.deeplife.DeepLife;
 import deeplife.gcme.com.deeplife.News.News;
 import deeplife.gcme.com.deeplife.News.NewsListAdapter;
 import deeplife.gcme.com.deeplife.R;
+import deeplife.gcme.com.deeplife.Testimony.Testimony;
+import deeplife.gcme.com.deeplife.Testimony.TestimonyListAdapter;
 
 /**
  * Created by bengeos on 12/6/16.
@@ -29,6 +34,7 @@ public class DisciplesFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Nullable
@@ -39,22 +45,17 @@ public class DisciplesFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(getActivity());
         myRecyclerView.setLayoutManager(mLayoutManager);
         myContext = getActivity();
-        ArrayList<Disciple> items = new ArrayList<Disciple>();
-        items.add(new Disciple());
-        items.add(new Disciple());
-        items.add(new Disciple());
-        items.add(new Disciple());
-        items.add(new Disciple());
-        items.add(new Disciple());
-        items.add(new Disciple());
-        items.add(new Disciple());
-        items.add(new Disciple());
-        items.add(new Disciple());
-        items.add(new Disciple());
-        items.add(new Disciple());
-        items.add(new Disciple());
+        ArrayList<Disciple> items = DeepLife.myDATABASE.getAllDisciples();
         mAdapter = new DiscipleListAdapter(items,getContext());
         myRecyclerView.setAdapter(mAdapter);
         return view;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.testimony_menu,menu);
+    }
+
+    public static void UpdateList(){
     }
 }

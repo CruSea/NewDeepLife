@@ -1,11 +1,18 @@
 package deeplife.gcme.com.deeplife;
 
+import android.Manifest;
 import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
@@ -26,6 +33,7 @@ import deeplife.gcme.com.deeplife.Disciples.DisciplesFragment;
 import deeplife.gcme.com.deeplife.Home.HomeFragment;
 import deeplife.gcme.com.deeplife.LearningTools.LearningFragment;
 import deeplife.gcme.com.deeplife.News.NewsFragment;
+import deeplife.gcme.com.deeplife.SyncService.SyncService;
 import deeplife.gcme.com.deeplife.Tabs.SlidingTabLayout;
 import deeplife.gcme.com.deeplife.Testimony.TestimonyFragment;
 
@@ -39,10 +47,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private CollapsingToolbarLayout myCollapsingToolbarLayout;
     private LinearLayout myLinearLayout;
 
+    private JobScheduler myJobScheduler;
+
+
+    private static int JOB_ID = 1000;
+    private static int RECEIVE_BOOT_COMPLETED = 1001;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        myJobScheduler = (JobScheduler) getSystemService(Context.JOB_SCHEDULER_SERVICE);
         myToolbar = (Toolbar) findViewById(R.id.toolbar);
 
         setSupportActionBar(myToolbar);
@@ -59,9 +74,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         myViewPager = (ViewPager) findViewById(R.id.viewpager);
         ViewPageAdapter viewPageAdapter = new ViewPageAdapter(getSupportFragmentManager());
         viewPageAdapter.addFragment(new HomeFragment(),"Home");
+        viewPageAdapter.addFragment(new DisciplesFragment(),"Disciples");
         viewPageAdapter.addFragment(new TestimonyFragment(),"Testimony");
         viewPageAdapter.addFragment(new NewsFragment(),"News");
-        viewPageAdapter.addFragment(new DisciplesFragment(),"Disciples");
         viewPageAdapter.addFragment(new LearningFragment(),"Learning");
         myViewPager.setAdapter(viewPageAdapter);
 
@@ -72,12 +87,38 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         myTabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.colorAccent));
 
         myTabLayout.getTabAt(0).setIcon(R.drawable.nav_home_icon_grey);
-        myTabLayout.getTabAt(1).setIcon(R.drawable.nav_testimonials_icon_grey);
-        myTabLayout.getTabAt(2).setIcon(R.drawable.nav_news_icon_grey);
-        myTabLayout.getTabAt(3).setIcon(R.drawable.nav_disciple_icon_grey);
+        myTabLayout.getTabAt(1).setIcon(R.drawable.nav_disciple_icon_grey);
+        myTabLayout.getTabAt(2).setIcon(R.drawable.nav_testimonials_icon_grey);
+        myTabLayout.getTabAt(3).setIcon(R.drawable.nav_news_icon_grey);
         myTabLayout.getTabAt(4).setIcon(R.drawable.nav_learning_icon_grey);
+
+        checkPermissions();
     }
 
+    public void checkPermissions(){
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_BOOT_COMPLETED) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECEIVE_BOOT_COMPLETED}, RECEIVE_BOOT_COMPLETED);
+        }else {
+            JobConstr();
+        }
+    }
+
+    public void JobConstr(){
+        JobInfo.Builder jobInfo;
+        jobInfo = new JobInfo.Builder(JOB_ID,  new ComponentName(this,SyncService.class))
+                .setMinimumLatency(1000)
+                .setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED)
+                .setRequiresCharging(false);
+        myJobScheduler.cancelAll();
+        int x = myJobScheduler.schedule(jobInfo.build());
+        if(x == android.app.job.JobScheduler.RESULT_SUCCESS){
+//            List<JobInfo> xx = myJobScheduler.getAllPendingJobs();
+            Log.i(TAG,"The Job scheduler Constructed\n");
+        }else{
+            Log.i(TAG, "The Job scheduler Not Constructed");
+        }
+
+    }
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

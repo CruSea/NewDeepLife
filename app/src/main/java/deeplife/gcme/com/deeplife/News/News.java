@@ -6,7 +6,7 @@ package deeplife.gcme.com.deeplife.News;
 
 public class News {
     private int id,SerID;
-    private String Title,Content,ImageURL,ImagePath;
+    private String Title,Content,ImageURL,ImagePath,Category,PubDate;
 
     public int getId() {
         return id;
@@ -34,6 +34,22 @@ public class News {
 
     public int getSerID() {
         return SerID;
+    }
+
+    public String getCategory() {
+        return Category;
+    }
+
+    public void setCategory(String category) {
+        Category = category;
+    }
+
+    public String getPubDate() {
+        return PubDate;
+    }
+
+    public void setPubDate(String pubDate) {
+        PubDate = pubDate;
     }
 
     public void setSerID(int serID) {
