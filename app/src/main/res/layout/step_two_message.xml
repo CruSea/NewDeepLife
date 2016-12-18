@@ -1,6 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@drawable/splash_background"
     android:layout_height="match_parent">
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:gravity="center_horizontal|center_vertical"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:background="@drawable/logo_small3x"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorAccent"
+            android:textStyle="bold"
+            android:gravity="center_horizontal"
+            android:textSize="30sp"
+            android:text="Prey | Meet | Call"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textColor="#ffffff"
+            android:gravity="center_horizontal"
+            android:layout_margin="10dp"
+            android:paddingBottom="10dp"
+            android:text="Lets make desciples, its our calling. add your new desciple with their full information"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:textColor="#ffffff"
+            android:textStyle="bold"
+            android:layout_margin="20dp"
+            android:textSize="20dp"
+            android:text="ge and make disciples of all nation Matthew 28:19"/>
+    </LinearLayout>
 </LinearLayout>

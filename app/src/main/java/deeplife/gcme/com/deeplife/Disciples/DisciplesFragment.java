@@ -1,6 +1,7 @@
 package deeplife.gcme.com.deeplife.Disciples;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,12 +10,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import deeplife.gcme.com.deeplife.DeepLife;
+import deeplife.gcme.com.deeplife.MainActivity;
 import deeplife.gcme.com.deeplife.News.News;
 import deeplife.gcme.com.deeplife.News.NewsListAdapter;
 import deeplife.gcme.com.deeplife.R;
@@ -53,7 +57,17 @@ public class DisciplesFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.testimony_menu,menu);
+        inflater.inflate(R.menu.disciple_menu,menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.disciple_add){
+            Toast.makeText(getContext(),"Add New Disciple",Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(getContext(),DiscipleAddActivity.class);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public static void UpdateList(){
