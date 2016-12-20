@@ -57,9 +57,12 @@
                     android:orientation="horizontal"
                     android:gravity="center_horizontal|center_vertical"
                     android:layout_weight="4">
-                    <Switch
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp" />
+                    <ToggleButton
+                        android:layout_width="110dp"
+                        android:layout_height="60dp"
+                        android:textOff=""
+                        android:textOn=""
+                        android:background="@drawable/switch_tump1"/>
                 </LinearLayout>
             </LinearLayout>
         </FrameLayout>

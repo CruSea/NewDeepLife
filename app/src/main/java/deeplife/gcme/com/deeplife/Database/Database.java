@@ -9,6 +9,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import deeplife.gcme.com.deeplife.Disciples.Disciple;
+import deeplife.gcme.com.deeplife.Models.Category;
 import deeplife.gcme.com.deeplife.News.News;
 import deeplife.gcme.com.deeplife.Testimony.Testimony;
 import deeplife.gcme.com.deeplife.Models.User;
@@ -26,6 +27,7 @@ public class Database {
     public static final String Table_QUESTION_ANSWER = "QUESTION_ANSWER";
     public static final String Table_TESTIMONY = "TESTIMONY";
     public static final String Table_IMAGE_SYNC = "ImageToSync";
+    public static final String Table_CATEGORIES = "Categories";
 
     public static final String[] DISCIPLES_FIELDS = {"SerID","FullName","DisplayName", "Email", "Phone", "Country","MentorID","Stage","ImageURL","ImagePath","Role","Created" };
     public static final String[] LOGS_FIELDS = { "Type", "Task","Value" };
@@ -40,6 +42,7 @@ public class Database {
     public static final String[] QUESTION_ANSWER_FIELDS = {"Disciple_Phone","Question_ID", "Answer","Build_Stage"};
     public static final String[] TESTIMONY_FIELDS = {"SerID","UserID","Description","Status","PubDate"};
     public static final String[] IMAGE_SYNC_FIELDS = {"FileName", "Param"};
+    public static final String[] CATEGORY_FIELDS = {"SerID", "Name", "Parent", "Status", "Created"};
 
     public static final String[] DISCIPLES_COLUMN = { "id", "SerID","FullName","DisplayName", "Email", "Phone", "Country","MentorID","Stage","ImageURL","ImagePath","Role","Created"  };
     public static final String[] SCHEDULES_COLUMN = { "id","Disciple_Phone","Title","Alarm_Time","Alarm_Repeat","Description" };
@@ -53,6 +56,7 @@ public class Database {
     public static final String[] QUESTION_ANSWER_COLUMN = {"id", "Disciple_Phone","Question_ID", "Answer","Build_Stage"};
     public static final String[] TESTIMONY_COLUMN = {"id","SerID","UserID", "Description","Status","PubDate"};
     public static final String[] IMAGE_SYNC_COLUMN = {"id","FileName", "Param"};
+    public static final String[] CATEGORY_COLUMN = {"id","SerID", "Name", "Parent", "Status", "Created"};
 
 
 	private SQLiteDatabase myDatabase;
@@ -76,6 +80,7 @@ public class Database {
         mySQL.createTables(Table_NEWSFEED, NewsFeed_FIELDS);
         mySQL.createTables(Table_TESTIMONY, TESTIMONY_FIELDS);
         mySQL.createTables(Table_IMAGE_SYNC,IMAGE_SYNC_FIELDS);
+        mySQL.createTables(Table_CATEGORIES,CATEGORY_FIELDS);
     }
 
     public long insert(String DB_Table, ContentValues cv){
@@ -454,6 +459,113 @@ public class Database {
                 }
             }
         }catch (Exception e){
+            return null;
+        }
+        return found;
+    }
+
+
+    ////////////////////////////////
+    ////////////////////////////////
+    ///////  CATEGORY    ///////////
+    ////////////////////////////////
+    ////////////////////////////////
+
+
+    public Category getCategoryByID(int id) {
+        Log.i(TAG, "Get Category by ID: ");
+        String DB_Table = Table_CATEGORIES;
+        try{
+            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
+            if(c.getCount()>0){
+                c.moveToFirst();
+                for(int i=0;i<c.getCount();i++){
+                    c.moveToPosition(i);
+                    int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(CATEGORY_COLUMN[0])));
+                    if(cur_id == id){
+                        Category category = new Category();
+                        category.setID(Integer.valueOf(c.getString(c.getColumnIndex(CATEGORY_COLUMN[0]))));
+                        category.setSerID(Integer.valueOf(c.getString(c.getColumnIndex(CATEGORY_COLUMN[1]))));
+                        category.setName(c.getString(c.getColumnIndex(CATEGORY_COLUMN[2])));
+                        category.setParent(Integer.valueOf(c.getString(c.getColumnIndex(CATEGORY_COLUMN[3]))));
+                        category.setStatus(Integer.valueOf(c.getString(c.getColumnIndex(CATEGORY_COLUMN[4]))));
+                        category.setCreated(c.getString(c.getColumnIndex(DISCIPLES_COLUMN[5])));
+                        return category;
+                    }
+                }
+            }
+        }catch (Exception e){
+            Log.i(TAG, "Failed Get Category by ID: "+e.toString());
+            return null;
+        }
+        return null;
+
+    }
+
+    public Category getCategoryBySerID(int id) {
+        Log.i(TAG, "Get Category by Server ID: ");
+        String DB_Table = Table_CATEGORIES;
+        try{
+            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
+            if(c.getCount()>0){
+                c.moveToFirst();
+                for(int i=0;i<c.getCount();i++){
+                    c.moveToPosition(i);
+                    int ser_id = Integer.valueOf(c.getString(c.getColumnIndex(CATEGORY_COLUMN[1])));
+                    int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(CATEGORY_COLUMN[0])));
+                    if(ser_id == id){
+                        Category category = getCategoryByID(cur_id);
+                        return category;
+                    }
+                }
+            }
+        }catch (Exception e){
+            Log.i(TAG, "Failed Get Category by Server ID: "+e.toString());
+            return null;
+        }
+        return null;
+    }
+    public Category getCategoryByParentID(int id) {
+        Log.i(TAG, "Get Category by Server ID: ");
+        String DB_Table = Table_CATEGORIES;
+        try{
+            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
+            if(c.getCount()>0){
+                c.moveToFirst();
+                for(int i=0;i<c.getCount();i++){
+                    c.moveToPosition(i);
+                    int par_id = Integer.valueOf(c.getString(c.getColumnIndex(CATEGORY_COLUMN[3])));
+                    int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(CATEGORY_COLUMN[0])));
+                    if(par_id == id){
+                        Category category = getCategoryByID(cur_id);
+                        return category;
+                    }
+                }
+            }
+        }catch (Exception e){
+            Log.i(TAG, "Failed Get Category by Server ID: "+e.toString());
+            return null;
+        }
+        return null;
+    }
+    public ArrayList<Category> getParentCategory(){
+        Log.i(TAG, "Get All Parent Category: ");
+        String DB_Table = Table_CATEGORIES;
+        ArrayList<Category> found = new ArrayList<Category>();
+        try{
+            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
+            c.moveToFirst();
+            for(int i=0;i<c.getCount();i++){
+                c.moveToPosition(i);
+                int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(CATEGORY_COLUMN[0])));
+                Category category = getCategoryByID(cur_id);
+                if(category!= null && category.getID() == 0){
+                    found.add(category);
+                    Log.i(TAG, "Get All Parent Category: "+category.getID());
+                }
+            }
+        }catch (Exception e){
+            Log.i(TAG, "Failed Get All Parent Category: "+e.toString());
             return null;
         }
         return found;
@@ -1402,6 +1514,10 @@ public class Database {
             strs = NewsFeed_COLUMN;
         }else if(DB_Table == Table_TESTIMONY){
             strs = TESTIMONY_COLUMN;
+        }else if(DB_Table == Table_CATEGORIES){
+            strs = CATEGORY_COLUMN;
+        }else if(DB_Table == Table_IMAGE_SYNC){
+            strs = IMAGE_SYNC_COLUMN;
         }
         return strs;
     }
