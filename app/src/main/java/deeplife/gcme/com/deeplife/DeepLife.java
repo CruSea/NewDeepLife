@@ -19,7 +19,7 @@ import deeplife.gcme.com.deeplife.SyncService.SyncService;
 
 public class DeepLife extends Application {
 //    public static final String DEEP_URL  = "http://staging.deeplife.cc";
-    public static final String DEEP_URL  = "http://192.168.1.119/DeepLife_Web/public";
+    public static final String DEEP_URL  = "http://192.168.100.19/DeepLife_Web/public";
     public static final String API_URL  = DEEP_URL+"/deep_api";
     public static final String PROFILE_PIC_URL  = DEEP_URL+"/img/profile/";
 

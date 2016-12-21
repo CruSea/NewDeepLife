@@ -2,6 +2,7 @@ package deeplife.gcme.com.deeplife.Disciples;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +22,7 @@ import deeplife.gcme.com.deeplife.WinBuildSend.WinBuildSendActivity;
  */
 
 public class DiscipleListAdapter extends RecyclerView.Adapter<DiscipleListAdapter.DataObjectHolder> {
-    private List<Disciple> Disciples;
+    public static List<Disciple> Disciples;
     public static Context myContext;
 
     public DiscipleListAdapter(List<Disciple> disciples, Context myContext) {
@@ -67,6 +68,9 @@ public class DiscipleListAdapter extends RecyclerView.Adapter<DiscipleListAdapte
         public void onClick(View v) {
             if(v.getId() == R.id.btn_win_build_send){
                 Intent intent = new Intent(myContext, WinBuildSendActivity.class);
+                Bundle b = new Bundle();
+                b.putString("DisciplePhone",Disciples.get(getAdapterPosition()).getPhone().toString());
+                intent.putExtras(b);
                 myContext.startActivity(intent);
             }
         }

@@ -8,8 +8,12 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import java.util.ArrayList;
+
+import deeplife.gcme.com.deeplife.DeepLife;
 import deeplife.gcme.com.deeplife.Disciples.Disciple;
+import deeplife.gcme.com.deeplife.Models.Answer;
 import deeplife.gcme.com.deeplife.Models.Category;
+import deeplife.gcme.com.deeplife.WinBuildSend.WinBuildSendQuestion;
 import deeplife.gcme.com.deeplife.News.News;
 import deeplife.gcme.com.deeplife.Testimony.Testimony;
 import deeplife.gcme.com.deeplife.Models.User;
@@ -36,10 +40,10 @@ public class Database {
     public static final String[] COUNTRY_FIELDS = { "Country_id", "iso3","name","code" };
     public static final String[] SCHEDULES_FIELDS = { "Disciple_Phone","Title","Alarm_Time","Alarm_Repeat","Description"};
     public static final String[] USER_FIELDS = { "Full_Name", "Email","Phone","Password","Country","Picture","Favorite_Scripture" };
-    public static final String[] QUESTION_LIST_FIELDS = {"Category","Description", "Note","Mandatory"};
+    public static final String[] QUESTION_LIST_FIELDS = {"SerID","Category", "Question","Description","Mandatory","Type","Country","Created"};
     public static final String[] REPORT_FORM_FIELDS = {"Report_ID","Category","Questions"};
     public static final String[] REPORT_FIELDS = {"Report_ID","Value","Date"};
-    public static final String[] QUESTION_ANSWER_FIELDS = {"Disciple_Phone","Question_ID", "Answer","Build_Stage"};
+    public static final String[] QUESTION_ANSWER_FIELDS = {"SerID","DisciplePhone","Question_ID", "Answer","BuildStage"};
     public static final String[] TESTIMONY_FIELDS = {"SerID","UserID","Description","Status","PubDate"};
     public static final String[] IMAGE_SYNC_FIELDS = {"FileName", "Param"};
     public static final String[] CATEGORY_FIELDS = {"SerID", "Name", "Parent", "Status", "Created"};
@@ -52,8 +56,8 @@ public class Database {
     public static final String[] COUNTRY_COLUMN = {"id", "Country_id", "iso3","name","code"};
     public static final String[] LOGS_COLUMN = { "id", "Type", "Task","Value" };
     public static final String[] USER_COLUMN = { "id", "Full_Name", "Email","Phone","Password","Country","Picture","Favorite_Scripture" };
-    public static final String[] QUESTION_LIST_COLUMN = {"id","Category","Description", "Note","Mandatory"};
-    public static final String[] QUESTION_ANSWER_COLUMN = {"id", "Disciple_Phone","Question_ID", "Answer","Build_Stage"};
+    public static final String[] QUESTION_LIST_COLUMN = {"id","SerID","Category", "Question","Description","Mandatory","Type","Country","Created"};
+    public static final String[] QUESTION_ANSWER_COLUMN = {"id","SerID","DisciplePhone","Question_ID", "Answer","BuildStage"};
     public static final String[] TESTIMONY_COLUMN = {"id","SerID","UserID", "Description","Status","PubDate"};
     public static final String[] IMAGE_SYNC_COLUMN = {"id","FileName", "Param"};
     public static final String[] CATEGORY_COLUMN = {"id","SerID", "Name", "Parent", "Status", "Created"};
@@ -571,6 +575,263 @@ public class Database {
         return found;
     }
 
+
+    ////////////////////////////////
+    ////////////////////////////////
+    //  WIN BUILD SEND QUESTION  //
+    ////////////////////////////////
+    ////////////////////////////////
+
+
+    public WinBuildSendQuestion getWinBuildSendQuestionByID(int id) {
+        Log.i(TAG, "Get WinBuildQuestion by ID: ");
+        String DB_Table = Table_QUESTION_LIST;
+        try{
+            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
+            if(c.getCount()>0){
+                c.moveToFirst();
+                for(int i=0;i<c.getCount();i++){
+                    c.moveToPosition(i);
+                    int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(QUESTION_LIST_COLUMN[0])));
+                    if(cur_id == id){
+                        WinBuildSendQuestion winBuildSendQuestion = new WinBuildSendQuestion();
+                        winBuildSendQuestion.setID(Integer.valueOf(c.getString(c.getColumnIndex(QUESTION_LIST_COLUMN[0]))));
+                        winBuildSendQuestion.setSerID(Integer.valueOf(c.getString(c.getColumnIndex(QUESTION_LIST_COLUMN[1]))));
+                        winBuildSendQuestion.setCategory(Integer.valueOf(c.getString(c.getColumnIndex(QUESTION_LIST_COLUMN[2]))));
+                        winBuildSendQuestion.setQuestion(c.getString(c.getColumnIndex(QUESTION_LIST_COLUMN[3])));
+                        winBuildSendQuestion.setDescription(c.getString(c.getColumnIndex(QUESTION_LIST_COLUMN[4])));
+                        winBuildSendQuestion.setMandatory(Integer.valueOf(c.getString(c.getColumnIndex(QUESTION_LIST_COLUMN[5]))));
+                        winBuildSendQuestion.setType(c.getString(c.getColumnIndex(QUESTION_LIST_COLUMN[6])));
+                        winBuildSendQuestion.setCauntry(Integer.valueOf(c.getString(c.getColumnIndex(QUESTION_LIST_COLUMN[7]))));
+                        winBuildSendQuestion.setCreated(c.getString(c.getColumnIndex(QUESTION_LIST_COLUMN[8])));
+                        return winBuildSendQuestion;
+                    }
+                }
+            }
+        }catch (Exception e){
+            Log.i(TAG, "Failed Get WinBuildQuestion by ID: "+e.toString());
+            return null;
+        }
+        return null;
+
+    }
+
+    public WinBuildSendQuestion getWinBuildSendQuestionBySerID(int id) {
+        Log.i(TAG, "Get WinBuildQuestion by Server ID: ");
+        String DB_Table = Table_QUESTION_LIST;
+        try{
+            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
+            if(c.getCount()>0){
+                c.moveToFirst();
+                for(int i=0;i<c.getCount();i++){
+                    c.moveToPosition(i);
+                    int ser_id = Integer.valueOf(c.getString(c.getColumnIndex(QUESTION_LIST_COLUMN[1])));
+                    int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(QUESTION_LIST_COLUMN[0])));
+                    if(ser_id == id){
+                        WinBuildSendQuestion winBuildSendQuestion = getWinBuildSendQuestionByID(cur_id);
+                        return winBuildSendQuestion;
+                    }
+                }
+            }
+        }catch (Exception e){
+            Log.i(TAG, "Failed Get WinBuildQuestion by Server ID: "+e.toString());
+            return null;
+        }
+        return null;
+    }
+
+    public ArrayList<WinBuildSendQuestion> getWinBuildSendQuestionsByCategory(int categoryID){
+        Log.i(TAG, "Get All WinBuildQuestion by Category id: "+categoryID);
+        String DB_Table = Table_QUESTION_LIST;
+        ArrayList<WinBuildSendQuestion> found = new ArrayList<WinBuildSendQuestion>();
+        try{
+            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
+            c.moveToFirst();
+            for(int i=0;i<c.getCount();i++){
+                c.moveToPosition(i);
+                int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(QUESTION_LIST_COLUMN[0])));
+                int cat_id = Integer.valueOf(c.getString(c.getColumnIndex(QUESTION_LIST_COLUMN[2])));
+                if(cat_id == categoryID){
+                    WinBuildSendQuestion winBuildSendQuestion = getWinBuildSendQuestionByID(cur_id);
+                    if(winBuildSendQuestion != null){
+                        found.add(winBuildSendQuestion);
+                        Log.i(TAG, "Get All WinBuildQuestion: "+winBuildSendQuestion.getID());
+                    }
+
+                }
+            }
+        }catch (Exception e){
+            Log.i(TAG, "Failed Get getWinBuildSendQuestionsByCategory: "+e.toString());
+            return null;
+        }
+        return found;
+    }
+    public ArrayList<WinBuildSendQuestion> getWinBuildSendQuestionsByCategorySerID(int SerID){
+        Log.i(TAG, "Get All WinBuildQuestion by Category Parent ID: "+SerID);
+        ArrayList<WinBuildSendQuestion> found = new ArrayList<WinBuildSendQuestion>();
+        if(SerID > 0){
+            found = getWinBuildSendQuestionsByCategory(SerID);
+            Log.i(TAG, "Get All WinBuildQuestion: "+SerID);
+            return found;
+        }
+        return found;
+    }
+
+    ////////////////////////////////
+    ////////////////////////////////
+    //  Answers Table  //
+    ////////////////////////////////
+    ////////////////////////////////
+
+
+    public Answer getAnswerByID(int id) {
+        Log.i(TAG, "Get Answer by ID: ");
+        String DB_Table = Table_QUESTION_ANSWER;
+        try{
+            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
+            if(c.getCount()>0){
+                c.moveToFirst();
+                for(int i=0;i<c.getCount();i++){
+                    c.moveToPosition(i);
+                    int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(QUESTION_ANSWER_COLUMN[0])));
+                    if(cur_id == id){
+                        Answer answer = new Answer();
+                        answer.setID(Integer.valueOf(c.getString(c.getColumnIndex(QUESTION_ANSWER_COLUMN[0]))));
+                        answer.setSerID(Integer.valueOf(c.getString(c.getColumnIndex(QUESTION_ANSWER_COLUMN[1]))));
+                        answer.setDisciplePhone(c.getString(c.getColumnIndex(QUESTION_ANSWER_COLUMN[2])));
+                        answer.setQuestionID(Integer.valueOf(c.getString(c.getColumnIndex(QUESTION_ANSWER_COLUMN[3]))));
+                        answer.setAnswer(c.getString(c.getColumnIndex(QUESTION_ANSWER_COLUMN[4])));
+                        answer.setBuildStage(c.getString(c.getColumnIndex(QUESTION_ANSWER_COLUMN[5])));
+                        return answer;
+                    }
+                }
+            }
+        }catch (Exception e){
+            Log.i(TAG, "Failed Get WinBuildQuestion by ID: "+e.toString());
+            return null;
+        }
+        return null;
+    }
+    public Answer getAnswerBySerID(int id) {
+        Log.i(TAG, "Get getAnswerBySerID by ServerID: ");
+        String DB_Table = Table_QUESTION_ANSWER;
+        try{
+            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
+            if(c.getCount()>0){
+                c.moveToFirst();
+                for(int i=0;i<c.getCount();i++){
+                    c.moveToPosition(i);
+                    int qst_id = Integer.valueOf(c.getString(c.getColumnIndex(QUESTION_ANSWER_COLUMN[2])));
+                    int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(QUESTION_ANSWER_COLUMN[0])));
+                    if(qst_id == id){
+                        Answer answer = getAnswerByID(cur_id);
+                        return answer;
+                    }
+                }
+            }
+        }catch (Exception e){
+            Log.i(TAG, "Failed Get getAnswerByQuestionID by QuestionID: "+e.toString());
+            return null;
+        }
+        return null;
+    }
+    public Answer getAnswerByQuestionID(int id) {
+        Log.i(TAG, "Get getAnswerByQuestionID by QuestionID: ");
+        String DB_Table = Table_QUESTION_ANSWER;
+        try{
+            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
+            if(c.getCount()>0){
+                c.moveToFirst();
+                for(int i=0;i<c.getCount();i++){
+                    c.moveToPosition(i);
+                    int qst_id = Integer.valueOf(c.getString(c.getColumnIndex(QUESTION_ANSWER_COLUMN[3])));
+                    int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(QUESTION_ANSWER_COLUMN[0])));
+                    if(qst_id == id){
+                        Answer answer = getAnswerByID(cur_id);
+                        return answer;
+                    }
+                }
+            }
+        }catch (Exception e){
+            Log.i(TAG, "Failed Get getAnswerByQuestionID by QuestionID: "+e.toString());
+            return null;
+        }
+        return null;
+    }
+    public Answer getAnswerByQuestionIDandDisciplePhone(int questionID, String disciplePhone) {
+        Log.i(TAG, "Get getAnswerByQuestionIDandDisciplePhone by QuestionPhone and DisciplePhone: ");
+        String DB_Table = Table_QUESTION_ANSWER;
+        try{
+            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
+            if(c.getCount()>0){
+                c.moveToFirst();
+                for(int i=0;i<c.getCount();i++){
+                    c.moveToPosition(i);
+                    int qst_id = Integer.valueOf(c.getString(c.getColumnIndex(QUESTION_ANSWER_COLUMN[3])));
+                    int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(QUESTION_ANSWER_COLUMN[0])));
+                    String dis_ph = c.getString(c.getColumnIndex(QUESTION_ANSWER_COLUMN[2]));
+                    if(qst_id == questionID && disciplePhone.equals(dis_ph)){
+                        Answer answer = getAnswerByID(cur_id);
+                        return answer;
+                    }
+                }
+            }
+        }catch (Exception e){
+            Log.i(TAG, "Failed Get getAnswerByQuestionIDandDisciplePhone by QuestionPhone and DisciplePhone: "+e.toString());
+            return null;
+        }
+        return null;
+    }
+    public long updateAnswer(Answer answer) {
+        Log.i(TAG, "UPDATE updateAnswer: ");
+        String DB_Table = Table_QUESTION_ANSWER;
+        try{
+            ContentValues cv = new ContentValues();
+            cv.put(Database.QUESTION_ANSWER_FIELDS[0], answer.getSerID());
+            cv.put(Database.QUESTION_ANSWER_FIELDS[1], answer.getDisciplePhone());
+            cv.put(Database.QUESTION_ANSWER_FIELDS[2], answer.getQuestionID());
+            cv.put(Database.QUESTION_ANSWER_FIELDS[3], answer.getAnswer());
+            cv.put(Database.QUESTION_ANSWER_FIELDS[4], answer.getBuildStage());
+            int id = DeepLife.myDATABASE.getAnswerByQuestionID(answer.getQuestionID()).getID();
+            long  x = DeepLife.myDATABASE.update(DB_Table,cv,id);
+            return x;
+        }catch (Exception e){
+            Log.i(TAG, "Failed UPDATE updateAnswer: "+e.toString());
+            return 0;
+        }
+    }
+    public long add_updateAnswer(Answer answer) {
+        Log.i(TAG, "add_updateAnswer: ");
+        Answer oldAnswer1 = getAnswerByQuestionIDandDisciplePhone(answer.getQuestionID(),answer.getDisciplePhone());
+        if(oldAnswer1 == null){
+            long res = addAnswer(answer);
+            return res;
+        }else {
+            long res = updateAnswer(answer);
+            return res;
+        }
+    }
+    public long addAnswer(Answer answer) {
+        Log.i(TAG, "Add addAnswer: ");
+        String DB_Table = Table_QUESTION_ANSWER;
+        try{
+            ContentValues cv = new ContentValues();
+            cv.put(Database.QUESTION_ANSWER_FIELDS[0], answer.getSerID());
+            cv.put(Database.QUESTION_ANSWER_FIELDS[1], answer.getDisciplePhone());
+            cv.put(Database.QUESTION_ANSWER_FIELDS[2], answer.getQuestionID());
+            cv.put(Database.QUESTION_ANSWER_FIELDS[3], answer.getAnswer());
+            cv.put(Database.QUESTION_ANSWER_FIELDS[4], answer.getBuildStage());
+            Answer oldAnswer1 = getAnswerBySerID(answer.getSerID());
+            if(oldAnswer1 == null){
+                long  x = DeepLife.myDATABASE.insert(DB_Table,cv);
+                return x;
+            }
+            return 0;
+        }catch (Exception e){
+            Log.i(TAG, "Failed Add addAnswer: "+e.toString());
+            return 0;
+        }
+    }
 //    public ArrayList<ImageSync> Get_All_ImageSync(){
 //        String DB_Table = Table_IMAGE_SYNC;
 //        ArrayList<ImageSync> found = new ArrayList<ImageSync>();
