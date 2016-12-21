@@ -97,6 +97,21 @@ public class SyncService extends JobService {
                             Log.i(TAG, "Disciples: \n" + json_disciples.toString());
                             mySyncDatabase.Add_Disciples(json_disciples);
                         }
+                        if(!json_response.isNull("Questions")){
+                            JSONArray json_questions = json_response.getJSONArray("Questions");
+                            Log.i(TAG, "Questions: \n" + json_questions.toString());
+                            mySyncDatabase.Add_Questions(json_questions);
+                        }
+                        if(!json_response.isNull("Categories")){
+                            JSONArray json_categories = json_response.getJSONArray("Categories");
+                            Log.i(TAG, "Categories: \n" + json_categories.toString());
+                            mySyncDatabase.Add_Category(json_categories);
+                        }
+                        if(!json_response.isNull("Answers")){
+                            JSONArray json_answers = json_response.getJSONArray("Answers");
+                            Log.i(TAG, "Answers: \n" + json_answers.toString());
+                            mySyncDatabase.Add_Answers(json_answers);
+                        }
                     }
 
                 }catch (Exception e){

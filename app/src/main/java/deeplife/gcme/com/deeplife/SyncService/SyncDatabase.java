@@ -9,6 +9,9 @@ import org.json.JSONObject;
 import deeplife.gcme.com.deeplife.Database.Database;
 import deeplife.gcme.com.deeplife.DeepLife;
 import deeplife.gcme.com.deeplife.Disciples.Disciple;
+import deeplife.gcme.com.deeplife.Models.Answer;
+import deeplife.gcme.com.deeplife.Models.Category;
+import deeplife.gcme.com.deeplife.WinBuildSend.WinBuildSendQuestion;
 import deeplife.gcme.com.deeplife.News.News;
 import deeplife.gcme.com.deeplife.Testimony.Testimony;
 import deeplife.gcme.com.deeplife.Testimony.TestimonyFragment;
@@ -128,6 +131,114 @@ public class SyncDatabase {
                             Log.i(TAG,"Successfully Updated: Disciples Updated -> \n"+cv.toString());
                         }else {
                             Log.i(TAG,"Error During Updating: Disciples -> \n"+cv.toString());
+                        }
+                    }
+                }
+            }
+        }catch (Exception e){
+            Log.i(TAG,e.toString());
+        }
+    }
+    public static void Add_Questions(JSONArray json_questions){
+        try{
+            if(json_questions.length()>0){
+                Log.i(TAG,"Adding New WinBuildSend Questions -> \n"+json_questions.toString());
+                for(int i=0;i<json_questions.length();i++){
+                    JSONObject obj = json_questions.getJSONObject(i);
+                    ContentValues cv = new ContentValues();
+                    cv.put(Database.QUESTION_LIST_FIELDS[0], obj.getString("id"));
+                    cv.put(Database.QUESTION_LIST_FIELDS[1], obj.getString("category"));
+                    cv.put(Database.QUESTION_LIST_FIELDS[2], obj.getString("question"));
+                    cv.put(Database.QUESTION_LIST_FIELDS[3], obj.getString("description"));
+                    cv.put(Database.QUESTION_LIST_FIELDS[4], obj.getString("mandatory"));
+                    cv.put(Database.QUESTION_LIST_FIELDS[5], obj.getString("type"));
+                    cv.put(Database.QUESTION_LIST_FIELDS[6], obj.getString("country"));
+                    cv.put(Database.QUESTION_LIST_FIELDS[7], obj.getString("created"));
+                    WinBuildSendQuestion winBuildSendQuestion = DeepLife.myDATABASE.getWinBuildSendQuestionBySerID(Integer.valueOf(obj.getString("id")));
+                    if(winBuildSendQuestion == null){
+                        long x = DeepLife.myDATABASE.insert(Database.Table_QUESTION_LIST,cv);
+                        if(x>0){
+                            Log.i(TAG,"Successfully Added: WinBuildSend Questions Added -> \n"+cv.toString());
+                        }else {
+                            Log.i(TAG,"Error During Adding: WinBuildSend Questions -> \n"+cv.toString());
+                        }
+                    }else {
+                        long x = DeepLife.myDATABASE.update(Database.Table_QUESTION_LIST,cv,winBuildSendQuestion.getID());
+                        Log.i(TAG,"Updated: WinBuildSend Questions Updated -> \n"+cv.toString());
+                        if(x>0){
+                            Log.i(TAG,"Successfully Updated: WinBuildSend Questions Updated -> \n"+cv.toString());
+                        }else {
+                            Log.i(TAG,"Error During Updating: WinBuildSend Questions -> \n"+cv.toString());
+                        }
+                    }
+                }
+            }
+        }catch (Exception e){
+            Log.i(TAG,e.toString());
+        }
+    }
+    public static void Add_Category(JSONArray json_questions){
+        try{
+            if(json_questions.length()>0){
+                Log.i(TAG,"Adding New Category  -> \n"+json_questions.toString());
+                for(int i=0;i<json_questions.length();i++){
+                    JSONObject obj = json_questions.getJSONObject(i);
+                    ContentValues cv = new ContentValues();
+                    cv.put(Database.CATEGORY_FIELDS[0], obj.getString("id"));
+                    cv.put(Database.CATEGORY_FIELDS[1], obj.getString("name"));
+                    cv.put(Database.CATEGORY_FIELDS[2], obj.getString("parent"));
+                    cv.put(Database.CATEGORY_FIELDS[3], obj.getString("status"));
+                    cv.put(Database.CATEGORY_FIELDS[4], obj.getString("created"));;
+                    Category category = DeepLife.myDATABASE.getCategoryByID(Integer.valueOf(obj.getString("id")));
+                    if(category == null){
+                        long x = DeepLife.myDATABASE.insert(Database.Table_CATEGORIES,cv);
+                        if(x>0){
+                            Log.i(TAG,"Successfully Added: Category -> \n"+cv.toString());
+                        }else {
+                            Log.i(TAG,"Error During Adding: Category -> \n"+cv.toString());
+                        }
+                    }else {
+                        long x = DeepLife.myDATABASE.update(Database.Table_CATEGORIES,cv,category.getID());
+                        Log.i(TAG,"Updated: Category -> \n"+cv.toString());
+                        if(x>0){
+                            Log.i(TAG,"Successfully Updated: Category Updated -> \n"+cv.toString());
+                        }else {
+                            Log.i(TAG,"Error During Updating: Category -> \n"+cv.toString());
+                        }
+                    }
+                }
+            }
+        }catch (Exception e){
+            Log.i(TAG,e.toString());
+        }
+    }
+    public static void Add_Answers(JSONArray json_answers){
+        try{
+            if(json_answers.length()>0){
+                Log.i(TAG,"Adding New Answers  -> \n"+json_answers.toString());
+                for(int i=0;i<json_answers.length();i++){
+                    JSONObject obj = json_answers.getJSONObject(i);
+                    ContentValues cv = new ContentValues();
+                    cv.put(Database.QUESTION_ANSWER_FIELDS[0], obj.getString("id"));
+                    cv.put(Database.QUESTION_ANSWER_FIELDS[1], obj.getString("user_id"));
+                    cv.put(Database.QUESTION_ANSWER_FIELDS[2], obj.getString("question_id"));
+                    cv.put(Database.QUESTION_ANSWER_FIELDS[3], obj.getString("answer"));
+                    cv.put(Database.QUESTION_ANSWER_FIELDS[4], obj.getString("stage"));;
+                    Answer answer = DeepLife.myDATABASE.getAnswerBySerID(Integer.valueOf(obj.getString("id")));
+                    if(answer == null){
+                        long x = DeepLife.myDATABASE.insert(Database.Table_QUESTION_ANSWER,cv);
+                        if(x>0){
+                            Log.i(TAG,"Successfully Added: Answers -> \n"+cv.toString());
+                        }else {
+                            Log.i(TAG,"Error During Adding: Answers -> \n"+cv.toString());
+                        }
+                    }else {
+                        long x = DeepLife.myDATABASE.update(Database.Table_QUESTION_ANSWER,cv,answer.getID());
+                        Log.i(TAG,"Updated: Answers -> \n"+cv.toString());
+                        if(x>0){
+                            Log.i(TAG,"Successfully Updated: Answers Updated -> \n"+cv.toString());
+                        }else {
+                            Log.i(TAG,"Error During Updating: Answers -> \n"+cv.toString());
                         }
                     }
                 }
