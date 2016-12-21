@@ -792,7 +792,7 @@ public class Database {
             cv.put(Database.QUESTION_ANSWER_FIELDS[2], answer.getQuestionID());
             cv.put(Database.QUESTION_ANSWER_FIELDS[3], answer.getAnswer());
             cv.put(Database.QUESTION_ANSWER_FIELDS[4], answer.getBuildStage());
-            int id = DeepLife.myDATABASE.getAnswerByQuestionID(answer.getQuestionID()).getID();
+            int id = DeepLife.myDATABASE.getAnswerByQuestionIDandDisciplePhone(answer.getQuestionID(),answer.getDisciplePhone()).getID();
             long  x = DeepLife.myDATABASE.update(DB_Table,cv,id);
             return x;
         }catch (Exception e){

@@ -69,9 +69,7 @@ public class SyncService extends JobService {
         }
         Log.i(TAG, "Prepared Request: \n" + Send_Param.toString());
         Log.i(TAG,"Service Started");
-
         Fuel.post(DeepLife.API_URL, Send_Param).responseString(new Handler<String>() {
-
             @Override
             public void success(@NotNull Request request, @NotNull Response response, String s) {
                 Log.i(TAG, "Request: \n" + request);
@@ -121,7 +119,7 @@ public class SyncService extends JobService {
 
             @Override
             public void failure(@NotNull Request request, @NotNull Response response, @NotNull FuelError fuelError) {
-
+                Log.i(TAG, "Fuel failure: \n" + fuelError.toString());
             }
         });
         return true;

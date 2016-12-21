@@ -13,54 +13,62 @@
         android:layout_margin="3dp"
         card_view:cardCornerRadius="0dp"
         card_view:cardElevation="2dp"
-        card_view:contentPadding="10dp">
+        card_view:contentPadding="5dp">
         <FrameLayout
             android:id="@+id/frame1"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <LinearLayout
-                android:layout_width="100dp"
-                android:layout_height="2dp"
-                android:layout_marginTop="10dp"
-                android:background="@color/bg_logins">
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="2dp"
-                android:layout_height="70dp"
-                android:layout_marginLeft="10dp"
-                android:background="@color/bg_logins">
-            </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:gravity="center_vertical"
-                android:weightSum="6"
-                android:padding="10sp"
                 android:orientation="horizontal">
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
                     android:gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
                     android:layout_weight="2">
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center_horizontal|center_vertical"
-                        android:text=""
+                        android:layout_marginTop="5dp"
+                        android:text="This is the Question Place "
                         android:textSize="17dp"
                         android:textColor="#000000"
                         android:id="@+id/txt_winbuildsend_question1" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="6dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_height="match_parent">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="*Mandatory"/>
+                        <TextView
+                            android:id="@+id/txt_readnote1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:textColor="@color/bg_login"
+                            android:text="Read Note"/>
+                    </LinearLayout>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:orientation="horizontal"
                     android:gravity="center_horizontal|center_vertical"
                     android:layout_weight="4">
                     <ToggleButton
                         android:id="@+id/tgl_winbuildsend_state"
-                        android:layout_width="110dp"
-                        android:layout_height="60dp"
+                        android:layout_width="100dp"
+                        android:layout_height="55dp"
                         android:textOff=""
                         android:textOn=""
                         android:background="@drawable/switch_tump1"/>
@@ -73,18 +81,6 @@
             android:id="@+id/frame2"
             >
             <LinearLayout
-                android:layout_width="100dp"
-                android:layout_height="2dp"
-                android:layout_marginTop="10dp"
-                android:background="@color/bg_logins">
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="2dp"
-                android:layout_height="70dp"
-                android:layout_marginLeft="10dp"
-                android:background="@color/bg_logins">
-            </LinearLayout>
-            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
@@ -94,17 +90,36 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:orientation="vertical"
                     android:gravity="center_vertical"
                     android:layout_weight="2">
                     <TextView
-                        android:id="@+id/txt_winbuildsend_question2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center_horizontal|center_vertical"
-                        android:text=""
+                        android:layout_marginTop="5dp"
+                        android:text="This is the Question Place "
                         android:textSize="17dp"
                         android:textColor="#000000"
-                         />
+                        android:id="@+id/txt_winbuildsend_question2" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="6dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_height="match_parent">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="*Mandatory"/>
+                        <TextView
+                            android:id="@+id/txt_readnote2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:textColor="@color/bg_login"
+                            android:text="Read Note"/>
+                    </LinearLayout>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -141,6 +156,49 @@
                         android:background="@drawable/btn_incrs"
                         android:id="@+id/btn_winbuildsend_inc" />
 
+                </LinearLayout>
+            </LinearLayout>
+        </FrameLayout>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/frame3"
+            >
+            <LinearLayout
+                android:layout_width="100dp"
+                android:layout_height="2dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/bg_logins">
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="2dp"
+                android:layout_height="70dp"
+                android:layout_marginLeft="10dp"
+                android:background="@color/bg_logins">
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:weightSum="6"
+                android:padding="10sp"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:layout_weight="2">
+                    <TextView
+                        android:id="@+id/txt_winbuildsend_question3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginLeft="10dp"
+                        android:text=""
+                        android:textSize="17dp"
+                        android:textColor="#000000"
+                        />
                 </LinearLayout>
             </LinearLayout>
         </FrameLayout>
