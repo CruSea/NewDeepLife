@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import deeplife.gcme.com.deeplife.DeepLife;
 import deeplife.gcme.com.deeplife.Disciples.Disciple;
@@ -477,7 +478,7 @@ public class Database {
 
 
     public Category getCategoryByID(int id) {
-        Log.i(TAG, "Get Category by ID: ");
+        Log.i(TAG, "Get Category by ID: "+id);
         String DB_Table = Table_CATEGORIES;
         try{
             Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
@@ -486,6 +487,7 @@ public class Database {
                 for(int i=0;i<c.getCount();i++){
                     c.moveToPosition(i);
                     int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(CATEGORY_COLUMN[0])));
+                    Log.i(TAG, "--> Get Category by SerID: "+c.getColumnIndex(CATEGORY_COLUMN[1])+", "+c.getColumnIndex(CATEGORY_COLUMN[2]));
                     if(cur_id == id){
                         Category category = new Category();
                         category.setID(Integer.valueOf(c.getString(c.getColumnIndex(CATEGORY_COLUMN[0]))));
@@ -493,7 +495,6 @@ public class Database {
                         category.setName(c.getString(c.getColumnIndex(CATEGORY_COLUMN[2])));
                         category.setParent(Integer.valueOf(c.getString(c.getColumnIndex(CATEGORY_COLUMN[3]))));
                         category.setStatus(Integer.valueOf(c.getString(c.getColumnIndex(CATEGORY_COLUMN[4]))));
-                        category.setCreated(c.getString(c.getColumnIndex(DISCIPLES_COLUMN[5])));
                         return category;
                     }
                 }
@@ -551,6 +552,32 @@ public class Database {
             return null;
         }
         return null;
+    }
+    public List<Category> getCategoriesByParentID(int id) {
+        Log.i(TAG, "Get Category by Server ID: ");
+        String DB_Table = Table_CATEGORIES;
+        List<Category> found = new ArrayList<Category>();
+        try{
+            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
+            if(c.getCount()>0){
+                c.moveToFirst();
+                for(int i=0;i<c.getCount();i++){
+                    c.moveToPosition(i);
+                    int par_id = Integer.valueOf(c.getString(c.getColumnIndex(CATEGORY_COLUMN[3])));
+                    int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(CATEGORY_COLUMN[0])));
+                    if(par_id == id){
+                        Category category = getCategoryByID(cur_id);
+                        if(category != null){
+                            found.add(category);
+                        }
+                    }
+                }
+            }
+        }catch (Exception e){
+            Log.i(TAG, "Failed Get Category by Server ID: "+e.toString());
+            return found;
+        }
+        return found;
     }
     public ArrayList<Category> getParentCategory(){
         Log.i(TAG, "Get All Parent Category: ");

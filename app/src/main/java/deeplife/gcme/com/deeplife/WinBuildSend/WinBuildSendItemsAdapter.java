@@ -27,6 +27,7 @@ import deeplife.gcme.com.deeplife.Disciples.Disciple;
 import deeplife.gcme.com.deeplife.Disciples.DiscipleListAdapter;
 import deeplife.gcme.com.deeplife.MainActivity;
 import deeplife.gcme.com.deeplife.Models.Answer;
+import deeplife.gcme.com.deeplife.Models.Category;
 import deeplife.gcme.com.deeplife.R;
 import deeplife.gcme.com.deeplife.SyncService.SyncService;
 
@@ -40,7 +41,7 @@ public class WinBuildSendItemsAdapter extends RecyclerView.Adapter<WinBuildSendI
     public static String DisciplePhone;
     private int count;
 
-    public WinBuildSendItemsAdapter(List<WinBuildSendQuestion> winBuildSends,Context context, String disciplePhone) {
+    public WinBuildSendItemsAdapter(List<WinBuildSendQuestion> winBuildSends, Context context, String disciplePhone) {
         this.winBuildSends = winBuildSends;
         this.count = winBuildSends.size();
 

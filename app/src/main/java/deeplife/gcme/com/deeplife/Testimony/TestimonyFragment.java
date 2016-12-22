@@ -13,6 +13,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -43,9 +44,7 @@ public class TestimonyFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(getActivity());
         myRecyclerView.setLayoutManager(mLayoutManager);
         myContext = getActivity();
-        ArrayList<Testimony> items = DeepLife.myDATABASE.getAllTestimonies();
-        mAdapter = new TestimonyListAdapter(getActivity(),items);
-        myRecyclerView.setAdapter(mAdapter);
+        UpdateList();
         return view;
     }
 
@@ -66,6 +65,7 @@ public class TestimonyFragment extends Fragment {
 
     public static void UpdateList(){
         ArrayList<Testimony> items = DeepLife.myDATABASE.getAllTestimonies();
+        Toast.makeText(myContext,"There are "+items.size()+" Testimonies",Toast.LENGTH_LONG).show();
         mAdapter = new TestimonyListAdapter(myContext,items);
         myRecyclerView.setAdapter(mAdapter);
     }
