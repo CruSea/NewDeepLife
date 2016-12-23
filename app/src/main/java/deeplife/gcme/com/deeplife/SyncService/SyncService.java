@@ -48,16 +48,16 @@ public class SyncService extends JobService {
     public boolean onStartJob(JobParameters params) {
         Log.i(TAG, "The Job scheduler started");
         user = new User();
-        user.setUser_Name("916417951");
-        user.setUser_Pass("passben");
-        user.setUser_Country("68");
+        user.setUserName("916417951");
+        user.setUserPass("passben");
+        user.setUserCountry("68");
 
 
         Send_Param = new ArrayList<Pair<String,String>>();
         if(user != null ){
-            Send_Param.add(new kotlin.Pair<String, String>("User_Name",user.getUser_Name()));
-            Send_Param.add(new kotlin.Pair<String, String>("User_Pass",user.getUser_Pass()));
-            Send_Param.add(new kotlin.Pair<String, String>("Country", user.getUser_Country()));
+            Send_Param.add(new kotlin.Pair<String, String>("User_Name",user.getUserName()));
+            Send_Param.add(new kotlin.Pair<String, String>("User_Pass",user.getUserPass()));
+            Send_Param.add(new kotlin.Pair<String, String>("Country", user.getUserCountry()));
             Send_Param.add(new kotlin.Pair<String, String>("Service",getService()));
             Send_Param.add(new kotlin.Pair<String, String>("Param","[]"));
         }else{
@@ -74,47 +74,7 @@ public class SyncService extends JobService {
             public void success(@NotNull Request request, @NotNull Response response, String s) {
                 Log.i(TAG, "Request: \n" + request);
                 Log.i(TAG, "Response: \n" + s);
-                Gson myGson = new Gson();
-                try {
-                    JSONObject myObject = (JSONObject) new JSONTokener(s).nextValue();
-                    Log.i(TAG, "Server Response -> \n" + myObject.toString());
-                    if (!myObject.isNull("Response")) {
-                        JSONObject json_response = myObject.getJSONObject("Response");
-                        if (!json_response.isNull("NewsFeeds")) {
-                            JSONArray json_newsfeeds = json_response.getJSONArray("NewsFeeds");
-                            Log.i(TAG, "News Feeds: \n" + json_newsfeeds.toString());
-                            mySyncDatabase.Add_News(json_newsfeeds);
-                        }
-                        if(!json_response.isNull("Testimonies")){
-                            JSONArray json_testimonies = json_response.getJSONArray("Testimonies");
-                            Log.i(TAG, "Testimonies: \n" + json_testimonies.toString());
-                            mySyncDatabase.Add_Testimony(json_testimonies);
-                        }
-                        if(!json_response.isNull("Disciples")){
-                            JSONArray json_disciples = json_response.getJSONArray("Disciples");
-                            Log.i(TAG, "Disciples: \n" + json_disciples.toString());
-                            mySyncDatabase.Add_Disciples(json_disciples);
-                        }
-                        if(!json_response.isNull("Questions")){
-                            JSONArray json_questions = json_response.getJSONArray("Questions");
-                            Log.i(TAG, "Questions: \n" + json_questions.toString());
-                            mySyncDatabase.Add_Questions(json_questions);
-                        }
-                        if(!json_response.isNull("Categories")){
-                            JSONArray json_categories = json_response.getJSONArray("Categories");
-                            Log.i(TAG, "Categories: \n" + json_categories.toString());
-                            mySyncDatabase.Add_Category(json_categories);
-                        }
-                        if(!json_response.isNull("Answers")){
-                            JSONArray json_answers = json_response.getJSONArray("Answers");
-                            Log.i(TAG, "Answers: \n" + json_answers.toString());
-                            mySyncDatabase.Add_Answers(json_answers);
-                        }
-                    }
-
-                }catch (Exception e){
-
-                }
+                mySyncDatabase.ProcessResponse(s);
             }
 
             @Override

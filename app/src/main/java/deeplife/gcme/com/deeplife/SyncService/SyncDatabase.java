@@ -3,14 +3,19 @@ package deeplife.gcme.com.deeplife.SyncService;
 import android.content.ContentValues;
 import android.util.Log;
 
+import com.google.gson.Gson;
+
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONTokener;
 
 import deeplife.gcme.com.deeplife.Database.Database;
 import deeplife.gcme.com.deeplife.DeepLife;
 import deeplife.gcme.com.deeplife.Disciples.Disciple;
 import deeplife.gcme.com.deeplife.Models.Answer;
 import deeplife.gcme.com.deeplife.Models.Category;
+import deeplife.gcme.com.deeplife.Models.Country;
 import deeplife.gcme.com.deeplife.WinBuildSend.WinBuildSendQuestion;
 import deeplife.gcme.com.deeplife.News.News;
 import deeplife.gcme.com.deeplife.Testimony.Testimony;
@@ -22,6 +27,54 @@ import deeplife.gcme.com.deeplife.Testimony.TestimonyFragment;
 
 public class SyncDatabase {
     private static String TAG = "SyncDatabase";
+
+    public static void ProcessResponse(String jsonArray){
+        Gson myGson = new Gson();
+        try {
+            JSONObject myObject = (JSONObject) new JSONTokener(jsonArray).nextValue();
+            Log.i(TAG, "Server Response -> \n" + myObject.toString());
+            if (!myObject.isNull("Response")) {
+                JSONObject json_response = myObject.getJSONObject("Response");
+                if (!json_response.isNull("NewsFeeds")) {
+                    JSONArray json_newsfeeds = json_response.getJSONArray("NewsFeeds");
+                    Log.i(TAG, "News Feeds: \n" + json_newsfeeds.toString());
+                    Add_News(json_newsfeeds);
+                }
+                if (!json_response.isNull("Testimonies")) {
+                    JSONArray json_testimonies = json_response.getJSONArray("Testimonies");
+                    Log.i(TAG, "Testimonies: \n" + json_testimonies.toString());
+                    Add_Testimony(json_testimonies);
+                }
+                if (!json_response.isNull("Disciples")) {
+                    JSONArray json_disciples = json_response.getJSONArray("Disciples");
+                    Log.i(TAG, "Disciples: \n" + json_disciples.toString());
+                    Add_Disciples(json_disciples);
+                }
+                if (!json_response.isNull("Questions")) {
+                    JSONArray json_questions = json_response.getJSONArray("Questions");
+                    Log.i(TAG, "Questions: \n" + json_questions.toString());
+                    Add_Questions(json_questions);
+                }
+                if (!json_response.isNull("Categories")) {
+                    JSONArray json_categories = json_response.getJSONArray("Categories");
+                    Log.i(TAG, "Categories: \n" + json_categories.toString());
+                    Add_Category(json_categories);
+                }
+                if (!json_response.isNull("Answers")) {
+                    JSONArray json_answers = json_response.getJSONArray("Answers");
+                    Log.i(TAG, "Answers: \n" + json_answers.toString());
+                    Add_Answers(json_answers);
+                }
+                if (!json_response.isNull("Country")) {
+                    JSONArray json_answers = json_response.getJSONArray("Country");
+                    Log.i(TAG, "Country: \n" + json_answers.toString());
+                    Add_Countries(json_answers);
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
 
     public static void Add_News(JSONArray json_newses){
         try{
@@ -239,6 +292,40 @@ public class SyncDatabase {
                             Log.i(TAG,"Successfully Updated: Answers Updated -> \n"+cv.toString());
                         }else {
                             Log.i(TAG,"Error During Updating: Answers -> \n"+cv.toString());
+                        }
+                    }
+                }
+            }
+        }catch (Exception e){
+            Log.i(TAG,e.toString());
+        }
+    }
+    public static void Add_Countries(JSONArray json_countries){
+        try{
+            if(json_countries.length()>0){
+                Log.i(TAG,"Adding New Countries  -> \n"+json_countries.toString());
+                for(int i=0;i<json_countries.length();i++){
+                    JSONObject obj = json_countries.getJSONObject(i);
+                    ContentValues cv = new ContentValues();
+                    cv.put(Database.COUNTRY_FIELDS[0], obj.getString("id"));
+                    cv.put(Database.COUNTRY_FIELDS[1], obj.getString("iso3"));
+                    cv.put(Database.COUNTRY_FIELDS[2], obj.getString("name"));
+                    cv.put(Database.COUNTRY_FIELDS[3], obj.getString("code"));
+                    Country country = DeepLife.myDATABASE.getCountryByID(Integer.valueOf(obj.getString("id")));
+                    if(country == null){
+                        long x = DeepLife.myDATABASE.insert(Database.Table_COUNTRY,cv);
+                        if(x>0){
+                            Log.i(TAG,"Successfully Added: Country -> \n"+cv.toString());
+                        }else {
+                            Log.i(TAG,"Error During Adding: Country -> \n"+cv.toString());
+                        }
+                    }else {
+                        long x = DeepLife.myDATABASE.update(Database.Table_COUNTRY,cv,country.getID());
+                        Log.i(TAG,"Updated: Answers -> \n"+cv.toString());
+                        if(x>0){
+                            Log.i(TAG,"Successfully Updated: Country Updated -> \n"+cv.toString());
+                        }else {
+                            Log.i(TAG,"Error During Updating: Country -> \n"+cv.toString());
                         }
                     }
                 }

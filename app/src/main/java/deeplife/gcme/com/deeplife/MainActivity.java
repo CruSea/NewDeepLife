@@ -25,6 +25,7 @@ import android.view.MenuItem;
 import android.widget.LinearLayout;
 
 import deeplife.gcme.com.deeplife.Adapters.ViewPageAdapter;
+import deeplife.gcme.com.deeplife.Database.Database;
 import deeplife.gcme.com.deeplife.Disciples.DisciplesFragment;
 import deeplife.gcme.com.deeplife.Home.HomeFragment;
 import deeplife.gcme.com.deeplife.LearningTools.LearningFragment;
@@ -165,7 +166,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             myViewPager.setCurrentItem(4,true);
         } else if (id == R.id.nav_send) {
 
-        } else if (id == R.id.nav_profile) {
+        } else if (id == R.id.nav_logout) {
+            DeepLife.myDATABASE.Delete_All(Database.Table_USER);
+            DeepLife.myDATABASE.Delete_All(Database.Table_QUESTION_ANSWER);
+            DeepLife.myDATABASE.Delete_All(Database.Table_DISCIPLES);
+            DeepLife.myDATABASE.Delete_All(Database.Table_NEWSFEED);
+            DeepLife.myDATABASE.Delete_All(Database.Table_TESTIMONY);
+            Intent intent = new Intent(this, Login.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+        }else if (id == R.id.nav_profile) {
             startActivity(new Intent(this, ProfileShowActivity.class));
         }
 

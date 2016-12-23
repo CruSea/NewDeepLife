@@ -54,76 +54,46 @@ public class WinBuildSendActivity extends AppCompatActivity {
         int sum = DeepLife.myDATABASE.count(Database.Table_QUESTION_LIST);
         Toast.makeText(this,"There are: "+sum,Toast.LENGTH_LONG).show();
         checkStage();
-        ArrayList<WinBuildSendQuestion> WinQuestioons = DeepLife.myDATABASE.getWinBuildSendQuestionsByCategorySerID(Stage);
-        if(WinQuestioons != null){
-            List<Category> items = DeepLife.myDATABASE.getCategoriesByParentID(Stage);
-            if(items.size()>0){
-                for(Category category :items){
-                    WinBuildSendQuestion question = new WinBuildSendQuestion();
-                    question.setQuestion(category.getName());
-                    question.setType("Folder");
-                    WinQuestioons.add(question);
-                }
-            }
-            UpdateGUIAdapter(WinQuestioons);
-        }
+        UpdateQuestionList(Stage);
 
         Btn_Win.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ArrayList<WinBuildSendQuestion> WinQuestioons = DeepLife.myDATABASE.getWinBuildSendQuestionsByCategorySerID(1);
-                if(WinQuestioons != null){
-                    List<Category> items = DeepLife.myDATABASE.getCategoriesByParentID(1);
-                    if(items.size()>0){
-                        for(Category category :items){
-                            WinBuildSendQuestion question = new WinBuildSendQuestion();
-                            question.setQuestion(category.getName());
-                            question.setType("Folder");
-                            WinQuestioons.add(question);
-                        }
-                    }
-                    UpdateGUIAdapter(WinQuestioons);
-                }
+                UpdateQuestionList(1);
             }
         });
 
         Btn_Build.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ArrayList<WinBuildSendQuestion> BuildQuestions = DeepLife.myDATABASE.getWinBuildSendQuestionsByCategorySerID(2);
-                if(BuildQuestions != null){
-                    List<Category> items = DeepLife.myDATABASE.getCategoriesByParentID(2);
-                    if(items.size()>0){
-                        for(Category category :items){
-                            WinBuildSendQuestion question = new WinBuildSendQuestion();
-                            question.setQuestion(category.getName());
-                            question.setType("Folder");
-                            BuildQuestions.add(question);
-                        }
-                    }
-                    UpdateGUIAdapter(BuildQuestions);
-                }
+                UpdateQuestionList(2);
             }
         });
         Btn_Send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ArrayList<WinBuildSendQuestion> SendQuestions = DeepLife.myDATABASE.getWinBuildSendQuestionsByCategorySerID(3);
-                if(SendQuestions != null){
-                    List<Category> items = DeepLife.myDATABASE.getCategoriesByParentID(3);
-                    if(items.size()>0){
-                        for(Category category :items){
-                            WinBuildSendQuestion question = new WinBuildSendQuestion();
-                            question.setQuestion(category.getName());
-                            question.setType("Folder");
-                            SendQuestions.add(question);
-                        }
-                    }
-                    UpdateGUIAdapter(SendQuestions);
-                }
+                UpdateQuestionList(3);
             }
         });
 
+    }
+    public void UpdateQuestionList(int stage){
+        ArrayList<WinBuildSendQuestion> SendQuestions = DeepLife.myDATABASE.getWinBuildSendQuestionsByCategorySerID(stage);
+        if(SendQuestions != null){
+            List<Category> items = DeepLife.myDATABASE.getCategoriesByParentID(stage);
+            if(items.size()>0){
+                for(Category category :items){
+                    WinBuildSendQuestion question = new WinBuildSendQuestion();
+                    question.setQuestion(category.getName());
+                    question.setType("Folder");
+                    ArrayList<WinBuildSendQuestion> FoundQuestion = DeepLife.myDATABASE.getWinBuildSendQuestionsByCategorySerID(category.getSerID());
+                    if(FoundQuestion.size()>0){
+                        SendQuestions.add(question);
+                    }
+                }
+            }
+            UpdateGUIAdapter(SendQuestions);
+        }
     }
     public static void UpdateGUIAdapter(List<WinBuildSendQuestion> datas){
         mAdapter = new WinBuildSendItemsAdapter(datas,myContext,DisciplePhone);

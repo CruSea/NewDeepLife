@@ -14,6 +14,7 @@ import deeplife.gcme.com.deeplife.DeepLife;
 import deeplife.gcme.com.deeplife.Disciples.Disciple;
 import deeplife.gcme.com.deeplife.Models.Answer;
 import deeplife.gcme.com.deeplife.Models.Category;
+import deeplife.gcme.com.deeplife.Models.Country;
 import deeplife.gcme.com.deeplife.WinBuildSend.WinBuildSendQuestion;
 import deeplife.gcme.com.deeplife.News.News;
 import deeplife.gcme.com.deeplife.Testimony.Testimony;
@@ -38,7 +39,7 @@ public class Database {
     public static final String[] LOGS_FIELDS = { "Type", "Task","Value" };
     public static final String[] NewsFeed_FIELDS = { "News_ID", "Title","Content","Category","ImageURL","ImagePath","PubDate" };
 
-    public static final String[] COUNTRY_FIELDS = { "Country_id", "iso3","name","code" };
+    public static final String[] COUNTRY_FIELDS = { "SerID", "ISO3","Name","Code" };
     public static final String[] SCHEDULES_FIELDS = { "Disciple_Phone","Title","Alarm_Time","Alarm_Repeat","Description"};
     public static final String[] USER_FIELDS = { "Full_Name", "Email","Phone","Password","Country","Picture","Favorite_Scripture" };
     public static final String[] QUESTION_LIST_FIELDS = {"SerID","Category", "Question","Description","Mandatory","Type","Country","Created"};
@@ -54,7 +55,7 @@ public class Database {
     public static final String[] REPORT_FORM_COLUMN = {"id","Report_ID","Category","Questions"};
     public static final String[] NewsFeed_COLUMN = { "id","News_ID", "Title","Content","Category","ImageURL","ImagePath","PubDate" };
     public static final String[] REPORT_COLUMN = {"id","Report_ID","Value","Date"};
-    public static final String[] COUNTRY_COLUMN = {"id", "Country_id", "iso3","name","code"};
+    public static final String[] COUNTRY_COLUMN = {"id", "SerID", "ISO3","Name","Code"};
     public static final String[] LOGS_COLUMN = { "id", "Type", "Task","Value" };
     public static final String[] USER_COLUMN = { "id", "Full_Name", "Email","Phone","Password","Country","Picture","Favorite_Scripture" };
     public static final String[] QUESTION_LIST_COLUMN = {"id","SerID","Category", "Question","Description","Mandatory","Type","Country","Created"};
@@ -199,13 +200,13 @@ public class Database {
                 c.moveToPosition(i);
                 User dis = new User();
                 dis.setId(c.getString(c.getColumnIndex(USER_COLUMN[0])));
-                dis.setUser_Name(c.getString(c.getColumnIndex(USER_COLUMN[1])));
-                dis.setUser_Email(c.getString(c.getColumnIndex(USER_COLUMN[2])));
-                dis.setUser_Phone(c.getString(c.getColumnIndex(USER_COLUMN[3])));
-                dis.setUser_Pass(c.getString(c.getColumnIndex(USER_COLUMN[4])));
-                dis.setUser_Country(c.getString(c.getColumnIndex(USER_COLUMN[5])));
-                dis.setUser_Picture(c.getString(c.getColumnIndex(USER_COLUMN[6])));
-                dis.setUser_Favorite_Scripture(c.getString(c.getColumnIndex(USER_COLUMN[7])));
+                dis.setUserName(c.getString(c.getColumnIndex(USER_COLUMN[1])));
+                dis.setUserEmail(c.getString(c.getColumnIndex(USER_COLUMN[2])));
+                dis.setUserPhone(c.getString(c.getColumnIndex(USER_COLUMN[3])));
+                dis.setUserPass(c.getString(c.getColumnIndex(USER_COLUMN[4])));
+                dis.setUserCountry(c.getString(c.getColumnIndex(USER_COLUMN[5])));
+                dis.setUserPicture(c.getString(c.getColumnIndex(USER_COLUMN[6])));
+                dis.setUserFavorite_Scripture(c.getString(c.getColumnIndex(USER_COLUMN[7])));
                 return dis;
             }
         }catch (Exception e){
@@ -858,6 +859,86 @@ public class Database {
             Log.i(TAG, "Failed Add addAnswer: "+e.toString());
             return 0;
         }
+    }
+
+
+    ////////////////////////////////
+    ////////////////////////////////
+    ///////  Country Table    /////////
+    ////////////////////////////////
+    ////////////////////////////////
+    public Country getCountryByID(int id) {
+        String DB_Table = Table_COUNTRY;
+        News found = new News();
+        Log.i(TAG, "Get Country By ID: " + id);
+        try{
+            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
+            if(c.getCount()>0){
+                c.moveToFirst();
+                for(int i=0;i<c.getCount();i++){
+                    c.moveToPosition(i);
+                    int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(COUNTRY_COLUMN[0])));
+                    if(cur_id == id){
+                        Country country = new Country();
+                        country.setID(Integer.valueOf(c.getString(c.getColumnIndex(COUNTRY_COLUMN[0]))));
+                        country.setSerID(Integer.valueOf(c.getString(c.getColumnIndex(COUNTRY_COLUMN[1]))));
+                        country.setISO3(c.getString(c.getColumnIndex(COUNTRY_COLUMN[2])));
+                        country.setName(c.getString(c.getColumnIndex(COUNTRY_COLUMN[3])));
+                        country.setCode(Integer.valueOf(c.getString(c.getColumnIndex(COUNTRY_COLUMN[4]))));
+                        return country;
+                    }
+                }
+            }
+        }catch (Exception e){
+            Log.i(TAG, "Failed Get Country By ID: "+e.toString());
+            return null;
+        }
+        return null;
+
+    }
+    public Country getCountryBySerID(int id) {
+        Log.i(TAG, "Get getCountryBySerID by ServerID: ");
+        String DB_Table = Table_COUNTRY;
+        try{
+            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
+            if(c.getCount()>0){
+                c.moveToFirst();
+                for(int i=0;i<c.getCount();i++){
+                    c.moveToPosition(i);
+                    int ser_id = Integer.valueOf(c.getString(c.getColumnIndex(COUNTRY_COLUMN[1])));
+                    int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(COUNTRY_COLUMN[0])));
+                    if(ser_id == id){
+                        Country country = getCountryByID(cur_id);
+                        return country;
+                    }
+                }
+            }
+        }catch (Exception e){
+            Log.i(TAG, "Failed Get getCountryBySerID by ServerID: "+e.toString());
+            return null;
+        }
+        return null;
+    }
+    public ArrayList<Country> getAllCountries(){
+        Log.i(TAG, "Get All getAllCountries: ");
+        String DB_Table = Table_COUNTRY;
+        ArrayList<Country> found = new ArrayList<Country>();
+        try{
+            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
+            c.moveToFirst();
+            for(int i=0;i<c.getCount();i++){
+                c.moveToPosition(i);
+                int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(COUNTRY_COLUMN[0])));
+                Country country = getCountryByID(cur_id);
+                if(country != null){
+                    found.add(country);
+                    Log.i(TAG, "Get All Countries: "+country.getID());
+                }
+            }
+        }catch (Exception e){
+            return null;
+        }
+        return found;
     }
 //    public ArrayList<ImageSync> Get_All_ImageSync(){
 //        String DB_Table = Table_IMAGE_SYNC;

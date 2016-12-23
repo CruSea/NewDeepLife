@@ -97,12 +97,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
                         <EditText
-                            android:id="@+id/login_phone"
+                            android:id="@+id/txt_signup_phone"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="10dp"
                             android:background="@color/white"
-                            android:hint="Your Email or Phone Number"
+                            android:inputType="number"
+                            android:hint="Your Phone Number"
                             android:padding="10dp"
                             android:textColor="@color/input_login"
                             android:textColorHint="@color/input_login_hint" />
@@ -153,7 +154,7 @@
 
 
                 <Button
-                    android:id="@+id/btnregister"
+                    android:id="@+id/btn_signup_signup"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"

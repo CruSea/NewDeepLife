@@ -4,45 +4,52 @@ package deeplife.gcme.com.deeplife.Models;
  * Created by BENGEOS on 4/5/16.
  */
 public class Country {
-    private String id,Country_id,iso3,name,code;
+    private int ID,SerID,Code;
+    private String ISO3,Name;
 
-    public String getId() {
-        return id;
+    public Country() {
+    }
+    public Country(String name) {
+        Name = name;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public int getID() {
+        return ID;
     }
 
-    public String getCountry_id() {
-        return Country_id;
+    public void setID(int ID) {
+        this.ID = ID;
     }
 
-    public void setCountry_id(String country_id) {
-        Country_id = country_id;
+    public int getSerID() {
+        return SerID;
     }
 
-    public String getIso3() {
-        return iso3;
+    public void setSerID(int serID) {
+        SerID = serID;
     }
 
-    public void setIso3(String iso3) {
-        this.iso3 = iso3;
+    public int getCode() {
+        return Code;
+    }
+
+    public void setCode(int code) {
+        Code = code;
+    }
+
+    public String getISO3() {
+        return ISO3;
+    }
+
+    public void setISO3(String ISO3) {
+        this.ISO3 = ISO3;
     }
 
     public String getName() {
-        return name;
+        return Name;
     }
 
     public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
+        Name = name;
     }
 }

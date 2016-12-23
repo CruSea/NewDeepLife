@@ -6,6 +6,8 @@ import android.os.HandlerThread;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
+import deeplife.gcme.com.deeplife.Database.Database;
+
 /**
  * Created by bengeos on 12/18/16.
  */
@@ -15,19 +17,33 @@ public class Splash extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash);
-        Thread thread = new Thread(){
+        Thread splash = new Thread(){
             @Override
             public void run() {
                 try {
                     sleep(3000);
-                    Intent intent = new Intent(Splash.this,Login.class);
-                    startActivity(intent);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                } catch(InterruptedException e){
+                } finally {
+                    getNextActivity();
                 }
+                //super.run();
             }
         };
-        Intent intent = new Intent(Splash.this,Login.class);
-        startActivity(intent);
+        splash.start();
+    }
+    public synchronized void getNextActivity() {
+
+        int Count = DeepLife.myDATABASE.count(Database.Table_USER);
+        if(Count == 1){
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            finish();
+        }else{
+            Intent intent = new Intent(this, Login.class);
+            startActivity(intent);
+            finish();
+        }
+
     }
 }
