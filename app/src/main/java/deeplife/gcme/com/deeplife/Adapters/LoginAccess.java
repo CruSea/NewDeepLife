@@ -56,50 +56,56 @@ public class LoginAccess {
 
     private static String TAG = "Login";
     public boolean LogInAuthnticate(){
-        if(myUser.getUserEmail()!=null){
-            Send_Param.add(new kotlin.Pair<String, String>("User_Name", myUser.getUserEmail()));
+        if(myUser.getUser_Email()!=null){
+            Send_Param.add(new kotlin.Pair<String, String>("User_Name", myUser.getUser_Email()));
         }else {
-            Send_Param.add(new kotlin.Pair<String, String>("User_Name", myUser.getUserPhone()));
+            Send_Param.add(new kotlin.Pair<String, String>("User_Name", myUser.getUser_Phone()));
         }
-        Send_Param.add(new kotlin.Pair<String, String>("User_Pass", myUser.getUserPass()));
-        Send_Param.add(new kotlin.Pair<String, String>("Country", myUser.getUserCountry()));
+        Send_Param.add(new kotlin.Pair<String, String>("User_Pass", myUser.getUser_Pass()));
+        Send_Param.add(new kotlin.Pair<String, String>("Country", myUser.getUser_Country()));
         Send_Param.add(new kotlin.Pair<String, String>("Service", "Log_In"));
         Send_Param.add(new kotlin.Pair<String, String>("Param", "[]"));
-        myFuel.post(DeepLife.API_URL,Send_Param).responseString(new Handler<String>() {
-            @Override
-            public void success(@NotNull Request request, @NotNull Response response, String s) {
-                Log.i(TAG, "Server Request  -> \n" + request.toString());
-                Log.i(TAG, "Server Response -> \n" + s);
-                JSONObject myObject = null;
-                try {
-                    myObject = (JSONObject) new JSONTokener(s).nextValue();
-                    if (!myObject.isNull("Response")) {
-                        mySyncDatabase.ProcessResponse(s);
-                        DeepLife.myDATABASE.Delete_All(deeplife.gcme.com.deeplife.Database.Database.Table_USER);
-                        ContentValues cv = new ContentValues();
-                        cv.put(Database.USER_FIELDS[1],myUser.getUserEmail());
-                        cv.put(Database.USER_FIELDS[2], myUser.getUserPhone());
-                        cv.put(Database.USER_FIELDS[3], myUser.getUserPass());
-                        long state = DeepLife.myDATABASE.insert(Database.Table_USER,cv);
-                        if(state>0){
-                            Login.GetNextActivity();
+
+        try{
+            myFuel.post(DeepLife.API_URL,Send_Param).responseString(new Handler<String>() {
+                @Override
+                public void success(@NotNull Request request, @NotNull Response response, String s) {
+                    Log.i(TAG, "Server Request  -> \n" + request.toString());
+                    Log.i(TAG, "Server Response -> \n" + s);
+                    JSONObject myObject = null;
+                    try {
+                        myObject = (JSONObject) new JSONTokener(s).nextValue();
+                        if (!myObject.isNull("Response")) {
+                            mySyncDatabase.ProcessResponse(s);
+                            DeepLife.myDATABASE.Delete_All(deeplife.gcme.com.deeplife.Database.Database.Table_USER);
+                            ContentValues cv = new ContentValues();
+                            cv.put(Database.USER_FIELDS[1],myUser.getUser_Email());
+                            cv.put(Database.USER_FIELDS[2], myUser.getUser_Phone());
+                            cv.put(Database.USER_FIELDS[3], myUser.getUser_Pass());
+                            cv.put(Database.USER_FIELDS[4], myUser.getUser_Country());
+                            long state = DeepLife.myDATABASE.insert(Database.Table_USER,cv);
+                            if(state>0){
+                                Login.GetNextActivity();
+                            }else {
+                                Login.DialogState(0);
+                                Login.showDialog("Unable to login now! please retry again!");
+                            }
                         }else {
                             Login.DialogState(0);
                             Login.showDialog("Unable to login now! please retry again!");
                         }
-                    }else {
-                        Login.DialogState(0);
-                        Login.showDialog("Unable to login now! please retry again with correct Phone or Email and Password!");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
                 }
-            }
-            @Override
-            public void failure(@NotNull Request request, @NotNull Response response, @NotNull FuelError fuelError) {
-                Log.i(TAG, "Server Response Error-> \n" + fuelError);
-            }
-        });
+                @Override
+                public void failure(@NotNull Request request, @NotNull Response response, @NotNull FuelError fuelError) {
+                    Log.i(TAG, "Server Response Error-> \n" + fuelError);
+                }
+            });
+        }catch (Exception e){
+
+        }
         return false;
     }
     public boolean GetMetaData(){
@@ -108,38 +114,42 @@ public class LoginAccess {
         Send_Param.add(new kotlin.Pair<String, String>("Country", ""));
         Send_Param.add(new kotlin.Pair<String, String>("Service", "Meta_Data"));
         Send_Param.add(new kotlin.Pair<String, String>("Param", "[]"));
-        myFuel.post(DeepLife.API_URL,Send_Param).responseString(new Handler<String>() {
-            @Override
-            public void success(@NotNull Request request, @NotNull Response response, String s) {
-                Log.i(TAG, "Server Request  -> \n" + request.toString());
-                Log.i(TAG, "Server Response -> \n" + s);
-                JSONObject myObject = null;
-                try {
-                    myObject = (JSONObject) new JSONTokener(s).nextValue();
-                    if (!myObject.isNull("Response")) {
-                        mySyncDatabase.ProcessResponse(s);
-                        Login.DialogState(0);
-                        Login.showDialog("Please Enter your Phone or Email and Password to login");
-                    }else {
-                        Login.showDialog("Unable to download all the necessary files! please retry again!");
+        try{
+            myFuel.post(DeepLife.API_URL,Send_Param).responseString(new Handler<String>() {
+                @Override
+                public void success(@NotNull Request request, @NotNull Response response, String s) {
+                    Log.i(TAG, "Server Request  -> \n" + request.toString());
+                    Log.i(TAG, "Server Response -> \n" + s);
+                    JSONObject myObject = null;
+                    try {
+                        myObject = (JSONObject) new JSONTokener(s).nextValue();
+                        if (!myObject.isNull("Response")) {
+                            mySyncDatabase.ProcessResponse(s);
+                            Login.DialogState(0);
+                            Login.showDialog("Please Enter your Phone or Email and Password to login");
+                        }else {
+                            Login.showDialog("Unable to download all the necessary files! please retry again!");
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
                 }
-            }
-            @Override
-            public void failure(@NotNull Request request, @NotNull Response response, @NotNull FuelError fuelError) {
-                Log.i(TAG, "Server Response Error-> \n" + fuelError);
-                Login.showDialog("Unable to download all the necessary files! please retry again!");
-            }
-        });
+                @Override
+                public void failure(@NotNull Request request, @NotNull Response response, @NotNull FuelError fuelError) {
+                    Log.i(TAG, "Server Response Error-> \n" + fuelError);
+                    Login.showDialog("Unable to download all the necessary files! please retry again!");
+                }
+            });
+        }catch (Exception e){
+
+        }
         return false;
     }
 
     public boolean SignupAuthnticate(final User user){
-        Send_Param.add(new kotlin.Pair<String, String>("User_Name", user.getUserEmail()));
-        Send_Param.add(new kotlin.Pair<String, String>("User_Pass", user.getUserPass()));
-        Send_Param.add(new kotlin.Pair<String, String>("Country", user.getUserCountry()));
+        Send_Param.add(new kotlin.Pair<String, String>("User_Name", user.getUser_Email()));
+        Send_Param.add(new kotlin.Pair<String, String>("User_Pass", user.getUser_Pass()));
+        Send_Param.add(new kotlin.Pair<String, String>("Country", user.getUser_Country()));
         Send_Param.add(new kotlin.Pair<String, String>("Service", "Sign_Up"));
         Send_Param.add(new kotlin.Pair<String, String>("Param", myParser.toJson(user)));
         myFuel.post(DeepLife.API_URL,Send_Param).responseString(new Handler<String>() {
@@ -154,9 +164,9 @@ public class LoginAccess {
                         mySyncDatabase.ProcessResponse(s);
                         DeepLife.myDATABASE.Delete_All(deeplife.gcme.com.deeplife.Database.Database.Table_USER);
                         ContentValues cv = new ContentValues();
-                        cv.put(Database.USER_FIELDS[1], user.getUserEmail());
-                        cv.put(Database.USER_FIELDS[2], user.getUserPhone());
-                        cv.put(Database.USER_FIELDS[3], user.getUserPass());
+                        cv.put(Database.USER_FIELDS[1], user.getUser_Email());
+                        cv.put(Database.USER_FIELDS[2], user.getUser_Phone());
+                        cv.put(Database.USER_FIELDS[3], user.getUser_Pass());
                         long state = DeepLife.myDATABASE.insert(Database.Table_USER,cv);
                         if(state>0){
                             Login.GetNextActivity();

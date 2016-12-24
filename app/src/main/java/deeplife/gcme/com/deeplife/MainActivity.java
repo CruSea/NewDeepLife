@@ -96,26 +96,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_BOOT_COMPLETED) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECEIVE_BOOT_COMPLETED}, RECEIVE_BOOT_COMPLETED);
         }else {
-            JobConstr();
+//            JobConstr();
         }
     }
 
-    public void JobConstr(){
-        JobInfo.Builder jobInfo;
-        jobInfo = new JobInfo.Builder(JOB_ID,  new ComponentName(this,SyncService.class))
-                .setMinimumLatency(1000)
-                .setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED)
-                .setRequiresCharging(false);
-        myJobScheduler.cancelAll();
-        int x = myJobScheduler.schedule(jobInfo.build());
-        if(x == android.app.job.JobScheduler.RESULT_SUCCESS){
-//            List<JobInfo> xx = myJobScheduler.getAllPendingJobs();
-            Log.i(TAG,"The Job scheduler Constructed\n");
-        }else{
-            Log.i(TAG, "The Job scheduler Not Constructed");
-        }
-
-    }
+//    public void JobConstr(){
+//        JobInfo.Builder jobInfo;
+//        jobInfo = new JobInfo.Builder(JOB_ID,  new ComponentName(this,SyncService.class))
+//                .setMinimumLatency(1000)
+//                .setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED)
+//                .setRequiresCharging(false);
+//        myJobScheduler.cancelAll();
+//        int x = myJobScheduler.schedule(jobInfo.build());
+//        if(x == android.app.job.JobScheduler.RESULT_SUCCESS){
+////            List<JobInfo> xx = myJobScheduler.getAllPendingJobs();
+//            Log.i(TAG,"The Job scheduler Constructed\n");
+//        }else{
+//            Log.i(TAG, "The Job scheduler Not Constructed");
+//        }
+//
+//    }
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

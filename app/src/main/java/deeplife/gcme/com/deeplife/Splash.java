@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.HandlerThread;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Window;
 
 import deeplife.gcme.com.deeplife.Database.Database;
 
@@ -15,6 +16,7 @@ import deeplife.gcme.com.deeplife.Database.Database;
 public class Splash extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash);
         Thread splash = new Thread(){

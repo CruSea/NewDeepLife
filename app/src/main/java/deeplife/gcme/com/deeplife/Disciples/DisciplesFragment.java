@@ -71,5 +71,8 @@ public class DisciplesFragment extends Fragment {
     }
 
     public static void UpdateList(){
+        ArrayList<Disciple> items = DeepLife.myDATABASE.getAllDisciples();
+        mAdapter = new DiscipleListAdapter(items,myContext);
+        myRecyclerView.setAdapter(mAdapter);
     }
 }

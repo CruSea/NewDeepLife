@@ -8,9 +8,12 @@ import android.content.Context;
 import android.os.Build;
 import android.util.Log;
 
+import com.evernote.android.job.JobManager;
+
 import java.util.List;
 
 import deeplife.gcme.com.deeplife.Database.Database;
+import deeplife.gcme.com.deeplife.SyncService.SyncJob;
 import deeplife.gcme.com.deeplife.SyncService.SyncService;
 
 /**
@@ -19,7 +22,7 @@ import deeplife.gcme.com.deeplife.SyncService.SyncService;
 
 public class DeepLife extends Application {
 //    public static final String DEEP_URL  = "http://staging.deeplife.cc";
-    public static final String DEEP_URL  = "http://192.168.100.10/DeepLife_Web/public";
+    public static final String DEEP_URL  = "http://192.168.100.4/DeepLife_Web/public";
     public static final String API_URL  = DEEP_URL+"/deep_api";
     public static final String PROFILE_PIC_URL  = DEEP_URL+"/img/profile/";
 
@@ -36,7 +39,6 @@ public class DeepLife extends Application {
         super.onCreate();
         Log.i(TAG,"Application Started");
         myDATABASE = new Database(this);
+//        JobManager.create(this).addJobCreator(new SyncJob());
     }
-
-
 }

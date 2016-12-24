@@ -28,7 +28,9 @@ import deeplife.gcme.com.deeplife.Disciples.DiscipleListAdapter;
 import deeplife.gcme.com.deeplife.MainActivity;
 import deeplife.gcme.com.deeplife.Models.Answer;
 import deeplife.gcme.com.deeplife.Models.Category;
+import deeplife.gcme.com.deeplife.Models.Logs;
 import deeplife.gcme.com.deeplife.R;
+import deeplife.gcme.com.deeplife.SyncService.SyncDatabase;
 import deeplife.gcme.com.deeplife.SyncService.SyncService;
 
 /**
@@ -39,11 +41,13 @@ public class WinBuildSendItemsAdapter extends RecyclerView.Adapter<WinBuildSendI
     public static List<WinBuildSendQuestion> winBuildSends;
     public static Context myContext;
     public static String DisciplePhone;
+    public static SyncDatabase mySyncDatabase;
     private int count;
 
     public WinBuildSendItemsAdapter(List<WinBuildSendQuestion> winBuildSends, Context context, String disciplePhone) {
         this.winBuildSends = winBuildSends;
         this.count = winBuildSends.size();
+        mySyncDatabase = new SyncDatabase();
 
         myContext = context;
         DisciplePhone = disciplePhone;
@@ -139,32 +143,59 @@ public class WinBuildSendItemsAdapter extends RecyclerView.Adapter<WinBuildSendI
             answer.setDisciplePhone(DisciplePhone);
             answer.setQuestionID(winBuildSends.get(getAdapterPosition()).getSerID());
             answer.setSerID(0);
-            answer.setBuildStage("WIN");
-
             if(v.getId() == R.id.btn_winbuildsend_inc){
                 int value = Integer.valueOf(QuestionValue.getText().toString());
                 value = value + 1;
                 QuestionValue.setText(""+value);
                 answer.setAnswer(""+value);
-                DeepLife.myDATABASE.add_updateAnswer(answer);
+                long x = DeepLife.myDATABASE.add_updateAnswer(answer);
+                if(x>0){
+                    Logs logs = new Logs();
+                    logs.setTask(SyncService.Sync_Tasks[11]);
+                    logs.setService(SyncService.Sync_Tasks[12]);
+                    logs.setValue(""+x);
+                    mySyncDatabase.AddLog(logs);
+                }
             }else if(v.getId() == R.id.btn_winbuildsend_dec){
                 int value = Integer.valueOf(QuestionValue.getText().toString());
                 if(value > 0){
                     value = value - 1;
                     QuestionValue.setText(""+value);
                     answer.setAnswer(""+value);
-                    DeepLife.myDATABASE.add_updateAnswer(answer);
+                    long x = DeepLife.myDATABASE.add_updateAnswer(answer);
+                    if(x>0){
+                        Logs logs = new Logs();
+                        logs.setTask(SyncService.Sync_Tasks[11]);
+                        logs.setService(SyncService.Sync_Tasks[12]);
+                        logs.setValue(""+x);
+                        mySyncDatabase.AddLog(logs);
+                    }
                 }
 
             }else if(v.getId() == R.id.tgl_winbuildsend_state){
                 if(btnToggle.isChecked()){
                     Toast.makeText(myContext,"Checked",Toast.LENGTH_LONG).show();
                     answer.setAnswer("YES");
-                    DeepLife.myDATABASE.add_updateAnswer(answer);
+                    long x = DeepLife.myDATABASE.add_updateAnswer(answer);
+                    if(x>0){
+                        Logs logs = new Logs();
+                        logs.setTask(SyncService.Sync_Tasks[11]);
+                        logs.setService(SyncService.Sync_Tasks[12]);
+                        logs.setValue(""+x);
+                        mySyncDatabase.AddLog(logs);
+                    }
                 }else {
                     Toast.makeText(myContext,"Not Checked",Toast.LENGTH_LONG).show();
                     answer.setAnswer("NO");
-                    DeepLife.myDATABASE.add_updateAnswer(answer);
+                    long x = DeepLife.myDATABASE.add_updateAnswer(answer);
+                    if(x>0){
+                        Logs logs = new Logs();
+                        logs.setTask(SyncService.Sync_Tasks[11]);
+                        logs.setService(SyncService.Sync_Tasks[12]);
+                        logs.setValue(""+x);
+                        mySyncDatabase.AddLog(logs);
+                    }
+
                 }
             }else if(v.getId() == R.id.txt_readnote1 || v.getId() == R.id.txt_readnote2){
                 showDialog(winBuildSends.get(getAdapterPosition()).getDescription());

@@ -16,6 +16,7 @@ import deeplife.gcme.com.deeplife.Disciples.Disciple;
 import deeplife.gcme.com.deeplife.Models.Answer;
 import deeplife.gcme.com.deeplife.Models.Category;
 import deeplife.gcme.com.deeplife.Models.Country;
+import deeplife.gcme.com.deeplife.Models.Logs;
 import deeplife.gcme.com.deeplife.WinBuildSend.WinBuildSendQuestion;
 import deeplife.gcme.com.deeplife.News.News;
 import deeplife.gcme.com.deeplife.Testimony.Testimony;
@@ -69,6 +70,10 @@ public class SyncDatabase {
                     JSONArray json_answers = json_response.getJSONArray("Country");
                     Log.i(TAG, "Country: \n" + json_answers.toString());
                     Add_Countries(json_answers);
+                }
+                if (!json_response.isNull("Log_Response")) {
+                    JSONArray json_logs = json_response.getJSONArray("Log_Response");
+                    Delete_Logs(json_logs);
                 }
             }
         } catch (JSONException e) {
@@ -150,6 +155,46 @@ public class SyncDatabase {
             Log.i(TAG,e.toString());
         }
     }
+    public long AddDisciple(Disciple disciple){
+        ContentValues cv = new ContentValues();
+        cv.put(Database.DISCIPLES_FIELDS[0], disciple.getSerID());
+        cv.put(Database.DISCIPLES_FIELDS[1], disciple.getFullName());
+        cv.put(Database.DISCIPLES_FIELDS[2], disciple.getDisplayName());
+        cv.put(Database.DISCIPLES_FIELDS[3], disciple.getEmail());
+        cv.put(Database.DISCIPLES_FIELDS[4], disciple.getPhone());
+        cv.put(Database.DISCIPLES_FIELDS[5], disciple.getCountry());
+        cv.put(Database.DISCIPLES_FIELDS[6], disciple.getMentorID());
+        cv.put(Database.DISCIPLES_FIELDS[7], disciple.getStage());
+        cv.put(Database.DISCIPLES_FIELDS[8], disciple.getImageURL());
+        cv.put(Database.DISCIPLES_FIELDS[9], disciple.getImagePath());
+        cv.put(Database.DISCIPLES_FIELDS[10], disciple.getRole());
+        cv.put(Database.DISCIPLES_FIELDS[11], disciple.getGender());
+        cv.put(Database.DISCIPLES_FIELDS[12], disciple.getCreated());
+        Disciple old_disciple = DeepLife.myDATABASE.getDiscipleByPhone(disciple.getPhone());
+        if(old_disciple == null){
+            long x = DeepLife.myDATABASE.insert(Database.Table_DISCIPLES,cv);
+            if(x>0){
+                Log.i(TAG,"Successfully Added: Disciples Added -> \n"+cv.toString());
+            }else {
+                Log.i(TAG,"Error During Adding: Disciples -> \n"+cv.toString());
+            }
+            return x;
+        }
+        return 0;
+    }
+    public long AddLog(Logs logs){
+        ContentValues log = new ContentValues();
+        log.put(Database.LOGS_FIELDS[0], logs.getType());
+        log.put(Database.LOGS_FIELDS[1], logs.getTask());
+        log.put(Database.LOGS_FIELDS[2], logs.getValue());
+        long x = DeepLife.myDATABASE.insert(Database.Table_LOGS,log);
+        if(x>0){
+            Log.i(TAG,"Successfully Added: new Logs Added -> \n"+log.toString());
+        }else {
+            Log.i(TAG,"Error During Adding: Logs -> \n"+log.toString());
+        }
+        return x;
+    }
     public static void Add_Disciples(JSONArray json_disciples){
         try{
             if(json_disciples.length()>0){
@@ -168,8 +213,9 @@ public class SyncDatabase {
                     cv.put(Database.DISCIPLES_FIELDS[8], obj.getString("picture"));
                     cv.put(Database.DISCIPLES_FIELDS[9], "");
                     cv.put(Database.DISCIPLES_FIELDS[10], obj.getString("role_id"));
-                    cv.put(Database.DISCIPLES_FIELDS[11], obj.getString("created"));
-                    Disciple disciple = DeepLife.myDATABASE.getDiscipleBySerID(Integer.valueOf(obj.getString("id")));
+                    cv.put(Database.DISCIPLES_FIELDS[11], obj.getString("gender"));
+                    cv.put(Database.DISCIPLES_FIELDS[12], obj.getString("created"));
+                    Disciple disciple = DeepLife.myDATABASE.getDiscipleByPhone(obj.getString("phone_no"));
                     if(disciple == null){
                         long x = DeepLife.myDATABASE.insert(Database.Table_DISCIPLES,cv);
                         if(x>0){
@@ -273,7 +319,7 @@ public class SyncDatabase {
                     JSONObject obj = json_answers.getJSONObject(i);
                     ContentValues cv = new ContentValues();
                     cv.put(Database.QUESTION_ANSWER_FIELDS[0], obj.getString("id"));
-                    cv.put(Database.QUESTION_ANSWER_FIELDS[1], obj.getString("user_id"));
+                    cv.put(Database.QUESTION_ANSWER_FIELDS[1], obj.getString("disciple_phone"));
                     cv.put(Database.QUESTION_ANSWER_FIELDS[2], obj.getString("question_id"));
                     cv.put(Database.QUESTION_ANSWER_FIELDS[3], obj.getString("answer"));
                     cv.put(Database.QUESTION_ANSWER_FIELDS[4], obj.getString("stage"));;
@@ -332,6 +378,26 @@ public class SyncDatabase {
             }
         }catch (Exception e){
             Log.i(TAG,e.toString());
+        }
+    }
+    private static void Delete_Logs(JSONArray json_logs) {
+        try{
+            Log.i(TAG,"Deleting Confirmed Logs -> \n");
+            Log.i(TAG,"Found  -> "+json_logs.length()+"   ->"+json_logs.toString());
+            if(json_logs.length()>0){
+                for(int i=0;i<json_logs.length();i++){
+                    JSONObject obj = json_logs.getJSONObject(i);
+                    Log.i(TAG, "Deleting  -> Logs: " + obj.toString());
+                    int id = Integer.valueOf(obj.getString("Log_ID"));
+                    Log.i(TAG, "Deleting -> LogID: " + id);
+                    if(id>0){
+                        long val = DeepLife.myDATABASE.remove(Database.Table_LOGS, id);
+                        Log.i(TAG, "Deleting -> LogID: " + id+" :-> "+val);
+                    }
+                }
+            }
+        }catch (Exception e){
+
         }
     }
 }

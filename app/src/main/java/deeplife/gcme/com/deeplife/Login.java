@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -38,13 +39,14 @@ public class Login extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_page);
         myContext = this;
         PROGRESS_DIALOG = new ProgressDialog(this);
         PROGRESS_DIALOG.setTitle(R.string.app_name);
         myCountries = DeepLife.myDATABASE.getAllCountries();
-        if(myCountries.size()>0){
+        if(myCountries != null && myCountries.size()>0){
 
         }else {
             PROGRESS_DIALOG.setMessage("Downloading Necessary Files ....");
@@ -69,16 +71,14 @@ public class Login extends AppCompatActivity {
         mySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(position == 0){
-                    TextCode.setText("Email");
-                }else {
-                    TextCode.setText("+"+myCountries.get(position).getCode());
-                }
+                TextCode.setText("+"+myCountries.get(position).getCode());
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
+                if(myCountries.size()>0){
+                    TextCode.setText("+"+myCountries.get(0).getCode());
+                }
             }
         });
 
@@ -87,21 +87,26 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 User user = new User();
-                user.setUserPhone(UserName.getText().toString());
-                user.setUserPass(UserPass.getText().toString());
-                user.setUserCountry(""+myCountries.get(mySpinner.getSelectedItemPosition()).getSerID());
+                if(UserName.getText().toString().contains("@")){
+                    user.setUser_Email(UserName.getText().toString());
+                }else {
+                    user.setUser_Phone(""+myCountries.get(mySpinner.getSelectedItemPosition()).getCode()+""+UserName.getText().toString());
+                }
+                user.setUser_Pass(UserPass.getText().toString());
+                user.setUser_Country(""+myCountries.get(mySpinner.getSelectedItemPosition()).getSerID());
                 loginAccess = new LoginAccess(user);
                 PROGRESS_DIALOG.setMessage("Authenticating the user ....");
                 PROGRESS_DIALOG.show();
                 loginAccess.LogInAuthnticate();
             }
         });
-
+        myCountries = DeepLife.myDATABASE.getAllCountries();
         UpdateView();
     }
     public static void UpdateView(){
-        myCountries = DeepLife.myDATABASE.getAllCountries();
-        mySpinner.setAdapter(new CountryListAdapter(myContext,R.layout.login_countries_item,myCountries));
+        if(myCountries != null){
+            mySpinner.setAdapter(new CountryListAdapter(myContext,R.layout.login_countries_item,myCountries));
+        }
     }
     public static void GetNextActivity(){
         Toast.makeText(myContext,"Login Successful",Toast.LENGTH_LONG).show();
@@ -110,27 +115,37 @@ public class Login extends AppCompatActivity {
         myContext.startActivity(intent);
     }
     public static void DialogState(int state){
-        if(state == 0){
-            PROGRESS_DIALOG.cancel();
-            UpdateView();
-        }else{
-            PROGRESS_DIALOG.show();
+        try{
+            if(state == 0){
+                PROGRESS_DIALOG.cancel();
+                UpdateView();
+            }else{
+                PROGRESS_DIALOG.show();
+            }
+        }catch (Exception e){
+
         }
+
     }
     public static void showDialog(final String message) {
-        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                switch (which){
-                    case DialogInterface.BUTTON_POSITIVE:
-                        break;
+        try{
+            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    switch (which){
+                        case DialogInterface.BUTTON_POSITIVE:
+                            break;
+                    }
                 }
-            }
-        };
-        android.app.AlertDialog.Builder builder = new AlertDialog.Builder(myContext);
-        builder.setMessage(message)
-                .setPositiveButton("ok ", dialogClickListener)
-                .show();
+            };
+            android.app.AlertDialog.Builder builder = new AlertDialog.Builder(myContext);
+            builder.setMessage(message)
+                    .setPositiveButton("ok ", dialogClickListener)
+                    .show();
+        }catch (Exception e){
+
+        }
+
     }
 
 }

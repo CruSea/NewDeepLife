@@ -3,6 +3,7 @@ package deeplife.gcme.com.deeplife.Database;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
@@ -15,6 +16,11 @@ import deeplife.gcme.com.deeplife.Disciples.Disciple;
 import deeplife.gcme.com.deeplife.Models.Answer;
 import deeplife.gcme.com.deeplife.Models.Category;
 import deeplife.gcme.com.deeplife.Models.Country;
+import deeplife.gcme.com.deeplife.Models.ImageSync;
+import deeplife.gcme.com.deeplife.Models.Logs;
+import deeplife.gcme.com.deeplife.Models.ReportItem;
+import deeplife.gcme.com.deeplife.Models.Schedule;
+import deeplife.gcme.com.deeplife.SyncService.SyncService;
 import deeplife.gcme.com.deeplife.WinBuildSend.WinBuildSendQuestion;
 import deeplife.gcme.com.deeplife.News.News;
 import deeplife.gcme.com.deeplife.Testimony.Testimony;
@@ -26,7 +32,7 @@ public class Database {
     public static final String Table_LOGS = "LOGS";
     public static final String Table_USER = "USER";
     public static final String Table_NEWSFEED = "NewsFeed";
-    public static final String Table_COUNTRY = "COUNTRIES";
+    public static final String Table_COUNTRY = "countries";
     public static final String Table_Reports = "Reports";
     public static final String Table_Report_Forms = "Report_Form";
     public static final String Table_QUESTION_LIST = "QUESTION_LIST";
@@ -35,11 +41,11 @@ public class Database {
     public static final String Table_IMAGE_SYNC = "ImageToSync";
     public static final String Table_CATEGORIES = "Categories";
 
-    public static final String[] DISCIPLES_FIELDS = {"SerID","FullName","DisplayName", "Email", "Phone", "Country","MentorID","Stage","ImageURL","ImagePath","Role","Created" };
+    public static final String[] DISCIPLES_FIELDS = {"SerID","FullName","DisplayName", "Email", "Phone", "Country","MentorID","Stage","ImageURL","ImagePath","Role","Gender","Created" };
     public static final String[] LOGS_FIELDS = { "Type", "Task","Value" };
     public static final String[] NewsFeed_FIELDS = { "News_ID", "Title","Content","Category","ImageURL","ImagePath","PubDate" };
 
-    public static final String[] COUNTRY_FIELDS = { "SerID", "ISO3","Name","Code" };
+    public static final String[] COUNTRY_FIELDS = { "serid", "iso3","name","code" };
     public static final String[] SCHEDULES_FIELDS = { "Disciple_Phone","Title","Alarm_Time","Alarm_Repeat","Description"};
     public static final String[] USER_FIELDS = { "Full_Name", "Email","Phone","Password","Country","Picture","Favorite_Scripture" };
     public static final String[] QUESTION_LIST_FIELDS = {"SerID","Category", "Question","Description","Mandatory","Type","Country","Created"};
@@ -50,12 +56,12 @@ public class Database {
     public static final String[] IMAGE_SYNC_FIELDS = {"FileName", "Param"};
     public static final String[] CATEGORY_FIELDS = {"SerID", "Name", "Parent", "Status", "Created"};
 
-    public static final String[] DISCIPLES_COLUMN = { "id", "SerID","FullName","DisplayName", "Email", "Phone", "Country","MentorID","Stage","ImageURL","ImagePath","Role","Created"  };
+    public static final String[] DISCIPLES_COLUMN = { "id", "SerID","FullName","DisplayName", "Email", "Phone", "Country","MentorID","Stage","ImageURL","ImagePath","Role","Gender","Created"  };
     public static final String[] SCHEDULES_COLUMN = { "id","Disciple_Phone","Title","Alarm_Time","Alarm_Repeat","Description" };
     public static final String[] REPORT_FORM_COLUMN = {"id","Report_ID","Category","Questions"};
     public static final String[] NewsFeed_COLUMN = { "id","News_ID", "Title","Content","Category","ImageURL","ImagePath","PubDate" };
     public static final String[] REPORT_COLUMN = {"id","Report_ID","Value","Date"};
-    public static final String[] COUNTRY_COLUMN = {"id", "SerID", "ISO3","Name","Code"};
+    public static final String[] COUNTRY_COLUMN = {"id", "serid", "iso3","name","code"};
     public static final String[] LOGS_COLUMN = { "id", "Type", "Task","Value" };
     public static final String[] USER_COLUMN = { "id", "Full_Name", "Email","Phone","Password","Country","Picture","Favorite_Scripture" };
     public static final String[] QUESTION_LIST_COLUMN = {"id","SerID","Category", "Question","Description","Mandatory","Type","Country","Created"};
@@ -200,13 +206,13 @@ public class Database {
                 c.moveToPosition(i);
                 User dis = new User();
                 dis.setId(c.getString(c.getColumnIndex(USER_COLUMN[0])));
-                dis.setUserName(c.getString(c.getColumnIndex(USER_COLUMN[1])));
-                dis.setUserEmail(c.getString(c.getColumnIndex(USER_COLUMN[2])));
-                dis.setUserPhone(c.getString(c.getColumnIndex(USER_COLUMN[3])));
-                dis.setUserPass(c.getString(c.getColumnIndex(USER_COLUMN[4])));
-                dis.setUserCountry(c.getString(c.getColumnIndex(USER_COLUMN[5])));
-                dis.setUserPicture(c.getString(c.getColumnIndex(USER_COLUMN[6])));
-                dis.setUserFavorite_Scripture(c.getString(c.getColumnIndex(USER_COLUMN[7])));
+                dis.setUser_Name(c.getString(c.getColumnIndex(USER_COLUMN[1])));
+                dis.setUser_Email(c.getString(c.getColumnIndex(USER_COLUMN[2])));
+                dis.setUser_Phone(c.getString(c.getColumnIndex(USER_COLUMN[3])));
+                dis.setUser_Pass(c.getString(c.getColumnIndex(USER_COLUMN[4])));
+                dis.setUser_Country(c.getString(c.getColumnIndex(USER_COLUMN[5])));
+                dis.setUser_Picture(c.getString(c.getColumnIndex(USER_COLUMN[6])));
+                dis.setUser_Favorite_Scripture(c.getString(c.getColumnIndex(USER_COLUMN[7])));
                 return dis;
             }
         }catch (Exception e){
@@ -412,7 +418,8 @@ public class Database {
                         disciple.setImageURL(c.getString(c.getColumnIndex(DISCIPLES_COLUMN[9])));
                         disciple.setImagePath(c.getString(c.getColumnIndex(DISCIPLES_COLUMN[10])));
                         disciple.setRole(c.getString(c.getColumnIndex(DISCIPLES_COLUMN[11])));
-                        disciple.setCreated(c.getString(c.getColumnIndex(DISCIPLES_COLUMN[12])));
+                        disciple.setGender(c.getString(c.getColumnIndex(DISCIPLES_COLUMN[12])));
+                        disciple.setCreated(c.getString(c.getColumnIndex(DISCIPLES_COLUMN[13])));
                         return disciple;
                     }
                 }
@@ -437,6 +444,29 @@ public class Database {
                     int ser_id = Integer.valueOf(c.getString(c.getColumnIndex(DISCIPLES_COLUMN[1])));
                     int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(DISCIPLES_COLUMN[0])));
                     if(ser_id == id){
+                        Disciple disciple = getDiscipleByID(cur_id);
+                        return disciple;
+                    }
+                }
+            }
+        }catch (Exception e){
+            Log.i(TAG, "Failed Get Disciple by Server ID: "+e.toString());
+            return null;
+        }
+        return null;
+    }
+    public Disciple getDiscipleByPhone(String phone) {
+        Log.i(TAG, "Get Disciple by Server ID: ");
+        String DB_Table = Table_DISCIPLES;
+        try{
+            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
+            if(c.getCount()>0){
+                c.moveToFirst();
+                for(int i=0;i<c.getCount();i++){
+                    c.moveToPosition(i);
+                    String phone_num = c.getString(c.getColumnIndex(DISCIPLES_COLUMN[5]));
+                    int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(DISCIPLES_COLUMN[0])));
+                    if(phone_num.equals(phone)){
                         Disciple disciple = getDiscipleByID(cur_id);
                         return disciple;
                     }
@@ -940,6 +970,271 @@ public class Database {
         }
         return found;
     }
+
+    public ArrayList<Logs> getSendLogs(){
+        Log.i(TAG, "SendLogs:\n");
+        ArrayList<Logs> Found = new ArrayList<Logs>();
+        try{
+            Cursor c = myDatabase.query(Table_LOGS, LOGS_COLUMN, null, null, null, null, null);
+            if(c != null && c.getCount()>0){
+                c.moveToFirst();
+                for(int i=0;i<c.getCount();i++){
+                    c.moveToPosition(i);
+                    String str = c.getString(c.getColumnIndex(LOGS_COLUMN[2]));
+                    Log.i(TAG, "Comparing-> \n" + SyncService.Sync_Tasks[0] + " | "+str);
+                    if (SyncService.Sync_Tasks[0].equals(str)){
+                        Log.i(TAG, "SendLogs Count:-> " + c.getCount());
+                        Logs newLogs = new Logs();
+                        newLogs.setID(Integer.valueOf(c.getString(c.getColumnIndex(LOGS_COLUMN[0]))));
+                        newLogs.setType(c.getString(c.getColumnIndex(LOGS_COLUMN[1])));
+                        newLogs.setTask(c.getString(c.getColumnIndex(LOGS_COLUMN[2])));
+                        newLogs.setValue(c.getString(c.getColumnIndex(LOGS_COLUMN[3])));
+                        Log.i(TAG, "Found for SendLogs:-> \n" + newLogs.toString());
+                        Found.add(newLogs);
+                    }
+                }
+                return Found;
+            }
+        }catch (Exception e){
+            Log.i(TAG, "Faild getSendLogs:\n"+e.toString());
+            return null;
+        }
+        return Found;
+    }
+    public ImageSync getTopImageSync(){
+        String DB_Table = Table_IMAGE_SYNC;
+        ImageSync found = new ImageSync();
+        try{
+            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
+            if(c.getCount()>0){
+                c.moveToPosition(c.getCount()-1);
+                ImageSync dis = new ImageSync();
+                dis.setId(c.getString(c.getColumnIndex(IMAGE_SYNC_COLUMN[0])));
+                dis.setFilePath(c.getString(c.getColumnIndex(IMAGE_SYNC_COLUMN[1])));
+                dis.setParam(c.getString(c.getColumnIndex(IMAGE_SYNC_COLUMN[2])));
+                return dis;
+            }else{
+                return null;
+            }
+        }catch (Exception e){
+
+        }
+        return null;
+    }
+
+    public ArrayList<Disciple> getSendDisciples(){
+        Log.i(TAG, "getSendDisciples:\n");
+        ArrayList<Disciple> Found = new ArrayList<Disciple>();
+        try{
+            Cursor c = myDatabase.query(Table_LOGS, LOGS_COLUMN, null, null, null, null, null);
+            if(c != null && c.getCount()>0){
+                c.moveToFirst();
+                for(int i=0;i<c.getCount();i++){
+                    c.moveToPosition(i);
+                    String Log_Task = c.getString(c.getColumnIndex(LOGS_COLUMN[2]));
+                    String Log_Value = c.getString(c.getColumnIndex(LOGS_COLUMN[3]));
+                    int Log_ID = Integer.valueOf(c.getString(c.getColumnIndex(LOGS_COLUMN[0])));
+                    Log.i(TAG, "Comparing-> \n" + SyncService.Sync_Tasks[1] + " | "+Log_Task);
+                    if(SyncService.Sync_Tasks[1].equals(Log_Task)){
+                        Log.i(TAG, "SendDisciples Count:-> " + c.getCount());
+                        Disciple sendDisciple = getDiscipleByPhone(Log_Value);
+                        if(sendDisciple !=null){
+                            sendDisciple.setID(Log_ID);
+                            Log.i(TAG, "Found for Send:-> \n" + sendDisciple.toString());
+                            Found.add(sendDisciple);
+                        }
+                    }
+                }
+                return Found;
+            }
+        }catch (Exception e){
+            Log.i(TAG, "Failed getSendDisciples:\n"+e.toString());
+        }
+        return Found;
+    }
+
+    public ArrayList<Disciple> getUpdateDisciples(){
+        Log.i(TAG, "getUpdateDisciples:\n");
+        ArrayList<Disciple> Found = new ArrayList<Disciple>();
+        try{
+            Cursor c = myDatabase.query(Table_LOGS, LOGS_COLUMN, null, null, null, null, null);
+            if(c != null && c.getCount()>0){
+                c.moveToFirst();
+                for(int i=0;i<c.getCount();i++){
+                    c.moveToPosition(i);
+                    int ID = Integer.valueOf(c.getString(c.getColumnIndex(LOGS_COLUMN[0])));
+                    String Log_Task = c.getString(c.getColumnIndex(LOGS_COLUMN[2]));
+                    String Task_Value = c.getString(c.getColumnIndex(LOGS_COLUMN[3]));
+                    Log.i(TAG, "Comparing-> \n" + SyncService.Sync_Tasks[3] + " | "+Log_Task);
+                    if(SyncService.Sync_Tasks[3].equals(Log_Task)){
+                        Log.i(TAG, "UpdateDisciples Count:-> " + c.getCount());
+                        Disciple updateDisciple = getDiscipleByPhone(Task_Value);
+                        if(updateDisciple !=null){
+                            updateDisciple.setID(ID);
+                            Found.add(updateDisciple);
+                        }
+                    }
+                }
+            }
+        }catch (Exception e){
+            Log.i(TAG, "Failed getUpdateDisciples:\n"+e.toString());
+        }
+        return Found;
+    }
+    public ArrayList<Testimony> getSendTestimony(){
+        Log.i(TAG, "getSendTestimony:\n");
+        ArrayList<Testimony> Found = new ArrayList<Testimony>();
+        try{
+            Cursor c = myDatabase.query(Table_LOGS, LOGS_COLUMN, null, null, null, null, null);
+            if(c != null && c.getCount()>0){
+                c.moveToFirst();
+                for(int i=0;i<c.getCount();i++){
+                    c.moveToPosition(i);
+                    String str = c.getString(c.getColumnIndex(LOGS_COLUMN[2]));
+                    int id = Integer.valueOf(c.getString(c.getColumnIndex(LOGS_COLUMN[3])));
+                    int ID = Integer.valueOf(c.getString(c.getColumnIndex(LOGS_COLUMN[0])));
+                    Log.i(TAG, "Comparing-> \n" + SyncService.Sync_Tasks[6] + " | "+str);
+                    if(SyncService.Sync_Tasks[6].equals(str)){
+                        Log.i(TAG, "SendTestimony Count:-> " + c.getCount());
+                        Testimony newTestimony = getTestimonyByID(id);
+                        if(newTestimony !=null){
+                            newTestimony.setID(ID);
+                            Log.i(TAG, "Found for Testimony Send:-> \n" + newTestimony.toString());
+                            Found.add(newTestimony);
+                        }
+                    }
+                }
+            }
+        }catch (Exception e){
+            Log.i(TAG, "Failed getSendTestimony:\n"+e.toString());
+        }
+        return Found;
+    }
+
+    public ArrayList<Answer> getSendAnswers(){
+        Log.i(TAG, "getSendAnswers:\n");
+        ArrayList<Answer> Found = new ArrayList<Answer>();
+        try{
+            Cursor c = myDatabase.query(Table_LOGS, LOGS_COLUMN, null, null, null, null, null);
+            if(c != null && c.getCount()>0){
+                c.moveToFirst();
+                for(int i=0;i<c.getCount();i++){
+                    c.moveToPosition(i);
+                    String Task_Name = c.getString(c.getColumnIndex(LOGS_COLUMN[2]));
+                    int AnswerID = Integer.valueOf(c.getString(c.getColumnIndex(LOGS_COLUMN[3])));
+                    int LogID = Integer.valueOf(c.getString(c.getColumnIndex(LOGS_COLUMN[0])));
+                    Log.i(TAG, "Comparing-> \n" + SyncService.Sync_Tasks[6] + " | "+Task_Name);
+                    if(SyncService.Sync_Tasks[11].equals(Task_Name)){
+                        Log.i(TAG, "SendAnswer Count:-> " + c.getCount());
+                        Answer sendAnswer = getAnswerByID(AnswerID);
+                        if(sendAnswer !=null){
+                            sendAnswer.setID(LogID);
+                            Log.i(TAG, "Found for SendAnswer Send:-> \n" + sendAnswer.toString());
+                            Found.add(sendAnswer);
+                        }
+                    }
+                }
+            }
+        }catch (Exception e){
+            Log.i(TAG, "Failed getSendAnswers:\n"+e.toString());
+        }
+        return Found;
+    }
+
+
+
+
+
+    public ArrayList<Schedule> getSendSchedules(){
+        Log.i(TAG, "SendSchedules:\n");
+        ArrayList<Schedule> Found = new ArrayList<Schedule>();
+        try{
+            Cursor c = myDatabase.query(Table_LOGS, LOGS_COLUMN, null, null, null, null, null);
+            if(c != null && c.getCount()>0){
+                c.moveToFirst();
+                for(int i=0;i<c.getCount();i++){
+                    c.moveToPosition(i);
+                    String str = c.getString(c.getColumnIndex(LOGS_COLUMN[2]));
+                    String id = c.getString(c.getColumnIndex(LOGS_COLUMN[3]));
+                    String ID = c.getString(c.getColumnIndex(LOGS_COLUMN[0]));
+                    Log.i(TAG, "SendSchedule Comparing-> \n" + SyncService.Sync_Tasks[4] + " | "+str);
+                    if(SyncService.Sync_Tasks[4].equals(str)){
+//                        Log.i(TAG, "SendSchedule Count:-> " + c.getCount());
+//                        Schedule newSchedule = getScheduleWithId(id);
+//                        if(newSchedule !=null){
+//                            newSchedule.setID(ID);
+//                            Log.i(TAG, "Found for SendSchedules:-> \n" + newSchedule.toString());
+//                            Found.add(newSchedule);
+//                        }
+                    }
+                }
+            }
+        }catch (Exception e){
+
+        }
+        return Found;
+    }
+
+    public ArrayList<Schedule> getUpdateSchedules(){
+        Log.i(TAG, "UpdateDisciples:\n");
+        ArrayList<Schedule> Found = new ArrayList<Schedule>();
+        try{
+            Cursor c = myDatabase.query(Table_LOGS, LOGS_COLUMN, null, null, null, null, null);
+            if(c != null && c.getCount()>0){
+                c.moveToFirst();
+                for(int i=0;i<c.getCount();i++){
+                    c.moveToPosition(i);
+                    String ID = c.getString(c.getColumnIndex(LOGS_COLUMN[0]));
+                    String str = c.getString(c.getColumnIndex(LOGS_COLUMN[2]));
+                    String id = c.getString(c.getColumnIndex(LOGS_COLUMN[3]));
+                    Log.i(TAG, "Comparing-> \n" + SyncService.Sync_Tasks[3] + " | "+str);
+                    if(SyncService.Sync_Tasks[7].equals(str)){
+//                        Log.i(TAG, "Update Schedule Count:-> " + c.getCount());
+//                        Schedule newschedule = getScheduleWithId(id);
+//                        if(newschedule !=null){
+//                            newschedule.setID(ID);
+//                            Found.add(newschedule);
+//                        }
+                    }
+                }
+            }
+        }catch (Exception e){
+
+        }
+        return Found;
+    }
+
+    public ArrayList<ReportItem> getSendReports(){
+        Log.i(TAG, "SendReports:\n");
+        ArrayList<ReportItem> Found = new ArrayList<ReportItem>();
+        try{
+            Cursor c = myDatabase.query(Table_LOGS, LOGS_COLUMN, null, null, null, null, null);
+            if(c != null && c.getCount()>0){
+                c.moveToFirst();
+                for(int i=0;i<c.getCount();i++){
+                    c.moveToPosition(i);
+                    String str = c.getString(c.getColumnIndex(LOGS_COLUMN[2]));
+                    String id = c.getString(c.getColumnIndex(LOGS_COLUMN[3]));
+                    String ID = c.getString(c.getColumnIndex(LOGS_COLUMN[0]));
+                    Log.i(TAG, "Comparing-> \n" + SyncService.Sync_Tasks[5] + " | "+str);
+                    if(SyncService.Sync_Tasks[5].equals(str)){
+                        Log.i(TAG, "SendDisciples Count:-> " + c.getCount());
+//                        ReportItem newReport = get_Report_by_id(id);
+//                        if(newReport !=null){
+//                            newReport.setId(ID);
+//                            Log.i(TAG, "Found for Send:-> \n" + newReport.toString());
+//                            Found.add(newReport);
+//                        }
+                    }
+                }
+            }
+        }catch (Exception e){
+
+        }
+        return Found;
+    }
+
+
 //    public ArrayList<ImageSync> Get_All_ImageSync(){
 //        String DB_Table = Table_IMAGE_SYNC;
 //        ArrayList<ImageSync> found = new ArrayList<ImageSync>();

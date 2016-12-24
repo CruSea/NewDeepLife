@@ -10,4 +10,13 @@
         <item>Male</item>
         <item>Female</item>
     </string-array>
+
+    <string name="err_msg_name">Enter your full name here</string>
+    <string name="err_msg_email">Enter a valid email address</string>
+    <string name="err_msg_email_phone">Enter a valid email address or phone number</string>
+    <string name="err_msg_password1">Enter the password</string>
+    <string name="err_msg_password2">The Password You Entered Does not Much</string>
+    <string name="err_msg_phone">Enter a valid phone number</string>
+    <string name="err_msg_testimony_title">Enter testimony title</string>
+    <string name="err_msg_testimony_detail">Enter testimony detail</string>
 </resources>

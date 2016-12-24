@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "264199334967",
+    "firebase_url": "https://newdeeplife.firebaseio.com",
+    "project_id": "newdeeplife",
+    "storage_bucket": "newdeeplife.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:264199334967:android:1e9a40cd87b6712d",
+        "android_client_info": {
+          "package_name": "deeplife.gcme.com.deeplife"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "264199334967-23muu7ukak2aar24j6sj310odhdboo7o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "deeplife.gcme.com.deeplife",
+            "certificate_hash": "033E30F356CF183B992538C79373428041F5262A"
+          }
+        },
+        {
+          "client_id": "264199334967-f6f4idsds1idlrmf1gn4d10d2htvr4bs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC590q8spjpPpTGnRxOCyQEAntQrXqBgV0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "264199334967-f6f4idsds1idlrmf1gn4d10d2htvr4bs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
