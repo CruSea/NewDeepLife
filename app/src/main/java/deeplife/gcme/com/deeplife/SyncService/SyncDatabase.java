@@ -224,6 +224,7 @@ public class SyncDatabase {
                             Log.i(TAG,"Error During Adding: Disciples -> \n"+cv.toString());
                         }
                     }else {
+                        cv.put(Database.DISCIPLES_FIELDS[9], disciple.getImagePath());
                         long x = DeepLife.myDATABASE.update(Database.Table_DISCIPLES,cv,disciple.getID());
                         Log.i(TAG,"Updated: Testimony Updated -> \n"+cv.toString());
                         if(x>0){

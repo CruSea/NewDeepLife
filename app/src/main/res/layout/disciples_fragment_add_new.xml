@@ -67,7 +67,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:orientation="vertical"
-                android:background="@color/bg_login"
                 android:padding="20dp"
                 android:layout_height="wrap_content">
                 <LinearLayout
@@ -85,13 +84,12 @@
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="10dp"
-                            android:background="@color/white"
+                            android:background="@color/bg_login"
                             android:hint="Disciple Full Name"
                             android:inputType="text"
                             android:padding="10dp"
-                            android:singleLine="true"
-                            android:textColor="@color/input_login"
-                            android:textColorHint="@color/input_login_hint" />
+                            android:textColor="@color/colorAccent"
+                            android:textColorHint="@color/colorAccent" />
                     </android.support.design.widget.TextInputLayout>
                 </LinearLayout>
 
@@ -109,7 +107,7 @@
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="10dp"
-                            android:background="@color/white"
+                            android:background="@color/bg_login"
                             android:hint="Disciple Email"
                             android:inputType="text"
                             android:padding="10dp"
@@ -119,13 +117,19 @@
                     </android.support.design.widget.TextInputLayout>
                 </LinearLayout>
 
-                <Spinner
-                    android:id="@+id/spn_discipleadd_country"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_marginBottom="10dp"
-                    android:background="@color/white"
+                    android:background="@color/bg_login"
                     android:layout_height="wrap_content">
-                </Spinner>
+                    <Spinner
+                        android:id="@+id/spn_discipleadd_country"
+                        android:layout_width="match_parent"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:background="@color/bg_login"
+                        android:layout_height="wrap_content">
+                    </Spinner>
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="fill_parent"
@@ -136,7 +140,7 @@
                         android:id="@+id/txt_discipleadd_phonecode"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@color/white"
+                        android:background="@color/bg_login"
                         android:hint="Email"
                         android:inputType="phone"
                         android:focusable="false"
@@ -158,7 +162,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="10dp"
-                            android:background="@color/white"
+                            android:background="@color/bg_login"
                             android:inputType="number"
                             android:hint="Disciple Phone Number"
                             android:padding="10dp"
@@ -173,7 +177,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
                     android:entries="@array/gender"
-                    android:background="@color/white"
+                    android:background="@color/bg_login"
                     android:layout_height="40dp">
                 </Spinner>
                 <Button

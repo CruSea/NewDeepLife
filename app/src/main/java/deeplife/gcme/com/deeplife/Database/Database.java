@@ -432,6 +432,7 @@ public class Database {
 
     }
 
+
     public Disciple getDiscipleBySerID(int id) {
         Log.i(TAG, "Get Disciple by Server ID: ");
         String DB_Table = Table_DISCIPLES;
@@ -499,8 +500,32 @@ public class Database {
         }
         return found;
     }
-
-
+    public long updateDisciple(Disciple disciple) {
+        Log.i(TAG, "UPDATE updateDisciple: ");
+        String DB_Table = Table_DISCIPLES;
+        try{
+            ContentValues cv = new ContentValues();
+            cv.put(Database.DISCIPLES_FIELDS[0], disciple.getSerID());
+            cv.put(Database.DISCIPLES_FIELDS[1], disciple.getFullName());
+            cv.put(Database.DISCIPLES_FIELDS[2], disciple.getDisplayName());
+            cv.put(Database.DISCIPLES_FIELDS[3], disciple.getEmail());
+            cv.put(Database.DISCIPLES_FIELDS[4], disciple.getPhone());
+            cv.put(Database.DISCIPLES_FIELDS[5], disciple.getCountry());
+            cv.put(Database.DISCIPLES_FIELDS[6], disciple.getMentorID());
+            cv.put(Database.DISCIPLES_FIELDS[7], disciple.getStage());
+            cv.put(Database.DISCIPLES_FIELDS[8], disciple.getImageURL());
+            cv.put(Database.DISCIPLES_FIELDS[9], disciple.getImagePath());
+            cv.put(Database.DISCIPLES_FIELDS[10], disciple.getRole());
+            cv.put(Database.DISCIPLES_FIELDS[11], disciple.getGender());
+            cv.put(Database.DISCIPLES_FIELDS[12], disciple.getCreated());
+            int id = DeepLife.myDATABASE.getDiscipleByPhone(disciple.getPhone()).getID();
+            long  x = DeepLife.myDATABASE.update(DB_Table,cv,id);
+            return x;
+        }catch (Exception e){
+            Log.i(TAG, "Failed UPDATE updateDisciple: "+e.toString());
+            return 0;
+        }
+    }
     ////////////////////////////////
     ////////////////////////////////
     ///////  CATEGORY    ///////////

@@ -42,13 +42,14 @@ public class WinBuildSendItemsAdapter extends RecyclerView.Adapter<WinBuildSendI
     public static Context myContext;
     public static String DisciplePhone;
     public static SyncDatabase mySyncDatabase;
+    public static String BuildStage;
     private int count;
 
-    public WinBuildSendItemsAdapter(List<WinBuildSendQuestion> winBuildSends, Context context, String disciplePhone) {
+    public WinBuildSendItemsAdapter(List<WinBuildSendQuestion> winBuildSends, Context context, String disciplePhone, String buildStage) {
         this.winBuildSends = winBuildSends;
         this.count = winBuildSends.size();
         mySyncDatabase = new SyncDatabase();
-
+        BuildStage = buildStage;
         myContext = context;
         DisciplePhone = disciplePhone;
     }
@@ -143,6 +144,7 @@ public class WinBuildSendItemsAdapter extends RecyclerView.Adapter<WinBuildSendI
             answer.setDisciplePhone(DisciplePhone);
             answer.setQuestionID(winBuildSends.get(getAdapterPosition()).getSerID());
             answer.setSerID(0);
+            answer.setBuildStage(BuildStage);
             if(v.getId() == R.id.btn_winbuildsend_inc){
                 int value = Integer.valueOf(QuestionValue.getText().toString());
                 value = value + 1;

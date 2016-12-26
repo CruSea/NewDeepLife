@@ -1,9 +1,10 @@
 package deeplife.gcme.com.deeplife.SyncService;
 
 import android.app.job.JobParameters;
-import android.app.job.JobService;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.util.Base64;
 import android.util.Log;
 
@@ -35,6 +36,7 @@ import deeplife.gcme.com.deeplife.Models.Schedule;
 import deeplife.gcme.com.deeplife.Models.User;
 import deeplife.gcme.com.deeplife.Testimony.Testimony;
 import kotlin.Pair;
+import me.tatarka.support.job.JobService;
 
 /**
  * Created by bengeos on 12/16/16.
@@ -60,7 +62,7 @@ public class SyncService extends JobService {
     }
 
     @Override
-    public boolean onStartJob(JobParameters params) {
+    public boolean onStartJob(me.tatarka.support.job.JobParameters params) {
         Log.i(TAG, "The Job scheduler started");
         user = DeepLife.myDATABASE.get_User();
         Send_Param = new ArrayList<Pair<String,String>>();
@@ -102,11 +104,10 @@ public class SyncService extends JobService {
     }
 
     @Override
-    public boolean onStopJob(JobParameters params) {
+    public boolean onStopJob(me.tatarka.support.job.JobParameters params) {
         Log.i(TAG,"Service Stopped");
-        return true;
+        return false;
     }
-
     public void getService(){
         Logs found = getParam();
         if(found != null){

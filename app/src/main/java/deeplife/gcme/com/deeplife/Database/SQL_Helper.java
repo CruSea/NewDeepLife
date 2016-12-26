@@ -5,8 +5,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class SQL_Helper extends SQLiteOpenHelper {
-	private final static String DATABASE_NAME = "Deep_Life";
-	private final static int DATABASE_VERSION = 1;
+	private final static String DATABASE_NAME = "DeepLife";
+	private final static int DATABASE_VERSION = 2;
 
 	public SQL_Helper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);

@@ -1,6 +1,7 @@
 package deeplife.gcme.com.deeplife.WinBuildSend;
 
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -8,8 +9,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,8 +36,12 @@ public class WinBuildSendActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager mLayoutManager;
     private static Context myContext;
     public static Button Btn_Win,Btn_Build,Btn_Send;
+    public static ImageView DiscipleImage;
+    public static TextView DiscipleName;
     public static String DisciplePhone;
     public static int Stage;
+    public static String BuildStage;
+    public static Disciple myDisciple;
     public static List<Category> categories;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,8 +53,11 @@ public class WinBuildSendActivity extends AppCompatActivity {
         myContext = this;
         Stage = 1;
         DisciplePhone = getIntent().getExtras().getString("DisciplePhone");
+        myDisciple = DeepLife.myDATABASE.getDiscipleByPhone(DisciplePhone);
         categories = new ArrayList<Category>();
 
+        DiscipleImage = (ImageView) findViewById(R.id.img_winbuildsend_image);
+        DiscipleName = (TextView) findViewById(R.id.txt_winbuildsend_fullname);
         Btn_Win = (Button) findViewById(R.id.btn_winbuildsend_win);
         Btn_Build = (Button) findViewById(R.id.btn_winbuildsend_build);
         Btn_Send = (Button) findViewById(R.id.btn_winbuildsend_send);
@@ -75,6 +86,13 @@ public class WinBuildSendActivity extends AppCompatActivity {
                 UpdateQuestionList(3);
             }
         });
+        DiscipleName.setText(myDisciple.getDisplayName());
+        if(myDisciple.getImagePath() != null){
+            File file = new File(myDisciple.getImagePath());
+            if(file.isFile()){
+                DiscipleImage.setImageBitmap(BitmapFactory.decodeFile(file.getAbsolutePath()));
+            }
+        }
 
     }
     public void UpdateQuestionList(int stage){
@@ -92,11 +110,23 @@ public class WinBuildSendActivity extends AppCompatActivity {
                     }
                 }
             }
+            if(stage == 1){
+                BuildStage = "WIN";
+            }else if(stage == 2){
+                BuildStage = "BUILD";
+            }else {
+                BuildStage = "SEND";
+            }
             UpdateGUIAdapter(SendQuestions);
+            Disciple disciple = DeepLife.myDATABASE.getDiscipleByPhone(DisciplePhone);
+            if(disciple != null){
+                disciple.setStage(BuildStage);
+                DeepLife.myDATABASE.updateDisciple(disciple);
+            }
         }
     }
     public static void UpdateGUIAdapter(List<WinBuildSendQuestion> datas){
-        mAdapter = new WinBuildSendItemsAdapter(datas,myContext,DisciplePhone);
+        mAdapter = new WinBuildSendItemsAdapter(datas,myContext,DisciplePhone,BuildStage);
         myRecyclerView.setAdapter(mAdapter);
     }
     public static void checkStage() {
@@ -119,8 +149,10 @@ public class WinBuildSendActivity extends AppCompatActivity {
         }
         if(WinBuilSend == 0){
             Stage = 1;
+            BuildStage = "WIN";
         }else {
             Stage = 2;
+            BuildStage = "BUILD";
             WinBuilSend = 1;
             Questions = DeepLife.myDATABASE.getWinBuildSendQuestionsByCategorySerID(2);
             for(WinBuildSendQuestion WinQuestioons : Questions){
@@ -139,8 +171,10 @@ public class WinBuildSendActivity extends AppCompatActivity {
             }
             if(WinBuilSend == 0 && Stage > 1){
                 Stage = 2;
+                BuildStage = "BUILD";
             }else {
                 Stage = 3;
+                BuildStage = "SEND";
                 WinBuilSend = 1;
                 Questions = DeepLife.myDATABASE.getWinBuildSendQuestionsByCategorySerID(3);
                 for(WinBuildSendQuestion WinQuestioons : Questions){
@@ -159,8 +193,10 @@ public class WinBuildSendActivity extends AppCompatActivity {
                 }
                 if(WinBuilSend == 0 && Stage > 2){
                     Stage = 3;
+                    BuildStage = "SEND";
                 }else {
                     Stage = 3;
+                    BuildStage = "SEND";
                 }
             }
         }

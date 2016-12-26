@@ -16,14 +16,6 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                app:srcCompat="@drawable/jesus_saves"
-                android:id="@+id/imageView2"
-                android:scaleType="centerCrop" />
-
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"

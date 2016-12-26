@@ -3,6 +3,8 @@ package deeplife.gcme.com.deeplife.Disciples;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +15,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.File;
 import java.util.List;
 
 import deeplife.gcme.com.deeplife.Database.Database;
@@ -53,7 +56,16 @@ public class DiscipleListAdapter extends RecyclerView.Adapter<DiscipleListAdapte
     public void onBindViewHolder(DataObjectHolder holder, int position) {
         holder.FullName.setText(Disciples.get(position).getFullName());
         holder.Email.setText(Disciples.get(position).getEmail());
-        holder.Phone.setText(Disciples.get(position).getPhone());
+        holder.Phone.setText("+"+Disciples.get(position).getPhone());
+        holder.btn_WinBuild.setText(Disciples.get(position).getStage());
+        if(Disciples.get(position).getImagePath() != null){
+            File file = new File(Disciples.get(position).getImagePath());
+            if(file.isFile()){
+                holder.DiscipleImage.setImageBitmap(BitmapFactory.decodeFile(file.getAbsolutePath()));
+            }
+        }
+
+
     }
 
     public void ShowDialog(String message) {
@@ -105,12 +117,13 @@ public class DiscipleListAdapter extends RecyclerView.Adapter<DiscipleListAdapte
     public static class DataObjectHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         TextView FullName,Email,Phone;
         Button btn_WinBuild;
-        ImageView NewsImage;
+        ImageView DiscipleImage;
         public DataObjectHolder(View itemView) {
             super(itemView);
             FullName = (TextView) itemView.findViewById(R.id.txt_disciple_name);
             Email = (TextView) itemView.findViewById(R.id.txt_disciple_email);
             Phone = (TextView) itemView.findViewById(R.id.txt_disciple_phone);
+            DiscipleImage = (ImageView) itemView.findViewById(R.id.img_disciple_image);
             btn_WinBuild = (Button) itemView.findViewById(R.id.btn_win_build_send);
             btn_WinBuild.setOnClickListener(this);
             itemView.setOnClickListener(this);
@@ -121,6 +134,12 @@ public class DiscipleListAdapter extends RecyclerView.Adapter<DiscipleListAdapte
         public void onClick(View v) {
             if(v.getId() == R.id.btn_win_build_send){
                 Intent intent = new Intent(myContext, WinBuildSendActivity.class);
+                Bundle b = new Bundle();
+                b.putString("DisciplePhone",Disciples.get(getAdapterPosition()).getPhone().toString());
+                intent.putExtras(b);
+                myContext.startActivity(intent);
+            }else {
+                Intent intent = new Intent(myContext, DiscipleProfileActivity.class);
                 Bundle b = new Bundle();
                 b.putString("DisciplePhone",Disciples.get(getAdapterPosition()).getPhone().toString());
                 intent.putExtras(b);

@@ -28,7 +28,7 @@ public class LearningToolsListAdpapter extends RecyclerView.Adapter<LearningTool
 
     @Override
     public DataObjectHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.abc_screen_simple, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.learning_fragment_item, parent, false);
         LearningToolsListAdpapter.DataObjectHolder dataObjectHolder = new LearningToolsListAdpapter.DataObjectHolder(view);
         return dataObjectHolder;
     }

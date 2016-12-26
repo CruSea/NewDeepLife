@@ -60,6 +60,7 @@
                         android:layout_width="120dp"
                         android:layout_height="120dp">
                         <ImageView
+                            android:id="@+id/img_winbuildsend_image"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:background="@drawable/bengeos"/>
@@ -70,6 +71,7 @@
                             android:background="@drawable/cover_page"/>
                     </FrameLayout>
                     <TextView
+                        android:id="@+id/txt_winbuildsend_fullname"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Biniam Kassahun"

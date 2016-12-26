@@ -7,7 +7,9 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -47,9 +49,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private JobScheduler myJobScheduler;
 
 
-    private static int JOB_ID = 1000;
     private static int RECEIVE_BOOT_COMPLETED = 1001;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,30 +94,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         checkPermissions();
     }
 
+
     public void checkPermissions(){
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_BOOT_COMPLETED) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECEIVE_BOOT_COMPLETED}, RECEIVE_BOOT_COMPLETED);
         }else {
-//            JobConstr();
         }
     }
 
-//    public void JobConstr(){
-//        JobInfo.Builder jobInfo;
-//        jobInfo = new JobInfo.Builder(JOB_ID,  new ComponentName(this,SyncService.class))
-//                .setMinimumLatency(1000)
-//                .setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED)
-//                .setRequiresCharging(false);
-//        myJobScheduler.cancelAll();
-//        int x = myJobScheduler.schedule(jobInfo.build());
-//        if(x == android.app.job.JobScheduler.RESULT_SUCCESS){
-////            List<JobInfo> xx = myJobScheduler.getAllPendingJobs();
-//            Log.i(TAG,"The Job scheduler Constructed\n");
-//        }else{
-//            Log.i(TAG, "The Job scheduler Not Constructed");
-//        }
-//
-//    }
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -126,27 +113,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
