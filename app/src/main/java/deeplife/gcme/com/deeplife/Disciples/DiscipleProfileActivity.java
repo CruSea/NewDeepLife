@@ -1,8 +1,11 @@
 package deeplife.gcme.com.deeplife.Disciples;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -12,6 +15,8 @@ import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -20,6 +25,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -45,6 +51,7 @@ import deeplife.gcme.com.deeplife.Processing.ImageProcessing;
 import deeplife.gcme.com.deeplife.R;
 import deeplife.gcme.com.deeplife.SyncService.SyncDatabase;
 import deeplife.gcme.com.deeplife.SyncService.SyncService;
+import deeplife.gcme.com.deeplife.WinBuildSend.WinBuildSendActivity;
 
 /**
  * Created by bengeos on 12/25/16.
@@ -64,6 +71,8 @@ public class DiscipleProfileActivity extends AppCompatActivity {
     private String newImage = "";
     private FileManager myFileManager;
     private SyncDatabase mySyncDatabase;
+    private Button DisCall,DisMessage,DisComplete;
+    private Context myContext;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -72,6 +81,7 @@ public class DiscipleProfileActivity extends AppCompatActivity {
         DisciplePhone = getIntent().getExtras().getString("DisciplePhone");
         myDisciple = DeepLife.myDATABASE.getDiscipleByPhone(DisciplePhone);
         myActivity = this;
+        myContext = this;
         myFileManager = new FileManager(this);
         mySyncDatabase = new SyncDatabase();
         Init();
@@ -87,6 +97,7 @@ public class DiscipleProfileActivity extends AppCompatActivity {
             Phone.setText("+"+myDisciple.getPhone());
             Country country = DeepLife.myDATABASE.getCountryByID(Integer.valueOf(myDisciple.getCountry()));
             Countr.setText(country.getName());
+            Countr.setEnabled(false);
             if(myDisciple.getImagePath() != null){
                 File file = new File(myDisciple.getImagePath());
                 if(file.isFile()){
@@ -106,10 +117,42 @@ public class DiscipleProfileActivity extends AppCompatActivity {
         Countr = (EditText) findViewById(R.id.txt_disciple_profile_country);
         DiscipleImage = (ImageView) findViewById(R.id.img_discipleprofile_image);
         DiscipleImageBtn = (ImageButton) findViewById(R.id.btn_discipleprofile_image);
+        DisComplete = (Button) findViewById(R.id.btn_disciple_profile_complete);
+        DisCall = (Button) findViewById(R.id.btn_disciple_profile_call);
+        DisMessage = (Button) findViewById(R.id.btn_disciple_profile_message);
         DiscipleImageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Crop.pickImage(myActivity);
+                if (ContextCompat.checkSelfPermission(myContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(myActivity, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 12);
+                }else {
+                    Crop.pickImage(myActivity);
+                }
+
+            }
+        });
+        DisComplete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(myContext, WinBuildSendActivity.class);
+                Bundle b = new Bundle();
+                b.putString("DisciplePhone",myDisciple.getPhone().toString());
+                intent.putExtras(b);
+                myContext.startActivity(intent);
+            }
+        });
+        DisCall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String phone = "+"+myDisciple.getPhone();
+                String number = "tel:" + phone;
+                Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse(number));
+                if (ContextCompat.checkSelfPermission(myContext, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(myActivity, new String[]{Manifest.permission.READ_PHONE_STATE}, 11);
+                }else {
+                    myContext.startActivity(callIntent);
+                }
+
             }
         });
     }

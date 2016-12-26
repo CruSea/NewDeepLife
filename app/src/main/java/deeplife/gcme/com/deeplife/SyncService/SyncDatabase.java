@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -74,6 +75,10 @@ public class SyncDatabase {
                 if (!json_response.isNull("Log_Response")) {
                     JSONArray json_logs = json_response.getJSONArray("Log_Response");
                     Delete_Logs(json_logs);
+                }
+                if (!json_response.isNull("Profile")) {
+                    JSONObject json_user_profile = json_response.getJSONObject("Profile");
+                    Add_MainUser(json_user_profile);
                 }
             }
         } catch (JSONException e) {
@@ -341,6 +346,32 @@ public class SyncDatabase {
                             Log.i(TAG,"Error During Updating: Answers -> \n"+cv.toString());
                         }
                     }
+                }
+            }
+        }catch (Exception e){
+            Log.i(TAG,e.toString());
+        }
+    }
+    public static void Add_MainUser(JSONObject json_mainuser){
+        try{
+            if(json_mainuser.length()>0){
+                Log.i(TAG,"Adding MainUser  -> \n"+json_mainuser.toString());
+                JSONObject obj = json_mainuser;
+                ContentValues cv = new ContentValues();
+                cv.put(Database.USER_FIELDS[0], obj.getString("id"));
+                cv.put(Database.USER_FIELDS[1], obj.getString("firstName"));
+                cv.put(Database.USER_FIELDS[2], obj.getString("email"));
+                cv.put(Database.USER_FIELDS[3], obj.getString("phone_no"));
+                cv.put(Database.USER_FIELDS[4], "pass");
+                cv.put(Database.USER_FIELDS[5], obj.getString("country"));
+                cv.put(Database.USER_FIELDS[6], obj.getString("picture"));
+                cv.put(Database.USER_FIELDS[7], obj.getString("picture"));
+                DeepLife.myDATABASE.Delete_All(Database.Table_USER);
+                long x = DeepLife.myDATABASE.insert(Database.Table_USER,cv);
+                if(x>0){
+                    Log.i(TAG,"Successfully Added: Main User -> \n"+cv.toString());
+                }else {
+                    Log.i(TAG,"Error During Adding: Main User -> \n"+cv.toString());
                 }
             }
         }catch (Exception e){

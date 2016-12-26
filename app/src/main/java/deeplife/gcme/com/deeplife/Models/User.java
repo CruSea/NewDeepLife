@@ -4,14 +4,23 @@ package deeplife.gcme.com.deeplife.Models;
  * Created by Roger on 3/27/16.
  */
 public class User {
-    private String id,User_Name,User_Pass, User_Email,User_Phone,User_Country,User_Picture,User_Gender,User_Favorite_Scripture;
+    private int ID,SerID;
+    private String User_Name,User_Pass,Full_Name,User_Email,User_Phone,User_Country,User_Picture,User_Gender,User_Favorite_Scripture;
 
-    public String getId() {
-        return id;
+    public int getID() {
+        return ID;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+
+    public int getSerID() {
+        return SerID;
+    }
+
+    public void setSerID(int serID) {
+        SerID = serID;
     }
 
     public String getUser_Name() {
@@ -20,6 +29,14 @@ public class User {
 
     public void setUser_Name(String user_Name) {
         User_Name = user_Name;
+    }
+
+    public String getFull_Name() {
+        return Full_Name;
+    }
+
+    public void setFull_Name(String full_Name) {
+        Full_Name = full_Name;
     }
 
     public String getUser_Pass() {
@@ -62,16 +79,16 @@ public class User {
         User_Picture = user_Picture;
     }
 
-    public String getUser_Favorite_Scripture() {
-        return User_Favorite_Scripture;
-    }
-
     public String getUser_Gender() {
         return User_Gender;
     }
 
     public void setUser_Gender(String user_Gender) {
         User_Gender = user_Gender;
+    }
+
+    public String getUser_Favorite_Scripture() {
+        return User_Favorite_Scripture;
     }
 
     public void setUser_Favorite_Scripture(String user_Favorite_Scripture) {

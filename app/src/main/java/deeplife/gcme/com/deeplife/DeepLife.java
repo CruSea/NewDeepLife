@@ -26,6 +26,8 @@ public class DeepLife extends Application {
     public static final String API_URL  = DEEP_URL+"/deep_api";
     public static final String PROFILE_PIC_URL  = DEEP_URL+"/img/profile/";
 
+    private static final int REQUEST_PHONE_CALL = 11;
+
 
     private static final String TAG = "DeepLifeApplication";
     public JobScheduler myJobScheduler;
@@ -48,7 +50,7 @@ public class DeepLife extends Application {
         JobInfo.Builder jobInfo;
         jobInfo = new JobInfo.Builder(JOB_ID++,  new ComponentName(this,SyncService.class))
                 .setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED)
-                .setPeriodic(15000)
+                .setPeriodic(30000)
                 .setRequiresDeviceIdle(false)
                 .setRequiresCharging(false);
         myJobScheduler.cancelAll();

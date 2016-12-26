@@ -43,26 +43,51 @@
                 </FrameLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
+                    android:gravity="center_horizontal"
+                    android:layout_marginBottom="30dp"
+                    android:orientation="vertical"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/txt_disciple_profile_displayname"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Biniam Kassahun"/>
+                    <Button
+                        android:id="@+id/btn_disciple_profile_complete"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="Win | Build | Send"
+                        style="@style/AppTheme.Button1" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:orientation="horizontal"
                     android:weightSum="6"
                     android:layout_height="wrap_content">
                     <Button
+                        android:id="@+id/btn_disciple_profile_message"
                         android:layout_width="match_parent"
                         android:layout_weight="3"
                         android:text="Send SMS"
+                        style="@style/AppTheme.Button1"
                         android:layout_height="wrap_content" />
                     <Button
+                        android:id="@+id/btn_disciple_profile_call"
                         android:layout_width="match_parent"
                         android:layout_weight="3"
                         android:text="Call Now"
+                        style="@style/AppTheme.Button1"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
+
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:paddingLeft="10dp"
+                android:paddingRight="10dp"
                 android:orientation="vertical">
 
                 <android.support.v7.widget.CardView
@@ -94,7 +119,7 @@
                             android:hint="Full Name"
                             android:inputType="text"
                             android:padding="10dp"
-                            android:textColor="@color/black"
+                            android:textColor="@color/bg_login"
                             android:textColorHint="@color/input_login" />
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
@@ -128,8 +153,7 @@
                             android:inputType="text"
                             android:textStyle="bold"
                             android:padding="10dp"
-                            android:singleLine="true"
-                            android:textColor="@color/black"
+                            android:textColor="@color/bg_login"
                             android:textColorHint="@color/input_login" />
                     </LinearLayout>
                 </android.support.v7.widget.CardView>

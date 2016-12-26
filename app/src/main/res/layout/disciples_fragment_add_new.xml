@@ -28,15 +28,11 @@
         android:layout_height="match_parent"
         android:layout_marginTop="20dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
             android:orientation="vertical"
-
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp">
+>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -51,12 +47,13 @@
                     android:layout_marginBottom="20dp">
 
                     <ImageView
+                        android:id="@+id/img_discipleadd_image"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@drawable/bengeos" />
 
-                    <ImageView
-                        android:id="@+id/img_discipleadd_image"
+                    <ImageButton
+                        android:id="@+id/btn_discipleadd_image"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@drawable/cover_page"
@@ -67,47 +64,64 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:orientation="vertical"
-                android:padding="20dp"
                 android:layout_height="wrap_content">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
+                    android:background="@color/bg_login"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="20dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:layout_marginLeft="10dp"
+                        android:text="Full Name"/>
                     <android.support.design.widget.TextInputLayout
                         android:id="@+id/discipleadd_fullname"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
-
                         <EditText
                             android:id="@+id/txt_discipleadd_fullname"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="10dp"
-                            android:background="@color/bg_login"
-                            android:hint="Disciple Full Name"
+                            android:background="@color/white"
                             android:inputType="text"
                             android:padding="10dp"
-                            android:textColor="@color/colorAccent"
-                            android:textColorHint="@color/colorAccent" />
+                            android:textColor="@color/colorAccent" />
                     </android.support.design.widget.TextInputLayout>
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:background="@color/bg_login"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="5dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="20dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:layout_marginLeft="10dp"
+                        android:text="Email"/>
                     <android.support.design.widget.TextInputLayout
                         android:id="@+id/discipleadd_email"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
-
                         <EditText
                             android:id="@+id/txt_discipleadd_email"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="10dp"
-                            android:background="@color/bg_login"
+                            android:background="@color/white"
                             android:hint="Disciple Email"
                             android:inputType="text"
                             android:padding="10dp"
@@ -116,11 +130,21 @@
                             android:textColorHint="@color/input_login_hint" />
                     </android.support.design.widget.TextInputLayout>
                 </LinearLayout>
-
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:background="@color/bg_login"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="5dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="20dp"
+                    android:background="@color/bg_login">
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:layout_marginLeft="10dp"
+                        android:text="Country"/>
                     <Spinner
                         android:id="@+id/spn_discipleadd_country"
                         android:layout_width="match_parent"
@@ -131,28 +155,33 @@
                     </Spinner>
                 </LinearLayout>
 
+
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
+                    android:background="@color/bg_login"
+                    android:layout_marginTop="5dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="20dp"
                     android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:layout_marginLeft="10dp"
+                        android:text="Phone Num."/>
                     <EditText
                         android:id="@+id/txt_discipleadd_phonecode"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@color/bg_login"
-                        android:hint="Email"
+                        android:background="@color/white"
+                        android:hint="+###"
                         android:inputType="phone"
                         android:focusable="false"
                         android:padding="10dp"
-                        android:textColor="@color/input_login"
-                        android:textColorHint="@color/input_login_hint" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="4dp"
-                        android:layout_marginRight="4dp"
-                        android:text="-"/>
+                        android:textColor="@color/input_login" />
                     <android.support.design.widget.TextInputLayout
                         android:id="@+id/signup_phone"
                         android:layout_width="match_parent"
@@ -162,7 +191,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="10dp"
-                            android:background="@color/bg_login"
+                            android:background="@color/white"
                             android:inputType="number"
                             android:hint="Disciple Phone Number"
                             android:padding="10dp"
@@ -171,20 +200,40 @@
                     </android.support.design.widget.TextInputLayout>
 
                 </LinearLayout>
-                <Spinner
-                    android:id="@+id/spn_discipleadd_gender"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:entries="@array/gender"
+                    android:orientation="horizontal"
                     android:background="@color/bg_login"
-                    android:layout_height="40dp">
-                </Spinner>
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="5dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="20dp"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:layout_marginLeft="10dp"
+                        android:text="Phone Num."/>
+                    <Spinner
+                        android:id="@+id/spn_discipleadd_gender"
+                        android:layout_width="match_parent"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:entries="@array/gender"
+                        android:background="@color/white"
+                        android:layout_height="40dp">
+                    </Spinner>
+
+                </LinearLayout>
+
                 <Button
                     android:id="@+id/btn_discipleadd_add"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
+                    style="@style/AppTheme.Button1"
                     android:text="Add Disciple"/>
             </LinearLayout>
         </LinearLayout>

@@ -106,6 +106,9 @@ public class Login extends AppCompatActivity {
     public static void UpdateView(){
         if(myCountries != null){
             mySpinner.setAdapter(new CountryListAdapter(myContext,R.layout.login_countries_item,myCountries));
+        }else {
+            myCountries = DeepLife.myDATABASE.getAllCountries();
+            mySpinner.setAdapter(new CountryListAdapter(myContext,R.layout.login_countries_item,myCountries));
         }
     }
     public static void GetNextActivity(){
@@ -134,6 +137,7 @@ public class Login extends AppCompatActivity {
                 public void onClick(DialogInterface dialog, int which) {
                     switch (which){
                         case DialogInterface.BUTTON_POSITIVE:
+                            UpdateView();
                             break;
                     }
                 }

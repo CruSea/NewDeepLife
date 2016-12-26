@@ -47,7 +47,7 @@ public class Database {
 
     public static final String[] COUNTRY_FIELDS = { "serid", "iso3","name","code" };
     public static final String[] SCHEDULES_FIELDS = { "Disciple_Phone","Title","Alarm_Time","Alarm_Repeat","Description"};
-    public static final String[] USER_FIELDS = { "Full_Name", "Email","Phone","Password","Country","Picture","Favorite_Scripture" };
+    public static final String[] USER_FIELDS = { "SerID","Full_Name", "Email","Phone","Password","Country","Picture","Favorite_Scripture" };
     public static final String[] QUESTION_LIST_FIELDS = {"SerID","Category", "Question","Description","Mandatory","Type","Country","Created"};
     public static final String[] REPORT_FORM_FIELDS = {"Report_ID","Category","Questions"};
     public static final String[] REPORT_FIELDS = {"Report_ID","Value","Date"};
@@ -63,7 +63,7 @@ public class Database {
     public static final String[] REPORT_COLUMN = {"id","Report_ID","Value","Date"};
     public static final String[] COUNTRY_COLUMN = {"id", "serid", "iso3","name","code"};
     public static final String[] LOGS_COLUMN = { "id", "Type", "Task","Value" };
-    public static final String[] USER_COLUMN = { "id", "Full_Name", "Email","Phone","Password","Country","Picture","Favorite_Scripture" };
+    public static final String[] USER_COLUMN = { "id", "SerID","Full_Name", "Email","Phone","Password","Country","Picture","Favorite_Scripture"  };
     public static final String[] QUESTION_LIST_COLUMN = {"id","SerID","Category", "Question","Description","Mandatory","Type","Country","Created"};
     public static final String[] QUESTION_ANSWER_COLUMN = {"id","SerID","DisciplePhone","Question_ID", "Answer","BuildStage"};
     public static final String[] TESTIMONY_COLUMN = {"id","SerID","UserID", "Description","Status","PubDate"};
@@ -205,7 +205,7 @@ public class Database {
             for(int i=0;i<c.getCount();i++){
                 c.moveToPosition(i);
                 User dis = new User();
-                dis.setId(c.getString(c.getColumnIndex(USER_COLUMN[0])));
+                dis.setID(Integer.valueOf(c.getString(c.getColumnIndex(USER_COLUMN[0]))));
                 dis.setUser_Name(c.getString(c.getColumnIndex(USER_COLUMN[1])));
                 dis.setUser_Email(c.getString(c.getColumnIndex(USER_COLUMN[2])));
                 dis.setUser_Phone(c.getString(c.getColumnIndex(USER_COLUMN[3])));
@@ -1259,6 +1259,64 @@ public class Database {
         return Found;
     }
 
+
+    /////////////////////////////////
+    /////////////////////////////////
+    ////////  Main User   /////////
+    /////////////////////////////////
+    /////////////////////////////////
+
+
+    public User getMainUser() {
+        Log.i(TAG, "Get getMainUser: ");
+        String DB_Table = Table_USER;
+        try{
+            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
+            if(c.getCount()>0){
+                c.moveToFirst();
+                for(int i=0;i<c.getCount();i++){
+                    c.moveToPosition(i);
+                    User user = new User();
+                    user.setID(Integer.valueOf(c.getString(c.getColumnIndex(USER_COLUMN[0]))));
+                    user.setSerID(Integer.valueOf(c.getString(c.getColumnIndex(USER_COLUMN[1]))));
+                    user.setFull_Name(c.getString(c.getColumnIndex(USER_COLUMN[2])));
+                    user.setUser_Email(c.getString(c.getColumnIndex(USER_COLUMN[3])));
+                    user.setUser_Phone(c.getString(c.getColumnIndex(USER_COLUMN[4])));
+                    user.setUser_Pass(c.getString(c.getColumnIndex(USER_COLUMN[5])));
+                    user.setUser_Country(c.getString(c.getColumnIndex(USER_COLUMN[6])));
+                    user.setUser_Picture(c.getString(c.getColumnIndex(USER_COLUMN[7])));
+                    user.setUser_Favorite_Scripture(c.getString(c.getColumnIndex(USER_COLUMN[8])));
+                    return user;
+                }
+            }
+        }catch (Exception e){
+            Log.i(TAG, "Failed Get MainUser By ID: "+e.toString());
+            return null;
+        }
+        return null;
+
+    }
+
+    public long updateMainUser(User mainUser) {
+        Log.i(TAG, "UPDATE updateDisciple: ");
+        String DB_Table = Table_USER;
+        try{
+            ContentValues cv = new ContentValues();
+            cv.put(Database.USER_FIELDS[0], mainUser.getSerID());
+            cv.put(Database.USER_FIELDS[1], mainUser.getFull_Name());
+            cv.put(Database.USER_FIELDS[2], mainUser.getUser_Email());
+            cv.put(Database.USER_FIELDS[3], mainUser.getUser_Phone());
+            cv.put(Database.USER_FIELDS[4], mainUser.getUser_Pass());
+            cv.put(Database.USER_FIELDS[5], mainUser.getUser_Country());
+            cv.put(Database.USER_FIELDS[6], mainUser.getUser_Picture());
+            cv.put(Database.USER_FIELDS[7], mainUser.getUser_Favorite_Scripture());
+            long  x = DeepLife.myDATABASE.insert(DB_Table,cv);
+            return x;
+        }catch (Exception e){
+            Log.i(TAG, "Failed UPDATE updateMainUser: "+e.toString());
+            return 0;
+        }
+    }
 
 //    public ArrayList<ImageSync> Get_All_ImageSync(){
 //        String DB_Table = Table_IMAGE_SYNC;

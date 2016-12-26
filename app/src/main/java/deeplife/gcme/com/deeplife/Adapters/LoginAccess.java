@@ -67,7 +67,7 @@ public class LoginAccess {
         Send_Param.add(new kotlin.Pair<String, String>("Param", "[]"));
 
         try{
-            myFuel.post(DeepLife.API_URL,Send_Param).responseString(new Handler<String>() {
+            Fuel.post(DeepLife.API_URL,Send_Param).responseString(new Handler<String>() {
                 @Override
                 public void success(@NotNull Request request, @NotNull Response response, String s) {
                     Log.i(TAG, "Server Request  -> \n" + request.toString());
@@ -77,15 +77,16 @@ public class LoginAccess {
                         myObject = (JSONObject) new JSONTokener(s).nextValue();
                         if (!myObject.isNull("Response")) {
                             mySyncDatabase.ProcessResponse(s);
-                            DeepLife.myDATABASE.Delete_All(deeplife.gcme.com.deeplife.Database.Database.Table_USER);
-                            ContentValues cv = new ContentValues();
-                            cv.put(Database.USER_FIELDS[1],myUser.getUser_Email());
-                            cv.put(Database.USER_FIELDS[2], myUser.getUser_Phone());
-                            cv.put(Database.USER_FIELDS[3], myUser.getUser_Pass());
-                            cv.put(Database.USER_FIELDS[4], myUser.getUser_Country());
-                            long state = DeepLife.myDATABASE.insert(Database.Table_USER,cv);
-                            if(state>0){
-                                Login.GetNextActivity();
+                            User user = DeepLife.myDATABASE.getMainUser();
+                            if(user != null){
+                                user.setUser_Pass(myUser.getUser_Pass());
+                                long state = DeepLife.myDATABASE.updateMainUser(user);
+                                if(state>0){
+                                    Login.GetNextActivity();
+                                }else {
+                                    Login.DialogState(0);
+                                    Login.showDialog("Unable to login now! please retry again!");
+                                }
                             }else {
                                 Login.DialogState(0);
                                 Login.showDialog("Unable to login now! please retry again!");
