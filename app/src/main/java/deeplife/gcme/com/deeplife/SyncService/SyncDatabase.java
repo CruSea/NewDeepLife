@@ -29,7 +29,6 @@ import deeplife.gcme.com.deeplife.Testimony.TestimonyFragment;
 
 public class SyncDatabase {
     private static String TAG = "SyncDatabase";
-
     public static void ProcessResponse(String jsonArray){
         Gson myGson = new Gson();
         try {
@@ -136,6 +135,7 @@ public class SyncDatabase {
                     cv.put(Database.TESTIMONY_FIELDS[2], obj.getString("description"));
                     cv.put(Database.TESTIMONY_FIELDS[3], obj.getString("status"));
                     cv.put(Database.TESTIMONY_FIELDS[4], obj.getString("created"));
+                    cv.put(Database.TESTIMONY_FIELDS[5], obj.getString("user_name"));
                     Testimony testimony = DeepLife.myDATABASE.getTestimonyBySerID(Integer.valueOf(obj.getString("id")));
                     if(testimony == null){
                         long x = DeepLife.myDATABASE.insert(Database.Table_TESTIMONY,cv);
@@ -204,41 +204,45 @@ public class SyncDatabase {
         try{
             if(json_disciples.length()>0){
                 Log.i(TAG,"Adding New Disciples -> \n"+json_disciples.toString());
-                for(int i=0;i<json_disciples.length();i++){
-                    JSONObject obj = json_disciples.getJSONObject(i);
-                    ContentValues cv = new ContentValues();
-                    cv.put(Database.DISCIPLES_FIELDS[0], obj.getString("id"));
-                    cv.put(Database.DISCIPLES_FIELDS[1], obj.getString("firstName"));
-                    cv.put(Database.DISCIPLES_FIELDS[2], obj.getString("displayName"));
-                    cv.put(Database.DISCIPLES_FIELDS[3], obj.getString("email"));
-                    cv.put(Database.DISCIPLES_FIELDS[4], obj.getString("phone_no"));
-                    cv.put(Database.DISCIPLES_FIELDS[5], obj.getString("country"));
-                    cv.put(Database.DISCIPLES_FIELDS[6], obj.getString("mentor_id"));
-                    cv.put(Database.DISCIPLES_FIELDS[7], obj.getString("stage"));
-                    cv.put(Database.DISCIPLES_FIELDS[8], obj.getString("picture"));
-                    cv.put(Database.DISCIPLES_FIELDS[9], "");
-                    cv.put(Database.DISCIPLES_FIELDS[10], obj.getString("role_id"));
-                    cv.put(Database.DISCIPLES_FIELDS[11], obj.getString("gender"));
-                    cv.put(Database.DISCIPLES_FIELDS[12], obj.getString("created"));
-                    Disciple disciple = DeepLife.myDATABASE.getDiscipleByPhone(obj.getString("phone_no"));
-                    if(disciple == null){
-                        long x = DeepLife.myDATABASE.insert(Database.Table_DISCIPLES,cv);
-                        if(x>0){
-                            Log.i(TAG,"Successfully Added: Disciples Added -> \n"+cv.toString());
+                if(json_disciples.length()>0){
+                    DeepLife.myDATABASE.Delete_All(Database.Table_DISCIPLES);
+                    for(int i=0;i<json_disciples.length();i++){
+                        JSONObject obj = json_disciples.getJSONObject(i);
+                        ContentValues cv = new ContentValues();
+                        cv.put(Database.DISCIPLES_FIELDS[0], obj.getString("id"));
+                        cv.put(Database.DISCIPLES_FIELDS[1], obj.getString("firstName"));
+                        cv.put(Database.DISCIPLES_FIELDS[2], obj.getString("displayName"));
+                        cv.put(Database.DISCIPLES_FIELDS[3], obj.getString("email"));
+                        cv.put(Database.DISCIPLES_FIELDS[4], obj.getString("phone_no"));
+                        cv.put(Database.DISCIPLES_FIELDS[5], obj.getString("country"));
+                        cv.put(Database.DISCIPLES_FIELDS[6], obj.getString("mentor_id"));
+                        cv.put(Database.DISCIPLES_FIELDS[7], obj.getString("stage"));
+                        cv.put(Database.DISCIPLES_FIELDS[8], obj.getString("picture"));
+                        cv.put(Database.DISCIPLES_FIELDS[9], "");
+                        cv.put(Database.DISCIPLES_FIELDS[10], obj.getString("role_id"));
+                        cv.put(Database.DISCIPLES_FIELDS[11], obj.getString("gender"));
+                        cv.put(Database.DISCIPLES_FIELDS[12], obj.getString("created"));
+                        Disciple disciple = DeepLife.myDATABASE.getDiscipleByPhone(obj.getString("phone_no"));
+                        if(disciple == null){
+                            long x = DeepLife.myDATABASE.insert(Database.Table_DISCIPLES,cv);
+                            if(x>0){
+                                Log.i(TAG,"Successfully Added: Disciples Added -> \n"+cv.toString());
+                            }else {
+                                Log.i(TAG,"Error During Adding: Disciples -> \n"+cv.toString());
+                            }
                         }else {
-                            Log.i(TAG,"Error During Adding: Disciples -> \n"+cv.toString());
-                        }
-                    }else {
-                        cv.put(Database.DISCIPLES_FIELDS[9], disciple.getImagePath());
-                        long x = DeepLife.myDATABASE.update(Database.Table_DISCIPLES,cv,disciple.getID());
-                        Log.i(TAG,"Updated: Testimony Updated -> \n"+cv.toString());
-                        if(x>0){
-                            Log.i(TAG,"Successfully Updated: Disciples Updated -> \n"+cv.toString());
-                        }else {
-                            Log.i(TAG,"Error During Updating: Disciples -> \n"+cv.toString());
+                            cv.put(Database.DISCIPLES_FIELDS[9], disciple.getImagePath());
+                            long x = DeepLife.myDATABASE.update(Database.Table_DISCIPLES,cv,disciple.getID());
+                            Log.i(TAG,"Updated: Testimony Updated -> \n"+cv.toString());
+                            if(x>0){
+                                Log.i(TAG,"Successfully Updated: Disciples Updated -> \n"+cv.toString());
+                            }else {
+                                Log.i(TAG,"Error During Updating: Disciples -> \n"+cv.toString());
+                            }
                         }
                     }
                 }
+
             }
         }catch (Exception e){
             Log.i(TAG,e.toString());

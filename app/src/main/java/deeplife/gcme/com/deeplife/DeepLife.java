@@ -22,9 +22,10 @@ import me.tatarka.support.job.JobScheduler;
 
 public class DeepLife extends Application {
 //    public static final String DEEP_URL  = "http://staging.deeplife.cc";
-    public static final String DEEP_URL  = "http://192.168.100.7/DeepLife_Web/public";
+    public static final String DEEP_URL  = "http://192.168.8.109/DeepLife_Web/public";
     public static final String API_URL  = DEEP_URL+"/deep_api";
     public static final String PROFILE_PIC_URL  = DEEP_URL+"/img/profile/";
+    public static int ImageDownloadCount = 0;
 
     private static final int REQUEST_PHONE_CALL = 11;
 
@@ -50,7 +51,7 @@ public class DeepLife extends Application {
         JobInfo.Builder jobInfo;
         jobInfo = new JobInfo.Builder(JOB_ID++,  new ComponentName(this,SyncService.class))
                 .setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED)
-                .setPeriodic(30000)
+                .setPeriodic(10000)
                 .setRequiresDeviceIdle(false)
                 .setRequiresCharging(false);
         myJobScheduler.cancelAll();

@@ -6,7 +6,7 @@ package deeplife.gcme.com.deeplife.Testimony;
 
 public class Testimony {
     private int ID,SerID,User_ID,Status;
-    private String Content,PubDate;
+    private String Content,PubDate,UserName;
 
     public int getID() {
         return ID;
@@ -30,6 +30,14 @@ public class Testimony {
 
     public void setUser_ID(int user_ID) {
         User_ID = user_ID;
+    }
+
+    public String getUserName() {
+        return UserName;
+    }
+
+    public void setUserName(String userName) {
+        UserName = userName;
     }
 
     public String getContent() {

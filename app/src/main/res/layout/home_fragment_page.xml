@@ -43,57 +43,63 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:paddingLeft="40dp"
-                        android:paddingRight="40dp">
-
-                        <ImageView
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:background="@drawable/icon_disciple_tree_white" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
-                            android:text="Disciple Tree"
-                            android:textColor="#ffffff"
-                            android:textSize="20dp"
-                            android:textStyle="bold" />
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
                         android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:paddingLeft="60dp">
-
-                        <TextView
+                        android:layout_marginLeft="20dp"
+                        android:layout_height="wrap_content">
+                        <LinearLayout
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="141"
-                            android:textColor="#ffffff"
-                            android:textSize="35sp" />
-
-                        <TextView
+                            android:gravity="center_horizontal|center_vertical"
+                            android:layout_height="wrap_content">
+                            <ImageView
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:layout_gravity="center_vertical"
+                                android:background="@drawable/icon_disciple_tree_white" />
+                        </LinearLayout>
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:orientation="vertical"
                             android:layout_marginLeft="20dp"
-                            android:text="Total Disciples"
-                            android:textColor="#ffffff"
-                            android:textSize="20sp" />
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Disciple Tree"
+                                android:textStyle="bold"
+                                android:textColor="#ffffff"
+                                android:textSize="25dp"/>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal"
+                                android:layout_height="wrap_content">
+                                <TextView
+                                    android:id="@+id/txt_home_disciple"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="#ffffff"
+                                    android:textSize="30dp"
+                                    android:text="241"/>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="10dp"
+                                    android:textColor="#ffffff"
+                                    android:textSize="20sp"
+                                    android:text="Total Disciples"/>
+                            </LinearLayout>
+                        </LinearLayout>
+
+
                     </LinearLayout>
                 </LinearLayout>
 
             </android.support.v7.widget.CardView>
 
         </LinearLayout>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -117,56 +123,63 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:paddingLeft="40dp"
-                        android:paddingRight="40dp">
-
-                        <ImageView
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:background="@drawable/icon_win_icon_white" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
-                            android:text="Win"
-                            android:textColor="#ffffff"
-                            android:textSize="20dp"
-                            android:textStyle="bold" />
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
                         android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:paddingLeft="60dp">
-
-                        <TextView
+                        android:layout_marginLeft="20dp"
+                        android:layout_height="wrap_content">
+                        <LinearLayout
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="209"
-                            android:textColor="#ffffff"
-                            android:textSize="35sp" />
-
-                        <TextView
+                            android:gravity="center_horizontal|center_vertical"
+                            android:layout_height="wrap_content">
+                            <ImageView
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:layout_gravity="center_vertical"
+                                android:background="@drawable/icon_win_icon_white" />
+                        </LinearLayout>
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:orientation="vertical"
                             android:layout_marginLeft="20dp"
-                            android:text="Aggressive"
-                            android:textColor="#ffffff"
-                            android:textSize="20sp" />
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Win Disciples"
+                                android:textStyle="bold"
+                                android:textColor="#ffffff"
+                                android:textSize="25dp"/>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal"
+                                android:layout_height="wrap_content">
+                                <TextView
+                                    android:id="@+id/txt_home_win"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="#ffffff"
+                                    android:textSize="30dp"
+                                    android:text="241"/>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="10dp"
+                                    android:textColor="#ffffff"
+                                    android:textSize="20sp"
+                                    android:text="Aggressive"/>
+                            </LinearLayout>
+                        </LinearLayout>
+
+
                     </LinearLayout>
                 </LinearLayout>
 
             </android.support.v7.widget.CardView>
-        </LinearLayout>
 
+        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -183,67 +196,73 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/colorPrimary"
+                    android:background="@color/bg_login"
                     android:gravity="center_vertical|center_horizontal"
                     android:orientation="vertical"
                     android:padding="10dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:paddingLeft="40dp"
-                        android:paddingRight="40dp">
-
-                        <ImageView
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:background="@drawable/icon_build_icon_white" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
-                            android:text="Build"
-                            android:textColor="#ffffff"
-                            android:textSize="20dp"
-                            android:textStyle="bold" />
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
                         android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:paddingLeft="60dp">
-
-                        <TextView
+                        android:layout_marginLeft="20dp"
+                        android:layout_height="wrap_content">
+                        <LinearLayout
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="29"
-                            android:textColor="#ffffff"
-                            android:textSize="35sp" />
-
-                        <TextView
+                            android:gravity="center_horizontal|center_vertical"
+                            android:layout_height="wrap_content">
+                            <ImageView
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:layout_gravity="center_vertical"
+                                android:background="@drawable/icon_build_icon_white" />
+                        </LinearLayout>
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:orientation="vertical"
                             android:layout_marginLeft="20dp"
-                            android:text="Total Disciples"
-                            android:textColor="#ffffff"
-                            android:textSize="20sp" />
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Build Disciples"
+                                android:textStyle="bold"
+                                android:textColor="#ffffff"
+                                android:textSize="25dp"/>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal"
+                                android:layout_height="wrap_content">
+                                <TextView
+                                    android:id="@+id/txt_home_build"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="#ffffff"
+                                    android:textSize="30dp"
+                                    android:text="241"/>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="10dp"
+                                    android:textColor="#ffffff"
+                                    android:textSize="20sp"
+                                    android:text="Built Disciples"/>
+                            </LinearLayout>
+                        </LinearLayout>
+
+
                     </LinearLayout>
                 </LinearLayout>
 
             </android.support.v7.widget.CardView>
-        </LinearLayout>
 
+        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="5dp"
             android:layout_weight="1">
 
             <android.support.v7.widget.CardView
@@ -264,54 +283,62 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:paddingLeft="40dp"
-                        android:paddingRight="40dp">
-
-                        <ImageView
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:background="@drawable/icon_send_icon_white" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
-                            android:text="Send"
-                            android:textColor="#ffffff"
-                            android:textSize="20dp"
-                            android:textStyle="bold" />
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
                         android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:paddingLeft="60dp">
-
-                        <TextView
+                        android:layout_marginLeft="20dp"
+                        android:layout_height="wrap_content">
+                        <LinearLayout
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="14"
-                            android:textColor="#ffffff"
-                            android:textSize="35sp" />
-
-                        <TextView
+                            android:gravity="center_horizontal|center_vertical"
+                            android:layout_height="wrap_content">
+                            <ImageView
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:layout_gravity="center_vertical"
+                                android:background="@drawable/icon_send_icon_white" />
+                        </LinearLayout>
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:orientation="vertical"
                             android:layout_marginLeft="20dp"
-                            android:text="Total Disciples"
-                            android:textColor="#ffffff"
-                            android:textSize="20sp" />
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Sent Disciples"
+                                android:textStyle="bold"
+                                android:textColor="#ffffff"
+                                android:textSize="25dp"/>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal"
+                                android:layout_height="wrap_content">
+                                <TextView
+                                    android:id="@+id/txt_home_send"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="#ffffff"
+                                    android:textSize="30dp"
+                                    android:text="241"/>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="10dp"
+                                    android:textColor="#ffffff"
+                                    android:textSize="20sp"
+                                    android:text="Built Disciples"/>
+                            </LinearLayout>
+                        </LinearLayout>
+
+
                     </LinearLayout>
                 </LinearLayout>
 
             </android.support.v7.widget.CardView>
+
         </LinearLayout>
     </LinearLayout>
 

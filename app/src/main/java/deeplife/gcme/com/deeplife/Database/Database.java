@@ -52,7 +52,7 @@ public class Database {
     public static final String[] REPORT_FORM_FIELDS = {"Report_ID","Category","Questions"};
     public static final String[] REPORT_FIELDS = {"Report_ID","Value","Date"};
     public static final String[] QUESTION_ANSWER_FIELDS = {"SerID","DisciplePhone","Question_ID", "Answer","BuildStage"};
-    public static final String[] TESTIMONY_FIELDS = {"SerID","UserID","Description","Status","PubDate"};
+    public static final String[] TESTIMONY_FIELDS = {"SerID","UserID","Description","Status","PubDate","UserName"};
     public static final String[] IMAGE_SYNC_FIELDS = {"FileName", "Param"};
     public static final String[] CATEGORY_FIELDS = {"SerID", "Name", "Parent", "Status", "Created"};
 
@@ -66,7 +66,7 @@ public class Database {
     public static final String[] USER_COLUMN = { "id", "SerID","Full_Name", "Email","Phone","Password","Country","Picture","Favorite_Scripture"  };
     public static final String[] QUESTION_LIST_COLUMN = {"id","SerID","Category", "Question","Description","Mandatory","Type","Country","Created"};
     public static final String[] QUESTION_ANSWER_COLUMN = {"id","SerID","DisciplePhone","Question_ID", "Answer","BuildStage"};
-    public static final String[] TESTIMONY_COLUMN = {"id","SerID","UserID", "Description","Status","PubDate"};
+    public static final String[] TESTIMONY_COLUMN = {"id","SerID","UserID","Description","Status","PubDate","UserName"};
     public static final String[] IMAGE_SYNC_COLUMN = {"id","FileName", "Param"};
     public static final String[] CATEGORY_COLUMN = {"id","SerID", "Name", "Parent", "Status", "Created"};
 
@@ -330,6 +330,7 @@ public class Database {
                         testimony.setContent(c.getString(c.getColumnIndex(TESTIMONY_COLUMN[3])));
                         testimony.setStatus(Integer.valueOf(c.getString(c.getColumnIndex(TESTIMONY_COLUMN[4]))));
                         testimony.setPubDate(c.getString(c.getColumnIndex(TESTIMONY_COLUMN[5])));
+                        testimony.setUserName(c.getString(c.getColumnIndex(TESTIMONY_COLUMN[6])));
                         return testimony;
                     }
                 }
@@ -1310,7 +1311,7 @@ public class Database {
             cv.put(Database.USER_FIELDS[5], mainUser.getUser_Country());
             cv.put(Database.USER_FIELDS[6], mainUser.getUser_Picture());
             cv.put(Database.USER_FIELDS[7], mainUser.getUser_Favorite_Scripture());
-            long  x = DeepLife.myDATABASE.insert(DB_Table,cv);
+            long x = DeepLife.myDATABASE.update(DB_Table,cv,mainUser.getID());
             return x;
         }catch (Exception e){
             Log.i(TAG, "Failed UPDATE updateMainUser: "+e.toString());

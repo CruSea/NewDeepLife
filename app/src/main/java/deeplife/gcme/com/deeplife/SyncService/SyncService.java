@@ -64,7 +64,7 @@ public class SyncService extends JobService {
     @Override
     public boolean onStartJob(me.tatarka.support.job.JobParameters params) {
         Log.i(TAG, "The Job scheduler started");
-        user = DeepLife.myDATABASE.get_User();
+        user = DeepLife.myDATABASE.getMainUser();
         Send_Param = new ArrayList<Pair<String,String>>();
         getService();
         if(user != null ){

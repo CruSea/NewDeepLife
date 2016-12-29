@@ -11,8 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import deeplife.gcme.com.deeplife.DeepLife;
+import deeplife.gcme.com.deeplife.FileManager.FileDownloader;
+import deeplife.gcme.com.deeplife.FileManager.FileManager;
 import deeplife.gcme.com.deeplife.R;
 import deeplife.gcme.com.deeplife.Testimony.Testimony;
 import deeplife.gcme.com.deeplife.Testimony.TestimonyListAdapter;
@@ -26,10 +29,23 @@ public class NewsFragment extends Fragment {
     private static RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private static Context myContext;
+    private static FileDownloader myFileDownloader;
+    private static FileManager myFileManager;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        myFileManager = new FileManager(getContext());
+        List<News> myNews = DeepLife.myDATABASE.getAllNews();
+        for(News news:myNews){
+            String filename = "news"+news.getSerID()+".png";
+            if(!myFileManager.getFileAt("News",filename).isFile()){
+                if(DeepLife.ImageDownloadCount < 5){
+                    FileDownloader d1 = new FileDownloader(getContext(),news.getImageURL(),"News",filename);
+                    d1.execute();
+                }
+            }
+        }
     }
 
     @Nullable

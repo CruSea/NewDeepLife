@@ -1,6 +1,7 @@
 package deeplife.gcme.com.deeplife.News;
 
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,8 +9,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.File;
 import java.util.List;
 
+import deeplife.gcme.com.deeplife.FileManager.FileManager;
 import deeplife.gcme.com.deeplife.R;
 import deeplife.gcme.com.deeplife.Testimony.TestimonyListAdapter;
 
@@ -20,11 +23,13 @@ import deeplife.gcme.com.deeplife.Testimony.TestimonyListAdapter;
 public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.DataObjectHolder> {
     private List<News> Newses;
     private Context myContext;
+    private FileManager myFileManager;
 
 
     public NewsListAdapter(List<News> newses, Context myContext) {
         Newses = newses;
         this.myContext = myContext;
+        myFileManager = new FileManager(myContext);
     }
 
     @Override
@@ -39,6 +44,11 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.DataOb
         holder.Title.setText(Newses.get(position).getTitle());
         holder.Content.setText(Newses.get(position).getContent());
         holder.PubDate.setText(Newses.get(position).getPubDate());
+        String filename = "news"+Newses.get(position).getSerID()+".png";
+        File myFile = myFileManager.getFileAt("News",filename);
+        if(myFile.isFile()){
+           holder.NewsImage.setImageBitmap(BitmapFactory.decodeFile(myFile.getAbsolutePath()));
+        }
     }
 
     @Override
@@ -54,6 +64,7 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.DataOb
             Title = (TextView) itemView.findViewById(R.id.txt_newsfeed_title);
             Content = (TextView) itemView.findViewById(R.id.txt_newsfeed_content);
             PubDate = (TextView) itemView.findViewById(R.id.txt_newsfeed_pubdate);
+            NewsImage = (ImageView) itemView.findViewById(R.id.img_news_image);
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);
         }
