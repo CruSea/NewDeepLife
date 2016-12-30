@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
 
 import deeplife.gcme.com.deeplife.Database.Database;
+import deeplife.gcme.com.deeplife.Models.User;
 
 /**
  * Created by bengeos on 12/18/16.
@@ -36,6 +37,7 @@ public class Splash extends AppCompatActivity {
     public synchronized void getNextActivity() {
 
         int Count = DeepLife.myDATABASE.count(Database.Table_USER);
+        User bb = DeepLife.myDATABASE.getMainUser();
         if(Count == 1){
             Intent intent = new Intent(this, MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);

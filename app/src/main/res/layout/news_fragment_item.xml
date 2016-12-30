@@ -24,7 +24,6 @@
                     android:id="@+id/img_news_image"
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
-                    android:src="@drawable/jesus_saves"
                     android:scaleType="centerCrop" />
             </LinearLayout>
             <LinearLayout
@@ -37,6 +36,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
+                    android:textSize="18sp"
                     android:textColor="#000000"
                     android:text="Deeplife Discipleship System is launched in Zimbuwabe"/>
                 <TextView
@@ -44,6 +44,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
+                    android:textSize="16sp"
                     android:text="Who had great time in zimbuwabe lauinching deeplife android application in last April. it was totaly mind blowing event. i liked it very very much"/>
             </LinearLayout>
             <LinearLayout

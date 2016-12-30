@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -49,7 +50,7 @@ public class Login extends AppCompatActivity {
         if(myCountries != null && myCountries.size()>0){
 
         }else {
-            PROGRESS_DIALOG.setMessage("Downloading Necessary Files ....");
+            PROGRESS_DIALOG.setMessage("Downloading Files ....");
             PROGRESS_DIALOG.show();
             loginAccess = new LoginAccess(new User());
             loginAccess.GetMetaData();
@@ -86,18 +87,34 @@ public class Login extends AppCompatActivity {
         Login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                User user = new User();
-                if(UserName.getText().toString().contains("@")){
-                    user.setUser_Email(UserName.getText().toString());
+                if(myCountries == null || myCountries.size() == 0){
+                    myCountries = DeepLife.myDATABASE.getAllCountries();
+                    UpdateView();
                 }else {
-                    user.setUser_Phone(""+myCountries.get(mySpinner.getSelectedItemPosition()).getCode()+""+UserName.getText().toString());
+                    User user = new User();
+                    if(UserName.getText().toString().contains("@")){
+                        user.setUser_Email(UserName.getText().toString());
+                    }else {
+                        user.setUser_Phone(""+myCountries.get(mySpinner.getSelectedItemPosition()).getCode()+""+UserName.getText().toString());
+                    }
+                    user.setUser_Pass(UserPass.getText().toString());
+                    user.setUser_Country(""+myCountries.get(mySpinner.getSelectedItemPosition()).getSerID());
+                    loginAccess = new LoginAccess(user);
+                    PROGRESS_DIALOG.setMessage("Authenticating the user ....");
+                    PROGRESS_DIALOG.show();
+                    loginAccess.LogInAuthnticate();
                 }
-                user.setUser_Pass(UserPass.getText().toString());
-                user.setUser_Country(""+myCountries.get(mySpinner.getSelectedItemPosition()).getSerID());
-                loginAccess = new LoginAccess(user);
-                PROGRESS_DIALOG.setMessage("Authenticating the user ....");
-                PROGRESS_DIALOG.show();
-                loginAccess.LogInAuthnticate();
+
+            }
+        });
+
+        Forgotten = (Button) findViewById(R.id.btn_link_forgot_password);
+        Forgotten.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Uri uri = Uri.parse(DeepLife.FORGOTEN_URL);
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
             }
         });
         myCountries = DeepLife.myDATABASE.getAllCountries();

@@ -13,9 +13,11 @@ import java.util.List;
 
 import deeplife.gcme.com.deeplife.DeepLife;
 import deeplife.gcme.com.deeplife.Disciples.Disciple;
+import deeplife.gcme.com.deeplife.LearningTools.LearningTool;
 import deeplife.gcme.com.deeplife.Models.Answer;
 import deeplife.gcme.com.deeplife.Models.Category;
 import deeplife.gcme.com.deeplife.Models.Country;
+import deeplife.gcme.com.deeplife.Models.DiscipleTreeCount;
 import deeplife.gcme.com.deeplife.Models.ImageSync;
 import deeplife.gcme.com.deeplife.Models.Logs;
 import deeplife.gcme.com.deeplife.Models.ReportItem;
@@ -40,6 +42,8 @@ public class Database {
     public static final String Table_TESTIMONY = "TESTIMONY";
     public static final String Table_IMAGE_SYNC = "ImageToSync";
     public static final String Table_CATEGORIES = "Categories";
+    public static final String Table_LEARNING = "LEARNING_TOOLS";
+    public static final String Table_DISCIPLE_TREE = "DISCIPLE_TREE_COUNT";
 
     public static final String[] DISCIPLES_FIELDS = {"SerID","FullName","DisplayName", "Email", "Phone", "Country","MentorID","Stage","ImageURL","ImagePath","Role","Gender","Created" };
     public static final String[] LOGS_FIELDS = { "Type", "Task","Value" };
@@ -55,6 +59,8 @@ public class Database {
     public static final String[] TESTIMONY_FIELDS = {"SerID","UserID","Description","Status","PubDate","UserName"};
     public static final String[] IMAGE_SYNC_FIELDS = {"FileName", "Param"};
     public static final String[] CATEGORY_FIELDS = {"SerID", "Name", "Parent", "Status", "Created"};
+    public static final String[] LEARNING_FIELDS = {"SerID", "Title", "Description", "VideoURL", "Country", "IsDefault", "Created"};
+    public static final String[] DISCIPLE_TREE_FIELDS = {"SerID", "UserID", "Count"};
 
     public static final String[] DISCIPLES_COLUMN = { "id", "SerID","FullName","DisplayName", "Email", "Phone", "Country","MentorID","Stage","ImageURL","ImagePath","Role","Gender","Created"  };
     public static final String[] SCHEDULES_COLUMN = { "id","Disciple_Phone","Title","Alarm_Time","Alarm_Repeat","Description" };
@@ -69,6 +75,8 @@ public class Database {
     public static final String[] TESTIMONY_COLUMN = {"id","SerID","UserID","Description","Status","PubDate","UserName"};
     public static final String[] IMAGE_SYNC_COLUMN = {"id","FileName", "Param"};
     public static final String[] CATEGORY_COLUMN = {"id","SerID", "Name", "Parent", "Status", "Created"};
+    public static final String[] LEARNING_COLUMN = {"id","SerID", "Title", "Description", "VideoURL", "Country", "IsDefault", "Created"};
+    public static final String[] DISCIPLE_TREE_COLUMN = {"id","SerID", "UserID", "Count"};
 
 
 	private SQLiteDatabase myDatabase;
@@ -93,6 +101,8 @@ public class Database {
         mySQL.createTables(Table_TESTIMONY, TESTIMONY_FIELDS);
         mySQL.createTables(Table_IMAGE_SYNC,IMAGE_SYNC_FIELDS);
         mySQL.createTables(Table_CATEGORIES,CATEGORY_FIELDS);
+        mySQL.createTables(Table_LEARNING,LEARNING_FIELDS);
+        mySQL.createTables(Table_DISCIPLE_TREE,DISCIPLE_TREE_FIELDS);
     }
 
     public long insert(String DB_Table, ContentValues cv){
@@ -519,9 +529,15 @@ public class Database {
             cv.put(Database.DISCIPLES_FIELDS[10], disciple.getRole());
             cv.put(Database.DISCIPLES_FIELDS[11], disciple.getGender());
             cv.put(Database.DISCIPLES_FIELDS[12], disciple.getCreated());
-            int id = DeepLife.myDATABASE.getDiscipleByPhone(disciple.getPhone()).getID();
-            long  x = DeepLife.myDATABASE.update(DB_Table,cv,id);
-            return x;
+            if(disciple.getID() >0){
+                long  x = DeepLife.myDATABASE.update(DB_Table,cv,disciple.getID());
+                return x;
+            }else {
+                int id = DeepLife.myDATABASE.getDiscipleByPhone(disciple.getPhone()).getID();
+                long  x = DeepLife.myDATABASE.update(DB_Table,cv,id);
+                return x;
+
+            }
         }catch (Exception e){
             Log.i(TAG, "Failed UPDATE updateDisciple: "+e.toString());
             return 0;
@@ -1267,7 +1283,6 @@ public class Database {
     /////////////////////////////////
     /////////////////////////////////
 
-
     public User getMainUser() {
         Log.i(TAG, "Get getMainUser: ");
         String DB_Table = Table_USER;
@@ -1311,7 +1326,8 @@ public class Database {
             cv.put(Database.USER_FIELDS[5], mainUser.getUser_Country());
             cv.put(Database.USER_FIELDS[6], mainUser.getUser_Picture());
             cv.put(Database.USER_FIELDS[7], mainUser.getUser_Favorite_Scripture());
-            long x = DeepLife.myDATABASE.update(DB_Table,cv,mainUser.getID());
+            DeepLife.myDATABASE.Delete_All(DB_Table);
+            long x = DeepLife.myDATABASE.insert(DB_Table,cv);
             return x;
         }catch (Exception e){
             Log.i(TAG, "Failed UPDATE updateMainUser: "+e.toString());
@@ -1319,921 +1335,117 @@ public class Database {
         }
     }
 
-//    public ArrayList<ImageSync> Get_All_ImageSync(){
-//        String DB_Table = Table_IMAGE_SYNC;
-//        ArrayList<ImageSync> found = new ArrayList<ImageSync>();
-//        try{
-//            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
-//            c.moveToFirst();
-//            for(int i=0;i<c.getCount();i++){
-//                c.moveToPosition(i);
-//                ImageSync dis = new ImageSync();
-//                dis.setId(c.getString(c.getColumnIndex(IMAGE_SYNC_COLUMN[0])));
-//                dis.setFilePath(c.getString(c.getColumnIndex(IMAGE_SYNC_COLUMN[1])));
-//                dis.setParam(c.getString(c.getColumnIndex(IMAGE_SYNC_COLUMN[2])));
-//                found.add(dis);
-//            }
-//        }catch (Exception e){
-//
-//        }
-//        return found;
-//    }
-//
-//    public ArrayList<Testimony> getSendTestimony(){
-//        Log.i(TAG, "SendTestimony:\n");
-//        ArrayList<Testimony> Found = new ArrayList<Testimony>();
-//        try{
-//            Cursor c = myDatabase.query(Table_LOGS, LOGS_COLUMN, null, null, null, null, null);
-//            if(c != null && c.getCount()>0){
-//                c.moveToFirst();
-//                for(int i=0;i<c.getCount();i++){
-//                    c.moveToPosition(i);
-//                    String str = c.getString(c.getColumnIndex(LOGS_COLUMN[2]));
-//                    String id = c.getString(c.getColumnIndex(LOGS_COLUMN[3]));
-//                    String ID = c.getString(c.getColumnIndex(LOGS_COLUMN[0]));
-//                    Log.i(TAG, "Comparing-> \n" + SyncService.Sync_Tasks[6] + " | "+str);
-//                    if(SyncService.Sync_Tasks[6].equals(str)){
-//                        Log.i(TAG, "SendTestimony Count:-> " + c.getCount());
-//                        Testimony newTestimony = get_Testimony_by_id(id);
-//                        if(newTestimony !=null){
-//                            newTestimony.setId(ID);
-//                            Log.i(TAG, "Found for Testimony Send:-> \n" + newTestimony.toString());
-//                            Found.add(newTestimony);
-//                        }
-//                    }
-//                }
-//            }
-//        }catch (Exception e){
-//
-//        }
-//        return Found;
-//    }
-//    public ImageSync Get_Top_ImageSync(){
-//        String DB_Table = Table_IMAGE_SYNC;
-//        ImageSync found = new ImageSync();
-//        try{
-//            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
-//            if(c.getCount()>0){
-//                c.moveToPosition(c.getCount()-1);
-//                ImageSync dis = new ImageSync();
-//                dis.setId(c.getString(c.getColumnIndex(IMAGE_SYNC_COLUMN[0])));
-//                dis.setFilePath(c.getString(c.getColumnIndex(IMAGE_SYNC_COLUMN[1])));
-//                dis.setParam(c.getString(c.getColumnIndex(IMAGE_SYNC_COLUMN[2])));
-//                return dis;
-//            }else{
-//                return null;
-//            }
-//        }catch (Exception e){
-//
-//        }
-//        return null;
-//    }
-//    public ArrayList<Question> get_All_Questions(String Category){
-//        String DB_Table = Table_QUESTION_LIST;
-//        ArrayList<Question> found = new ArrayList<Question>();
-//        try{
-//            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), QUESTION_LIST_FIELDS[0] + " = '" + Category + "'", null, null, null, null);
-//            c.moveToFirst();
-//            for(int i=0;i<c.getCount();i++){
-//                c.moveToPosition(i);
-//                Question dis = new Question();
-//                dis.setId(c.getString(c.getColumnIndex(QUESTION_LIST_COLUMN[0])));
-//                dis.setCategory(c.getString(c.getColumnIndex(QUESTION_LIST_COLUMN[1])));
-//                dis.setDescription(c.getString(c.getColumnIndex(QUESTION_LIST_COLUMN[2])));
-//                dis.setNote(c.getString(c.getColumnIndex(QUESTION_LIST_COLUMN[3])));
-//                dis.setMandatory(c.getString(c.getColumnIndex(QUESTION_LIST_COLUMN[4])));
-//                found.add(dis);
-//            }
-//        }catch (Exception e){
-//
-//        }
-//        return found;
-//    }
-//    public ArrayList<Question> get_All_Questions(){
-//        String DB_Table = Table_QUESTION_LIST;
-//        ArrayList<Question> found = new ArrayList<Question>();
-//        try{
-//            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
-//            c.moveToFirst();
-//            for(int i=0;i<c.getCount();i++){
-//                c.moveToPosition(i);
-//                Question dis = new Question();
-//                dis.setId(c.getString(c.getColumnIndex(QUESTION_LIST_COLUMN[0])));
-//                dis.setCategory(c.getString(c.getColumnIndex(QUESTION_LIST_COLUMN[1])));
-//                dis.setDescription(c.getString(c.getColumnIndex(QUESTION_LIST_COLUMN[2])));
-//                dis.setNote(c.getString(c.getColumnIndex(QUESTION_LIST_COLUMN[3])));
-//                dis.setMandatory(c.getString(c.getColumnIndex(QUESTION_LIST_COLUMN[4])));
-//                found.add(dis);
-//            }
-//        }catch (Exception e){
-//
-//        }
-//        return found;
-//    }
-//    public ArrayList<ReportItem> get_All_Report(){
-//        String DB_Table = Table_Report_Forms;
-//        ArrayList<ReportItem> found = new ArrayList<ReportItem>();
-//        try{
-//            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
-//            c.moveToFirst();
-//            for(int i=0;i<c.getCount();i++){
-//                c.moveToPosition(i);
-//                ReportItem dis = new ReportItem();
-//                dis.setId(c.getString(c.getColumnIndex(REPORT_FORM_COLUMN[0])));
-//                dis.setReport_ID(c.getString(c.getColumnIndex(REPORT_FORM_COLUMN[1])));
-//                dis.setCategory(c.getString(c.getColumnIndex(REPORT_FORM_COLUMN[2])));
-//                dis.setQuestion(c.getString(c.getColumnIndex(REPORT_FORM_COLUMN[3])));
-//                found.add(dis);
-//            }
-//        }catch (Exception e){
-//        }
-//        return found;
-//    }
-//    public ReportItem get_Report(String Report_ID){
-//        try{
-//            String DB_Table = Table_Reports;
-//            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
-//            c.moveToFirst();
-//            for(int i=0;i<c.getCount();i++){
-//                c.moveToPosition(i);
-//                String rep_id  = c.getString(c.getColumnIndex(REPORT_COLUMN[1]));
-//                if(rep_id.equals(Report_ID)){
-//                    ReportItem dis = new ReportItem();
-//                    dis.setId(c.getString(c.getColumnIndex(REPORT_COLUMN[0])));
-//                    dis.setReport_ID(c.getString(c.getColumnIndex(REPORT_COLUMN[1])));
-//                    dis.setValue(c.getString(c.getColumnIndex(REPORT_COLUMN[2])));
-//                    dis.setQuestion(c.getString(c.getColumnIndex(REPORT_COLUMN[1])));
-//                    dis.setCategory(c.getString(c.getColumnIndex(REPORT_COLUMN[1])));
-//                    return dis;
-//                }
-//            }
-//        }catch (Exception e){
-//
-//        }
-//        return null;
-//    }
-//    public ReportItem get_Report_by_id(String ID){
-//        try{
-//            String DB_Table = Table_Reports;
-//            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
-//            c.moveToFirst();
-//            for(int i=0;i<c.getCount();i++){
-//                c.moveToPosition(i);
-//                String rep_id  = c.getString(c.getColumnIndex(REPORT_COLUMN[0]));
-//                if(rep_id.equals(ID)){
-//                    ReportItem dis = new ReportItem();
-//                    dis.setId(c.getString(c.getColumnIndex(REPORT_COLUMN[0])));
-//                    dis.setReport_ID(c.getString(c.getColumnIndex(REPORT_COLUMN[1])));
-//                    dis.setValue(c.getString(c.getColumnIndex(REPORT_COLUMN[2])));
-//                    dis.setQuestion(c.getString(c.getColumnIndex(REPORT_COLUMN[1])));
-//                    dis.setCategory(c.getString(c.getColumnIndex(REPORT_COLUMN[1])));
-//                    return dis;
-//                }
-//            }
-//        }catch (Exception e){
-//
-//        }
-//        return null;
-//    }
-//    public NewsFeed get_NewsFeed_by_id(String ID){
-//        try{
-//            String DB_Table = Table_NEWSFEED;
-//            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
-//            c.moveToFirst();
-//            for(int i=0;i<c.getCount();i++){
-//                c.moveToPosition(i);
-//                String news_id  = c.getString(c.getColumnIndex(NewsFeed_COLUMN[0]));
-//                if(news_id.equals(ID)){
-//                    NewsFeed news = new NewsFeed();
-//                    news.setId(c.getString(c.getColumnIndex(NewsFeed_COLUMN[0])));
-//                    news.setNews_ID(c.getString(c.getColumnIndex(NewsFeed_COLUMN[1])));
-//                    news.setTitle(c.getString(c.getColumnIndex(NewsFeed_COLUMN[2])));
-//                    news.setContent(c.getString(c.getColumnIndex(NewsFeed_COLUMN[3])));
-//                    news.setImageURL(c.getString(c.getColumnIndex(NewsFeed_COLUMN[4])));
-//                    news.setImagePath(c.getString(c.getColumnIndex(NewsFeed_COLUMN[5])));
-//                    news.setPubDate(c.getString(c.getColumnIndex(NewsFeed_COLUMN[6])));
-//                    news.setCategory(c.getString(c.getColumnIndex(NewsFeed_COLUMN[7])));
-//                    return news;
-//                }
-//            }
-//        }catch (Exception e){
-//
-//        }
-//        return null;
-//    }
-//    public ArrayList<Logs> getSendLogs(){
-//        Log.i(TAG, "SendLogs:\n");
-//        ArrayList<Logs> Found = new ArrayList<Logs>();
-//        try{
-//            Cursor c = myDatabase.query(Table_LOGS, LOGS_COLUMN, null, null, null, null, null);
-//            if(c != null && c.getCount()>0){
-//                c.moveToFirst();
-//                for(int i=0;i<c.getCount();i++){
-//                    c.moveToPosition(i);
-//                    String str = c.getString(c.getColumnIndex(LOGS_COLUMN[2]));
-//                    Log.i(TAG, "Comparing-> \n" + SyncService.Sync_Tasks[0] + " | "+str);
-//                    if (SyncService.Sync_Tasks[0].equals(str)){
-//                        Log.i(TAG, "SendLogs Count:-> " + c.getCount());
-//                        Logs newLogs = new Logs();
-//                        newLogs.setId(c.getString(c.getColumnIndex(LOGS_COLUMN[0])));
-//                        newLogs.setType(c.getString(c.getColumnIndex(LOGS_COLUMN[1])));
-//                        newLogs.setTask(c.getString(c.getColumnIndex(LOGS_COLUMN[2])));
-//                        newLogs.setValue(c.getString(c.getColumnIndex(LOGS_COLUMN[3])));
-//                        Log.i(TAG, "Found for SendLogs:-> \n" + newLogs.toString());
-//                        Found.add(newLogs);
-//                    }
-//                }
-//            }
-//        }catch (Exception e){
-//
-//        }
-//        return Found;
-//    }
-//    public ArrayList<Disciples> getSendDisciples(){
-//        Log.i(TAG, "SendDisciples:\n");
-//        ArrayList<Disciples> Found = new ArrayList<Disciples>();
-//        try{
-//            Cursor c = myDatabase.query(Table_LOGS, LOGS_COLUMN, null, null, null, null, null);
-//            if(c != null && c.getCount()>0){
-//                c.moveToFirst();
-//                for(int i=0;i<c.getCount();i++){
-//                    c.moveToPosition(i);
-//                    String str = c.getString(c.getColumnIndex(LOGS_COLUMN[2]));
-//                    String id = c.getString(c.getColumnIndex(LOGS_COLUMN[3]));
-//                    String ID = c.getString(c.getColumnIndex(LOGS_COLUMN[0]));
-//                    Log.i(TAG, "Comparing-> \n" + SyncService.Sync_Tasks[1] + " | "+str);
-//                    if(SyncService.Sync_Tasks[1].equals(str)){
-//                        Log.i(TAG, "SendDisciples Count:-> " + c.getCount());
-//                        Disciples newDisciples = getDiscipleProfile(id);
-//                        if(newDisciples !=null){
-//                            newDisciples.setId(ID);
-//                            Log.i(TAG, "Found for Send:-> \n" + newDisciples.toString());
-//                            Found.add(newDisciples);
-//                        }
-//                    }
-//                }
-//            }
-//        }catch (Exception e){
-//
-//        }
-//        return Found;
-//    }
-//    public ArrayList<Schedule> getSendSchedules(){
-//        Log.i(TAG, "SendSchedules:\n");
-//        ArrayList<Schedule> Found = new ArrayList<Schedule>();
-//        try{
-//            Cursor c = myDatabase.query(Table_LOGS, LOGS_COLUMN, null, null, null, null, null);
-//            if(c != null && c.getCount()>0){
-//                c.moveToFirst();
-//                for(int i=0;i<c.getCount();i++){
-//                    c.moveToPosition(i);
-//                    String str = c.getString(c.getColumnIndex(LOGS_COLUMN[2]));
-//                    String id = c.getString(c.getColumnIndex(LOGS_COLUMN[3]));
-//                    String ID = c.getString(c.getColumnIndex(LOGS_COLUMN[0]));
-//                    Log.i(TAG, "SendSchedule Comparing-> \n" + SyncService.Sync_Tasks[4] + " | "+str);
-//                    if(SyncService.Sync_Tasks[4].equals(str)){
-//                        Log.i(TAG, "SendSchedule Count:-> " + c.getCount());
-//                        Schedule newSchedule = getScheduleWithId(id);
-//                        if(newSchedule !=null){
-//                            newSchedule.setID(ID);
-//                            Log.i(TAG, "Found for SendSchedules:-> \n" + newSchedule.toString());
-//                            Found.add(newSchedule);
-//                        }
-//                    }
-//                }
-//            }
-//        }catch (Exception e){
-//
-//        }
-//        return Found;
-//    }
-//    public ArrayList<Schedule> getUpdateSchedules(){
-//        Log.i(TAG, "UpdateDisciples:\n");
-//        ArrayList<Schedule> Found = new ArrayList<Schedule>();
-//        try{
-//            Cursor c = myDatabase.query(Table_LOGS, LOGS_COLUMN, null, null, null, null, null);
-//            if(c != null && c.getCount()>0){
-//                c.moveToFirst();
-//                for(int i=0;i<c.getCount();i++){
-//                    c.moveToPosition(i);
-//                    String ID = c.getString(c.getColumnIndex(LOGS_COLUMN[0]));
-//                    String str = c.getString(c.getColumnIndex(LOGS_COLUMN[2]));
-//                    String id = c.getString(c.getColumnIndex(LOGS_COLUMN[3]));
-//                    Log.i(TAG, "Comparing-> \n" + SyncService.Sync_Tasks[3] + " | "+str);
-//                    if(SyncService.Sync_Tasks[7].equals(str)){
-//                        Log.i(TAG, "Update Schedule Count:-> " + c.getCount());
-//                        Schedule newschedule = getScheduleWithId(id);
-//                        if(newschedule !=null){
-//                            newschedule.setID(ID);
-//                            Found.add(newschedule);
-//                        }
-//                    }
-//                }
-//            }
-//        }catch (Exception e){
-//
-//        }
-//        return Found;
-//    }
-//    public ArrayList<ReportItem> getSendReports(){
-//        Log.i(TAG, "SendReports:\n");
-//        ArrayList<ReportItem> Found = new ArrayList<ReportItem>();
-//        try{
-//            Cursor c = myDatabase.query(Table_LOGS, LOGS_COLUMN, null, null, null, null, null);
-//            if(c != null && c.getCount()>0){
-//                c.moveToFirst();
-//                for(int i=0;i<c.getCount();i++){
-//                    c.moveToPosition(i);
-//                    String str = c.getString(c.getColumnIndex(LOGS_COLUMN[2]));
-//                    String id = c.getString(c.getColumnIndex(LOGS_COLUMN[3]));
-//                    String ID = c.getString(c.getColumnIndex(LOGS_COLUMN[0]));
-//                    Log.i(TAG, "Comparing-> \n" + SyncService.Sync_Tasks[5] + " | "+str);
-//                    if(SyncService.Sync_Tasks[5].equals(str)){
-//                        Log.i(TAG, "SendDisciples Count:-> " + c.getCount());
-//                        ReportItem newReport = get_Report_by_id(id);
-//                        if(newReport !=null){
-//                            newReport.setId(ID);
-//                            Log.i(TAG, "Found for Send:-> \n" + newReport.toString());
-//                            Found.add(newReport);
-//                        }
-//                    }
-//                }
-//            }
-//        }catch (Exception e){
-//
-//        }
-//        return Found;
-//    }
-//    public ArrayList<Disciples> getUpdateDisciples(){
-//        Log.i(TAG, "UpdateDisciples:\n");
-//        ArrayList<Disciples> Found = new ArrayList<Disciples>();
-//        try{
-//            Cursor c = myDatabase.query(Table_LOGS, LOGS_COLUMN, null, null, null, null, null);
-//            if(c != null && c.getCount()>0){
-//                c.moveToFirst();
-//                for(int i=0;i<c.getCount();i++){
-//                    c.moveToPosition(i);
-//                    String ID = c.getString(c.getColumnIndex(LOGS_COLUMN[0]));
-//                    String str = c.getString(c.getColumnIndex(LOGS_COLUMN[2]));
-//                    String id = c.getString(c.getColumnIndex(LOGS_COLUMN[3]));
-//                    Log.i(TAG, "Comparing-> \n" + SyncService.Sync_Tasks[3] + " | "+str);
-//                    if(SyncService.Sync_Tasks[3].equals(str)){
-//                        Log.i(TAG, "UpdateDisciples Count:-> " + c.getCount());
-//                        Disciples newDisciples = getDiscipleProfile(id);
-//                        if(newDisciples !=null){
-//                            newDisciples.setId(ID);
-//                            Found.add(newDisciples);
-//                        }
-//                    }
-//                }
-//            }
-//        }catch (Exception e){
-//
-//        }
-//        return Found;
-//    }
-//    public ArrayList<NewsFeed> getAllNewsFeeds(){
-//        ArrayList<NewsFeed> found = new ArrayList<NewsFeed>();
-//        String DB_Table = Table_NEWSFEED;
-//        try{
-//            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
-//            if(c != null && c.getCount()>0){
-//                c.moveToFirst();
-//                for(int i = 0;i < c.getCount();i++){
-//                    c.moveToPosition(i);
-//                    NewsFeed news = new NewsFeed();
-//                    news.setId(c.getString(c.getColumnIndex(NewsFeed_COLUMN[0])));
-//                    news.setNews_ID(c.getString(c.getColumnIndex(NewsFeed_COLUMN[1])));
-//                    news.setTitle(c.getString(c.getColumnIndex(NewsFeed_COLUMN[2])));
-//                    news.setContent(c.getString(c.getColumnIndex(NewsFeed_COLUMN[3])));
-//                    news.setImageURL(c.getString(c.getColumnIndex(NewsFeed_COLUMN[4])));
-////                    news.setImagePath(c.getString(c.getColumnIndex(NewsFeed_COLUMN[5])));
-//                    news.setImagePath(c.getString(c.getColumnIndex(NewsFeed_COLUMN[5])));
-//                    news.setPubDate(c.getString(c.getColumnIndex(NewsFeed_COLUMN[6])));
-//                    news.setCategory(c.getString(c.getColumnIndex(NewsFeed_COLUMN[7])));
-//                    found.add(news);
-//                }
-//            }
-//        }catch (Exception e){
-//            return found;
-//        }
-//        return found;
-//    }
-//    public Disciples Get_Disciple_By_Phone(String Phone_Num){
-//        Disciples found = null;
-//        Log.i(TAG, "GetDisciple by Phone: \n");
-//        String DB_Table = Table_DISCIPLES;
-//        try{
-//            Log.i(TAG, "GetDisciple by Phone -> Searching for  \n");
-//            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
-//            Log.i(TAG, "GetDisciple by Phone -> Searching for "+c.getCount());
-//            if (c.getCount() > 0) {
-//                c.moveToFirst();
-//
-//                for(int i=0;i<c.getCount(); i++) {
-//                    c.moveToPosition(i);
-//                    Log.i(TAG, "GetDisciple by Phone -> Searching for "+c.getPosition());
-//                    if(c.getString(c.getColumnIndex(DISCIPLES_COLUMN[3])).equals(Phone_Num)){
-//                        Log.i(TAG, "Comparing: \n" + c.getString(c.getColumnIndex(DISCIPLES_COLUMN[3])) +" | "+ Phone_Num);
-//                        Disciples dis = new Disciples();
-//                        dis.setId(c.getString(c.getColumnIndex(DISCIPLES_COLUMN[0])));
-//                        dis.setFull_Name(c.getString(c.getColumnIndex(DISCIPLES_COLUMN[1])));
-//                        dis.setEmail(c.getString(c.getColumnIndex(DISCIPLES_COLUMN[2])));
-//                        dis.setPhone(c.getString(c.getColumnIndex(DISCIPLES_COLUMN[3])));
-//                        dis.setCountry(c.getString(c.getColumnIndex(DISCIPLES_COLUMN[4])));
-//                        dis.setBuild_Phase(c.getString(c.getColumnIndex(DISCIPLES_COLUMN[5])));
-//                        dis.setGender(c.getString(c.getColumnIndex(DISCIPLES_COLUMN[6])));
-//                        dis.setPicture(c.getString(c.getColumnIndex(DISCIPLES_COLUMN[7])));
-//                        Log.i(TAG, "Found Disciples:-> "+dis.toString());
-//                        return dis;
-//                    }
-//                }
-//            }
-//            Log.i(TAG, "GetDisciple by Phone -> Found:  "+found.toString());
-//        }catch (Exception e){
-//
-//        }
-//        return found;
-//    }
-//    public ArrayList<Disciples> getDisciples(){
-//        Log.i(TAG, "GetDisciples: \n");
-//        String DB_Table = Table_DISCIPLES;
-//        ArrayList<Disciples> found = new ArrayList<Disciples>();
-//        try{
-//            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, DISCIPLES_COLUMN[0] + " DESC");
-//            if (c.getCount() > 0) {
-//                c.moveToFirst();
-//                for(int i=0;i<c.getCount(); i++) {
-//
-//                    c.moveToPosition(i);
-//                    Disciples dis = new Disciples();
-//                    dis.setId(c.getString(c.getColumnIndex(DISCIPLES_COLUMN[0])));
-//                    dis.setFull_Name(c.getString(c.getColumnIndex(DISCIPLES_COLUMN[1])));
-//                    dis.setEmail(c.getString(c.getColumnIndex(DISCIPLES_COLUMN[2])));
-//                    dis.setPhone(c.getString(c.getColumnIndex(DISCIPLES_COLUMN[3])));
-//                    dis.setCountry(c.getString(c.getColumnIndex(DISCIPLES_COLUMN[4])));
-//                    dis.setBuild_Phase(c.getString(c.getColumnIndex(DISCIPLES_COLUMN[5])));
-//                    dis.setGender(c.getString(c.getColumnIndex(DISCIPLES_COLUMN[6])));
-//                    dis.setPicture(c.getString(c.getColumnIndex(DISCIPLES_COLUMN[7])));
-//                    Log.i(TAG, "Found Disciples:-> "+dis.toString());
-//                    found.add(dis);
-//                }
-//            }
-//        }catch (Exception e){
-//
-//        }
-//        return found;
-//    }
-//    public ArrayList<Schedule> get_All_Schedule(){
-//        Log.i(TAG, "GetAll Schedule:\n");
-//        String DB_Table = Table_SCHEDULES;
-//        ArrayList<Schedule> found = new ArrayList<Schedule>();
-//        try{
-//            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, SCHEDULES_COLUMN[0] + " DESC");
-//            if (c.getCount() > 0) {
-//                c.moveToFirst();
-//                for(int i=0;i<c.getCount();i++){
-//                    c.moveToPosition(i);
-//                    Schedule dis = new Schedule();
-//                    dis.setID(c.getString(c.getColumnIndex(SCHEDULES_COLUMN[0])));
-//                    dis.setDisciple_Phone(c.getString(c.getColumnIndex(SCHEDULES_COLUMN[1])));
-//                    dis.setTitle(c.getString(c.getColumnIndex(SCHEDULES_COLUMN[2])));
-//                    dis.setAlarm_Time(c.getString(c.getColumnIndex(SCHEDULES_COLUMN[3])));
-//                    dis.setAlarm_Repeat(c.getString(c.getColumnIndex(SCHEDULES_COLUMN[4])));
-//                    dis.setDescription(c.getString(c.getColumnIndex(SCHEDULES_COLUMN[5])));
-//                    Log.i(TAG, "Found Schedules:-> "+dis.toString());
-//                    found.add(dis);
-//                }
-//            }
-//        }catch (Exception e){
-//
-//        }
-//        return found;
-//    }
-//    public ArrayList<Schedule> get_Schedule_With_User(String Dis_Phone){
-//        String DB_Table = Table_SCHEDULES;
-//        ArrayList<Schedule> found = new ArrayList<Schedule>();
-//        try{
-//            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
-//            c.moveToFirst();
-//            for (int i = 0; i < c.getCount(); i++){
-//                c.moveToPosition(i);
-//                Schedule dis = new Schedule();
-//                String phone = c.getString(c.getColumnIndex(SCHEDULES_COLUMN[1]));
-//                if(Dis_Phone.equals(phone)){
-//                    dis.setID(c.getString(c.getColumnIndex(SCHEDULES_COLUMN[0])));
-//                    dis.setDisciple_Phone(c.getString(c.getColumnIndex(SCHEDULES_COLUMN[1])));
-//                    dis.setTitle(c.getString(c.getColumnIndex(SCHEDULES_COLUMN[2])));
-//                    dis.setAlarm_Time(c.getString(c.getColumnIndex(SCHEDULES_COLUMN[3])));
-//                    dis.setAlarm_Repeat(c.getString(c.getColumnIndex(SCHEDULES_COLUMN[4])));
-//                    dis.setDescription(c.getString(c.getColumnIndex(SCHEDULES_COLUMN[5])));
-//                    Log.i(TAG, "Found Schedules:->:" + dis.toString());
-//                    found.add(dis);
-//                }
-//            }
-//        }catch (Exception e){
-//            return found;
-//        }
-//        return found;
-//    }
-//    public Schedule getScheduleWithId(String id){
-//        try{
-//            Schedule dis = new Schedule();
-//            String DB_Table = Table_SCHEDULES;
-//            Cursor c = myDatabase.query(DB_Table,getColumns(DB_Table),null,null,null,null,null);
-//            for(int i=0;i<c.getCount();i++){
-//                c.moveToPosition(i);
-//                dis.setID(c.getString(c.getColumnIndex(SCHEDULES_COLUMN[0])));
-//                dis.setDisciple_Phone(c.getString(c.getColumnIndex(SCHEDULES_COLUMN[1])));
-//                dis.setTitle(c.getString(c.getColumnIndex(SCHEDULES_COLUMN[2])));
-//                dis.setAlarm_Time(c.getString(c.getColumnIndex(SCHEDULES_COLUMN[3])));
-//                dis.setAlarm_Repeat(c.getString(c.getColumnIndex(SCHEDULES_COLUMN[4])));
-//                dis.setDescription(c.getString(c.getColumnIndex(SCHEDULES_COLUMN[5])));
-//                if(dis.getID().equals(id)) {
-//                    return dis;
-//                }
-//            }
-//            if(c.getCount()>0){
-//
-//
-//            }
-//        }catch (Exception e){
-//
-//        }
-//        return null;
-//    }
-//    public Schedule get_Schedule_by_time(String time){
-//        try{
-//            String DB_Table = Table_SCHEDULES;
-//            Cursor c = myDatabase.query(DB_Table,getColumns(DB_Table),null,null,null,null,null);
-//            c.moveToFirst();
-//            if(c.getCount()>0){
-//                for(int i=0;i<c.getCount();i++){
-//                    c.moveToPosition(i);
-//                    Schedule dis = new Schedule();
-//                    dis.setID(c.getString(c.getColumnIndex(SCHEDULES_COLUMN[0])));
-//                    dis.setDisciple_Phone(c.getString(c.getColumnIndex(SCHEDULES_COLUMN[1])));
-//                    dis.setTitle(c.getString(c.getColumnIndex(SCHEDULES_COLUMN[2])));
-//                    dis.setAlarm_Time(c.getString(c.getColumnIndex(SCHEDULES_COLUMN[3])));
-//                    dis.setAlarm_Repeat(c.getString(c.getColumnIndex(SCHEDULES_COLUMN[4])));
-//                    dis.setDescription(c.getString(c.getColumnIndex(SCHEDULES_COLUMN[5])));
-//                    Log.i(TAG, "Schedule Time Comparing: "+dis.getAlarm_Time()+" | "+time);
-//                    if(dis.getAlarm_Time().equals(time)){
-//                        return dis;
-//                    }
-//                }
-//
-//            }
-//        }catch (Exception e){
-//
-//        }
-//        return null;
-//    }
-//    public ArrayList<QuestionAnswer> get_Answer(String Dis_ID, String phase){
-//        String DB_Table = Table_QUESTION_ANSWER;
-//        ArrayList<QuestionAnswer> found = new ArrayList<QuestionAnswer>();
-//        try{
-//            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), QUESTION_ANSWER_FIELDS[0] + " = '" + Dis_ID + "' and " + QUESTION_ANSWER_FIELDS[3] + "= '" + phase + "'", null, null, null, null);
-//            Log.i("Deep Life", "Answer from db count: " + c.getCount() + " data: " + c.toString());
-//            c.moveToFirst();
-//            for(int i=0;i<c.getCount();i++){
-//                c.moveToPosition(i);
-//                QuestionAnswer dis = new QuestionAnswer();
-//                dis.setId(c.getString(c.getColumnIndex(QUESTION_ANSWER_COLUMN[0])));
-//                dis.setDisciple_id(c.getString(c.getColumnIndex(QUESTION_ANSWER_COLUMN[1])));
-//                dis.setQuestion_id(c.getString(c.getColumnIndex(QUESTION_ANSWER_COLUMN[2])));
-//                dis.setAnswer(c.getString(c.getColumnIndex(QUESTION_ANSWER_COLUMN[3])));
-//                dis.setBuild_Phase(c.getString(c.getColumnIndex(QUESTION_ANSWER_COLUMN[4])));
-//
-//                found.add(dis);
-//            }
-//        }catch (Exception e){
-//
-//        }
-//        return found;
-//    }
-//    public Disciples getDiscipleProfile(String Dis_ID){
-//        try{
-//            Log.i(TAG, "GetDiscipleProfile");
-//            Disciples dis = new Disciples();
-//            String DB_Table = Table_DISCIPLES;
-//            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, SCHEDULES_COLUMN[0] + " DESC");
-//            if(c != null){
-//                c.moveToFirst();
-//                for(int i=0; i<c.getCount();i++){
-//                    c.moveToPosition(i);
-//                    String ID = c.getString(c.getColumnIndex(DISCIPLES_COLUMN[0]));
-//                    Log.i(TAG, "GetDiscipleProfile Comparing: "+ID+" | "+Dis_ID);
-//                    if(ID.equals(Dis_ID)){
-//                        dis.setId(Dis_ID);
-//                        dis.setFull_Name(c.getString(c.getColumnIndex(DISCIPLES_COLUMN[1])));
-//                        dis.setEmail(c.getString(c.getColumnIndex(DISCIPLES_COLUMN[2])));
-//                        dis.setPhone(c.getString(c.getColumnIndex(DISCIPLES_COLUMN[3])));
-//                        dis.setCountry(c.getString(c.getColumnIndex(DISCIPLES_COLUMN[4])));
-//                        dis.setBuild_Phase(c.getString(c.getColumnIndex(DISCIPLES_COLUMN[5])));
-//                        dis.setGender(c.getString(c.getColumnIndex(DISCIPLES_COLUMN[6])));
-//                        dis.setPicture(c.getString(c.getColumnIndex(DISCIPLES_COLUMN[7])));
-//                        Log.i(TAG, "Found DiscipleProfile:-> " + dis.toString());
-//                        return dis;
-//                    }
-//                }
-//            }
-//        }catch (Exception e){
-//
-//        }
-//        return null;
-//    }
-//    public Disciples getDiscipleProfileFromPhone(String Dis_Phone){
-//        try{
-//            Log.i(TAG, "GetDiscipleProfile");
-//            Disciples dis = new Disciples();
-//            String DB_Table = Table_DISCIPLES;
-//            Cursor c = myDatabase.rawQuery("select * from " + DB_Table + " where " + DISCIPLES_COLUMN[3] + "= '" + Dis_Phone + "'", null);
-//            if(c.getCount()>0){
-//                c.moveToFirst();
-//                dis.setId(c.getString(c.getColumnIndex(DISCIPLES_COLUMN[0])));
-//                dis.setFull_Name(c.getString(c.getColumnIndex(DISCIPLES_COLUMN[1])));
-//                dis.setEmail(c.getString(c.getColumnIndex(DISCIPLES_COLUMN[2])));
-//                dis.setPhone(c.getString(c.getColumnIndex(DISCIPLES_COLUMN[3])));
-//                dis.setCountry(c.getString(c.getColumnIndex(DISCIPLES_COLUMN[4])));
-//                dis.setBuild_Phase(c.getString(c.getColumnIndex(DISCIPLES_COLUMN[5])));
-//                dis.setGender(c.getString(c.getColumnIndex(DISCIPLES_COLUMN[6])));
-//                dis.setPicture(c.getString(c.getColumnIndex(DISCIPLES_COLUMN[7])));
-//                Log.i(TAG, "Found DiscipleProfile:-> " + dis.toString());
-//                return dis;
-//            }
-//
-//        }catch (Exception e){
-//
-//        }
-//        return null;
-//    }
-//
-//
-//
-//
-//    public ArrayList<String> get_all_in_column(String DB_Table, String atColumn){
-//        ArrayList<String> found = new ArrayList<String>();
-//        try{
-//            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
-//            c.moveToFirst();
-//            for(int i = 0;i < c.getCount();i++){
-//                c.moveToPosition(i);
-//                String DB_Val = c.getString(c.getColumnIndex(atColumn));
-//                if(!found.contains(DB_Val)){
-//                    found.add(DB_Val);
-//                }
-//            }
-//        }catch (Exception e){
-//
-//        }
-//        return found;
-//    }
-//
-////    public Testimony get_Testimony_by_id(String ID){
-////        try{
-////            String DB_Table = Table_TESTIMONY;
-////            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
-////            c.moveToFirst();
-////            for(int i=0;i<c.getCount();i++){
-////                c.moveToPosition(i);
-////                String rep_id  = c.getString(c.getColumnIndex(TESTIMONY_COLUMN[0]));
-////                if(rep_id.equals(ID)){
-////                    Testimony dis = new Testimony();
-////                    dis.setID(c.getString(c.getColumnIndex(TESTIMONY_COLUMN[0])));
-////                    dis.setTitle(c.getString(c.getColumnIndex(TESTIMONY_COLUMN[1])));
-//////                    dis.setDetail(c.getString(c.getColumnIndex(TESTIMONY_COLUMN[2])));
-////                    return dis;
-////                }
-////            }
-////        }catch (Exception e){
-////
-////        }
-////        return null;
-////    }
-//    public String get_DiscipleName(String phone){
-//        String Name = null;
-//        try{
-//            String DB_Table = Table_DISCIPLES;
-//            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
-//            c.moveToFirst();
-//            for(int i=0;i<c.getCount();i++){
-//                c.moveToPosition(i);
-//                String str = c.getString(c.getColumnIndex(DISCIPLES_COLUMN[3]));
-//                if(str.equals(phone)){
-//                    Name = c.getString(c.getColumnIndex(DISCIPLES_COLUMN[1]));
-//                }
-//            }
-//        }catch (Exception e){
-//
-//        }
-//        return Name;
-//    }
-//    public int get_LogID(String Task, String Value){
-//        Log.i(TAG, "Get LogID:->");
-//		int id = 0;
-//		try{
-//            String DB_Table = Table_LOGS;
-//            Cursor c = myDatabase.query(DB_Table, LOGS_COLUMN, null, null, null, null, null);
-//            if(c != null){
-//                c.moveToFirst();
-//                for(int i=0;i<c.getCount();i++){
-//                    c.moveToPosition(i);
-//                    String task = c.getString(c.getColumnIndex(LOGS_COLUMN[2]));
-//                    String value = c.getString(c.getColumnIndex(LOGS_COLUMN[3]));
-//                    Log.i(TAG, "Get LogID: " + task + " --- " + value);
-//                    if(Task.equals(task) && Value.equals(value)){
-//                        String _id = c.getString(c.getColumnIndex(LOGS_COLUMN[0]));
-//                        id = Integer.valueOf(_id);
-//                        return  id;
-//                    }
-//                }
-//            }
-//        }catch (Exception e){
-//
-//        }
-//		return id;
-//	}
-//
-//
-//    public boolean isUniqueDisciple(String Country_Code, String Phone){
-//        Log.i(TAG, "Checking for duplication: \n");
-//        String DB_Table = Table_DISCIPLES;
-//        try{
-//            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
-//            if (c.getCount() > 0) {
-//                c.moveToFirst();
-//                for(int i=0;i<c.getCount(); i++) {
-//                    c.moveToPosition(i);
-//                    String country = c.getString(c.getColumnIndex(DISCIPLES_COLUMN[4]));
-//                    String phone = c.getString(c.getColumnIndex(DISCIPLES_COLUMN[3]));
-//                    if(country.equals(Country_Code) & phone.equals(Phone)) {
-//                        return true;
-//                    }
-//                }
-//                return false;
-//            }else{
-//                return false;
-//            }
-//        }catch (Exception e){
-//            return true;
-//        }
-//    }
-//
-//    public int Get_Country_Posistion_By_id(String id){
-//        Log.i(TAG, "GetAll Countries:\n");
-//        String DB_Table = Table_COUNTRY;
-//        try{
-//            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
-//            if (c.getCount() > 0) {
-//                c.moveToFirst();
-//                for(int i=0;i<c.getCount();i++){
-//                    c.moveToPosition(i);
-//                    if(c.getString(c.getColumnIndex(COUNTRY_COLUMN[0])).equals(id)){
-//                        return c.getPosition();
-//                    }
-//                }
-//            }
-//        }catch (Exception e){
-//
-//        }
-//        return 0;
-//    }
-//    public ArrayList<Country> get_All_Country(){
-//        Log.i(TAG, "GetAll Countries:\n");
-//        String DB_Table = Table_COUNTRY;
-//        ArrayList<Country> found = new ArrayList<Country>();
-//        try{
-//            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
-//            if (c.getCount() > 0) {
-//                c.moveToFirst();
-//                for(int i=0;i<c.getCount();i++){
-//                    c.moveToPosition(i);
-//                    Country dis = new Country();
-//                    dis.setId(c.getString(c.getColumnIndex(COUNTRY_COLUMN[0])));
-//                    dis.setCountry_id(c.getString(c.getColumnIndex(COUNTRY_COLUMN[1])));
-//                    dis.setIso3(c.getString(c.getColumnIndex(COUNTRY_COLUMN[2])));
-//                    dis.setName(c.getString(c.getColumnIndex(COUNTRY_COLUMN[3])));
-//                    dis.setCode(c.getString(c.getColumnIndex(COUNTRY_COLUMN[4])));
-//                    Log.i(TAG, "Found Countries:-> "+dis.toString());
-//                    found.add(dis);
-//                }
-//            }
-//        }catch (Exception e){
-//
-//        }
-//        return found;
-//    }
-//    public Country get_Country_by_CountryID(String CountryID){
-//        try{
-//            Log.i(TAG, "GetAll Country by CountryID:\n");
-//            String DB_Table = Table_COUNTRY;
-//            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
-//            if (c.getCount() > 0) {
-//                c.moveToFirst();
-//                for(int i=0;i<c.getCount();i++){
-//                    c.moveToPosition(i);
-//                    String id = c.getString(c.getColumnIndex(COUNTRY_COLUMN[1]));
-//                    if(id.equals(CountryID)){
-//                        Country dis = new Country();
-//                        dis.setId(c.getString(c.getColumnIndex(COUNTRY_COLUMN[0])));
-//                        dis.setCountry_id(c.getString(c.getColumnIndex(COUNTRY_COLUMN[1])));
-//                        dis.setIso3(c.getString(c.getColumnIndex(COUNTRY_COLUMN[2])));
-//                        dis.setName(c.getString(c.getColumnIndex(COUNTRY_COLUMN[3])));
-//                        dis.setCode(c.getString(c.getColumnIndex(COUNTRY_COLUMN[4])));
-//                        Log.i(TAG, "Found Country:-> "+dis.toString());
-//                        return dis;
-//                    }
-//                }
-//            }
-//        }catch (Exception e){
-//
-//        }
-//        return null;
-//    }
-//    public Country get_Country_by_Country_Code(String CountryCode){
-//        try{
-//            Log.i(TAG, "GetAll Country by CountryID:\n");
-//            String DB_Table = Table_COUNTRY;
-//            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
-//            if (c.getCount() > 0) {
-//                c.moveToFirst();
-//                for(int i=0;i<c.getCount();i++){
-//                    c.moveToPosition(i);
-//                    String id = c.getString(c.getColumnIndex(COUNTRY_COLUMN[4]));
-//                    if(id.equals(CountryCode)){
-//                        Country dis = new Country();
-//                        dis.setId(c.getString(c.getColumnIndex(COUNTRY_COLUMN[0])));
-//                        dis.setCountry_id(c.getString(c.getColumnIndex(COUNTRY_COLUMN[1])));
-//                        dis.setIso3(c.getString(c.getColumnIndex(COUNTRY_COLUMN[2])));
-//                        dis.setName(c.getString(c.getColumnIndex(COUNTRY_COLUMN[3])));
-//                        dis.setCode(c.getString(c.getColumnIndex(COUNTRY_COLUMN[4])));
-//                        Log.i(TAG, "Found Country:-> "+dis.toString());
-//                        return dis;
-//                    }
-//                }
-//            }
-//        }catch (Exception e){
-//
-//        }
-//        return null;
-//    }
-//
-//
-//    public User getUserProfile(){
-//        User dis = new User();
-//        try{
-//            String DB_Table = Table_USER;
-//            Cursor c = myDatabase.rawQuery("select * from " + DB_Table, null);
-//            c.moveToFirst();
-//            if(c.getCount()>0){
-//                dis.setId(c.getString(c.getColumnIndex(USER_COLUMN[0])));
-//                dis.setUser_Name(c.getString(c.getColumnIndex(USER_COLUMN[1])));
-//                dis.setUser_Email(c.getString(c.getColumnIndex(USER_COLUMN[2])));
-//                dis.setUser_Phone(c.getString(c.getColumnIndex(USER_COLUMN[3])));
-//                dis.setUser_Pass(c.getString(c.getColumnIndex(USER_COLUMN[4])));
-//                dis.setUser_Country(c.getString(c.getColumnIndex(USER_COLUMN[5])));
-//                dis.setUser_Picture(c.getString(c.getColumnIndex(USER_COLUMN[6])));
-//                dis.setUser_Favorite_Scripture(c.getString(c.getColumnIndex(USER_COLUMN[7])));
-//                return dis;
-//            }
-//        }catch (Exception e){
-//
-//        }
-//        return null;
-//    }
-//
-//
-//    public long checkExistence(String Db_Table, String column, String id, String build){
-//
-//        Cursor cursor = myDatabase.query(Db_Table, getColumns(Db_Table),column+" = '"+id+"' and "+QUESTION_ANSWER_FIELDS[3]+" = '"+ build+"'",null,null,null,null);
-//        return cursor.getCount();
-//
-//    }
-//    public int count_Questions(String DB_Table, String Category){
-//        Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), QUESTION_LIST_FIELDS[0]+" = '"+Category+"'", null, null, null, null);
-//        return c.getCount();
-//    }
-//
-//
-//    public User getUser(){
-//        User newUser = new User();
-//        try{
-//            Cursor c = myDatabase.query(Table_USER, USER_COLUMN, null, null, null, null, null);
-//            if(c != null && c.getCount() == 1){
-//                c.moveToFirst();
-//                newUser.setId(c.getString(c.getColumnIndex(USER_COLUMN[0])));
-//                newUser.setUser_Name(c.getString(c.getColumnIndex(USER_COLUMN[3])));
-//                newUser.setUser_Pass(c.getString(c.getColumnIndex(USER_COLUMN[4])));
-//                newUser.setUser_Country(c.getString(c.getColumnIndex(USER_COLUMN[5])));
-//            }else{
-//                newUser = null;
-//            }
-//        }catch (Exception e){
-//
-//        }
-//        return newUser;
-//    }
+
+    /////////////////////////////////
+    /////////////////////////////////
+    ////////  Learning Tools   /////////
+    /////////////////////////////////
+    /////////////////////////////////
+
+    public LearningTool getLearningToolByID(int id) {
+        Log.i(TAG, "Get getLearningToolByID: ");
+        String DB_Table = Table_LEARNING;
+        try{
+            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
+            if(c.getCount()>0){
+                c.moveToFirst();
+                for(int i=0;i<c.getCount();i++){
+                    c.moveToPosition(i);
+                    LearningTool learningTool = new LearningTool();
+                    learningTool.setID(Integer.valueOf(c.getString(c.getColumnIndex(LEARNING_COLUMN[0]))));
+                    learningTool.setSerID(Integer.valueOf(c.getString(c.getColumnIndex(LEARNING_COLUMN[1]))));
+                    learningTool.setTitle(c.getString(c.getColumnIndex(LEARNING_COLUMN[2])));
+                    learningTool.setContent(c.getString(c.getColumnIndex(LEARNING_COLUMN[3])));
+                    learningTool.setVideoURL(c.getString(c.getColumnIndex(LEARNING_COLUMN[4])));
+                    learningTool.setCountry(Integer.valueOf(c.getString(c.getColumnIndex(LEARNING_COLUMN[5]))));
+                    learningTool.setDefaultLearn(c.getString(c.getColumnIndex(LEARNING_COLUMN[6])));
+                    learningTool.setCreated(c.getString(c.getColumnIndex(LEARNING_COLUMN[7])));
+                    return learningTool;
+                }
+            }
+        }catch (Exception e){
+            Log.i(TAG, "Failed Get getLearningToolByID By ID: "+e.toString());
+            return null;
+        }
+        return null;
+
+    }
+
+    public LearningTool getLearningToolsBySerID(int id) {
+        Log.i(TAG, "Get getLearningToolsBySerID by ServerID: ");
+        String DB_Table = Table_LEARNING;
+        try{
+            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
+            if(c.getCount()>0){
+                c.moveToFirst();
+                for(int i=0;i<c.getCount();i++){
+                    c.moveToPosition(i);
+                    int ser_id = Integer.valueOf(c.getString(c.getColumnIndex(LEARNING_COLUMN[1])));
+                    int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(LEARNING_COLUMN[0])));
+                    if(ser_id == id){
+                        LearningTool learningTool = getLearningToolByID(cur_id);
+                        return learningTool;
+                    }
+                }
+            }
+        }catch (Exception e){
+            Log.i(TAG, "Failed Get getCountryBySerID by ServerID: "+e.toString());
+            return null;
+        }
+        return null;
+    }
+
+    public ArrayList<LearningTool> getAllLearningTools(){
+        Log.i(TAG, "Get All getAllLearningTools: ");
+        String DB_Table = Table_COUNTRY;
+        ArrayList<LearningTool> found = new ArrayList<LearningTool>();
+        try{
+            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
+            c.moveToFirst();
+            for(int i=0;i<c.getCount();i++){
+                c.moveToPosition(i);
+                int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(COUNTRY_COLUMN[0])));
+                LearningTool learningTool = getLearningToolByID(cur_id);
+                if(learningTool != null){
+                    found.add(learningTool);
+                    Log.i(TAG, "Get All Countries: "+learningTool.getID());
+                }
+            }
+        }catch (Exception e){
+            return null;
+        }
+        return found;
+    }
+
+
+
+
+
+    public DiscipleTreeCount getDiscipleTreeCount() {
+        Log.i(TAG, "Get getDiscipleTreeCount: ");
+        String DB_Table = Table_DISCIPLE_TREE;
+        try{
+            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
+            if(c.getCount()>0){
+                c.moveToFirst();
+                for(int i=0;i<c.getCount();i++){
+                    c.moveToPosition(i);
+                    DiscipleTreeCount discipleTreeCount = new DiscipleTreeCount();
+                    discipleTreeCount.setID(Integer.valueOf(c.getString(c.getColumnIndex(DISCIPLE_TREE_COLUMN[0]))));
+                    discipleTreeCount.setSerID(Integer.valueOf(c.getString(c.getColumnIndex(DISCIPLE_TREE_COLUMN[1]))));
+                    discipleTreeCount.setUserID(Integer.valueOf(c.getString(c.getColumnIndex(DISCIPLE_TREE_COLUMN[2]))));
+                    discipleTreeCount.setCount(Integer.valueOf(c.getString(c.getColumnIndex(DISCIPLE_TREE_COLUMN[3]))));
+                    return discipleTreeCount;
+                }
+            }
+        }catch (Exception e){
+            Log.i(TAG, "Failed Get getDiscipleTreeCount: "+e.toString());
+            return null;
+        }
+        return null;
+
+    }
+
 
 
 
@@ -2266,6 +1478,10 @@ public class Database {
             strs = CATEGORY_COLUMN;
         }else if(DB_Table == Table_IMAGE_SYNC){
             strs = IMAGE_SYNC_COLUMN;
+        }else if(DB_Table == Table_LEARNING){
+            strs = LEARNING_COLUMN;
+        }else if(DB_Table == Table_DISCIPLE_TREE){
+            strs = DISCIPLE_TREE_COLUMN;
         }
         return strs;
     }

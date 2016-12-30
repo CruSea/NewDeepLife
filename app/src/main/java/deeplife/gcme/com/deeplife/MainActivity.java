@@ -25,12 +25,14 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import deeplife.gcme.com.deeplife.Adapters.ViewPageAdapter;
 import deeplife.gcme.com.deeplife.Database.Database;
 import deeplife.gcme.com.deeplife.Disciples.DisciplesFragment;
 import deeplife.gcme.com.deeplife.Home.HomeFragment;
 import deeplife.gcme.com.deeplife.LearningTools.LearningFragment;
+import deeplife.gcme.com.deeplife.Models.User;
 import deeplife.gcme.com.deeplife.News.NewsFragment;
 import deeplife.gcme.com.deeplife.Profile.ProfileShowActivity;
 import deeplife.gcme.com.deeplife.SyncService.SyncService;
@@ -40,18 +42,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private static final String TAG = "MainActivity";
     private Toolbar myToolbar;
     private TabLayout myTabLayout;
-
     private ViewPager myViewPager;
+    private TextView UserName;
 
     private CollapsingToolbarLayout myCollapsingToolbarLayout;
     private LinearLayout myLinearLayout;
 
     private JobScheduler myJobScheduler;
+    private User myUser;
 
 
     private static int RECEIVE_BOOT_COMPLETED = 1001;
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,6 +94,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         myTabLayout.getTabAt(4).setIcon(R.drawable.nav_learning_icon_grey);
 
         checkPermissions();
+        myUser = DeepLife.myDATABASE.getMainUser();
+        if(myUser != null){
+            UserName = (TextView) findViewById(R.id.txt_main_user_name);
+            UserName.setText(myUser.getFull_Name());
+        }
+
     }
 
 

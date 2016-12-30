@@ -15,6 +15,7 @@ import java.util.List;
 
 import deeplife.gcme.com.deeplife.DeepLife;
 import deeplife.gcme.com.deeplife.Disciples.Disciple;
+import deeplife.gcme.com.deeplife.Models.DiscipleTreeCount;
 import deeplife.gcme.com.deeplife.R;
 
 /**
@@ -39,11 +40,18 @@ public class HomeFragment extends Fragment {
         Win = (TextView) view.findViewById(R.id.txt_home_win);
         Build = (TextView) view.findViewById(R.id.txt_home_build);
         Send = (TextView) view.findViewById(R.id.txt_home_send);
+        WinCount = 0;
+        BuildCount = 0;
+        SendCount = 0;
+        DisCount = 0;
+
+        DiscipleTreeCount discipleTreeCount = DeepLife.myDATABASE.getDiscipleTreeCount();
+        if(discipleTreeCount != null){
+            DisCount = discipleTreeCount.getCount();
+        }
         myDisciples = DeepLife.myDATABASE.getAllDisciples();
         if(myDisciples != null){
-            WinCount = 0;
-            BuildCount = 0;
-            SendCount = 0;
+
             for(Disciple dis : myDisciples){
                 if(dis.getStage().toLowerCase().equals("win")){
                     WinCount +=1;
@@ -53,10 +61,11 @@ public class HomeFragment extends Fragment {
                     SendCount +=1;
                 }
             }
-            Win.setText(""+WinCount);
-            Build.setText(""+BuildCount);
-            Send.setText(""+SendCount);
         }
+        Win.setText(""+WinCount);
+        Build.setText(""+BuildCount);
+        Send.setText(""+SendCount);
+        DiscipleTree.setText(""+DisCount);
         return view;
     }
 }

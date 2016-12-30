@@ -7,10 +7,4 @@
         myapp:showAsAction="ifRoom"
         android:icon="@drawable/edit_new_icon"
         android:title="Add New Disciple"/>
-    <item
-        android:id="@+id/disciple_save"
-        android:orderInCategory="100"
-        myapp:showAsAction="ifRoom"
-        android:icon="@drawable/save_new_icon"
-        android:title="Add New Disciple"/>
 </menu>

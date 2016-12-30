@@ -9,9 +9,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import deeplife.gcme.com.deeplife.DeepLife;
 import deeplife.gcme.com.deeplife.R;
 
 /**
@@ -37,15 +39,10 @@ public class LearningFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(getActivity());
         myRecyclerView.setLayoutManager(mLayoutManager);
         myContext = getActivity();
-        ArrayList<LearningTool> items = new ArrayList<LearningTool>();
-        items.add(new LearningTool());
-        items.add(new LearningTool());
-        items.add(new LearningTool());
-        items.add(new LearningTool());
-        items.add(new LearningTool());
-        items.add(new LearningTool());
-        mAdapter = new LearningToolsListAdpapter(items, getContext());
-        myRecyclerView.setAdapter(mAdapter);
+//        ArrayList<LearningTool> items = DeepLife.myDATABASE.getAllLearningTools();
+//        Toast.makeText(getContext(),"There are "+items.size(),Toast.LENGTH_LONG).show();
+//        mAdapter = new LearningToolsListAdpapter(items, getContext());
+//        myRecyclerView.setAdapter(mAdapter);
         return view;
     }
 }

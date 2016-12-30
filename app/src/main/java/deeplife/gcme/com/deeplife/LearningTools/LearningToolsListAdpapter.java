@@ -7,7 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.VideoView;
 
+import java.net.URI;
 import java.util.List;
 
 import deeplife.gcme.com.deeplife.News.NewsListAdapter;
@@ -35,7 +37,8 @@ public class LearningToolsListAdpapter extends RecyclerView.Adapter<LearningTool
 
     @Override
     public void onBindViewHolder(DataObjectHolder holder, int position) {
-
+        holder.Title.setText(LearningTools.get(position).getTitle());
+        holder.Content.setText(LearningTools.get(position).getTitle());
     }
 
     @Override
@@ -46,16 +49,21 @@ public class LearningToolsListAdpapter extends RecyclerView.Adapter<LearningTool
     public static class DataObjectHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         TextView Title,Content;
         ImageView LearningImage;
+        VideoView Video;
         public DataObjectHolder(View itemView) {
             super(itemView);
-            Title = (TextView) itemView.findViewById(R.id.nav_disciples);
-            Content = (TextView) itemView.findViewById(R.id.nav_learning);
+            Title = (TextView) itemView.findViewById(R.id.txt_learning_title);
+            Content = (TextView) itemView.findViewById(R.id.txt_learning_content);
+            Video = (VideoView) itemView.findViewById(R.id.vdo_learning_video);
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
+            if(v.getId() == R.id.vdo_learning_video){
+                Video.start();
+            }
         }
 
         @Override

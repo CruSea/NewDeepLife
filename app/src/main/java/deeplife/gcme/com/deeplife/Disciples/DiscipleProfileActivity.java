@@ -29,6 +29,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -73,6 +74,7 @@ public class DiscipleProfileActivity extends AppCompatActivity {
     private SyncDatabase mySyncDatabase;
     private Button DisCall,DisMessage,DisComplete;
     private Context myContext;
+    private TextView DisplayName;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -93,6 +95,7 @@ public class DiscipleProfileActivity extends AppCompatActivity {
     private void FillForm() {
         if(myDisciple != null){
             FullName.setText(myDisciple.getDisplayName());
+            DisplayName.setText(myDisciple.getDisplayName());
             Email.setText(myDisciple.getEmail());
             Phone.setText("+"+myDisciple.getPhone());
             Country country = DeepLife.myDATABASE.getCountryByID(Integer.valueOf(myDisciple.getCountry()));
@@ -109,6 +112,7 @@ public class DiscipleProfileActivity extends AppCompatActivity {
 
     private void Init() {
         FullName = (EditText) findViewById(R.id.txt_disciple_profile_fullname);
+        DisplayName = (TextView) findViewById(R.id.txt_disciple_profile_displayname);
         Email = (EditText) findViewById(R.id.txt_disciple_profile_email);
         Email.setEnabled(false);
         Phone = (EditText) findViewById(R.id.txt_disciple_profile_phone);
@@ -180,7 +184,7 @@ public class DiscipleProfileActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.disciple_edit){
             EditMode(true);
-        }else if(item.getItemId() == R.id.disciple_save){
+        }else if(item.getItemId() == R.id.disciple_edit){
             myDisciple.setDisplayName(FullName.getText().toString());
             DeepLife.myDATABASE.updateDisciple(myDisciple);
             Logs logs = new Logs();

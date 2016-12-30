@@ -14,10 +14,12 @@ import org.json.JSONTokener;
 import deeplife.gcme.com.deeplife.Database.Database;
 import deeplife.gcme.com.deeplife.DeepLife;
 import deeplife.gcme.com.deeplife.Disciples.Disciple;
+import deeplife.gcme.com.deeplife.LearningTools.LearningTool;
 import deeplife.gcme.com.deeplife.Models.Answer;
 import deeplife.gcme.com.deeplife.Models.Category;
 import deeplife.gcme.com.deeplife.Models.Country;
 import deeplife.gcme.com.deeplife.Models.Logs;
+import deeplife.gcme.com.deeplife.Models.User;
 import deeplife.gcme.com.deeplife.WinBuildSend.WinBuildSendQuestion;
 import deeplife.gcme.com.deeplife.News.News;
 import deeplife.gcme.com.deeplife.Testimony.Testimony;
@@ -77,7 +79,11 @@ public class SyncDatabase {
                 }
                 if (!json_response.isNull("Profile")) {
                     JSONObject json_user_profile = json_response.getJSONObject("Profile");
-                    Add_MainUser(json_user_profile);
+                    Update_MainUser(json_user_profile);
+                }
+                if (!json_response.isNull("LearningTools")) {
+                    JSONObject json_learning_tools = json_response.getJSONObject("LearningTools");
+                    Add_LearningTools(json_learning_tools);
                 }
             }
         } catch (JSONException e) {
@@ -378,6 +384,88 @@ public class SyncDatabase {
                     Log.i(TAG,"Error During Adding: Main User -> \n"+cv.toString());
                 }
             }
+        }catch (Exception e){
+            Log.i(TAG,e.toString());
+        }
+    }
+    public static void Add_LearningTools(JSONObject json_learnings){
+        try{
+            if(json_learnings.length()>0){
+                Log.i(TAG,"Adding MainUser  -> \n"+json_learnings.toString());
+                JSONObject obj = json_learnings;
+                ContentValues cv = new ContentValues();
+                cv.put(Database.LEARNING_FIELDS[0], obj.getString("id"));
+                cv.put(Database.LEARNING_FIELDS[1], obj.getString("title"));
+                cv.put(Database.LEARNING_FIELDS[2], obj.getString("description"));
+                cv.put(Database.LEARNING_FIELDS[3], obj.getString("iframcode"));
+                cv.put(Database.LEARNING_FIELDS[4], obj.getString("country"));
+                cv.put(Database.LEARNING_FIELDS[5], obj.getString("default_learn"));
+                cv.put(Database.LEARNING_FIELDS[6], obj.getString("created"));
+                LearningTool learningTool = DeepLife.myDATABASE.getLearningToolsBySerID(Integer.valueOf(obj.getString("id")));
+                if(learningTool != null){
+                    long x = DeepLife.myDATABASE.insert(Database.Table_USER,cv);
+                    if(x>0){
+                        Log.i(TAG,"Successfully Added: Learning Tools -> \n"+cv.toString());
+                    }else {
+                        Log.i(TAG,"Error During Adding: Learning Tools -> \n"+cv.toString());
+                    }
+                }else {
+                    long x = DeepLife.myDATABASE.update(Database.Table_USER,cv,learningTool.getID());
+                    if(x>0){
+                        Log.i(TAG,"Successfully Updated: Learning Tools -> \n"+cv.toString());
+                    }else {
+                        Log.i(TAG,"Error During Updated: Learning Tools -> \n"+cv.toString());
+                    }
+                }
+            }
+        }catch (Exception e){
+            Log.i(TAG,e.toString());
+        }
+    }
+    public static void Update_MainUser(JSONObject json_mainuser){
+        try{
+            User user = DeepLife.myDATABASE.getMainUser();
+            if(user != null){
+                if(json_mainuser.length()>0){
+                    Log.i(TAG,"Adding MainUser  -> \n"+json_mainuser.toString());
+                    JSONObject obj = json_mainuser;
+                    ContentValues cv = new ContentValues();
+                    cv.put(Database.USER_FIELDS[0], obj.getString("id"));
+                    cv.put(Database.USER_FIELDS[1], obj.getString("firstName"));
+                    cv.put(Database.USER_FIELDS[2], obj.getString("email"));
+                    cv.put(Database.USER_FIELDS[3], obj.getString("phone_no"));
+                    cv.put(Database.USER_FIELDS[5], obj.getString("country"));
+                    cv.put(Database.USER_FIELDS[6], obj.getString("picture"));
+                    cv.put(Database.USER_FIELDS[7], obj.getString("picture"));
+                    long x = DeepLife.myDATABASE.update(Database.Table_USER,cv,user.getID());
+                    if(x>0){
+                        Log.i(TAG,"Successfully Updated: Main User -> \n"+cv.toString());
+                    }else {
+                        Log.i(TAG,"Error During Updated: Main User -> \n"+cv.toString());
+                    }
+                }
+            }else {
+                if(json_mainuser.length()>0){
+                    Log.i(TAG,"Adding MainUser  -> \n"+json_mainuser.toString());
+                    JSONObject obj = json_mainuser;
+                    ContentValues cv = new ContentValues();
+                    cv.put(Database.USER_FIELDS[0], obj.getString("id"));
+                    cv.put(Database.USER_FIELDS[1], obj.getString("firstName"));
+                    cv.put(Database.USER_FIELDS[2], obj.getString("email"));
+                    cv.put(Database.USER_FIELDS[3], obj.getString("phone_no"));
+                    cv.put(Database.USER_FIELDS[4], "pass");
+                    cv.put(Database.USER_FIELDS[5], obj.getString("country"));
+                    cv.put(Database.USER_FIELDS[6], obj.getString("picture"));
+                    cv.put(Database.USER_FIELDS[7], obj.getString("picture"));
+                    long x = DeepLife.myDATABASE.insert(Database.Table_USER,cv);
+                    if(x>0){
+                        Log.i(TAG,"Successfully Updated: Main User -> \n"+cv.toString());
+                    }else {
+                        Log.i(TAG,"Error During Updated: Main User -> \n"+cv.toString());
+                    }
+                }
+            }
+
         }catch (Exception e){
             Log.i(TAG,e.toString());
         }

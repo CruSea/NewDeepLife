@@ -64,41 +64,45 @@ public class SyncService extends JobService {
     @Override
     public boolean onStartJob(me.tatarka.support.job.JobParameters params) {
         Log.i(TAG, "The Job scheduler started");
-        user = DeepLife.myDATABASE.getMainUser();
-        Send_Param = new ArrayList<Pair<String,String>>();
-        getService();
-        if(user != null ){
-            if(user.getUser_Email() != null){
-                Send_Param.add(new kotlin.Pair<String, String>("User_Name",user.getUser_Email()));
-            }else {
-                Send_Param.add(new kotlin.Pair<String, String>("User_Name",user.getUser_Phone()));
+        try{
+            user = DeepLife.myDATABASE.getMainUser();
+            Send_Param = new ArrayList<Pair<String,String>>();
+            getService();
+            if(user != null ){
+                if(user.getUser_Email() != null){
+                    Send_Param.add(new kotlin.Pair<String, String>("User_Name",user.getUser_Email()));
+                }else {
+                    Send_Param.add(new kotlin.Pair<String, String>("User_Name",user.getUser_Phone()));
+                }
+                Send_Param.add(new kotlin.Pair<String, String>("User_Pass",user.getUser_Pass()));
+                Send_Param.add(new kotlin.Pair<String, String>("Country", user.getUser_Country()));
+                Send_Param.add(new kotlin.Pair<String, String>("Service", myLogs.getService()));
+                Send_Param.add(new kotlin.Pair<String, String>("Param", myParser.toJson(myLogs.getParam())));
+            }else{
+                Send_Param.add(new kotlin.Pair<String, String>("User_Name"," "));
+                Send_Param.add(new kotlin.Pair<String, String>("User_Pass"," "));
+                Send_Param.add(new kotlin.Pair<String, String>("Country", " "));
+                Send_Param.add(new kotlin.Pair<String, String>("Service",myLogs.getService()));
+                Send_Param.add(new kotlin.Pair<String, String>("Param",myParser.toJson(myLogs.getParam())));
             }
-            Send_Param.add(new kotlin.Pair<String, String>("User_Pass",user.getUser_Pass()));
-            Send_Param.add(new kotlin.Pair<String, String>("Country", user.getUser_Country()));
-            Send_Param.add(new kotlin.Pair<String, String>("Service", myLogs.getService()));
-            Send_Param.add(new kotlin.Pair<String, String>("Param", myParser.toJson(myLogs.getParam())));
-        }else{
-            Send_Param.add(new kotlin.Pair<String, String>("User_Name",""));
-            Send_Param.add(new kotlin.Pair<String, String>("User_Pass",""));
-            Send_Param.add(new kotlin.Pair<String, String>("Country", ""));
-            Send_Param.add(new kotlin.Pair<String, String>("Service",myLogs.getService()));
-            Send_Param.add(new kotlin.Pair<String, String>("Param",myParser.toJson(myLogs.getParam())));
-        }
-        Log.i(TAG, "Prepared Request: \n" + Send_Param.toString());
-        Log.i(TAG,"Service Started");
-        Fuel.post(DeepLife.API_URL, Send_Param).responseString(new Handler<String>() {
-            @Override
-            public void success(@NotNull Request request, @NotNull Response response, String s) {
-                Log.i(TAG, "Request: \n" + request);
-                Log.i(TAG, "Response: \n" + s);
-                mySyncDatabase.ProcessResponse(s);
-            }
+            Log.i(TAG, "Prepared Request: \n" + Send_Param.toString());
+            Log.i(TAG,"Service Started for \n"+DeepLife.API_URL);
+            Fuel.post(DeepLife.API_URL, Send_Param).responseString(new Handler<String>() {
+                @Override
+                public void success(@NotNull Request request, @NotNull Response response, String s) {
+                    Log.i(TAG, "Request: \n" + request);
+                    Log.i(TAG, "Response: \n" + s);
+                    mySyncDatabase.ProcessResponse(s);
+                }
 
-            @Override
-            public void failure(@NotNull Request request, @NotNull Response response, @NotNull FuelError fuelError) {
-                Log.i(TAG, "Fuel failure: \n" + fuelError.toString());
-            }
-        });
+                @Override
+                public void failure(@NotNull Request request, @NotNull Response response, @NotNull FuelError fuelError) {
+                    Log.i(TAG, "Fuel failure: \n" + fuelError.toString());
+                }
+            });
+        }catch (Exception e){
+            Log.i(TAG, "The Job scheduler Failed ...."+e.toString());
+        }
         jobFinished(params, false);
         return true;
     }

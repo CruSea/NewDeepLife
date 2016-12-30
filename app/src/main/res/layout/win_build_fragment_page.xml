@@ -16,7 +16,7 @@
         >
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/add_disciple_toolbar"
+            android:id="@+id/add_winbuild_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:layout_marginTop="10dp"
@@ -89,23 +89,57 @@
                             android:id="@+id/btn_winbuildsend_win"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@color/bg_login"
+                            style="@style/AppTheme.Button1"
                             android:layout_weight="1"
                             android:text="Win"/>
                         <Button
                             android:id="@+id/btn_winbuildsend_build"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@color/bg_logins"
+                            style="@style/AppTheme.Button1"
                             android:layout_weight="1"
                             android:text="Build"/>
                         <Button
                             android:id="@+id/btn_winbuildsend_send"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@color/bg_login"
+                            style="@style/AppTheme.Button1"
                             android:layout_weight="1"
                             android:text="Send"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:orientation="horizontal"
+                        android:layout_marginRight="10dp"
+                        android:weightSum="3"
+                        >
+                        <LinearLayout
+                            android:id="@+id/lyt_win"
+                            android:layout_width="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="horizontal"
+                            android:background="@color/colorAccent"
+                            android:layout_height="8dp">
+                        </LinearLayout>
+                        <LinearLayout
+                            android:id="@+id/lyt_build"
+                            android:layout_width="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="horizontal"
+                            android:background="@color/bg_login"
+                            android:layout_height="8dp">
+                        </LinearLayout>
+                        <LinearLayout
+                            android:id="@+id/lyt_send"
+                            android:layout_width="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="horizontal"
+                            android:background="@color/bg_login"
+                            android:layout_height="8dp">
+                        </LinearLayout>
+
                     </LinearLayout>
                 </LinearLayout>
 

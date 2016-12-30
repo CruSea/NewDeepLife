@@ -130,7 +130,7 @@
                         android:layout_marginBottom="10dp"
                         android:background="@color/white"
                         android:hint="Password"
-                        android:inputType="textEmailAddress"
+                        android:inputType="textPassword"
                         android:padding="10dp"
                         android:textColor="@color/input_login"
                         android:textColorHint="@color/input_login_hint" />
@@ -146,7 +146,7 @@
                         android:layout_marginBottom="10dp"
                         android:background="@color/white"
                         android:hint="Confirm Password "
-                        android:inputType="textEmailAddress"
+                        android:inputType="textPassword"
                         android:padding="10dp"
                         android:textColor="@color/input_login"
                         android:textColorHint="@color/input_login_hint" />

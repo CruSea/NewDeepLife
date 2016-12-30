@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,17 +32,20 @@ public class NewsFragment extends Fragment {
     private static Context myContext;
     private static FileDownloader myFileDownloader;
     private static FileManager myFileManager;
+    private static String TAG = "News_Fragment";
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         myFileManager = new FileManager(getContext());
         List<News> myNews = DeepLife.myDATABASE.getAllNews();
+        Log.i(TAG,"There are "+myNews.size()+" News");
         for(News news:myNews){
             String filename = "news"+news.getSerID()+".png";
             if(!myFileManager.getFileAt("News",filename).isFile()){
                 if(DeepLife.ImageDownloadCount < 5){
-                    FileDownloader d1 = new FileDownloader(getContext(),news.getImageURL(),"News",filename);
+                    FileDownloader d1 = new FileDownloader(getContext(),DeepLife.API_URL+news.getImageURL(),"News",filename);
+                    Log.i(TAG,"Downloading Image "+DeepLife.DEEP_URL+news.getImageURL());
                     d1.execute();
                 }
             }
