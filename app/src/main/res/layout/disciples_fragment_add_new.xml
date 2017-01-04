@@ -190,7 +190,7 @@
                             android:id="@+id/txt_discipleadd_phone"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="10dp"
+                            android:layout_marginBottom="11dp"
                             android:background="@color/white"
                             android:inputType="number"
                             android:hint="Disciple Phone Number"
