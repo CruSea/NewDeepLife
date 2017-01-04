@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <string name="action_settings">Ayarlar</string>
+  <string-array name="gender">
+    <item>Erkek</item>
+    <item>Kadın</item>
+  </string-array>
+  <string name="err_msg_name">Burada tam adınızı girin</string>
+  <string name="err_msg_email">Geçerli bir e-posta adresi girin</string>
+  <string name="err_msg_email_phone">Geçerli bir e-posta adresi veya telefon numarası girin</string>
+  <string name="err_msg_password1">şifreyi girin</string>
+  <string name="err_msg_password2">Girdiğiniz şifre çok değil mi</string>
+  <string name="err_msg_phone">Geçerli bir telefon numarası girin</string>
+  <string name="err_msg_testimony_title">tanıklık başlığı girin</string>
+  <string name="err_msg_testimony_detail">tanıklık detay girin</string>
+</resources>

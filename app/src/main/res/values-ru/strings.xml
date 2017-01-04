@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <string name="action_settings">Настройки</string>
+  <string-array name="gender">
+    <item>Мужской</item>
+    <item>женский</item>
+  </string-array>
+  <string name="err_msg_name">Введите свое полное имя здесь</string>
+  <string name="err_msg_email">Введите действительный адрес электронной почты</string>
+  <string name="err_msg_email_phone">Введите действительный адрес электронной почты или номер телефона</string>
+  <string name="err_msg_password1">Вводить пароль</string>
+  <string name="err_msg_password2">Введенный вами пароль не имеет большого</string>
+  <string name="err_msg_phone">Введите действительный номер телефона</string>
+  <string name="err_msg_testimony_title">Введите название показания</string>
+  <string name="err_msg_testimony_detail">Введите показания подробно</string>
+</resources>
