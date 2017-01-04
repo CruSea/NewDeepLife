@@ -215,7 +215,7 @@
                         android:textColor="@color/white"
                         android:textStyle="bold"
                         android:layout_marginLeft="10dp"
-                        android:text="Phone Num."/>
+                        android:text="Gender"/>
                     <Spinner
                         android:id="@+id/spn_discipleadd_gender"
                         android:layout_width="match_parent"
