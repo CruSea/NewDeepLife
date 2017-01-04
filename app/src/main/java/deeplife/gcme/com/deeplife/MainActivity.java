@@ -1,15 +1,11 @@
 package deeplife.gcme.com.deeplife;
 
 import android.Manifest;
-import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -22,7 +18,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -35,7 +30,6 @@ import deeplife.gcme.com.deeplife.LearningTools.LearningFragment;
 import deeplife.gcme.com.deeplife.Models.User;
 import deeplife.gcme.com.deeplife.News.NewsFragment;
 import deeplife.gcme.com.deeplife.Profile.ProfileShowActivity;
-import deeplife.gcme.com.deeplife.SyncService.SyncService;
 import deeplife.gcme.com.deeplife.Testimony.TestimonyFragment;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -92,13 +86,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         myTabLayout.getTabAt(2).setIcon(R.drawable.nav_testimonials_icon_grey);
         myTabLayout.getTabAt(3).setIcon(R.drawable.nav_news_icon_grey);
         myTabLayout.getTabAt(4).setIcon(R.drawable.nav_learning_icon_grey);
+        UserName = (TextView) findViewById(R.id.txt_main_user_name);
 
         checkPermissions();
-        myUser = DeepLife.myDATABASE.getMainUser();
-        if(myUser != null){
-            UserName = (TextView) findViewById(R.id.txt_main_user_name);
-            UserName.setText(myUser.getFull_Name());
-        }
+//        myUser = DeepLife.myDATABASE.getMainUser();
+//        if(myUser != null && myUser.getFull_Name() != null){
+//            UserName.setText(myUser.getFull_Name());
+//        }
 
     }
 
@@ -107,6 +101,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_BOOT_COMPLETED) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECEIVE_BOOT_COMPLETED}, RECEIVE_BOOT_COMPLETED);
         }else {
+            
         }
     }
 

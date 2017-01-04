@@ -125,7 +125,6 @@ public class Login extends AppCompatActivity {
             mySpinner.setAdapter(new CountryListAdapter(myContext,R.layout.login_countries_item,myCountries));
         }else {
             myCountries = DeepLife.myDATABASE.getAllCountries();
-            mySpinner.setAdapter(new CountryListAdapter(myContext,R.layout.login_countries_item,myCountries));
         }
     }
     public static void GetNextActivity(){

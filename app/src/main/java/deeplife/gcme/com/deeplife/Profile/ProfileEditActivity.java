@@ -26,10 +26,10 @@ public class ProfileEditActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile_edit_activity);
-
-        saveBtn = (Button)findViewById(R.id.saveBtn);
-        cancelBtn = (Button)findViewById(R.id.cancelBtn);
-        countrySpinner = (Spinner)findViewById(R.id.countrySpinner);
+//
+//        saveBtn = (Button)findViewById(R.id.saveBtn);
+//        cancelBtn = (Button)findViewById(R.id.cancelBtn);
+//        countrySpinner = (Spinner)findViewById(R.id.countrySpinner);
 
         // Spinner Temp Init
         String[] countryItems = new String[]{"Ethiopia", "Hungary", "Turkey", "Uganda", "USA", "Zimbabwe"};
