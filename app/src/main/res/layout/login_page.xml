@@ -79,7 +79,8 @@
                             android:hint="Your Email or Phone Number"
                             android:padding="10dp"
                             android:textColor="@color/input_login"
-                            android:textColorHint="@color/input_login_hint" />
+                            android:textColorHint="@color/input_login_hint"
+                            android:inputType="textEmailAddress" />
                     </android.support.design.widget.TextInputLayout>
                 </LinearLayout>
 
