@@ -111,15 +111,15 @@ public class WinBuildSendActivity extends AppCompatActivity {
 
     }
     public void UpdateQuestionList(int stage){
-        ArrayList<WinBuildSendQuestion> SendQuestions = DeepLife.myDATABASE.getWinBuildSendQuestionsByCategorySerID(stage);
+        ArrayList<WbsQuestion> SendQuestions = DeepLife.myDATABASE.getWinBuildSendQuestionsByCategorySerID(stage);
         if(SendQuestions != null){
             List<Category> items = DeepLife.myDATABASE.getCategoriesByParentID(stage);
             if(items.size()>0){
                 for(Category category :items){
-                    WinBuildSendQuestion question = new WinBuildSendQuestion();
+                    WbsQuestion question = new WbsQuestion();
                     question.setQuestion(category.getName());
-                    question.setType("Folder");
-                    ArrayList<WinBuildSendQuestion> FoundQuestion = DeepLife.myDATABASE.getWinBuildSendQuestionsByCategorySerID(category.getSerID());
+                    question.setType(WbsQuestion.Type.FOLDER);
+                    ArrayList<WbsQuestion> FoundQuestion = DeepLife.myDATABASE.getWinBuildSendQuestionsByCategorySerID(category.getSerID());
                     if(FoundQuestion.size()>0){
                         SendQuestions.add(question);
                     }
@@ -150,7 +150,7 @@ public class WinBuildSendActivity extends AppCompatActivity {
             }
         }
     }
-    public static void UpdateGUIAdapter(List<WinBuildSendQuestion> datas){
+    public static void UpdateGUIAdapter(List<WbsQuestion> datas){
         mAdapter = new WinBuildSendItemsAdapter(datas,myContext,DisciplePhone,BuildStage);
         myRecyclerView.setAdapter(mAdapter);
         try{
@@ -162,8 +162,8 @@ public class WinBuildSendActivity extends AppCompatActivity {
     public static void checkStage() {
         Toast.makeText(myContext,"Checking for Stage change",Toast.LENGTH_LONG).show();
         int WinBuilSend = 1;
-        ArrayList<WinBuildSendQuestion> Questions = DeepLife.myDATABASE.getWinBuildSendQuestionsByCategorySerID(1);
-        for(WinBuildSendQuestion WinQuestioons : Questions){
+        ArrayList<WbsQuestion> Questions = DeepLife.myDATABASE.getWinBuildSendQuestionsByCategorySerID(1);
+        for(WbsQuestion WinQuestioons : Questions){
             if(WinQuestioons.getMandatory() != 0){
                 Answer answer = DeepLife.myDATABASE.getAnswerByQuestionIDandDisciplePhone(WinQuestioons.getSerID(),DisciplePhone);
                 if(answer != null){
@@ -185,7 +185,7 @@ public class WinBuildSendActivity extends AppCompatActivity {
             BuildStage = "BUILD";
             WinBuilSend = 1;
             Questions = DeepLife.myDATABASE.getWinBuildSendQuestionsByCategorySerID(2);
-            for(WinBuildSendQuestion WinQuestioons : Questions){
+            for(WbsQuestion WinQuestioons : Questions){
                 if(WinQuestioons.getMandatory() != 0){
                     Answer answer = DeepLife.myDATABASE.getAnswerByQuestionIDandDisciplePhone(WinQuestioons.getSerID(),DisciplePhone);
                     if(answer != null){
@@ -207,7 +207,7 @@ public class WinBuildSendActivity extends AppCompatActivity {
                 BuildStage = "SEND";
                 WinBuilSend = 1;
                 Questions = DeepLife.myDATABASE.getWinBuildSendQuestionsByCategorySerID(3);
-                for(WinBuildSendQuestion WinQuestioons : Questions){
+                for(WbsQuestion WinQuestioons : Questions){
                     if(WinQuestioons.getMandatory() != 0){
                         Answer answer = DeepLife.myDATABASE.getAnswerByQuestionIDandDisciplePhone(WinQuestioons.getSerID(),DisciplePhone);
                         if(answer != null){

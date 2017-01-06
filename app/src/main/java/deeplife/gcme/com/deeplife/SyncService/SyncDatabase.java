@@ -22,7 +22,7 @@ import deeplife.gcme.com.deeplife.Models.User;
 import deeplife.gcme.com.deeplife.News.News;
 import deeplife.gcme.com.deeplife.Testimony.Testimony;
 import deeplife.gcme.com.deeplife.Testimony.TestimonyFragment;
-import deeplife.gcme.com.deeplife.WinBuildSend.WinBuildSendQuestion;
+import deeplife.gcme.com.deeplife.WinBuildSend.WbsQuestion;
 
 /**
  * Created by bengeos on 12/16/16.
@@ -268,8 +268,8 @@ public class SyncDatabase {
                     cv.put(Database.QUESTION_LIST_FIELDS[5], obj.getString("type"));
                     cv.put(Database.QUESTION_LIST_FIELDS[6], obj.getString("country"));
                     cv.put(Database.QUESTION_LIST_FIELDS[7], obj.getString("created"));
-                    WinBuildSendQuestion winBuildSendQuestion = DeepLife.myDATABASE.getWinBuildSendQuestionBySerID(Integer.valueOf(obj.getString("id")));
-                    if(winBuildSendQuestion == null){
+                    WbsQuestion wbsQuestion = DeepLife.myDATABASE.getWinBuildSendQuestionBySerID(Integer.valueOf(obj.getString("id")));
+                    if(wbsQuestion == null){
                         long x = DeepLife.myDATABASE.insert(Database.Table_QUESTION_LIST,cv);
                         if(x>0){
                             Log.i(TAG,"Successfully Added: WinBuildSend Questions Added -> \n"+cv.toString());
@@ -277,7 +277,7 @@ public class SyncDatabase {
                             Log.i(TAG,"Error During Adding: WinBuildSend Questions -> \n"+cv.toString());
                         }
                     }else {
-                        long x = DeepLife.myDATABASE.update(Database.Table_QUESTION_LIST,cv,winBuildSendQuestion.getID());
+                        long x = DeepLife.myDATABASE.update(Database.Table_QUESTION_LIST,cv, wbsQuestion.getID());
                         Log.i(TAG,"Updated: WinBuildSend Questions Updated -> \n"+cv.toString());
                         if(x>0){
                             Log.i(TAG,"Successfully Updated: WinBuildSend Questions Updated -> \n"+cv.toString());
