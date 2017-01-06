@@ -70,7 +70,7 @@
                                 android:text="@string/ui_disciple_tree"
                                 android:textStyle="bold"
                                 android:textColor="#ffffff"
-                                android:textSize="25dp"/>
+                                android:textSize="25sp"/>
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:gravity="center_vertical"
@@ -81,7 +81,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:textColor="#ffffff"
-                                    android:textSize="30dp"
+                                    android:textSize="30sp"
                                     tools:text="241"/>
                                 <TextView
                                     android:layout_width="wrap_content"
@@ -150,7 +150,7 @@
                                 android:text="@string/text_win"
                                 android:textStyle="bold"
                                 android:textColor="#ffffff"
-                                android:textSize="25dp"/>
+                                android:textSize="25sp"/>
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:gravity="center_vertical"
@@ -161,7 +161,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:textColor="#ffffff"
-                                    android:textSize="30dp"
+                                    android:textSize="30sp"
                                     tools:text="241"/>
                                 <TextView
                                     android:layout_width="wrap_content"
@@ -230,7 +230,7 @@
                                 android:text="@string/text_build"
                                 android:textStyle="bold"
                                 android:textColor="#ffffff"
-                                android:textSize="25dp"/>
+                                android:textSize="25sp"/>
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:gravity="center_vertical"
@@ -241,7 +241,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:textColor="#ffffff"
-                                    android:textSize="30dp"
+                                    android:textSize="30sp"
                                     tools:text="241"/>
                                 <TextView
                                     android:layout_width="wrap_content"
@@ -310,7 +310,7 @@
                                 android:text="@string/text_send"
                                 android:textStyle="bold"
                                 android:textColor="#ffffff"
-                                android:textSize="25dp"/>
+                                android:textSize="25sp"/>
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:gravity="center_vertical"
@@ -321,7 +321,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:textColor="#ffffff"
-                                    android:textSize="30dp"
+                                    android:textSize="30sp"
                                     tools:text="241"/>
                                 <TextView
                                     android:layout_width="wrap_content"

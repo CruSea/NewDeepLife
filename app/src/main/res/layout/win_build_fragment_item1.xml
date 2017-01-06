@@ -37,7 +37,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:text="This is the Question Place "
-                        android:textSize="17dp"
+                        android:textSize="17sp"
                         android:textColor="#000000"
                         android:id="@+id/txt_winbuildsend_question1" />
                     <LinearLayout
@@ -98,7 +98,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:textSize="17dp"
+                        android:textSize="17sp"
                         android:textColor="#000000"
                         android:id="@+id/txt_winbuildsend_question2"
                         tools:text="This is the Question Place " />
@@ -197,7 +197,7 @@
                         android:layout_marginTop="5dp"
                         android:layout_marginLeft="10dp"
                         android:text=""
-                        android:textSize="17dp"
+                        android:textSize="17sp"
                         android:textColor="#000000"
                         />
                 </LinearLayout>

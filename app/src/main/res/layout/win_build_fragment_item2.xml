@@ -46,7 +46,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal|center_vertical"
-                        android:textSize="17dp"
+                        android:textSize="17sp"
                         android:textColor="#000000"
                         android:id="@+id/txt_question"
                         tools:text="Number of People that you tell about jesus christ" />

@@ -37,7 +37,7 @@
             android:textColor="#ffffff"
             android:textStyle="bold"
             android:layout_margin="20dp"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:text="@string/text_step2_verse"/>
     </LinearLayout>
 </LinearLayout>
