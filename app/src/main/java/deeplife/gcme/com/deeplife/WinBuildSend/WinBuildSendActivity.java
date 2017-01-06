@@ -24,12 +24,10 @@ import java.util.List;
 import deeplife.gcme.com.deeplife.Database.Database;
 import deeplife.gcme.com.deeplife.DeepLife;
 import deeplife.gcme.com.deeplife.Disciples.Disciple;
-import deeplife.gcme.com.deeplife.Disciples.DiscipleListAdapter;
 import deeplife.gcme.com.deeplife.Disciples.DisciplesFragment;
 import deeplife.gcme.com.deeplife.Models.Answer;
 import deeplife.gcme.com.deeplife.Models.Category;
 import deeplife.gcme.com.deeplife.R;
-import deeplife.gcme.com.deeplife.Tabs.SlidingTabLayout;
 
 /**
  * Created by bengeos on 12/19/16.
@@ -57,7 +55,7 @@ public class WinBuildSendActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.add_winbuild_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Win Build Send Disciple");
+        getSupportActionBar().setTitle(R.string.toolbar_title_disciple_wbs);
 
 
         myRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
@@ -236,49 +234,49 @@ public class WinBuildSendActivity extends AppCompatActivity {
         if(Stage == 1){
             Btn_Win.setEnabled(true);
             Btn_Win.setTypeface(Btn_Win.getTypeface(),Typeface.BOLD);
-            Btn_Win.setText("-> WIN <-");
+            Btn_Win.setText("->" + DeepLife.getContext().getString(R.string.text_win) + "<-");
 
 
             Btn_Build.setEnabled(false);
             Btn_Build.setTypeface(Btn_Build.getTypeface(),Typeface.ITALIC);
-            Btn_Build.setText("build");
+            Btn_Build.setText(R.string.text_build);
 
 
             Btn_Send.setEnabled(false);
             Btn_Send.setTypeface(Btn_Send.getTypeface(),Typeface.ITALIC);
-            Btn_Send.setText("send");
+            Btn_Send.setText(R.string.text_send);
 
             myDisciple.setStage("WIN");
         }else if(Stage == 2){
             Btn_Win.setEnabled(true);
             Btn_Win.setTypeface(Btn_Win.getTypeface(),Typeface.ITALIC);
-            Btn_Win.setText("win");
+            Btn_Win.setText(R.string.text_win);
             Btn_Win.setTextColor(Color.GRAY);
             Btn_Win.setActivated(false);
 
             Btn_Build.setEnabled(true);
             Btn_Build.setTypeface(Btn_Build.getTypeface(),Typeface.BOLD);
-            Btn_Build.setText("-> BUILD <-");
+            Btn_Build.setText("->" + DeepLife.getContext().getString(R.string.text_build) + "<-");
 
             Btn_Send.setEnabled(false);
             Btn_Send.setTypeface(Btn_Send.getTypeface(),Typeface.ITALIC);
-            Btn_Send.setText("send");
+            Btn_Send.setText(DeepLife.getContext().getString(R.string.text_send));
 
             myDisciple.setStage("BUILD");
         }else {
             Btn_Win.setEnabled(true);
             Btn_Win.setTypeface(Btn_Win.getTypeface(),Typeface.ITALIC);
             Btn_Win.setTextColor(Color.GRAY);
-            Btn_Win.setText("win");
+            Btn_Win.setText(DeepLife.getContext().getString(R.string.text_win));
 
             Btn_Build.setEnabled(true);
             Btn_Build.setTypeface(Btn_Build.getTypeface(),Typeface.ITALIC);
             Btn_Build.setTextColor(Color.GRAY);
-            Btn_Build.setText("build");
+            Btn_Build.setText(DeepLife.getContext().getString(R.string.text_build));
 
             Btn_Send.setEnabled(true);
             Btn_Send.setTypeface(Btn_Send.getTypeface(),Typeface.BOLD);
-            Btn_Send.setText("-> SEND <-");
+            Btn_Send.setText("->" + DeepLife.getContext().getString(R.string.text_send) + "<-");
 
             myDisciple.setStage("SEND");
         }

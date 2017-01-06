@@ -68,11 +68,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         myViewPager = (ViewPager) findViewById(R.id.viewpager);
         ViewPageAdapter viewPageAdapter = new ViewPageAdapter(getSupportFragmentManager());
-        viewPageAdapter.addFragment(new HomeFragment(),"Home");
-        viewPageAdapter.addFragment(new DisciplesFragment(),"Disciples");
-        viewPageAdapter.addFragment(new TestimonyFragment(),"Testimony");
-        viewPageAdapter.addFragment(new NewsFragment(),"News");
-        viewPageAdapter.addFragment(new LearningFragment(),"Learning");
+        viewPageAdapter.addFragment(new HomeFragment(),getString(R.string.home_fragment_title));
+        viewPageAdapter.addFragment(new DisciplesFragment(),getString(R.string.disciples_fragment_title));
+        viewPageAdapter.addFragment(new TestimonyFragment(),getString(R.string.testimony_fragment_title));
+        viewPageAdapter.addFragment(new NewsFragment(),getString(R.string.news_fragment_title));
+        viewPageAdapter.addFragment(new LearningFragment(),getString(R.string.learning_fragment_title));
         myViewPager.setAdapter(viewPageAdapter);
 
         myTabLayout = (TabLayout) findViewById(R.id.tabs);

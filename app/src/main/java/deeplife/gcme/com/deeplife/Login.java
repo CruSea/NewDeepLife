@@ -33,7 +33,7 @@ public class Login extends AppCompatActivity {
     public static Context myContext;
     private LoginAccess loginAccess;
     public static List<Country> myCountries;
-    public static ProgressDialog PROGRESS_DIALOG;
+    public static ProgressDialog progressDialog;
     public static Spinner mySpinner;
     public static EditText TextCode,UserName,UserPass;
     private static String LoginChoice;
@@ -44,14 +44,14 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_page);
         myContext = this;
-        PROGRESS_DIALOG = new ProgressDialog(this);
-        PROGRESS_DIALOG.setTitle(R.string.app_name);
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle(R.string.app_name);
         myCountries = DeepLife.myDATABASE.getAllCountries();
         if(myCountries != null && myCountries.size()>0){
 
         }else {
-            PROGRESS_DIALOG.setMessage("Downloading Files ....");
-            PROGRESS_DIALOG.show();
+            progressDialog.setMessage(getString(R.string.dlg_msg_downloading_files));
+            progressDialog.show();
             loginAccess = new LoginAccess(new User());
             loginAccess.GetMetaData();
         }
@@ -100,8 +100,8 @@ public class Login extends AppCompatActivity {
                     user.setUser_Pass(UserPass.getText().toString());
                     user.setUser_Country(""+myCountries.get(mySpinner.getSelectedItemPosition()).getSerID());
                     loginAccess = new LoginAccess(user);
-                    PROGRESS_DIALOG.setMessage("Authenticating the user ....");
-                    PROGRESS_DIALOG.show();
+                    progressDialog.setMessage(getString(R.string.dlg_msg_authenticating_user));
+                    progressDialog.show();
                     loginAccess.LogInAuthnticate();
                 }
 
@@ -128,7 +128,7 @@ public class Login extends AppCompatActivity {
         }
     }
     public static void GetNextActivity(){
-        Toast.makeText(myContext,"Login Successful",Toast.LENGTH_LONG).show();
+        Toast.makeText(myContext, R.string.toast_msg_login_successful,Toast.LENGTH_LONG).show();
         Intent intent = new Intent(myContext, deeplife.gcme.com.deeplife.MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         myContext.startActivity(intent);
@@ -136,10 +136,10 @@ public class Login extends AppCompatActivity {
     public static void DialogState(int state){
         try{
             if(state == 0){
-                PROGRESS_DIALOG.cancel();
+                progressDialog.cancel();
                 UpdateView();
             }else{
-                PROGRESS_DIALOG.show();
+                progressDialog.show();
             }
         }catch (Exception e){
 
@@ -160,7 +160,7 @@ public class Login extends AppCompatActivity {
             };
             android.app.AlertDialog.Builder builder = new AlertDialog.Builder(myContext);
             builder.setMessage(message)
-                    .setPositiveButton("ok ", dialogClickListener)
+                    .setPositiveButton(R.string.dlg_btn_ok, dialogClickListener)
                     .show();
         }catch (Exception e){
 

@@ -3,15 +3,11 @@ package deeplife.gcme.com.deeplife;
 import android.app.Application;
 import android.content.ComponentName;
 import android.content.Context;
-import android.os.Build;
 import android.util.Log;
-
-import com.evernote.android.job.JobManager;
 
 import java.util.List;
 
 import deeplife.gcme.com.deeplife.Database.Database;
-import deeplife.gcme.com.deeplife.SyncService.SyncJob;
 import deeplife.gcme.com.deeplife.SyncService.SyncService;
 import me.tatarka.support.job.JobInfo;
 import me.tatarka.support.job.JobScheduler;
@@ -36,12 +32,13 @@ public class DeepLife extends Application {
     public static Database myDATABASE;
     private static int JOB_ID = 1000;
 
-
+    private static Context mContext;
 
     @Override
     public void onCreate() {
         super.onCreate();
         Log.i(TAG,"Application Started");
+        mContext = this;
         myDATABASE = new Database(this);
 //        JobManager.create(this).addJobCreator(new SyncJob());
         myJobScheduler = JobScheduler.getInstance(this);
@@ -63,6 +60,9 @@ public class DeepLife extends Application {
         }else{
             Log.i(TAG, "The Job scheduler Not Constructed");
         }
+    }
 
+    public static Context getContext() {
+        return mContext;
     }
 }

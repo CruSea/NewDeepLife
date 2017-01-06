@@ -11,7 +11,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Looper;
-import android.os.PersistableBundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -80,7 +79,7 @@ public class DiscipleAddActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.add_disciple_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Add your Disciple");
+        getSupportActionBar().setTitle(R.string.toolbar_title_disciple_add);
         myFileManager = new FileManager(this);
         DiscipleImageFile = new File("");
 
@@ -127,15 +126,14 @@ public class DiscipleAddActivity extends AppCompatActivity {
                         logs.setValue(myDisciple.getPhone());
                         mySyncDatabase.AddLog(logs);
                         DisciplesFragment.UpdateList();
-                        ShowDialog("Your Disciple is Successfully Added!",true);
+                        ShowDialog(getString(R.string.dlg_msg_disciple_add_success),true);
 
                     }else {
-                        ShowDialog("Opps! This Disciple Could not be Added!",false);
+                        ShowDialog(getString(R.string.dlg_msg_disciple_add_failure),false);
                     }
                 }else {
-                    ShowDialog("Opps! This Disciple Could not be Added! make sure you have entered correct information",false);
+                    ShowDialog(getString(R.string.dlg_msg_disciple_add_failure_check), false);
                 }
-
             }
         });
 
@@ -177,7 +175,7 @@ public class DiscipleAddActivity extends AppCompatActivity {
         builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.app_name)
                 .setMessage(message)
-                .setPositiveButton("Ok", dialogClickListener).show();
+                .setPositiveButton(R.string.dlg_btn_ok, dialogClickListener).show();
     }
     public Disciple getDisciple(){
         if(FullName.getText().toString().length()>2){

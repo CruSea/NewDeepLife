@@ -53,7 +53,7 @@
                         android:textColor="@color/black"
                         android:textStyle="bold"
                         android:textSize="20sp"
-                        android:text="Biniam Kassahun"/>
+                        tools:text="Biniam Kassahun"/>
                 </LinearLayout>
             </LinearLayout>
 
@@ -83,13 +83,13 @@
                             android:textStyle="bold"
                             android:textSize="20sp"
                             android:layout_marginLeft="10dp"
-                            android:text="Full Name:    "/>
+                            android:text="@string/form_text_full_name"/>
                         <EditText
                             android:id="@+id/txt_disciple_profile_fullname"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@color/white"
-                            android:hint="Full Name"
+                            android:hint="@string/form_text_full_name"
                             android:inputType="text"
                             android:padding="10dp"
                             android:textColor="@color/bg_login"
@@ -116,13 +116,13 @@
                             android:textStyle="bold"
                             android:textSize="20sp"
                             android:layout_marginLeft="10dp"
-                            android:text="Email:    "/>
+                            android:text="@string/form_text_email"/>
                         <EditText
                             android:id="@+id/txt_disciple_profile_email"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@color/white"
-                            android:hint="Email Address"
+                            android:hint="@string/form_text_email"
                             android:inputType="text"
                             android:textStyle="bold"
                             android:padding="10dp"
@@ -150,13 +150,13 @@
                             android:textStyle="bold"
                             android:textSize="20sp"
                             android:layout_marginLeft="10dp"
-                            android:text="Country:    "/>
+                            android:text="@string/form_text_country"/>
                         <EditText
                             android:id="@+id/txt_disciple_profile_country"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@color/white"
-                            android:hint="Country"
+                            android:hint="@string/form_text_country"
                             android:inputType="text"
                             android:textStyle="bold"
                             android:padding="10dp"
@@ -185,13 +185,13 @@
                             android:textStyle="bold"
                             android:textSize="20sp"
                             android:layout_marginLeft="10dp"
-                            android:text="Phone:    "/>
+                            android:text="@string/form_text_phone"/>
                         <EditText
                             android:id="@+id/txt_disciple_profile_phone"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@color/white"
-                            android:hint="Phone Number"
+                            android:hint="@string/form_text_phone_number"
                             android:textStyle="bold"
                             android:inputType="text"
                             android:padding="10dp"
@@ -220,13 +220,13 @@
                             android:textStyle="bold"
                             android:textSize="20sp"
                             android:layout_marginLeft="10dp"
-                            android:text="Gender:    "/>
+                            android:text="@string/form_text_gender"/>
                         <EditText
                             android:id="@+id/txt_disciple_profile_gender"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@color/white"
-                            android:hint="Gender"
+                            android:hint="@string/form_text_gender"
                             android:textStyle="bold"
                             android:inputType="text"
                             android:padding="10dp"

@@ -20,7 +20,7 @@
         android:layout_marginLeft="16dp" />
 
     <TextView
-        android:text="Personal Information"
+        android:text="@string/form_text_personal_information"
         android:layout_width="256dp"
         android:layout_height="wrap_content"
         android:id="@+id/textView2"
@@ -30,7 +30,7 @@
         tools:layout_editor_absoluteX="16dp" />
 
     <Button
-        android:text="Edit"
+        android:text="@string/action_edit"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:id="@+id/editBtn"
@@ -61,7 +61,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:text="Name"
+                android:text="@string/form_text_full_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/textView3"
@@ -74,7 +74,7 @@
                 tools:layout_conversion_absoluteHeight="16dp" />
 
             <TextView
-                android:text="Biniam Kassahun"
+                tools:text="Biniam Kassahun"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/textView4"
@@ -89,7 +89,7 @@
                 android:layout_marginTop="8dp" />
 
             <TextView
-                android:text="Gender"
+                android:text="@string/form_text_gender"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/textView5"
@@ -103,7 +103,7 @@
                 android:layout_marginTop="16dp" />
 
             <TextView
-                android:text="Male"
+                tools:text="Male"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/textView6"
@@ -118,7 +118,7 @@
                 android:layout_marginTop="8dp" />
 
             <TextView
-                android:text="Country"
+                android:text="@string/form_text_country"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/textView7"
@@ -132,7 +132,7 @@
                 android:layout_marginTop="16dp" />
 
             <TextView
-                android:text="Ethiopia"
+                tools:text="Ethiopia"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/textView8"
@@ -147,7 +147,7 @@
                 android:layout_marginTop="8dp" />
 
             <TextView
-                android:text="Phone"
+                android:text="@string/form_text_phone"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/textView9"
@@ -161,7 +161,7 @@
                 android:layout_marginTop="16dp" />
 
             <TextView
-                android:text="+1 234 567 8900"
+                tools:text="+1 234 567 8900"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/textView10"
@@ -176,7 +176,7 @@
                 android:layout_marginTop="8dp" />
 
             <TextView
-                android:text="Email"
+                android:text="@string/form_text_email"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/textView11"
@@ -190,7 +190,7 @@
                 android:layout_marginTop="16dp" />
 
             <TextView
-                android:text="george.beng@gmail.com"
+                tools:text="george.beng@gmail.com"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/textView12"

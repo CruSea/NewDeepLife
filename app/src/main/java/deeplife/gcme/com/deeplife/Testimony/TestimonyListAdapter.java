@@ -2,8 +2,6 @@ package deeplife.gcme.com.deeplife.Testimony;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,11 +15,8 @@ import java.util.List;
 
 import deeplife.gcme.com.deeplife.Database.Database;
 import deeplife.gcme.com.deeplife.DeepLife;
-import deeplife.gcme.com.deeplife.Disciples.DisciplesFragment;
-import deeplife.gcme.com.deeplife.Models.Logs;
 import deeplife.gcme.com.deeplife.R;
 import deeplife.gcme.com.deeplife.SyncService.SyncDatabase;
-import deeplife.gcme.com.deeplife.SyncService.SyncService;
 
 /**
  * Created by bengeos on 12/6/16.
@@ -100,8 +95,8 @@ public class TestimonyListAdapter extends RecyclerView.Adapter<TestimonyListAdap
         };
         builder = new AlertDialog.Builder(myContext);
         builder.setTitle(R.string.app_name)
-                .setMessage("Are You Sure! You want to delete this Testimony")
-                .setNegativeButton("No! I don`t",dialogClickListener)
-                .setPositiveButton("Ok", dialogClickListener).show();
+                .setMessage(DeepLife.getContext().getString(R.string.dlg_msg_are_you_sure_delete_x, "Testimony"))
+                .setNegativeButton(R.string.dlg_btn_no_dont_delete, dialogClickListener)
+                .setPositiveButton(R.string.dlg_btn_ok, dialogClickListener).show();
     }
 }

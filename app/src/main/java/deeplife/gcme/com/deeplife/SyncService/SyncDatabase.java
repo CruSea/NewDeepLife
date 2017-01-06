@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.util.Log;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -20,17 +19,17 @@ import deeplife.gcme.com.deeplife.Models.Category;
 import deeplife.gcme.com.deeplife.Models.Country;
 import deeplife.gcme.com.deeplife.Models.Logs;
 import deeplife.gcme.com.deeplife.Models.User;
-import deeplife.gcme.com.deeplife.WinBuildSend.WinBuildSendQuestion;
 import deeplife.gcme.com.deeplife.News.News;
 import deeplife.gcme.com.deeplife.Testimony.Testimony;
 import deeplife.gcme.com.deeplife.Testimony.TestimonyFragment;
+import deeplife.gcme.com.deeplife.WinBuildSend.WinBuildSendQuestion;
 
 /**
  * Created by bengeos on 12/16/16.
  */
 
 public class SyncDatabase {
-    private static String TAG = "SyncDatabase";
+    private static final String TAG = "SyncDatabase";
     public static void ProcessResponse(String jsonArray){
         Gson myGson = new Gson();
         try {
