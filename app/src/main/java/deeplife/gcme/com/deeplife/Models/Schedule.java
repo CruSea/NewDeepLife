@@ -54,6 +54,4 @@ public class Schedule {
 	public void setDescription(String description) {
 		Description = description;
 	}
-
-
 }

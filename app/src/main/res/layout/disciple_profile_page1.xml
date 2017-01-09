@@ -57,7 +57,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:text="Win | Build | Send"
+                        android:text="@string/text_win_build_send"
                         style="@style/AppTheme.Button1" />
                 </LinearLayout>
                 <LinearLayout
@@ -69,14 +69,14 @@
                         android:id="@+id/btn_disciple_profile_message"
                         android:layout_width="match_parent"
                         android:layout_weight="3"
-                        android:text="Send SMS"
+                        android:text="@string/action_send_sms"
                         style="@style/AppTheme.Button1"
                         android:layout_height="wrap_content" />
                     <Button
                         android:id="@+id/btn_disciple_profile_call"
                         android:layout_width="match_parent"
                         android:layout_weight="3"
-                        android:text="Call Now"
+                        android:text="@string/action_call_now"
                         style="@style/AppTheme.Button1"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
@@ -110,13 +110,13 @@
                             android:textStyle="bold"
                             android:textSize="20sp"
                             android:layout_marginLeft="10dp"
-                            android:text="Full Name:    "/>
+                            android:text="@string/form_text_full_name"/>
                         <EditText
                             android:id="@+id/txt_disciple_profile_fullname"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@color/white"
-                            android:hint="Full Name"
+                            android:hint="@string/form_text_full_name"
                             android:inputType="text"
                             android:padding="10dp"
                             android:textColor="@color/bg_login"
@@ -143,47 +143,13 @@
                             android:textStyle="bold"
                             android:textSize="20sp"
                             android:layout_marginLeft="10dp"
-                            android:text="Email:    "/>
+                            android:text="@string/form_text_gender"/>
                         <EditText
-                            android:id="@+id/txt_disciple_profile_email"
+                            android:id="@+id/txt_disciple_profile_gender"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@color/white"
-                            android:hint="Email Address"
-                            android:inputType="text"
-                            android:textStyle="bold"
-                            android:padding="10dp"
-                            android:textColor="@color/bg_login"
-                            android:textColorHint="@color/input_login" />
-                    </LinearLayout>
-                </android.support.v7.widget.CardView>
-                <android.support.v7.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:cardElevation="2dp"
-                    android:layout_marginBottom="5dp"
-                    app:cardUseCompatPadding="true">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:orientation="horizontal">
-                        <TextView
-                            android:layout_width="150dp"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/bg_login"
-                            android:textStyle="bold"
-                            android:textSize="20sp"
-                            android:layout_marginLeft="10dp"
-                            android:text="Country:    "/>
-                        <EditText
-                            android:id="@+id/txt_disciple_profile_country"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@color/white"
-                            android:hint="Country"
+                            android:hint="@string/form_text_gender"
                             android:inputType="text"
                             android:textStyle="bold"
                             android:padding="10dp"
@@ -212,13 +178,82 @@
                             android:textStyle="bold"
                             android:textSize="20sp"
                             android:layout_marginLeft="10dp"
-                            android:text="Phone:    "/>
+                            android:text="@string/form_text_email"/>
+                        <EditText
+                            android:id="@+id/txt_disciple_profile_email"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:hint="@string/form_text_email"
+                            android:inputType="text"
+                            android:textStyle="bold"
+                            android:padding="10dp"
+                            android:textColor="@color/bg_login"
+                            android:textColorHint="@color/input_login" />
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardElevation="2dp"
+                    android:layout_marginBottom="5dp"
+                    app:cardUseCompatPadding="true">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/bg_login"
+                            android:textStyle="bold"
+                            android:textSize="20sp"
+                            android:layout_marginLeft="10dp"
+                            android:text="@string/form_text_country"/>
+                        <EditText
+                            android:id="@+id/txt_disciple_profile_country"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:hint="@string/form_text_country"
+                            android:inputType="text"
+                            android:textStyle="bold"
+                            android:padding="10dp"
+                            android:singleLine="true"
+                            android:textColor="@color/input_login"
+                            android:textColorHint="@color/input_login" />
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardElevation="2dp"
+                    android:layout_marginBottom="5dp"
+                    app:cardUseCompatPadding="true">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/bg_login"
+                            android:textStyle="bold"
+                            android:textSize="20sp"
+                            android:layout_marginLeft="10dp"
+                            android:text="@string/form_text_phone"/>
                         <EditText
                             android:id="@+id/txt_disciple_profile_phone"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@color/white"
-                            android:hint="Phone Number"
+                            android:hint="@string/form_text_phone_number"
                             android:textStyle="bold"
                             android:inputType="text"
                             android:padding="10dp"
@@ -244,7 +279,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="200dp"
                             android:background="@color/white"
-                            android:hint="Note About Disciple"
+                            android:hint="@string/text_notes"
                             android:inputType="text"
                             android:padding="10dp"
                             android:singleLine="true"

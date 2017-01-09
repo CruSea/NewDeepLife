@@ -45,16 +45,16 @@
                 android:textColor="#000000"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:text="Share Your Testimony"/>
+                android:text="@string/form_text_share_your_testimony"/>
             <EditText
                 android:layout_width="match_parent"
-                android:hint="Put your Testimony"
+                android:hint="@string/form_text_write_your_testimony"
                 android:gravity="center_horizontal|center_vertical"
                 android:layout_height="200dp" />
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Add Testimony"/>
+                android:text="@string/action_add_testimony"/>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 </android.support.design.widget.CoordinatorLayout>

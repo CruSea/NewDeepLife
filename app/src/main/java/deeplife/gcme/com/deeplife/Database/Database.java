@@ -3,7 +3,6 @@ package deeplife.gcme.com.deeplife.Database;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
@@ -22,11 +21,11 @@ import deeplife.gcme.com.deeplife.Models.ImageSync;
 import deeplife.gcme.com.deeplife.Models.Logs;
 import deeplife.gcme.com.deeplife.Models.ReportItem;
 import deeplife.gcme.com.deeplife.Models.Schedule;
-import deeplife.gcme.com.deeplife.SyncService.SyncService;
-import deeplife.gcme.com.deeplife.WinBuildSend.WinBuildSendQuestion;
-import deeplife.gcme.com.deeplife.News.News;
-import deeplife.gcme.com.deeplife.Testimony.Testimony;
 import deeplife.gcme.com.deeplife.Models.User;
+import deeplife.gcme.com.deeplife.News.News;
+import deeplife.gcme.com.deeplife.SyncService.SyncService;
+import deeplife.gcme.com.deeplife.Testimony.Testimony;
+import deeplife.gcme.com.deeplife.WinBuildSend.WbsQuestion;
 
 public class Database {
     public static final String Table_DISCIPLES = "DISCIPLES";
@@ -683,7 +682,7 @@ public class Database {
     ////////////////////////////////
 
 
-    public WinBuildSendQuestion getWinBuildSendQuestionByID(int id) {
+    public WbsQuestion getWinBuildSendQuestionByID(int id) {
         Log.i(TAG, "Get WinBuildQuestion by ID: ");
         String DB_Table = Table_QUESTION_LIST;
         try{
@@ -694,17 +693,17 @@ public class Database {
                     c.moveToPosition(i);
                     int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(QUESTION_LIST_COLUMN[0])));
                     if(cur_id == id){
-                        WinBuildSendQuestion winBuildSendQuestion = new WinBuildSendQuestion();
-                        winBuildSendQuestion.setID(Integer.valueOf(c.getString(c.getColumnIndex(QUESTION_LIST_COLUMN[0]))));
-                        winBuildSendQuestion.setSerID(Integer.valueOf(c.getString(c.getColumnIndex(QUESTION_LIST_COLUMN[1]))));
-                        winBuildSendQuestion.setCategory(Integer.valueOf(c.getString(c.getColumnIndex(QUESTION_LIST_COLUMN[2]))));
-                        winBuildSendQuestion.setQuestion(c.getString(c.getColumnIndex(QUESTION_LIST_COLUMN[3])));
-                        winBuildSendQuestion.setDescription(c.getString(c.getColumnIndex(QUESTION_LIST_COLUMN[4])));
-                        winBuildSendQuestion.setMandatory(Integer.valueOf(c.getString(c.getColumnIndex(QUESTION_LIST_COLUMN[5]))));
-                        winBuildSendQuestion.setType(c.getString(c.getColumnIndex(QUESTION_LIST_COLUMN[6])));
-                        winBuildSendQuestion.setCauntry(Integer.valueOf(c.getString(c.getColumnIndex(QUESTION_LIST_COLUMN[7]))));
-                        winBuildSendQuestion.setCreated(c.getString(c.getColumnIndex(QUESTION_LIST_COLUMN[8])));
-                        return winBuildSendQuestion;
+                        WbsQuestion wbsQuestion = new WbsQuestion();
+                        wbsQuestion.setID(Integer.valueOf(c.getString(c.getColumnIndex(QUESTION_LIST_COLUMN[0]))));
+                        wbsQuestion.setSerID(Integer.valueOf(c.getString(c.getColumnIndex(QUESTION_LIST_COLUMN[1]))));
+                        wbsQuestion.setCategory(Integer.valueOf(c.getString(c.getColumnIndex(QUESTION_LIST_COLUMN[2]))));
+                        wbsQuestion.setQuestion(c.getString(c.getColumnIndex(QUESTION_LIST_COLUMN[3])));
+                        wbsQuestion.setDescription(c.getString(c.getColumnIndex(QUESTION_LIST_COLUMN[4])));
+                        wbsQuestion.setMandatory(Integer.valueOf(c.getString(c.getColumnIndex(QUESTION_LIST_COLUMN[5]))));
+                        wbsQuestion.setType(c.getString(c.getColumnIndex(QUESTION_LIST_COLUMN[6])).equalsIgnoreCase("YESNO") ? WbsQuestion.Type.YESNO : WbsQuestion.Type.NUMBER);
+                        wbsQuestion.setCountry(Integer.valueOf(c.getString(c.getColumnIndex(QUESTION_LIST_COLUMN[7]))));
+                        wbsQuestion.setCreated(c.getString(c.getColumnIndex(QUESTION_LIST_COLUMN[8])));
+                        return wbsQuestion;
                     }
                 }
             }
@@ -716,7 +715,7 @@ public class Database {
 
     }
 
-    public WinBuildSendQuestion getWinBuildSendQuestionBySerID(int id) {
+    public WbsQuestion getWinBuildSendQuestionBySerID(int id) {
         Log.i(TAG, "Get WinBuildQuestion by Server ID: ");
         String DB_Table = Table_QUESTION_LIST;
         try{
@@ -728,8 +727,8 @@ public class Database {
                     int ser_id = Integer.valueOf(c.getString(c.getColumnIndex(QUESTION_LIST_COLUMN[1])));
                     int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(QUESTION_LIST_COLUMN[0])));
                     if(ser_id == id){
-                        WinBuildSendQuestion winBuildSendQuestion = getWinBuildSendQuestionByID(cur_id);
-                        return winBuildSendQuestion;
+                        WbsQuestion wbsQuestion = getWinBuildSendQuestionByID(cur_id);
+                        return wbsQuestion;
                     }
                 }
             }
@@ -740,10 +739,10 @@ public class Database {
         return null;
     }
 
-    public ArrayList<WinBuildSendQuestion> getWinBuildSendQuestionsByCategory(int categoryID){
+    public ArrayList<WbsQuestion> getWinBuildSendQuestionsByCategory(int categoryID){
         Log.i(TAG, "Get All WinBuildQuestion by Category id: "+categoryID);
         String DB_Table = Table_QUESTION_LIST;
-        ArrayList<WinBuildSendQuestion> found = new ArrayList<WinBuildSendQuestion>();
+        ArrayList<WbsQuestion> found = new ArrayList<WbsQuestion>();
         try{
             Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
             c.moveToFirst();
@@ -752,10 +751,10 @@ public class Database {
                 int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(QUESTION_LIST_COLUMN[0])));
                 int cat_id = Integer.valueOf(c.getString(c.getColumnIndex(QUESTION_LIST_COLUMN[2])));
                 if(cat_id == categoryID){
-                    WinBuildSendQuestion winBuildSendQuestion = getWinBuildSendQuestionByID(cur_id);
-                    if(winBuildSendQuestion != null){
-                        found.add(winBuildSendQuestion);
-                        Log.i(TAG, "Get All WinBuildQuestion: "+winBuildSendQuestion.getID());
+                    WbsQuestion wbsQuestion = getWinBuildSendQuestionByID(cur_id);
+                    if(wbsQuestion != null){
+                        found.add(wbsQuestion);
+                        Log.i(TAG, "Get All WinBuildQuestion: "+ wbsQuestion.getID());
                     }
 
                 }
@@ -766,9 +765,9 @@ public class Database {
         }
         return found;
     }
-    public ArrayList<WinBuildSendQuestion> getWinBuildSendQuestionsByCategorySerID(int SerID){
+    public ArrayList<WbsQuestion> getWinBuildSendQuestionsByCategorySerID(int SerID){
         Log.i(TAG, "Get All WinBuildQuestion by Category Parent ID: "+SerID);
-        ArrayList<WinBuildSendQuestion> found = new ArrayList<WinBuildSendQuestion>();
+        ArrayList<WbsQuestion> found = new ArrayList<WbsQuestion>();
         if(SerID > 0){
             found = getWinBuildSendQuestionsByCategory(SerID);
             Log.i(TAG, "Get All WinBuildQuestion: "+SerID);

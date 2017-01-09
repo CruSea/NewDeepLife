@@ -18,12 +18,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import deeplife.gcme.com.deeplife.DeepLife;
-import deeplife.gcme.com.deeplife.MainActivity;
-import deeplife.gcme.com.deeplife.News.News;
-import deeplife.gcme.com.deeplife.News.NewsListAdapter;
 import deeplife.gcme.com.deeplife.R;
-import deeplife.gcme.com.deeplife.Testimony.Testimony;
-import deeplife.gcme.com.deeplife.Testimony.TestimonyListAdapter;
 
 /**
  * Created by bengeos on 12/6/16.
@@ -63,7 +58,7 @@ public class DisciplesFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.disciple_add){
-            Toast.makeText(getContext(),"Add New Disciple",Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(),"Add New Disciple",Toast.LENGTH_LONG).show();  // briggsm: This toast message is just for debug, right? If not, we need to extract string for translation, but I think this toast message is unnecessary in final app.
             Intent intent = new Intent(getContext(),DiscipleAddActivity.class);
             startActivity(intent);
         }

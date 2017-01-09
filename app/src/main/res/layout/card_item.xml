@@ -41,9 +41,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:text="Disciple Tree"
+                    android:text="@string/ui_disciple_tree"
                     android:textColor="#ffffff"
-                    android:textSize="20dp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
 
@@ -69,7 +69,7 @@
                     android:layout_marginLeft="20dp"
                     android:textSize="20sp"
                     android:textColor="#ffffff"
-                    android:text="Total Disciples" />
+                    android:text="@string/ui_total_disciples" />
             </LinearLayout>
         </LinearLayout>
 

@@ -18,8 +18,6 @@ import deeplife.gcme.com.deeplife.DeepLife;
 import deeplife.gcme.com.deeplife.FileManager.FileDownloader;
 import deeplife.gcme.com.deeplife.FileManager.FileManager;
 import deeplife.gcme.com.deeplife.R;
-import deeplife.gcme.com.deeplife.Testimony.Testimony;
-import deeplife.gcme.com.deeplife.Testimony.TestimonyListAdapter;
 
 /**
  * Created by bengeos on 12/6/16.
@@ -32,7 +30,7 @@ public class NewsFragment extends Fragment {
     private static Context myContext;
     private static FileDownloader myFileDownloader;
     private static FileManager myFileManager;
-    private static String TAG = "News_Fragment";
+    private static final String TAG = "NewsFragment";
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

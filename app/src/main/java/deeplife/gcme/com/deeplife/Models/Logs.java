@@ -2,7 +2,8 @@ package deeplife.gcme.com.deeplife.Models;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+
+import deeplife.gcme.com.deeplife.SendParam;
 
 /**
  * Created by bengeos on 12/23/16.
@@ -12,11 +13,10 @@ public class Logs {
     private int ID;
     private String Type,Task,Value,Service;
     private List<Object> Param;
-    public static final String[] Sync_Tasks = {"Send_Log", "Send_Disciples","Remove_Disciple","Update_Disciple","Send_Schedule","Send_Report","Send_Testimony","Update_Schedules"};
 
     public Logs() {
         Param = new ArrayList<Object>();
-        Service = "Update";
+        Service = SendParam.Service.UPDATE;
     }
 
     public int getID() {

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -60,19 +61,19 @@
                             android:textStyle="bold"
                             android:textSize="20sp"
                             android:textColor="@color/colorPrimary"
-                            android:text="Biniam Kassahu dasd"/>
+                            tools:text="Biniam Kassahu dasd" />
                         <TextView
                             android:id="@+id/txt_disciple_email"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textColor="@color/colorAccent"
-                            android:text="george.beng@gmail.com"/>
+                            tools:text="george.beng@gmail.com" />
                         <TextView
                             android:id="@+id/txt_disciple_phone"
                             android:layout_width="match_parent"
                             android:textColor="@color/black"
                             android:layout_height="wrap_content"
-                            android:text="+251916417951"/>
+                            tools:text="+251916417951" />
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -85,7 +86,7 @@
                             android:layout_height="wrap_content"
                             android:theme="@style/AppTheme.Button1"
                             style="@style/Widget.AppCompat.Button.Colored"
-                            android:text="WIN"/>
+                            android:text="@string/text_win" />
                     </LinearLayout>
                 </FrameLayout>
 

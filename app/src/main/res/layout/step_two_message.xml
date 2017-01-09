@@ -20,7 +20,7 @@
             android:textStyle="bold"
             android:gravity="center_horizontal"
             android:textSize="30sp"
-            android:text="Prey | Meet | Call"/>
+            android:text="@string/text_pray_meet_call"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -29,7 +29,7 @@
             android:gravity="center_horizontal"
             android:layout_margin="10dp"
             android:paddingBottom="10dp"
-            android:text="Lets make desciples, its our calling. add your new desciple with their full information"/>
+            android:text="@string/text_step2_msg"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -37,7 +37,7 @@
             android:textColor="#ffffff"
             android:textStyle="bold"
             android:layout_margin="20dp"
-            android:textSize="20dp"
-            android:text="go and make disciples of all nation Matthew 28:19"/>
+            android:textSize="20sp"
+            android:text="@string/text_step2_verse"/>
     </LinearLayout>
 </LinearLayout>

@@ -37,7 +37,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import deeplife.gcme.com.deeplife.Adapters.CountryListAdapter;
-import deeplife.gcme.com.deeplife.Adapters.LoginAccess;
 import deeplife.gcme.com.deeplife.Database.Database;
 import deeplife.gcme.com.deeplife.Models.Country;
 import deeplife.gcme.com.deeplife.Models.User;
@@ -138,7 +137,7 @@ public class SignUp extends AppCompatActivity {
         builder = new AlertDialog.Builder(myContext);
         builder.setTitle(R.string.app_name)
                 .setMessage(message)
-                .setPositiveButton("Ok", dialogClickListener).show();
+                .setPositiveButton(R.string.dlg_btn_ok, dialogClickListener).show();
     }
     private void submitForm() {
         if (!validateName()) {
@@ -169,17 +168,17 @@ public class SignUp extends AppCompatActivity {
 
         final ProgressDialog myDialog = new ProgressDialog(this);
         myDialog.setTitle(R.string.app_name);
-        myDialog.setMessage("Authenticating the Account ....");
+        myDialog.setMessage(getString(R.string.msg_authenticating_account));
         myDialog.show();
         ArrayList<User> user = new ArrayList<User>();
         user.add(NewUser);
         List<Pair<String, String>> Send_Param;
         Send_Param = new ArrayList<Pair<String, String>>();
-        Send_Param.add(new kotlin.Pair<String, String>("User_Name", NewUser.getUser_Phone()));
-        Send_Param.add(new kotlin.Pair<String, String>("User_Pass", NewUser.getUser_Pass()));
-        Send_Param.add(new kotlin.Pair<String, String>("Country", NewUser.getUser_Country()));
-        Send_Param.add(new kotlin.Pair<String, String>("Service", "Sign_Up"));
-        Send_Param.add(new kotlin.Pair<String, String>("Param", myParser.toJson(user)));
+        Send_Param.add(new kotlin.Pair<String, String>(SendParam.USER_NAME, NewUser.getUser_Phone()));
+        Send_Param.add(new kotlin.Pair<String, String>(SendParam.USER_PASS, NewUser.getUser_Pass()));
+        Send_Param.add(new kotlin.Pair<String, String>(SendParam.COUNTRY, NewUser.getUser_Country()));
+        Send_Param.add(new kotlin.Pair<String, String>(SendParam.SERVICE, SendParam.Service.SIGN_UP));
+        Send_Param.add(new kotlin.Pair<String, String>(SendParam.PARAM, myParser.toJson(user)));
         Fuel.post(DeepLife.API_URL, Send_Param).responseString(new Handler<String>() {
             @Override
             public void success(Request request, Response response, String s) {
@@ -213,10 +212,11 @@ public class SignUp extends AppCompatActivity {
                         finish();
 
                     } else {
-                        ShowDialog("Invalid user account! use a valid account please");
+                        ShowDialog(getString(R.string.dlg_msg_invalid_user_acct));
                     }
                 } catch (Exception e) {
-                    ShowDialog("Something went wrong! Please try again \n"+e.toString());
+                    //ShowDialog("Something went wrong! Please try again!\nError: "+e.toString());
+                    ShowDialog(getString(R.string.dlg_msg_something_wrong_error, e.toString()));
                     Log.i(TAG, "Error Occurred-> \n" + e.toString());
                 }
 
@@ -225,11 +225,11 @@ public class SignUp extends AppCompatActivity {
             public void failure(Request request, Response response, FuelError fuelError) {
                 Log.i(TAG, "Server Response -> \n" + response.toString());
                 myDialog.cancel();
-                ShowDialog("Authentication has failed! Please try again");
+                ShowDialog(getString(R.string.dlg_msg_authentication_failed));
             }
         });
 
-        Toast.makeText(getApplicationContext(), "Thank You!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), R.string.thank_you, Toast.LENGTH_SHORT).show();
     }
 
     private boolean validateName() {

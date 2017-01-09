@@ -11,7 +11,6 @@ import com.github.kittinunf.fuel.core.Response;
 import com.google.gson.Gson;
 
 import org.jetbrains.annotations.NotNull;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
@@ -23,8 +22,9 @@ import deeplife.gcme.com.deeplife.Database.Database;
 import deeplife.gcme.com.deeplife.DeepLife;
 import deeplife.gcme.com.deeplife.Login;
 import deeplife.gcme.com.deeplife.Models.User;
+import deeplife.gcme.com.deeplife.R;
+import deeplife.gcme.com.deeplife.SendParam;
 import deeplife.gcme.com.deeplife.SyncService.SyncDatabase;
-import deeplife.gcme.com.deeplife.SyncService.SyncService;
 import kotlin.Pair;
 
 /**
@@ -54,17 +54,17 @@ public class LoginAccess {
         this.myUser = myUser;
     }
 
-    private static String TAG = "Login";
+    private static final String TAG = "LoginAccess";
     public boolean LogInAuthnticate(){
         if(myUser.getUser_Email()!=null){
-            Send_Param.add(new kotlin.Pair<String, String>("User_Name", myUser.getUser_Email()));
+            Send_Param.add(new kotlin.Pair<String, String>(SendParam.USER_NAME, myUser.getUser_Email()));
         }else {
-            Send_Param.add(new kotlin.Pair<String, String>("User_Name", myUser.getUser_Phone()));
+            Send_Param.add(new kotlin.Pair<String, String>(SendParam.USER_NAME, myUser.getUser_Phone()));
         }
-        Send_Param.add(new kotlin.Pair<String, String>("User_Pass", myUser.getUser_Pass()));
-        Send_Param.add(new kotlin.Pair<String, String>("Country", myUser.getUser_Country()));
-        Send_Param.add(new kotlin.Pair<String, String>("Service", "Log_In"));
-        Send_Param.add(new kotlin.Pair<String, String>("Param", "[]"));
+        Send_Param.add(new kotlin.Pair<String, String>(SendParam.USER_PASS, myUser.getUser_Pass()));
+        Send_Param.add(new kotlin.Pair<String, String>(SendParam.COUNTRY, myUser.getUser_Country()));
+        Send_Param.add(new kotlin.Pair<String, String>(SendParam.SERVICE, SendParam.Service.LOG_IN));
+        Send_Param.add(new kotlin.Pair<String, String>(SendParam.PARAM, "[]"));
 
         try{
             Fuel.post(DeepLife.API_URL,Send_Param).responseString(new Handler<String>() {
@@ -86,15 +86,15 @@ public class LoginAccess {
                                     Login.GetNextActivity();
                                 }else {
                                     Login.DialogState(0);
-                                    Login.showDialog("Unable to login now! please retry again!");
+                                    Login.showDialog(DeepLife.getContext().getString(R.string.dlg_msg_login_failure));
                                 }
                             }else {
                                 Login.DialogState(0);
-                                Login.showDialog("Unable to login now! please retry again!");
+                                Login.showDialog(DeepLife.getContext().getString(R.string.dlg_msg_login_failure));
                             }
                         }else {
                             Login.DialogState(0);
-                            Login.showDialog("Unable to login now! please retry again!");
+                            Login.showDialog(DeepLife.getContext().getString(R.string.dlg_msg_login_failure));
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -111,11 +111,11 @@ public class LoginAccess {
         return false;
     }
     public boolean GetMetaData(){
-        Send_Param.add(new kotlin.Pair<String, String>("User_Name", ""));
-        Send_Param.add(new kotlin.Pair<String, String>("User_Pass", ""));
-        Send_Param.add(new kotlin.Pair<String, String>("Country", ""));
-        Send_Param.add(new kotlin.Pair<String, String>("Service", "Meta_Data"));
-        Send_Param.add(new kotlin.Pair<String, String>("Param", "[]"));
+        Send_Param.add(new kotlin.Pair<String, String>(SendParam.USER_NAME, ""));
+        Send_Param.add(new kotlin.Pair<String, String>(SendParam.USER_PASS, ""));
+        Send_Param.add(new kotlin.Pair<String, String>(SendParam.COUNTRY, ""));
+        Send_Param.add(new kotlin.Pair<String, String>(SendParam.SERVICE, SendParam.Service.META_DATA));
+        Send_Param.add(new kotlin.Pair<String, String>(SendParam.PARAM, "[]"));
         try{
             myFuel.post(DeepLife.API_URL,Send_Param).responseString(new Handler<String>() {
                 @Override
@@ -128,9 +128,9 @@ public class LoginAccess {
                         if (!myObject.isNull("Response")) {
                             mySyncDatabase.ProcessResponse(s);
                             Login.DialogState(0);
-                            Login.showDialog("Please Enter your Phone or Email and Password to login");
+                            Login.showDialog(DeepLife.getContext().getString(R.string.dlg_msg_login));
                         }else {
-                            Login.showDialog("Unable to download all the necessary files! please retry again!");
+                            Login.showDialog(DeepLife.getContext().getString(R.string.dlg_msg_meta_download_failed));
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -139,7 +139,7 @@ public class LoginAccess {
                 @Override
                 public void failure(@NotNull Request request, @NotNull Response response, @NotNull FuelError fuelError) {
                     Log.i(TAG, "Server Response Error-> \n" + fuelError);
-                    Login.showDialog("Unable to download all the necessary files! please retry again!");
+                    Login.showDialog(DeepLife.getContext().getString(R.string.dlg_msg_meta_download_failed));
                 }
             });
         }catch (Exception e){
@@ -149,11 +149,11 @@ public class LoginAccess {
     }
 
     public boolean SignupAuthnticate(final User user){
-        Send_Param.add(new kotlin.Pair<String, String>("User_Name", user.getUser_Email()));
-        Send_Param.add(new kotlin.Pair<String, String>("User_Pass", user.getUser_Pass()));
-        Send_Param.add(new kotlin.Pair<String, String>("Country", user.getUser_Country()));
-        Send_Param.add(new kotlin.Pair<String, String>("Service", "Sign_Up"));
-        Send_Param.add(new kotlin.Pair<String, String>("Param", myParser.toJson(user)));
+        Send_Param.add(new kotlin.Pair<String, String>(SendParam.USER_NAME, user.getUser_Email()));
+        Send_Param.add(new kotlin.Pair<String, String>(SendParam.USER_PASS, user.getUser_Pass()));
+        Send_Param.add(new kotlin.Pair<String, String>(SendParam.COUNTRY, user.getUser_Country()));
+        Send_Param.add(new kotlin.Pair<String, String>(SendParam.SERVICE, SendParam.Service.SIGN_UP));
+        Send_Param.add(new kotlin.Pair<String, String>(SendParam.PARAM, myParser.toJson(user)));
         myFuel.post(DeepLife.API_URL,Send_Param).responseString(new Handler<String>() {
             @Override
             public void success(@NotNull Request request, @NotNull Response response, String s) {
@@ -174,11 +174,11 @@ public class LoginAccess {
                             Login.GetNextActivity();
                         }else {
                             Login.DialogState(0);
-                            Login.showDialog("Unable to login now! please retry again!");
+                            Login.showDialog(DeepLife.getContext().getString(R.string.dlg_msg_login_failure));
                         }
                     }else {
                         Login.DialogState(0);
-                        Login.showDialog("Unable to login now! please retry again with correct Phone or Email and Password!");
+                        Login.showDialog(DeepLife.getContext().getString(R.string.dlg_msg_login_failure));
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

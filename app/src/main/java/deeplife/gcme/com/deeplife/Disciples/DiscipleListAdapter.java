@@ -3,7 +3,6 @@ package deeplife.gcme.com.deeplife.Disciples;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -21,13 +20,10 @@ import java.util.List;
 import deeplife.gcme.com.deeplife.Database.Database;
 import deeplife.gcme.com.deeplife.DeepLife;
 import deeplife.gcme.com.deeplife.Models.Logs;
-import deeplife.gcme.com.deeplife.News.NewsListAdapter;
 import deeplife.gcme.com.deeplife.R;
 import deeplife.gcme.com.deeplife.SyncService.SyncDatabase;
 import deeplife.gcme.com.deeplife.SyncService.SyncService;
 import deeplife.gcme.com.deeplife.WinBuildSend.WinBuildSendActivity;
-
-import static android.R.id.message;
 
 /**
  * Created by bengeos on 12/7/16.
@@ -82,7 +78,7 @@ public class DiscipleListAdapter extends RecyclerView.Adapter<DiscipleListAdapte
         builder = new AlertDialog.Builder(myContext);
         builder.setTitle(R.string.app_name)
                 .setMessage(message)
-                .setPositiveButton("Ok", dialogClickListener).show();
+                .setPositiveButton(R.string.dlg_btn_ok, dialogClickListener).show();
     }
     public static void DeleteDiscipleDialog(final int discipleid, final String disciplePhone) {
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
@@ -105,9 +101,9 @@ public class DiscipleListAdapter extends RecyclerView.Adapter<DiscipleListAdapte
         };
         builder = new AlertDialog.Builder(myContext);
         builder.setTitle(R.string.app_name)
-                .setMessage("Are You Sure! You want to delete this disciple")
-                .setNegativeButton("No! I don`t want that",dialogClickListener)
-                .setPositiveButton("Ok", dialogClickListener).show();
+                .setMessage(DeepLife.getContext().getString(R.string.dlg_msg_are_you_sure_delete_x, "Disciple"))
+                .setNegativeButton(R.string.dlg_btn_no_dont_delete, dialogClickListener)
+                .setPositiveButton(R.string.dlg_btn_yes, dialogClickListener).show();
     }
     @Override
     public int getItemCount() {

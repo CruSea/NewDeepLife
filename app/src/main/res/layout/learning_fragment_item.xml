@@ -39,7 +39,7 @@
 
                 <TextView
                     android:id="@+id/txt_learning_content"
-                    android:text="Video description will be here"
+                    tools:text="Video description will be here"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                      />

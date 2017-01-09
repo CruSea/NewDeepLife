@@ -4,9 +4,17 @@ package deeplife.gcme.com.deeplife.WinBuildSend;
  * Created by bengeos on 12/20/16.
  */
 
-public class WinBuildSendQuestion{
-    private int ID, SerID, Category, Cauntry, Mandatory;
-    private String Question, Type, Description, Created;
+public class WbsQuestion {
+
+    public enum Type {
+        YESNO,
+        NUMBER,
+        FOLDER
+    }
+
+    private int ID, SerID, Category, mCountry, Mandatory;
+    private String Question, Description, Created;
+    private Type mType;
 
     public int getID() {
         return ID;
@@ -32,12 +40,12 @@ public class WinBuildSendQuestion{
         Category = category;
     }
 
-    public int getCauntry() {
-        return Cauntry;
+    public int getCountry() {
+        return mCountry;
     }
 
-    public void setCauntry(int cauntry) {
-        Cauntry = cauntry;
+    public void setCountry(int country) {
+        mCountry = country;
     }
 
     public int getMandatory() {
@@ -56,12 +64,12 @@ public class WinBuildSendQuestion{
         Question = question;
     }
 
-    public String getType() {
-        return Type;
+    public Type getType() {
+        return mType;
     }
 
-    public void setType(String type) {
-        Type = type;
+    public void setType(Type type) {
+        mType = type;
     }
 
     public String getDescription() {

@@ -1,10 +1,7 @@
 package deeplife.gcme.com.deeplife.SyncService;
 
-import android.app.job.JobParameters;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.util.Base64;
 import android.util.Log;
 
@@ -16,9 +13,6 @@ import com.github.kittinunf.fuel.core.Response;
 import com.google.gson.Gson;
 
 import org.jetbrains.annotations.NotNull;
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.json.JSONTokener;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -34,6 +28,7 @@ import deeplife.gcme.com.deeplife.Models.Logs;
 import deeplife.gcme.com.deeplife.Models.ReportItem;
 import deeplife.gcme.com.deeplife.Models.Schedule;
 import deeplife.gcme.com.deeplife.Models.User;
+import deeplife.gcme.com.deeplife.SendParam;
 import deeplife.gcme.com.deeplife.Testimony.Testimony;
 import kotlin.Pair;
 import me.tatarka.support.job.JobService;
@@ -42,8 +37,10 @@ import me.tatarka.support.job.JobService;
  * Created by bengeos on 12/16/16.
  */
 
+
 public class SyncService extends JobService {
     public static final String TAG = "SyncService";
+
     public static final String[] Sync_Tasks = {"Send_Log", "Send_Disciples","Remove_Disciple","Update_Disciple","Send_Schedule","Send_Report","Send_Testimony","Update_Schedules","AddNew_Disciples","Update_Disciples","Send_Testimony","Send_Answers","AddNew_Answers"};
     private List<Object> Param;
     private Gson myParser;
@@ -70,20 +67,20 @@ public class SyncService extends JobService {
             getService();
             if(user != null ){
                 if(user.getUser_Email() != null){
-                    Send_Param.add(new kotlin.Pair<String, String>("User_Name",user.getUser_Email()));
+                    Send_Param.add(new kotlin.Pair<String, String>(SendParam.USER_NAME, user.getUser_Email()));
                 }else {
-                    Send_Param.add(new kotlin.Pair<String, String>("User_Name",user.getUser_Phone()));
+                    Send_Param.add(new kotlin.Pair<String, String>(SendParam.USER_NAME, user.getUser_Phone()));
                 }
-                Send_Param.add(new kotlin.Pair<String, String>("User_Pass",user.getUser_Pass()));
-                Send_Param.add(new kotlin.Pair<String, String>("Country", user.getUser_Country()));
-                Send_Param.add(new kotlin.Pair<String, String>("Service", myLogs.getService()));
-                Send_Param.add(new kotlin.Pair<String, String>("Param", myParser.toJson(myLogs.getParam())));
+                Send_Param.add(new kotlin.Pair<String, String>(SendParam.USER_PASS, user.getUser_Pass()));
+                Send_Param.add(new kotlin.Pair<String, String>(SendParam.COUNTRY, user.getUser_Country()));
+                Send_Param.add(new kotlin.Pair<String, String>(SendParam.SERVICE, myLogs.getService()));
+                Send_Param.add(new kotlin.Pair<String, String>(SendParam.PARAM, myParser.toJson(myLogs.getParam())));
             }else{
-                Send_Param.add(new kotlin.Pair<String, String>("User_Name"," "));
-                Send_Param.add(new kotlin.Pair<String, String>("User_Pass"," "));
-                Send_Param.add(new kotlin.Pair<String, String>("Country", " "));
-                Send_Param.add(new kotlin.Pair<String, String>("Service",myLogs.getService()));
-                Send_Param.add(new kotlin.Pair<String, String>("Param",myParser.toJson(myLogs.getParam())));
+                Send_Param.add(new kotlin.Pair<String, String>(SendParam.USER_NAME, " "));
+                Send_Param.add(new kotlin.Pair<String, String>(SendParam.USER_PASS, " "));
+                Send_Param.add(new kotlin.Pair<String, String>(SendParam.COUNTRY, " "));
+                Send_Param.add(new kotlin.Pair<String, String>(SendParam.SERVICE, myLogs.getService()));
+                Send_Param.add(new kotlin.Pair<String, String>(SendParam.PARAM, myParser.toJson(myLogs.getParam())));
             }
             Log.i(TAG, "Prepared Request: \n" + Send_Param.toString());
             Log.i(TAG,"Service Started for \n"+DeepLife.API_URL);

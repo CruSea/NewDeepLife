@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -36,7 +37,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:text="This is the Question Place "
-                        android:textSize="17dp"
+                        android:textSize="17sp"
                         android:textColor="#000000"
                         android:id="@+id/txt_winbuildsend_question1" />
                     <LinearLayout
@@ -97,10 +98,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:text="This is the Question Place "
-                        android:textSize="17dp"
+                        android:textSize="17sp"
                         android:textColor="#000000"
-                        android:id="@+id/txt_winbuildsend_question2" />
+                        android:id="@+id/txt_winbuildsend_question2"
+                        tools:text="This is the Question Place " />
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:orientation="horizontal"
@@ -111,14 +112,14 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="*Mandatory"/>
+                            android:text="@string/text_star_mandatory"/>
                         <TextView
                             android:id="@+id/txt_readnote2"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="20dp"
                             android:textColor="@color/bg_login"
-                            android:text="Read Note"/>
+                            android:text="@string/action_read_note"/>
                     </LinearLayout>
                 </LinearLayout>
                 <LinearLayout
@@ -148,7 +149,7 @@
                             android:textSize="35sp"
                             android:inputType="number"
                             android:textColor="#000000"
-                            android:text="0"/>
+                            tools:text="0" />
                     </FrameLayout>
                     <Button
                         android:layout_width="30dp"
@@ -196,7 +197,7 @@
                         android:layout_marginTop="5dp"
                         android:layout_marginLeft="10dp"
                         android:text=""
-                        android:textSize="17dp"
+                        android:textSize="17sp"
                         android:textColor="#000000"
                         />
                 </LinearLayout>

@@ -79,7 +79,7 @@
                         android:textColor="@color/white"
                         android:textStyle="bold"
                         android:layout_marginLeft="10dp"
-                        android:text="Full Name"/>
+                        android:text="@string/form_text_full_name"/>
                     <android.support.design.widget.TextInputLayout
                         android:id="@+id/discipleadd_fullname"
                         android:layout_width="match_parent"
@@ -111,7 +111,7 @@
                         android:textColor="@color/white"
                         android:textStyle="bold"
                         android:layout_marginLeft="10dp"
-                        android:text="Email"/>
+                        android:text="@string/form_text_email"/>
                     <android.support.design.widget.TextInputLayout
                         android:id="@+id/discipleadd_email"
                         android:layout_width="match_parent"
@@ -122,12 +122,12 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="10dp"
                             android:background="@color/white"
-                            android:hint="Disciple Email"
-                            android:inputType="text"
+                            android:hint="@string/form_text_email"
                             android:padding="10dp"
                             android:singleLine="true"
                             android:textColor="@color/input_login"
-                            android:textColorHint="@color/input_login_hint" />
+                            android:textColorHint="@color/input_login_hint"
+                            android:inputType="textEmailAddress" />
                     </android.support.design.widget.TextInputLayout>
                 </LinearLayout>
                 <LinearLayout
@@ -144,7 +144,7 @@
                         android:textColor="@color/white"
                         android:textStyle="bold"
                         android:layout_marginLeft="10dp"
-                        android:text="Country"/>
+                        android:text="@string/form_text_country"/>
                     <Spinner
                         android:id="@+id/spn_discipleadd_country"
                         android:layout_width="match_parent"
@@ -171,7 +171,7 @@
                         android:textColor="@color/white"
                         android:textStyle="bold"
                         android:layout_marginLeft="10dp"
-                        android:text="Phone Num."/>
+                        android:text="@string/form_text_phone"/>
                     <EditText
                         android:id="@+id/txt_discipleadd_phonecode"
                         android:layout_width="wrap_content"
@@ -190,10 +190,10 @@
                             android:id="@+id/txt_discipleadd_phone"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="10dp"
+                            android:layout_marginBottom="11dp"
                             android:background="@color/white"
                             android:inputType="number"
-                            android:hint="Disciple Phone Number"
+                            android:hint="@string/form_text_phone_number"
                             android:padding="10dp"
                             android:textColor="@color/input_login"
                             android:textColorHint="@color/input_login_hint" />
@@ -215,7 +215,7 @@
                         android:textColor="@color/white"
                         android:textStyle="bold"
                         android:layout_marginLeft="10dp"
-                        android:text="Phone Num."/>
+                        android:text="@string/form_text_gender"/>
                     <Spinner
                         android:id="@+id/spn_discipleadd_gender"
                         android:layout_width="match_parent"
@@ -234,7 +234,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     style="@style/AppTheme.Button1"
-                    android:text="Add Disciple"/>
+                    android:text="@string/action_add_disciple"/>
             </LinearLayout>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>

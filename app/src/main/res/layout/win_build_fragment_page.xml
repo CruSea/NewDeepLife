@@ -46,16 +46,6 @@
                     android:orientation="vertical"
                     android:gravity="center_horizontal"
                     android:layout_height="wrap_content">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Win Build Send Your Disciple"
-                        android:textColor="#000000"
-                        android:gravity="center_horizontal"
-                        android:textStyle="bold"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"
-                        />
                     <FrameLayout
                         android:layout_width="120dp"
                         android:layout_height="120dp">
@@ -74,7 +64,7 @@
                         android:id="@+id/txt_winbuildsend_fullname"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Biniam Kassahun"
+                        tools:text="Biniam Kassahun"
                         android:gravity="center_horizontal"
                         android:textStyle="bold"
                         />
@@ -91,21 +81,21 @@
                             android:layout_height="wrap_content"
                             style="@style/AppTheme.Button1"
                             android:layout_weight="1"
-                            android:text="Win"/>
+                            android:text="@string/text_win"/>
                         <Button
                             android:id="@+id/btn_winbuildsend_build"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             style="@style/AppTheme.Button1"
                             android:layout_weight="1"
-                            android:text="Build"/>
+                            android:text="@string/text_build"/>
                         <Button
                             android:id="@+id/btn_winbuildsend_send"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             style="@style/AppTheme.Button1"
                             android:layout_weight="1"
-                            android:text="Send"/>
+                            android:text="@string/text_send"/>
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
