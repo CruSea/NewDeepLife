@@ -122,7 +122,7 @@ public class DiscipleAddActivity extends AppCompatActivity {
                     if(x>0){
                         Logs logs = new Logs();
                         logs.setType("Disciple");
-                        logs.setTask(SyncService.Sync_Tasks[1]);
+                        logs.setTask(SyncService.Sync_Tasks[1]);  // briggsm: Biniam says Send_Disciples.  Why not AddNew_Disciples? What's difference?
                         logs.setValue(myDisciple.getPhone());
                         mySyncDatabase.AddLog(logs);
                         DisciplesFragment.UpdateList();

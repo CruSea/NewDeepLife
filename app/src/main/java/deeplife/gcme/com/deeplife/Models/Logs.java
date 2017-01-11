@@ -3,7 +3,7 @@ package deeplife.gcme.com.deeplife.Models;
 import java.util.ArrayList;
 import java.util.List;
 
-import deeplife.gcme.com.deeplife.SendParam;
+import deeplife.gcme.com.deeplife.SyncService.SyncService;
 
 /**
  * Created by bengeos on 12/23/16.
@@ -11,12 +11,15 @@ import deeplife.gcme.com.deeplife.SendParam;
 
 public class Logs {
     private int ID;
-    private String Type,Task,Value,Service;
+    //private String Type,Task,Value,Service;
+    private String Type,Task,Value;
+    private SyncService.SyncServ Service;
     private List<Object> Param;
 
     public Logs() {
         Param = new ArrayList<Object>();
-        Service = SendParam.Service.UPDATE;
+        //Service = SendParam.Service.UPDATE;
+        Service = SyncService.SyncServ.UPDATE;
     }
 
     public int getID() {
@@ -59,11 +62,11 @@ public class Logs {
         Param = param;
     }
 
-    public String getService() {
+    public SyncService.SyncServ getService() {
         return Service;
     }
 
-    public void setService(String service) {
+    public void setService(SyncService.SyncServ service) {
         Service = service;
     }
 
