@@ -166,9 +166,9 @@ public class LoginAccess {
                         mySyncDatabase.ProcessResponse(s);
                         DeepLife.myDATABASE.Delete_All(deeplife.gcme.com.deeplife.Database.Database.Table_USER);
                         ContentValues cv = new ContentValues();
-                        cv.put(Database.USER_FIELDS[1], user.getUser_Email());
-                        cv.put(Database.USER_FIELDS[2], user.getUser_Phone());
-                        cv.put(Database.USER_FIELDS[3], user.getUser_Pass());
+                        cv.put(Database.UserColumn.EMAIL.toString(), user.getUser_Email());
+                        cv.put(Database.UserColumn.PHONE.toString(), user.getUser_Phone());
+                        cv.put(Database.UserColumn.PASSWORD.toString(), user.getUser_Pass());
                         long state = DeepLife.myDATABASE.insert(Database.Table_USER,cv);
                         if(state>0){
                             Login.GetNextActivity();

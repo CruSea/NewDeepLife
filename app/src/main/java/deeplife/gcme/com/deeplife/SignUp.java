@@ -197,6 +197,8 @@ public class SignUp extends AppCompatActivity {
                         DeepLife.myDATABASE.Delete_All(Database.Table_USER);
 
                         ContentValues cv = new ContentValues();
+                        /*
+                        // briggsm: Below indexes seems wrong
                         cv.put(Database.USER_FIELDS[0],NewUser.getUser_Name());
                         cv.put(Database.USER_FIELDS[1],NewUser.getUser_Email());
                         cv.put(Database.USER_FIELDS[2],NewUser.getUser_Phone());
@@ -204,6 +206,15 @@ public class SignUp extends AppCompatActivity {
                         cv.put(Database.USER_FIELDS[4], NewUser.getUser_Country());
                         cv.put(Database.USER_FIELDS[5],"");
                         cv.put(Database.USER_FIELDS[6],"");
+                        */
+                        cv.put(Database.UserColumn.FULL_NAME.toString(),NewUser.getUser_Name());
+                        cv.put(Database.UserColumn.EMAIL.toString(),NewUser.getUser_Email());
+                        cv.put(Database.UserColumn.PHONE.toString(),NewUser.getUser_Phone());
+                        cv.put(Database.UserColumn.PASSWORD.toString(),NewUser.getUser_Pass());
+                        cv.put(Database.UserColumn.COUNTRY.toString(), NewUser.getUser_Country());
+                        cv.put(Database.UserColumn.PICTURE.toString(),"");
+                        cv.put(Database.UserColumn.FAVORITE_SCRIPTURE.toString(),"");
+
                         long x = DeepLife.myDATABASE.insert(Database.Table_USER, cv);
                         Log.i(TAG, "Main User Adding-> " + x);
 

@@ -42,22 +42,21 @@ public class Database {
     public static final String Table_LEARNING = "LEARNING_TOOLS";
     public static final String Table_DISCIPLE_TREE = "DISCIPLE_TREE_COUNT";
 
-    public static final String[] DISCIPLES_FIELDS = {"SerID", "FullName", "DisplayName", "Email", "Phone", "Country", "MentorID", "Stage", "ImageURL", "ImagePath", "Role", "Gender", "Created"};
-    public static final String[] LOGS_FIELDS = {"Type", "Task", "Value"};
-    public static final String[] NewsFeed_FIELDS = {"News_ID", "Title", "Content", "Category", "ImageURL", "ImagePath", "PubDate"};
-
-    public static final String[] COUNTRY_FIELDS = {"serid", "iso3", "name", "code"};
-    public static final String[] SCHEDULES_FIELDS = {"Disciple_Phone", "Title", "Alarm_Time", "Alarm_Repeat", "Description"};
-    public static final String[] USER_FIELDS = {"SerID", "Full_Name", "Email", "Phone", "Password", "Country", "Picture", "Favorite_Scripture"};
-    public static final String[] QUESTION_LIST_FIELDS = {"SerID", "Category", "Question", "Description", "Mandatory", "Type", "Country", "Created"};
-    public static final String[] REPORT_FORM_FIELDS = {"Report_ID", "Category", "Questions"};
-    public static final String[] REPORT_FIELDS = {"Report_ID", "Value", "Date"};
-    public static final String[] QUESTION_ANSWER_FIELDS = {"SerID", "DisciplePhone", "Question_ID", "Answer", "BuildStage"};
-    public static final String[] TESTIMONY_FIELDS = {"SerID", "UserID", "Description", "Status", "PubDate", "UserName"};
-    public static final String[] IMAGE_SYNC_FIELDS = {"FileName", "Param"};
-    public static final String[] CATEGORY_FIELDS = {"SerID", "Name", "Parent", "Status", "Created"};
-    public static final String[] LEARNING_FIELDS = {"SerID", "Title", "Description", "VideoURL", "Country", "IsDefault", "Created"};
-    public static final String[] DISCIPLE_TREE_FIELDS = {"SerID", "UserID", "Count"};
+//    public static final String[] DISCIPLES_FIELDS = {"SerID", "FullName", "DisplayName", "Email", "Phone", "Country", "MentorID", "Stage", "ImageURL", "ImagePath", "Role", "Gender", "Created"};
+//    public static final String[] LOGS_FIELDS = {"Type", "Task", "Value"};
+//    public static final String[] NewsFeed_FIELDS = {"News_ID", "Title", "Content", "Category", "ImageURL", "ImagePath", "PubDate"};
+//    public static final String[] COUNTRY_FIELDS = {"serid", "iso3", "name", "code"};
+//    public static final String[] SCHEDULES_FIELDS = {"Disciple_Phone", "Title", "Alarm_Time", "Alarm_Repeat", "Description"};
+//    public static final String[] USER_FIELDS = {"SerID", "Full_Name", "Email", "Phone", "Password", "Country", "Picture", "Favorite_Scripture"};
+//    public static final String[] QUESTION_LIST_FIELDS = {"SerID", "Category", "Question", "Description", "Mandatory", "Type", "Country", "Created"};
+//    public static final String[] REPORT_FORM_FIELDS = {"Report_ID", "Category", "Questions"};
+//    public static final String[] REPORT_FIELDS = {"Report_ID", "Value", "Date"};
+//    public static final String[] QUESTION_ANSWER_FIELDS = {"SerID", "DisciplePhone", "Question_ID", "Answer", "BuildStage"};
+//    public static final String[] TESTIMONY_FIELDS = {"SerID", "UserID", "Description", "Status", "PubDate", "UserName"};
+//    public static final String[] IMAGE_SYNC_FIELDS = {"FileName", "Param"};
+//    public static final String[] CATEGORY_FIELDS = {"SerID", "Name", "Parent", "Status", "Created"};
+//    public static final String[] LEARNING_FIELDS = {"SerID", "Title", "Description", "VideoURL", "Country", "IsDefault", "Created"};
+//    public static final String[] DISCIPLE_TREE_FIELDS = {"SerID", "UserID", "Count"};
 
 //    public static final String[] DISCIPLES_COLUMN = {"id", "SerID", "FullName", "DisplayName", "Email", "Phone", "Country", "MentorID", "Stage", "ImageURL", "ImagePath", "Role", "Gender", "Created"};
 //    public static final String[] SCHEDULES_COLUMN = {"id", "Disciple_Phone", "Title", "Alarm_Time", "Alarm_Repeat", "Description"};
@@ -301,6 +300,7 @@ public class Database {
         myContext = context;
         mySQL = new SQL_Helper(myContext);
         myDatabase = mySQL.getWritableDatabase();
+        /*
         mySQL.createTables(Table_DISCIPLES, DISCIPLES_FIELDS);
         mySQL.createTables(Table_LOGS, LOGS_FIELDS);
         mySQL.createTables(Table_USER, USER_FIELDS);
@@ -316,6 +316,22 @@ public class Database {
         mySQL.createTables(Table_CATEGORIES, CATEGORY_FIELDS);
         mySQL.createTables(Table_LEARNING, LEARNING_FIELDS);
         mySQL.createTables(Table_DISCIPLE_TREE, DISCIPLE_TREE_FIELDS);
+        */
+        mySQL.createTable(Table_DISCIPLES, getStrArrFromEnum(DisciplesColumn.class));
+        mySQL.createTable(Table_LOGS, getStrArrFromEnum(LogsColumn.class));
+        mySQL.createTable(Table_USER, getStrArrFromEnum(UserColumn.class));
+        mySQL.createTable(Table_SCHEDULES, getStrArrFromEnum(SchedulesColumn.class));
+        mySQL.createTable(Table_QUESTION_LIST, getStrArrFromEnum(QuestionListColumn.class));
+        mySQL.createTable(Table_QUESTION_ANSWER, getStrArrFromEnum(QuestionAnswerColumn.class));
+        mySQL.createTable(Table_Reports, getStrArrFromEnum(ReportColumn.class));
+        mySQL.createTable(Table_Report_Forms, getStrArrFromEnum(ReportFormColumn.class));
+        mySQL.createTable(Table_COUNTRY, getStrArrFromEnum(CountryColumn.class));
+        mySQL.createTable(Table_NEWSFEED, getStrArrFromEnum(NewsfeedColumn.class));
+        mySQL.createTable(Table_TESTIMONY, getStrArrFromEnum(TestimonyColumn.class));
+        mySQL.createTable(Table_IMAGE_SYNC, getStrArrFromEnum(ImageSyncColumn.class));
+        mySQL.createTable(Table_CATEGORIES, getStrArrFromEnum(CategoryColumn.class));
+        mySQL.createTable(Table_LEARNING, getStrArrFromEnum(LearningColumn.class));
+        mySQL.createTable(Table_DISCIPLE_TREE, getStrArrFromEnum(DiscipleTreeColumn.class));
     }
 
     public long insert(String DB_Table, ContentValues cv) {
@@ -392,9 +408,9 @@ public class Database {
         String name = "";
         try {
             String DB_Table = Table_DISCIPLES;
-            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), DISCIPLES_FIELDS[2] + " = '" + phone + "'", null, null, null, null);
+            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), DisciplesColumn.PHONE.toString() + " = '" + phone + "'", null, null, null, null);
             c.moveToLast();
-            name = c.getString(c.getColumnIndex(DISCIPLES_FIELDS[0]));
+            name = c.getString(c.getColumnIndex(DisciplesColumn.SERID.toString()));  // briggsm: This func is not ever used, but if it were, I think it would not work as is.
         } catch (Exception e) {
 
         }
@@ -743,19 +759,19 @@ public class Database {
         String DB_Table = Table_DISCIPLES;
         try {
             ContentValues cv = new ContentValues();
-            cv.put(Database.DISCIPLES_FIELDS[0], disciple.getSerID());
-            cv.put(Database.DISCIPLES_FIELDS[1], disciple.getFullName());
-            cv.put(Database.DISCIPLES_FIELDS[2], disciple.getDisplayName());
-            cv.put(Database.DISCIPLES_FIELDS[3], disciple.getEmail());
-            cv.put(Database.DISCIPLES_FIELDS[4], disciple.getPhone());
-            cv.put(Database.DISCIPLES_FIELDS[5], disciple.getCountry());
-            cv.put(Database.DISCIPLES_FIELDS[6], disciple.getMentorID());
-            cv.put(Database.DISCIPLES_FIELDS[7], disciple.getStage());
-            cv.put(Database.DISCIPLES_FIELDS[8], disciple.getImageURL());
-            cv.put(Database.DISCIPLES_FIELDS[9], disciple.getImagePath());
-            cv.put(Database.DISCIPLES_FIELDS[10], disciple.getRole());
-            cv.put(Database.DISCIPLES_FIELDS[11], disciple.getGender());
-            cv.put(Database.DISCIPLES_FIELDS[12], disciple.getCreated());
+            cv.put(DisciplesColumn.SERID.toString(), disciple.getSerID());
+            cv.put(DisciplesColumn.FULLNAME.toString(), disciple.getFullName());
+            cv.put(DisciplesColumn.DISPLAYNAME.toString(), disciple.getDisplayName());
+            cv.put(DisciplesColumn.EMAIL.toString(), disciple.getEmail());
+            cv.put(DisciplesColumn.PHONE.toString(), disciple.getPhone());
+            cv.put(DisciplesColumn.COUNTRY.toString(), disciple.getCountry());
+            cv.put(DisciplesColumn.MENTORID.toString(), disciple.getMentorID());
+            cv.put(DisciplesColumn.STAGE.toString(), disciple.getStage());
+            cv.put(DisciplesColumn.IMAGEURL.toString(), disciple.getImageURL());
+            cv.put(DisciplesColumn.IMAGEPATH.toString(), disciple.getImagePath());
+            cv.put(DisciplesColumn.ROLE.toString(), disciple.getRole());
+            cv.put(DisciplesColumn.GENDER.toString(), disciple.getGender());
+            cv.put(DisciplesColumn.CREATED.toString(), disciple.getCreated());
             if (disciple.getID() > 0) {
 //                long x = DeepLife.myDATABASE.update(DB_Table, cv, disciple.getID()); // briggsm: pretty sure we don't need "DeepLife.myDATABASE." here.
                 long x = update(DB_Table, cv, disciple.getID());
@@ -1126,11 +1142,11 @@ public class Database {
         String DB_Table = Table_QUESTION_ANSWER;
         try {
             ContentValues cv = new ContentValues();
-            cv.put(Database.QUESTION_ANSWER_FIELDS[0], answer.getSerID());
-            cv.put(Database.QUESTION_ANSWER_FIELDS[1], answer.getDisciplePhone());
-            cv.put(Database.QUESTION_ANSWER_FIELDS[2], answer.getQuestionID());
-            cv.put(Database.QUESTION_ANSWER_FIELDS[3], answer.getAnswer());
-            cv.put(Database.QUESTION_ANSWER_FIELDS[4], answer.getBuildStage());
+            cv.put(QuestionAnswerColumn.SERID.toString(), answer.getSerID());
+            cv.put(QuestionAnswerColumn.DISCIPLEPHONE.toString(), answer.getDisciplePhone());
+            cv.put(QuestionAnswerColumn.QUESTION_ID.toString(), answer.getQuestionID());
+            cv.put(QuestionAnswerColumn.ANSWER.toString(), answer.getAnswer());
+            cv.put(QuestionAnswerColumn.BUILDSTAGE.toString(), answer.getBuildStage());
 //            int id = DeepLife.myDATABASE.getAnswerByQuestionIDandDisciplePhone(answer.getQuestionID(), answer.getDisciplePhone()).getID(); // briggsm: pretty sure we don't need "DeepLife.myDATABASE." here.
 //            long x = DeepLife.myDATABASE.update(DB_Table, cv, id);
             int id = getAnswerByQuestionIDandDisciplePhone(answer.getQuestionID(), answer.getDisciplePhone()).getID();
@@ -1161,11 +1177,11 @@ public class Database {
         String DB_Table = Table_QUESTION_ANSWER;
         try {
             ContentValues cv = new ContentValues();
-            cv.put(Database.QUESTION_ANSWER_FIELDS[0], answer.getSerID());
-            cv.put(Database.QUESTION_ANSWER_FIELDS[1], answer.getDisciplePhone());
-            cv.put(Database.QUESTION_ANSWER_FIELDS[2], answer.getQuestionID());
-            cv.put(Database.QUESTION_ANSWER_FIELDS[3], answer.getAnswer());
-            cv.put(Database.QUESTION_ANSWER_FIELDS[4], answer.getBuildStage());
+            cv.put(QuestionAnswerColumn.SERID.toString(), answer.getSerID());
+            cv.put(QuestionAnswerColumn.DISCIPLEPHONE.toString(), answer.getDisciplePhone());
+            cv.put(QuestionAnswerColumn.QUESTION_ID.toString(), answer.getQuestionID());
+            cv.put(QuestionAnswerColumn.ANSWER.toString(), answer.getAnswer());
+            cv.put(QuestionAnswerColumn.BUILDSTAGE.toString(), answer.getBuildStage());
             Answer oldAnswer1 = getAnswerBySerID(answer.getSerID());
             if (oldAnswer1 == null) {
 //                long x = DeepLife.myDATABASE.insert(DB_Table, cv);  // briggsm: pretty sure we don't need "DeepLife.myDATABASE." here.
@@ -1278,8 +1294,6 @@ public class Database {
                         Log.i(TAG, "SendLogs Count:-> " + c.getCount());  // briggsm: think this is wrong. 'c' might have 10 rows, but only 2 of them SendLogs. This would return 10. Right?
                         Logs newLogs = new Logs();
                         newLogs.setID(Integer.valueOf(c.getString(c.getColumnIndex(LogsColumn.ID.toString()))));
-//                        newLogs.setType(c.getString(c.getColumnIndex(LogsColumn.TYPE.toString())));
-//                        newLogs.setTask(c.getString(c.getColumnIndex(LogsColumn.TASK.toString())));
                         newLogs.setType(Logs.Type.fromString(c.getString(c.getColumnIndex(LogsColumn.TYPE.toString()))));
                         newLogs.setTask(Logs.Task.fromString(c.getString(c.getColumnIndex(LogsColumn.TASK.toString()))));
 
@@ -1295,59 +1309,7 @@ public class Database {
             return null;
         }
         return Found;
-
-
-        /*
-        // briggsm: !!! Add a loop here, right? !!! Probably, shouldn't do it this way actually. Need to return ALL logs at once.
-        Cursor c = getLogsCursorAtCorrectPosition(SyncService.Task.SEND_LOG);
-        if (c != null) {
-            Log.i(TAG, "getSendLogs: Found at least 1 SEND_LOG");
-            Logs newLogs = new Logs();
-            newLogs.setID(Integer.valueOf(c.getString(c.getColumnIndex(LogsColumn.ID.toString()))));
-            newLogs.setType(c.getString(c.getColumnIndex(LogsColumn.TYPE.toString())));
-            newLogs.setTask(c.getString(c.getColumnIndex(LogsColumn.TASK.toString())));
-            newLogs.setValue(c.getString(c.getColumnIndex(LogsColumn.VALUE.toString())));
-            Log.i(TAG, "Found for SendLogs:-> \n" + newLogs.toString());
-            Found.add(newLogs);
-        }
-        return Found;
-        */
     }
-
-    // private ok???
-    //public
-
-    /*
-    // private ok???
-    public Cursor getLogsCursorAtCorrectPosition(SyncService.Task logTask) {
-        // Return null if Log doesn't exist,
-        // Otherwise return a cursor object which already points at correct row.
-        // Note: If there more than one matching row, then only the first one is returned
-        //      so, this function should probably be called by a loop.
-        Log.i(TAG, "getLogsCursorAtCorrectPosition: ");
-        String DB_Table = Table_LOGS;
-
-        //ArrayList<Logs> Found = new ArrayList<Logs>();
-        try {
-            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
-            if (c != null && c.getCount() > 0) {
-                c.moveToFirst();
-                for (int i = 0; i < c.getCount(); i++) {
-                    c.moveToPosition(i);
-                    String Log_Task = c.getString(c.getColumnIndex(LogsColumn.TASK.toString()));
-                    Log.i(TAG, "Comparing-> \n" + logTask + " | " + Log_Task);
-                    if (logTask.equalsName(Log_Task)) {
-                        return c;
-                    }
-                }
-            }
-        } catch (Exception e) {
-            Log.i(TAG, "Failed getLogsCursorAtCorrecPosition: " + e.toString());
-            return null;
-        }
-        return null;
-    }
-    */
 
     public ImageSync getTopImageSync() {
         String DB_Table = Table_IMAGE_SYNC;
@@ -1630,14 +1592,14 @@ public class Database {
         String DB_Table = Table_USER;
         try {
             ContentValues cv = new ContentValues();
-            cv.put(Database.USER_FIELDS[0], mainUser.getSerID());
-            cv.put(Database.USER_FIELDS[1], mainUser.getFull_Name());
-            cv.put(Database.USER_FIELDS[2], mainUser.getUser_Email());
-            cv.put(Database.USER_FIELDS[3], mainUser.getUser_Phone());
-            cv.put(Database.USER_FIELDS[4], mainUser.getUser_Pass());
-            cv.put(Database.USER_FIELDS[5], mainUser.getUser_Country());
-            cv.put(Database.USER_FIELDS[6], mainUser.getUser_Picture());
-            cv.put(Database.USER_FIELDS[7], mainUser.getUser_Favorite_Scripture());
+            cv.put(UserColumn.SERID.toString(), mainUser.getSerID());
+            cv.put(UserColumn.FULL_NAME.toString(), mainUser.getFull_Name());
+            cv.put(UserColumn.EMAIL.toString(), mainUser.getUser_Email());
+            cv.put(UserColumn.PHONE.toString(), mainUser.getUser_Phone());
+            cv.put(UserColumn.PASSWORD.toString(), mainUser.getUser_Pass());
+            cv.put(UserColumn.COUNTRY.toString(), mainUser.getUser_Country());
+            cv.put(UserColumn.PICTURE.toString(), mainUser.getUser_Picture());
+            cv.put(UserColumn.FAVORITE_SCRIPTURE.toString(), mainUser.getUser_Favorite_Scripture());
 //            DeepLife.myDATABASE.Delete_All(DB_Table); // briggsm: pretty sure we don't need "DeepLife.myDATABASE." here.
 //            long x = DeepLife.myDATABASE.insert(DB_Table, cv);
             Delete_All(DB_Table);

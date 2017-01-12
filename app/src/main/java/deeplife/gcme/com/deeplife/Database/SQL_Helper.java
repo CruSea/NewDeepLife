@@ -17,7 +17,9 @@ public class SQL_Helper extends SQLiteOpenHelper {
 		// TODO Auto-generated method stub
 		
 	}
-	public void createTables(String Db_Tables, String[] fields) {
+
+	/*
+    public void createTables(String Db_Tables, String[] fields) {
 		String str = "id INTEGER PRIMARY KEY AUTOINCREMENT,";
 		if(fields.length>1){
 			for(int x = 0; x<fields.length-1;x++){
@@ -29,6 +31,18 @@ public class SQL_Helper extends SQLiteOpenHelper {
 		}
 		getWritableDatabase().execSQL("CREATE TABLE IF NOT EXISTS "+Db_Tables+" ("+str);
 	}
+	*/
+    public void createTable(String Db_Table, String[] fields) {
+        // Note: assumes fields[] starts with the "id" field (the one that is INTEGER PRIMARY KEY AUTOINCREMENT)
+
+        String str = "(" + fields[0] + " INTEGER PRIMARY KEY AUTOINCREMENT, ";
+        for (int x = 1; x < fields.length - 1; x++) {
+            str += fields[x] + " TEXT, ";
+        }
+        str += fields[fields.length - 1] + " TEXT);";
+
+        getWritableDatabase().execSQL("CREATE TABLE IF NOT EXISTS " + Db_Table + str);
+    }
 
 	@Override
 	public void onUpgrade(SQLiteDatabase arg0, int arg1, int arg2) {
