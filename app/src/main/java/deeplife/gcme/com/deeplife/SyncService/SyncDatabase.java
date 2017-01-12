@@ -379,7 +379,7 @@ public class SyncDatabase {
                 cv.put(Database.UserColumn.PASSWORD.toString(), "pass");
                 cv.put(Database.UserColumn.COUNTRY.toString(), obj.getString("country"));
                 cv.put(Database.UserColumn.PICTURE.toString(), obj.getString("picture"));
-                //cv.put(Database.UserColumn.FAVORITE_SCRIPTURE.toString(), obj.getString("favoriteScripture")); //briggsm: I just guessed "favoriteScripture"
+                cv.put(Database.UserColumn.FAVORITE_SCRIPTURE.toString(), "");
                 DeepLife.myDATABASE.Delete_All(Database.Table_USER);
                 long x = DeepLife.myDATABASE.insert(Database.Table_USER,cv);
                 if(x>0){
@@ -395,7 +395,7 @@ public class SyncDatabase {
     public static void Add_LearningTools(JSONObject json_learnings){
         try{
             if(json_learnings.length()>0){
-                Log.i(TAG,"Adding MainUser  -> \n"+json_learnings.toString());
+                Log.i(TAG,"Adding LearningTools  -> \n"+json_learnings.toString());
                 JSONObject obj = json_learnings;
                 ContentValues cv = new ContentValues();
                 cv.put(Database.LearningColumn.SERID.toString(), obj.getString("id"));
@@ -431,7 +431,7 @@ public class SyncDatabase {
             User user = DeepLife.myDATABASE.getMainUser();
             if(user != null){
                 if(json_mainuser.length()>0){
-                    Log.i(TAG,"Adding MainUser  -> \n"+json_mainuser.toString());
+                    Log.i(TAG,"Updating MainUser  -> \n"+json_mainuser.toString());
                     JSONObject obj = json_mainuser;
                     ContentValues cv = new ContentValues();
                     cv.put(Database.UserColumn.SERID.toString(), obj.getString("id"));
@@ -440,7 +440,7 @@ public class SyncDatabase {
                     cv.put(Database.UserColumn.PHONE.toString(), obj.getString("phone_no"));
                     cv.put(Database.UserColumn.COUNTRY.toString(), obj.getString("country"));
                     cv.put(Database.UserColumn.PICTURE.toString(), obj.getString("picture"));
-                    cv.put(Database.UserColumn.FAVORITE_SCRIPTURE.toString(), obj.getString("favoriteScripture")); //briggsm: Just guessed for now.
+                    cv.put(Database.UserColumn.FAVORITE_SCRIPTURE.toString(), "");
                     long x = DeepLife.myDATABASE.update(Database.Table_USER,cv,user.getID());
                     if(x>0){
                         Log.i(TAG,"Successfully Updated: Main User -> \n"+cv.toString());
@@ -450,7 +450,7 @@ public class SyncDatabase {
                 }
             }else {
                 if(json_mainuser.length()>0){
-                    Log.i(TAG,"Adding MainUser  -> \n"+json_mainuser.toString());
+                    Log.i(TAG,"Updating MainUser  -> \n"+json_mainuser.toString());
                     JSONObject obj = json_mainuser;
                     ContentValues cv = new ContentValues();
                     cv.put(Database.UserColumn.SERID.toString(), obj.getString("id"));
@@ -460,7 +460,7 @@ public class SyncDatabase {
                     cv.put(Database.UserColumn.PASSWORD.toString(), "pass");
                     cv.put(Database.UserColumn.COUNTRY.toString(), obj.getString("country"));
                     cv.put(Database.UserColumn.PICTURE.toString(), obj.getString("picture"));
-                    cv.put(Database.UserColumn.FAVORITE_SCRIPTURE.toString(), obj.getString("favoriteScripture")); // briggsm: Just guessed for now.
+                    cv.put(Database.UserColumn.FAVORITE_SCRIPTURE.toString(), "");
                     long x = DeepLife.myDATABASE.insert(Database.Table_USER,cv);
                     if(x>0){
                         Log.i(TAG,"Successfully Updated: Main User -> \n"+cv.toString());

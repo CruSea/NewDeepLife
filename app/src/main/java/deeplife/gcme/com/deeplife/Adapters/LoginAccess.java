@@ -86,17 +86,21 @@ public class LoginAccess {
                                     Login.GetNextActivity();
                                 }else {
                                     Login.DialogState(0);
+                                    Log.w(TAG, "LogInAuthenticate onSuccess(): state <= 0");
                                     Login.showDialog(DeepLife.getContext().getString(R.string.dlg_msg_login_failure));
                                 }
                             }else {
                                 Login.DialogState(0);
+                                Log.w(TAG, "LogInAuthenticate onSuccess(): user == null");
                                 Login.showDialog(DeepLife.getContext().getString(R.string.dlg_msg_login_failure));
                             }
                         }else {
                             Login.DialogState(0);
+                            Log.w(TAG, "LogInAuthenticate onSuccess(): JSONObject 'Response' is null");
                             Login.showDialog(DeepLife.getContext().getString(R.string.dlg_msg_login_failure));
                         }
                     } catch (JSONException e) {
+                        Log.e(TAG, "LogInAuthenticate onSuccess(): JSONException");
                         e.printStackTrace();
                     }
                 }
