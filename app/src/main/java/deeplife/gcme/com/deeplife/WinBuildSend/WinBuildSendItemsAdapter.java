@@ -145,7 +145,7 @@ public class WinBuildSendItemsAdapter extends RecyclerView.Adapter<WinBuildSendI
                 if(x>0){
                     Logs logs = new Logs();
                     logs.setTask(Logs.Task.SEND_ANSWERS);
-                    logs.setService(SyncService.SyncApiService.ADDNEW_ANSWERS);
+                    logs.setService(SyncService.ApiService.ADDNEW_ANSWERS);
                     logs.setValue(""+x);
                     mySyncDatabase.AddLog(logs);
                 }
@@ -159,7 +159,7 @@ public class WinBuildSendItemsAdapter extends RecyclerView.Adapter<WinBuildSendI
                     if(x>0){
                         Logs logs = new Logs();
                         logs.setTask(Logs.Task.SEND_ANSWERS);
-                        logs.setService(SyncService.SyncApiService.ADDNEW_ANSWERS);
+                        logs.setService(SyncService.ApiService.ADDNEW_ANSWERS);
                         logs.setValue(""+x);
                         mySyncDatabase.AddLog(logs);
                     }
@@ -173,7 +173,7 @@ public class WinBuildSendItemsAdapter extends RecyclerView.Adapter<WinBuildSendI
                     if(x>0){
                         Logs logs = new Logs();
                         logs.setTask(Logs.Task.SEND_ANSWERS);
-                        logs.setService(SyncService.SyncApiService.ADDNEW_ANSWERS);
+                        logs.setService(SyncService.ApiService.ADDNEW_ANSWERS);
                         logs.setValue(""+x);
                         mySyncDatabase.AddLog(logs);
                     }
@@ -184,7 +184,7 @@ public class WinBuildSendItemsAdapter extends RecyclerView.Adapter<WinBuildSendI
                     if(x>0){
                         Logs logs = new Logs();
                         logs.setTask(Logs.Task.SEND_ANSWERS);
-                        logs.setService(SyncService.SyncApiService.ADDNEW_ANSWERS);
+                        logs.setService(SyncService.ApiService.ADDNEW_ANSWERS);
                         logs.setValue(""+x);
                         mySyncDatabase.AddLog(logs);
                     }

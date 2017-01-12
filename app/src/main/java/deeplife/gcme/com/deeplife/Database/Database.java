@@ -25,6 +25,8 @@ import deeplife.gcme.com.deeplife.News.News;
 import deeplife.gcme.com.deeplife.Testimony.Testimony;
 import deeplife.gcme.com.deeplife.WinBuildSend.WbsQuestion;
 
+import static deeplife.gcme.com.deeplife.DeepLife.getStrArrFromEnum;
+
 public class Database {
     public static final String Table_DISCIPLES = "DISCIPLES";
     public static final String Table_SCHEDULES = "SCHEDULES";
@@ -91,7 +93,7 @@ public class Database {
         CREATED("Created");
 
         private final String name;
-        private DisciplesColumn(String s) { this.name = s; }
+        DisciplesColumn(String s) { this.name = s; }
         public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
         @Override public String toString() { return this.name; }
     }
@@ -105,7 +107,7 @@ public class Database {
         DESCRIPTION("Description");
 
         private final String name;
-        private SchedulesColumn(String s) { this.name = s; }
+        SchedulesColumn(String s) { this.name = s; }
         public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
         @Override public String toString() { return this.name; }
     }
@@ -117,7 +119,7 @@ public class Database {
         QUESTIONS("Questions");
 
         private final String name;
-        private ReportFormColumn(String s) { this.name = s; }
+        ReportFormColumn(String s) { this.name = s; }
         public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
         @Override public String toString() { return this.name; }
     }
@@ -133,7 +135,7 @@ public class Database {
         PUBDATE("PubDate");
 
         private final String name;
-        private NewsfeedColumn(String s) { this.name = s; }
+        NewsfeedColumn(String s) { this.name = s; }
         public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
         @Override public String toString() { return this.name; }
     }
@@ -145,7 +147,7 @@ public class Database {
         DATE("Date");
 
         private final String name;
-        private ReportColumn(String s) { this.name = s; }
+        ReportColumn(String s) { this.name = s; }
         public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
         @Override public String toString() { return this.name; }
     }
@@ -158,7 +160,7 @@ public class Database {
         CODE("code");
 
         private final String name;
-        private CountryColumn(String s) { this.name = s; }
+        CountryColumn(String s) { this.name = s; }
         public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
         @Override public String toString() { return this.name; }
     }
@@ -170,7 +172,7 @@ public class Database {
         VALUE("Value");
 
         private final String name;
-        private LogsColumn(String s) { this.name = s; }
+        LogsColumn(String s) { this.name = s; }
         public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
         @Override public String toString() { return this.name; }
     }
@@ -187,7 +189,7 @@ public class Database {
         FAVORITE_SCRIPTURE("Favorite_Scripture");
 
         private final String name;
-        private UserColumn(String s) { this.name = s; }
+        UserColumn(String s) { this.name = s; }
         public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
         @Override public String toString() { return this.name; }
     }
@@ -204,7 +206,7 @@ public class Database {
         CREATED("Created");
 
         private final String name;
-        private QuestionListColumn(String s) { this.name = s; }
+        QuestionListColumn(String s) { this.name = s; }
         public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
         @Override public String toString() { return this.name; }
     }
@@ -218,7 +220,7 @@ public class Database {
         BUILDSTAGE("BuildStage");
 
         private final String name;
-        private QuestionAnswerColumn(String s) { this.name = s; }
+        QuestionAnswerColumn(String s) { this.name = s; }
         public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
         @Override public String toString() { return this.name; }
     }
@@ -233,7 +235,7 @@ public class Database {
         USERNAME("UserName");
 
         private final String name;
-        private TestimonyColumn(String s) { this.name = s; }
+        TestimonyColumn(String s) { this.name = s; }
         public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
         @Override public String toString() { return this.name; }
     }
@@ -244,7 +246,7 @@ public class Database {
         PARAM("Param");
 
         private final String name;
-        private ImageSyncColumn(String s) { this.name = s; }
+        ImageSyncColumn(String s) { this.name = s; }
         public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
         @Override public String toString() { return this.name; }
     }
@@ -258,7 +260,7 @@ public class Database {
         CREATED("Created");
 
         private final String name;
-        private CategoryColumn(String s) { this.name = s; }
+        CategoryColumn(String s) { this.name = s; }
         public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
         @Override public String toString() { return this.name; }
     }
@@ -274,7 +276,7 @@ public class Database {
         CREATED("Created");
 
         private final String name;
-        private LearningColumn(String s) { this.name = s; }
+        LearningColumn(String s) { this.name = s; }
         public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
         @Override public String toString() { return this.name; }
     }
@@ -286,7 +288,7 @@ public class Database {
         COUNT("Count");
 
         private final String name;
-        private DiscipleTreeColumn(String s) { this.name = s; }
+        DiscipleTreeColumn(String s) { this.name = s; }
         public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
         @Override public String toString() { return this.name; }
     }
@@ -300,23 +302,6 @@ public class Database {
         myContext = context;
         mySQL = new SQL_Helper(myContext);
         myDatabase = mySQL.getWritableDatabase();
-        /*
-        mySQL.createTables(Table_DISCIPLES, DISCIPLES_FIELDS);
-        mySQL.createTables(Table_LOGS, LOGS_FIELDS);
-        mySQL.createTables(Table_USER, USER_FIELDS);
-        mySQL.createTables(Table_SCHEDULES, SCHEDULES_FIELDS);
-        mySQL.createTables(Table_QUESTION_LIST, QUESTION_LIST_FIELDS);
-        mySQL.createTables(Table_QUESTION_ANSWER, QUESTION_ANSWER_FIELDS);
-        mySQL.createTables(Table_Reports, REPORT_FIELDS);
-        mySQL.createTables(Table_Report_Forms, REPORT_FORM_FIELDS);
-        mySQL.createTables(Table_COUNTRY, COUNTRY_FIELDS);
-        mySQL.createTables(Table_NEWSFEED, NewsFeed_FIELDS);
-        mySQL.createTables(Table_TESTIMONY, TESTIMONY_FIELDS);
-        mySQL.createTables(Table_IMAGE_SYNC, IMAGE_SYNC_FIELDS);
-        mySQL.createTables(Table_CATEGORIES, CATEGORY_FIELDS);
-        mySQL.createTables(Table_LEARNING, LEARNING_FIELDS);
-        mySQL.createTables(Table_DISCIPLE_TREE, DISCIPLE_TREE_FIELDS);
-        */
         mySQL.createTable(Table_DISCIPLES, getStrArrFromEnum(DisciplesColumn.class));
         mySQL.createTable(Table_LOGS, getStrArrFromEnum(LogsColumn.class));
         mySQL.createTable(Table_USER, getStrArrFromEnum(UserColumn.class));
@@ -1756,15 +1741,5 @@ public class Database {
             strs = getStrArrFromEnum(DiscipleTreeColumn.class);
         }
         return strs;
-    }
-
-    public static <E extends Enum<E>> String[] getStrArrFromEnum(Class<E> e) {
-        Enum<E>[] enumConstants = e.getEnumConstants();
-        int numConstants = enumConstants.length;
-        String[] strArr = new String[numConstants];
-        for (int i = 0; i < numConstants; i++) {
-            strArr[i] = enumConstants[i].toString();
-        }
-        return  strArr;
     }
 }

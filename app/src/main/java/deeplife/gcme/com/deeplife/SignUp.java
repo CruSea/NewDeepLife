@@ -41,6 +41,7 @@ import deeplife.gcme.com.deeplife.Database.Database;
 import deeplife.gcme.com.deeplife.Models.Country;
 import deeplife.gcme.com.deeplife.Models.User;
 import deeplife.gcme.com.deeplife.SyncService.SyncDatabase;
+import deeplife.gcme.com.deeplife.SyncService.SyncService;
 import kotlin.Pair;
 
 /**
@@ -174,11 +175,11 @@ public class SignUp extends AppCompatActivity {
         user.add(NewUser);
         List<Pair<String, String>> Send_Param;
         Send_Param = new ArrayList<Pair<String, String>>();
-        Send_Param.add(new kotlin.Pair<String, String>(SendParam.USER_NAME, NewUser.getUser_Phone()));
-        Send_Param.add(new kotlin.Pair<String, String>(SendParam.USER_PASS, NewUser.getUser_Pass()));
-        Send_Param.add(new kotlin.Pair<String, String>(SendParam.COUNTRY, NewUser.getUser_Country()));
-        Send_Param.add(new kotlin.Pair<String, String>(SendParam.SERVICE, SendParam.Service.SIGN_UP));
-        Send_Param.add(new kotlin.Pair<String, String>(SendParam.PARAM, myParser.toJson(user)));
+        Send_Param.add(new kotlin.Pair<String, String>(SyncService.ApiRequest.USER_NAME.toString(), NewUser.getUser_Phone()));
+        Send_Param.add(new kotlin.Pair<String, String>(SyncService.ApiRequest.USER_PASS.toString(), NewUser.getUser_Pass()));
+        Send_Param.add(new kotlin.Pair<String, String>(SyncService.ApiRequest.COUNTRY.toString(), NewUser.getUser_Country()));
+        Send_Param.add(new kotlin.Pair<String, String>(SyncService.ApiRequest.SERVICE.toString(), SyncService.ApiService.SIGN_UP.toString()));
+        Send_Param.add(new kotlin.Pair<String, String>(SyncService.ApiRequest.PARAM.toString(), myParser.toJson(user)));
         Fuel.post(DeepLife.API_URL, Send_Param).responseString(new Handler<String>() {
             @Override
             public void success(Request request, Response response, String s) {

@@ -87,14 +87,13 @@ public class Logs {
     // Enum's
     private Type type;
     private Task task;
-    private SyncService.SyncApiService Service;
+    private SyncService.ApiService Service;
 
     private List<Object> Param;
 
     public Logs() {
         Param = new ArrayList<Object>();
-        //Service = SendParam.Service.UPDATE;
-        Service = SyncService.SyncApiService.UPDATE;
+        Service = SyncService.ApiService.UPDATE;
     }
 
     public int getID() {
@@ -138,11 +137,11 @@ public class Logs {
     }
 
 
-    public SyncService.SyncApiService getService() {
+    public SyncService.ApiService getService() {
         return Service;
     }
 
-    public void setService(SyncService.SyncApiService service) {
+    public void setService(SyncService.ApiService service) {
         Service = service;
     }
 }
