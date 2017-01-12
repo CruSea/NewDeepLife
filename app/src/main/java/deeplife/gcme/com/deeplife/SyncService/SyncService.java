@@ -41,113 +41,57 @@ import me.tatarka.support.job.JobService;
 public class SyncService extends JobService {
     public static final String TAG = "SyncService";
 
-    // === SyncTask ===
-    public enum SyncTask {
+    // === SyncApiService ===
+    public enum SyncApiService {
+        // From apiController.php in Web App:
+        GETALL_DISCIPLES("GetAll_Disciples"),
+        GETNEW_DISCIPLES("GetNew_Disciples"),
+        ADDNEW_DISCIPLES("AddNew_Disciples"),
+        ADDNEW_DISCIPLES_LOG("AddNew_Disciples_Log"),
+        DELETE_ALL_DISCIPLE_LOG("Delete_All_Disciple_Log"),
+        GETALL_SCHEDULES("GetAll_Schedules"),
+        GETNEW_SCHEDULES("GetNew_Schedules"),
+        ADDNEW_SCHEDULES("AddNew_Schedules"),
+        ADDNEW_SCHEDULE_LOG("AddNew_Schedule_Log"),
+        DELETE_ALL_SCHEDULE_LOG("Delete_All_Schedule_Log"),
+        ISVALID_USER("IsValid_User"),
+        CREATEUSER("CreateUser"),
+        GETALL_QUESTIONS("GetAll_Questions"),
+        GETALL_ANSWERS("GetAll_Answers"),
+        ADDNEW_ANSWERS("AddNew_Answers"),
         SEND_LOG("Send_Log"),
-        SEND_DISCIPLES("Send_Disciples"),
-        REMOVE_DISCIPLE("Remove_Disciple"),
-        UPDATE_DISCIPLE("Update_Disciple"),
-        SEND_SCHEDULE("Send_Schedule"),
-        SEND_REPORT("Send_Report"),
-        SEND_TESTIMONY("Send_Testimony"),
-        UPDATE_SCHEDULES("Update_Schedules"),
-        ADD_NEW_DISCIPLES("AddNew_Disciples"),
+        LOG_IN("Log_In"),
+        SIGN_UP("Sign_Up"),
         UPDATE_DISCIPLES("Update_Disciples"),
-        SEND_ANSWERS("Send_Answers"),
-        ADD_NEW_ANSWERS("AddNew_Answers");
-
-
-
-        private final String name;
-
-        // Constructor
-        private SyncTask(String s) {
-            this.name = s;
-        }
-
-        public boolean equalsName(String otherName) {
-            return (otherName == null) ? false : name.equals(otherName);
-        }
-
-        @Override
-        public String toString() {
-            return this.name;
-        }
-    }
-
-    // === SyncServ ===
-    public enum SyncServ {
-        SEND_LOG ("Send_Log"),
-        SEND_DISCIPLES ("Send_Disciples"),
-        REMOVE_DISCIPLE ("Remove_Disciple"),
-        UPDATE_DISCIPLE ("Update_Disciple"),
-        SEND_SCHEDULE ("Send_Schedule"),
-        SEND_REPORT ("Send_Report"),
-        SEND_TESTIMONY ("Send_Testimony"),
-        UPDATE_SCHEDULES ("Update_Schedules"),
-        ADD_NEW_DISCIPLES ("AddNew_Disciples"),
-        UPDATE_DISCIPLES ("Update_Disciples"),
-        SEND_ANSWERS ("Send_Answers"),
-        ADD_NEW_ANSWERS ("AddNew_Answers"),
-
-        UPDATE ("Update");
-
+        UPDATE("Update"),
+        META_DATA("Meta_Data"),
+        SEND_REPORT("Send_Report"),
+        GETNEW_NEWSFEED("GetNew_NewsFeed"),
+        SEND_TESTIMONY("Send_Testimony"),
+        UPLOAD_USER_PIC("Upload_User_Pic"),
+        UPLOAD_DISCIPLE_PIC("Upload_Disciple_pic"),
+        UPDATE_SCHEDULES("Update_Schedules"),
+        GETALL_TESTIMONIES("GetAll_Testimonies"),
+        GETNEW_TESTIMONIES("GetNew_Testimonies"),
+        ADDNEW_TESTIMONY("AddNew_Testimony"),
+        DELETE_TESTIMONY("Delete_Testimony"),
+        ADDNEW_TESTIMONY_LOG("AddNew_Testimony_Log"),
+        DELETE_ALL_TESTIMONYLOGS("Delete_All_TestimonyLogs"),
+        GETALL_NEWSFEEDS("GetAll_NewsFeeds"),
+        GETNEW_NEWSFEEDS("GetNew_NewsFeeds"),
+        ADDNEW_NEWSFEED_LOG("AddNew_NewsFeed_Log"),
+        DELETE_ALL_NEWSFEED_LOGS("Delete_All_NewsFeed_Logs"),
+        GETALL_CATEGORY("GetAll_Category"),
+        GETALL_LEARNINGTOOLS("GetAll_LearningTools"),
+        GETNEW_LEARNINGTOOLS("GetNew_LearningTools"),
+        DISCIPLETREE("DiscipleTree");
 
 
         private final String name;
-
-        // Constructor
-        private SyncServ(String s) {
-            this.name = s;
-        }
-
-        public boolean equalsName(String otherName) {
-            return (otherName == null) ? false : name.equals(otherName);
-        }
-
-        @Override
-        public String toString() {
-            return this.name;
-        }
+        private SyncApiService(String s) { this.name = s; }
+        public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
+        @Override public String toString() { return this.name; }
     }
-
-    // === SyncType ===
-    public enum SyncType {
-        SEND_LOG ("Send_Log"),
-        SEND_DISCIPLES ("Send_Disciples"),
-        REMOVE_DISCIPLE ("Remove_Disciple"),
-        UPDATE_DISCIPLE ("Update_Disciple"),
-        SEND_SCHEDULE ("Send_Schedule"),
-        SEND_REPORT ("Send_Report"),
-        SEND_TESTIMONY ("Send_Testimony"),
-        UPDATE_SCHEDULES ("Update_Schedules"),
-        ADD_NEW_DISCIPLES ("AddNew_Disciples"),
-        UPDATE_DISCIPLES ("Update_Disciples"),
-        SEND_ANSWERS ("Send_Answers"),
-        ADD_NEW_ANSWERS ("AddNew_Answers"),
-
-        DISCIPLE ("Disciple");
-
-
-
-        private final String name;
-
-        // Constructor
-        private SyncType(String s) {
-            this.name = s;
-        }
-
-        public boolean equalsName(String otherName) {
-            return (otherName == null) ? false : name.equals(otherName);
-        }
-
-        @Override
-        public String toString() {
-            return this.name;
-        }
-    }
-
-
 
     //public static final String[] Sync_Tasks = {"Send_Log", "Send_Disciples","Remove_Disciple","Update_Disciple","Send_Schedule","Send_Report","Send_Testimony","Update_Schedules","AddNew_Disciples","Update_Disciples","Send_Testimony","Send_Answers","AddNew_Answers"};
     private List<Object> Param;
@@ -191,10 +135,10 @@ public class SyncService extends JobService {
                 Send_Param.add(new kotlin.Pair<String, String>(SendParam.PARAM, myParser.toJson(myLogs.getParam())));
             }
             // Temp
-//            Log.i(TAG, "Enum test1: " + SyncTask.ADD_NEW_ANSWERS);
-//            Log.i(TAG, "Enum test2: " + SyncTask.ADD_NEW_ANSWERS.name());
-//            Log.i(TAG, "Enum test3: " + SyncTask.valueOf("ADD_NEW_ANSWERS"));
-//            Log.i(TAG, "Enum test4: " + SyncTask.SEND_ANSWERS);
+//            Log.i(TAG, "Enum test1: " + Task.ADD_NEW_ANSWERS);
+//            Log.i(TAG, "Enum test2: " + Task.ADD_NEW_ANSWERS.name());
+//            Log.i(TAG, "Enum test3: " + Task.valueOf("ADD_NEW_ANSWERS"));
+//            Log.i(TAG, "Enum test4: " + Task.SEND_ANSWERS);
 
 
             Log.i(TAG, "Prepared Request: \n" + Send_Param.toString());
@@ -242,14 +186,15 @@ public class SyncService extends JobService {
             for(int i=0;i<foundData.size();i++){
                 myLogs.getParam().add(foundData.get(i));
             }
-            myLogs.setService(SyncServ.SEND_LOG);
+            myLogs.setService(SyncApiService.SEND_LOG);
         }else if(DeepLife.myDATABASE.getSendDisciples().size()>0){
             Log.i(TAG,"GET DISCIPLES TO SEND -> \n");
             ArrayList<Disciple> foundData = DeepLife.myDATABASE.getSendDisciples();
             for(int i=0;i<foundData.size();i++){
                 myLogs.getParam().add(foundData.get(i));
             }
-            myLogs.setService(SyncServ.SEND_DISCIPLES);  // briggsm: Are we sure? Biniam had AddNew_Disciples here. Is that right? I'm changing to Send_Disciples.
+            //myLogs.setService(SyncApiService.SEND_DISCIPLES);  // briggsm: Are we sure? Biniam had AddNew_Disciples here. Is that right? I'm changing to Send_Disciples.
+            myLogs.setService(SyncApiService.ADDNEW_DISCIPLES);
         }else if(DeepLife.myDATABASE.getTopImageSync() != null){
             Log.i(TAG,"GET Images TO SEND -> \n");
             ImageSync tosync = DeepLife.myDATABASE.getTopImageSync();
@@ -259,14 +204,14 @@ public class SyncService extends JobService {
             img.setId(tosync.getId());
             myLogs.getParam().add(img);
             //myLogs.setService(tosync.getParam());
-            myLogs.setService(SyncServ.valueOf(tosync.getParam())); // briggsm: not 100% sure this will work... TODO: debug.
+            myLogs.setService(SyncApiService.valueOf(tosync.getParam())); // briggsm: not 100% sure this will work... TODO: debug.
         }else if(DeepLife.myDATABASE.getUpdateDisciples().size()>0){
             Log.i(TAG,"GET DISCIPLES TO UPDATE -> \n");
             ArrayList<Disciple> foundData = DeepLife.myDATABASE.getUpdateDisciples();
             for(int i=0;i<foundData.size();i++){
                 myLogs.getParam().add(foundData.get(i));
             }
-            myLogs.setService(SyncServ.UPDATE_DISCIPLES);
+            myLogs.setService(SyncApiService.UPDATE_DISCIPLES);
         }else if(DeepLife.myDATABASE.getSendAnswers().size()>0){
             Log.i(TAG,"GET Answers TO Send -> \n");
             ArrayList<Answer> foundData = DeepLife.myDATABASE.getSendAnswers();
@@ -274,35 +219,37 @@ public class SyncService extends JobService {
                 myLogs.getParam().add(foundData.get(i));
             }
             //myLogs.setService(Sync_Tasks[12]); // briggsm: Are we sure? Biniam had AddNewAnswers here. Is that right? I'm changing to Send_Answers
-            myLogs.setService(SyncServ.SEND_ANSWERS);
+            //myLogs.setService(SyncApiService.SEND_ANSWERS);
+            myLogs.setService(SyncApiService.ADDNEW_ANSWERS);
         }else if(DeepLife.myDATABASE.getSendSchedules().size()>0){
             Log.i(TAG,"GET Schedules TO Send -> \n");
             ArrayList<Schedule> foundData = DeepLife.myDATABASE.getSendSchedules();
             for(int i=0;i<foundData.size();i++){
                 myLogs.getParam().add(foundData.get(i));
             }
-            myLogs.setService(SyncServ.SEND_SCHEDULE);
+            //myLogs.setService(SyncApiService.SEND_SCHEDULE);
+            myLogs.setService(SyncApiService.ADDNEW_SCHEDULES);
         }else if(DeepLife.myDATABASE.getUpdateSchedules().size()>0){
             Log.i(TAG,"GET Schedules TO UPDATE -> \n");
             ArrayList<Schedule> foundData = DeepLife.myDATABASE.getUpdateSchedules();
             for(int i=0;i<foundData.size();i++){
                 myLogs.getParam().add(foundData.get(i));
             }
-            myLogs.setService(SyncServ.UPDATE_SCHEDULES);
+            myLogs.setService(SyncApiService.UPDATE_SCHEDULES);
         }else if(DeepLife.myDATABASE.getSendReports().size()>0){
             Log.i(TAG,"GET Reports TO Send -> \n");
             ArrayList<ReportItem> foundData = DeepLife.myDATABASE.getSendReports();
             for(int i=0;i<foundData.size();i++){
                 myLogs.getParam().add(foundData.get(i));
             }
-            myLogs.setService(SyncServ.SEND_REPORT);
+            myLogs.setService(SyncApiService.SEND_REPORT);
         }else if(DeepLife.myDATABASE.getSendTestimony().size()>0){
             Log.i(TAG,"GET Testimony TO Send -> \n");
             ArrayList<Testimony> foundData = DeepLife.myDATABASE.getSendTestimony();
             for(int i=0;i<foundData.size();i++){
                 myLogs.getParam().add(foundData.get(i));
             }
-            myLogs.setService(SyncServ.SEND_TESTIMONY);
+            myLogs.setService(SyncApiService.SEND_TESTIMONY);
         }
         return myLogs;
     }

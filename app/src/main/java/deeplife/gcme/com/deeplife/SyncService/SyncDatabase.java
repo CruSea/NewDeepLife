@@ -74,16 +74,21 @@ public class SyncDatabase {
                 }
                 if (!json_response.isNull("Log_Response")) {
                     JSONArray json_logs = json_response.getJSONArray("Log_Response");
+                    Log.i(TAG, "Deleting Logs: \n" + json_logs.toString());
                     Delete_Logs(json_logs);
                 }
                 if (!json_response.isNull("Profile")) {
                     JSONObject json_user_profile = json_response.getJSONObject("Profile");
+                    Log.i(TAG, "Updating Main User: \n" + json_user_profile.toString());
                     Update_MainUser(json_user_profile);
                 }
                 if (!json_response.isNull("LearningTools")) {
                     JSONObject json_learning_tools = json_response.getJSONObject("LearningTools");
+                    Log.i(TAG, "Add Learning tools: \n" + json_learning_tools.toString());
                     Add_LearningTools(json_learning_tools);
                 }
+            } else {
+                Log.i(TAG, "ProcessResponse: No 'Response' JSON object!");
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -194,8 +199,8 @@ public class SyncDatabase {
     }
     public long AddLog(Logs logs){
         ContentValues log = new ContentValues();
-        log.put(Database.LOGS_FIELDS[0], logs.getType());
-        log.put(Database.LOGS_FIELDS[1], logs.getTask());
+        log.put(Database.LOGS_FIELDS[0], logs.getType().toString());
+        log.put(Database.LOGS_FIELDS[1], logs.getTask().toString());
         log.put(Database.LOGS_FIELDS[2], logs.getValue());
         long x = DeepLife.myDATABASE.insert(Database.Table_LOGS,log);
         if(x>0){

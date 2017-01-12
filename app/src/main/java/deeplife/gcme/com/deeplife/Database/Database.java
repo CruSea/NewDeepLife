@@ -10,7 +10,6 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-import deeplife.gcme.com.deeplife.DeepLife;
 import deeplife.gcme.com.deeplife.Disciples.Disciple;
 import deeplife.gcme.com.deeplife.LearningTools.LearningTool;
 import deeplife.gcme.com.deeplife.Models.Answer;
@@ -23,7 +22,6 @@ import deeplife.gcme.com.deeplife.Models.ReportItem;
 import deeplife.gcme.com.deeplife.Models.Schedule;
 import deeplife.gcme.com.deeplife.Models.User;
 import deeplife.gcme.com.deeplife.News.News;
-import deeplife.gcme.com.deeplife.SyncService.SyncService;
 import deeplife.gcme.com.deeplife.Testimony.Testimony;
 import deeplife.gcme.com.deeplife.WinBuildSend.WbsQuestion;
 
@@ -61,22 +59,238 @@ public class Database {
     public static final String[] LEARNING_FIELDS = {"SerID", "Title", "Description", "VideoURL", "Country", "IsDefault", "Created"};
     public static final String[] DISCIPLE_TREE_FIELDS = {"SerID", "UserID", "Count"};
 
-    public static final String[] DISCIPLES_COLUMN = {"id", "SerID", "FullName", "DisplayName", "Email", "Phone", "Country", "MentorID", "Stage", "ImageURL", "ImagePath", "Role", "Gender", "Created"};
-    public static final String[] SCHEDULES_COLUMN = {"id", "Disciple_Phone", "Title", "Alarm_Time", "Alarm_Repeat", "Description"};
-    public static final String[] REPORT_FORM_COLUMN = {"id", "Report_ID", "Category", "Questions"};
-    public static final String[] NewsFeed_COLUMN = {"id", "News_ID", "Title", "Content", "Category", "ImageURL", "ImagePath", "PubDate"};
-    public static final String[] REPORT_COLUMN = {"id", "Report_ID", "Value", "Date"};
-    public static final String[] COUNTRY_COLUMN = {"id", "serid", "iso3", "name", "code"};
-    public static final String[] LOGS_COLUMN = {"id", "Type", "Task", "Value"};
-    public static final String[] USER_COLUMN = {"id", "SerID", "Full_Name", "Email", "Phone", "Password", "Country", "Picture", "Favorite_Scripture"};
-    public static final String[] QUESTION_LIST_COLUMN = {"id", "SerID", "Category", "Question", "Description", "Mandatory", "Type", "Country", "Created"};
-    public static final String[] QUESTION_ANSWER_COLUMN = {"id", "SerID", "DisciplePhone", "Question_ID", "Answer", "BuildStage"};
-    public static final String[] TESTIMONY_COLUMN = {"id", "SerID", "UserID", "Description", "Status", "PubDate", "UserName"};
-    public static final String[] IMAGE_SYNC_COLUMN = {"id", "FileName", "Param"};
-    public static final String[] CATEGORY_COLUMN = {"id", "SerID", "Name", "Parent", "Status", "Created"};
-    public static final String[] LEARNING_COLUMN = {"id", "SerID", "Title", "Description", "VideoURL", "Country", "IsDefault", "Created"};
-    public static final String[] DISCIPLE_TREE_COLUMN = {"id", "SerID", "UserID", "Count"};
+//    public static final String[] DISCIPLES_COLUMN = {"id", "SerID", "FullName", "DisplayName", "Email", "Phone", "Country", "MentorID", "Stage", "ImageURL", "ImagePath", "Role", "Gender", "Created"};
+//    public static final String[] SCHEDULES_COLUMN = {"id", "Disciple_Phone", "Title", "Alarm_Time", "Alarm_Repeat", "Description"};
+//    public static final String[] REPORT_FORM_COLUMN = {"id", "Report_ID", "Category", "Questions"};
+//    public static final String[] NewsFeed_COLUMN = {"id", "News_ID", "Title", "Content", "Category", "ImageURL", "ImagePath", "PubDate"};
+//    public static final String[] REPORT_COLUMN = {"id", "Report_ID", "Value", "Date"};
+//    public static final String[] COUNTRY_COLUMN = {"id", "serid", "iso3", "name", "code"};
+//    public static final String[] LOGS_COLUMN = {"id", "Type", "Task", "Value"};
+//    public static final String[] USER_COLUMN = {"id", "SerID", "Full_Name", "Email", "Phone", "Password", "Country", "Picture", "Favorite_Scripture"};
+//    public static final String[] QUESTION_LIST_COLUMN = {"id", "SerID", "Category", "Question", "Description", "Mandatory", "Type", "Country", "Created"};
+//    public static final String[] QUESTION_ANSWER_COLUMN = {"id", "SerID", "DisciplePhone", "Question_ID", "Answer", "BuildStage"};
+//    public static final String[] TESTIMONY_COLUMN = {"id", "SerID", "UserID", "Description", "Status", "PubDate", "UserName"};
+//    public static final String[] IMAGE_SYNC_COLUMN = {"id", "FileName", "Param"};
+//    public static final String[] CATEGORY_COLUMN = {"id", "SerID", "Name", "Parent", "Status", "Created"};
+//    public static final String[] LEARNING_COLUMN = {"id", "SerID", "Title", "Description", "VideoURL", "Country", "IsDefault", "Created"};
+//    public static final String[] DISCIPLE_TREE_COLUMN = {"id", "SerID", "UserID", "Count"};
 
+    public enum DisciplesColumn {
+        ID("id"),
+        SERID("SerID"),
+        FULLNAME("FullName"),
+        DISPLAYNAME("DisplayName"),
+        EMAIL("Email"),
+        PHONE("Phone"),
+        COUNTRY("Country"),
+        MENTORID("MentorID"),
+        STAGE("Stage"),
+        IMAGEURL("ImageURL"),
+        IMAGEPATH("ImagePath"),
+        ROLE("Role"),
+        GENDER("Gender"),
+        CREATED("Created");
+
+        private final String name;
+        private DisciplesColumn(String s) { this.name = s; }
+        public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
+        @Override public String toString() { return this.name; }
+    }
+
+    public enum SchedulesColumn {
+        ID("id"),
+        DISCIPLE_PHONE("Disciple_Phone"),
+        TITLE("Title"),
+        ALARM_TIME("Alarm_Time"),
+        ALARM_REPEAT("Alarm_Repeat"),
+        DESCRIPTION("Description");
+
+        private final String name;
+        private SchedulesColumn(String s) { this.name = s; }
+        public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
+        @Override public String toString() { return this.name; }
+    }
+
+    public enum ReportFormColumn {
+        ID("id"),
+        REPORT_ID("Report_ID"),
+        CATEGORY("Category"),
+        QUESTIONS("Questions");
+
+        private final String name;
+        private ReportFormColumn(String s) { this.name = s; }
+        public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
+        @Override public String toString() { return this.name; }
+    }
+
+    public enum NewsfeedColumn {
+        ID("id"),
+        NEWS_ID("News_ID"),
+        TITLE("Title"),
+        CONTENT("Content"),
+        CATEGORY("Category"),
+        IMAGEURL("ImageURL"),
+        IMAGEPATH("ImagePath"),
+        PUBDATE("PubDate");
+
+        private final String name;
+        private NewsfeedColumn(String s) { this.name = s; }
+        public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
+        @Override public String toString() { return this.name; }
+    }
+
+    public enum ReportColumn {
+        ID("id"),
+        REPORT_ID("Report_ID"),
+        VALUE("Value"),
+        DATE("Date");
+
+        private final String name;
+        private ReportColumn(String s) { this.name = s; }
+        public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
+        @Override public String toString() { return this.name; }
+    }
+
+    public enum CountryColumn {
+        ID("id"),
+        SERID("serid"),
+        ISO3("iso3"),
+        NAME("name"),
+        CODE("code");
+
+        private final String name;
+        private CountryColumn(String s) { this.name = s; }
+        public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
+        @Override public String toString() { return this.name; }
+    }
+
+    public enum LogsColumn {
+        ID("id"),
+        TYPE("Type"),
+        TASK("Task"),
+        VALUE("Value");
+
+        private final String name;
+        private LogsColumn(String s) { this.name = s; }
+        public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
+        @Override public String toString() { return this.name; }
+    }
+
+    public enum UserColumn {
+        ID("id"),
+        SERID("SerID"),
+        FULL_NAME("Full_Name"),
+        EMAIL("Email"),
+        PHONE("Phone"),
+        PASSWORD("Password"),
+        COUNTRY("Country"),
+        PICTURE("Picture"),
+        FAVORITE_SCRIPTURE("Favorite_Scripture");
+
+        private final String name;
+        private UserColumn(String s) { this.name = s; }
+        public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
+        @Override public String toString() { return this.name; }
+    }
+
+    public enum QuestionListColumn {
+        ID("id"),
+        SERID("SerID"),
+        CATEGORY("Category"),
+        QUESTION("Question"),
+        DESCRIPTION("Description"),
+        MANDATORY("Mandatory"),
+        TYPE("Type"),
+        COUNTRY("Country"),
+        CREATED("Created");
+
+        private final String name;
+        private QuestionListColumn(String s) { this.name = s; }
+        public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
+        @Override public String toString() { return this.name; }
+    }
+
+    public enum QuestionAnswerColumn {
+        ID("id"),
+        SERID("SerID"),
+        DISCIPLEPHONE("DisciplePhone"),
+        QUESTION_ID("Question_ID"),
+        ANSWER("Answer"),
+        BUILDSTAGE("BuildStage");
+
+        private final String name;
+        private QuestionAnswerColumn(String s) { this.name = s; }
+        public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
+        @Override public String toString() { return this.name; }
+    }
+
+    public enum TestimonyColumn {
+        ID("id"),
+        SERID("SerID"),
+        USERID("UserID"),
+        DESCRIPTION("Description"),
+        STATUS("Status"),
+        PUBDATE("PubDate"),
+        USERNAME("UserName");
+
+        private final String name;
+        private TestimonyColumn(String s) { this.name = s; }
+        public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
+        @Override public String toString() { return this.name; }
+    }
+
+    public enum ImageSyncColumn {
+        ID("id"),
+        FILENAME("FileName"),
+        PARAM("Param");
+
+        private final String name;
+        private ImageSyncColumn(String s) { this.name = s; }
+        public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
+        @Override public String toString() { return this.name; }
+    }
+
+    public enum CategoryColumn {
+        ID("id"),
+        SERID("SerID"),
+        NAME("Name"),
+        PARENT("Parent"),
+        STATUS("Status"),
+        CREATED("Created");
+
+        private final String name;
+        private CategoryColumn(String s) { this.name = s; }
+        public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
+        @Override public String toString() { return this.name; }
+    }
+
+    public enum LearningColumn {
+        ID("id"),
+        SERID("SerID"),
+        TITLE("Title"),
+        DESCRIPTION("Description"),
+        VIDEOURL("VideoURL"),
+        COUNTRY("Country"),
+        ISDEFAULT("IsDefault"),
+        CREATED("Created");
+
+        private final String name;
+        private LearningColumn(String s) { this.name = s; }
+        public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
+        @Override public String toString() { return this.name; }
+    }
+
+    public enum DiscipleTreeColumn {
+        ID("id"),
+        SERID("SerID"),
+        USERID("UserID"),
+        COUNT("Count");
+
+        private final String name;
+        private DiscipleTreeColumn(String s) { this.name = s; }
+        public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
+        @Override public String toString() { return this.name; }
+    }
 
     private SQLiteDatabase myDatabase;
     private SQL_Helper mySQL;
@@ -220,14 +434,15 @@ public class Database {
             for (int i = 0; i < c.getCount(); i++) {
                 c.moveToPosition(i);
                 User dis = new User();
-                dis.setID(Integer.valueOf(c.getString(c.getColumnIndex(USER_COLUMN[0]))));
-                dis.setUser_Name(c.getString(c.getColumnIndex(USER_COLUMN[1])));
-                dis.setUser_Email(c.getString(c.getColumnIndex(USER_COLUMN[2])));
-                dis.setUser_Phone(c.getString(c.getColumnIndex(USER_COLUMN[3])));
-                dis.setUser_Pass(c.getString(c.getColumnIndex(USER_COLUMN[4])));
-                dis.setUser_Country(c.getString(c.getColumnIndex(USER_COLUMN[5])));
-                dis.setUser_Picture(c.getString(c.getColumnIndex(USER_COLUMN[6])));
-                dis.setUser_Favorite_Scripture(c.getString(c.getColumnIndex(USER_COLUMN[7])));
+                dis.setID(Integer.valueOf(c.getString(c.getColumnIndex(UserColumn.ID.toString()))));
+                dis.setSerID(Integer.valueOf(c.getString(c.getColumnIndex(UserColumn.SERID.toString()))));
+                dis.setUser_Name(c.getString(c.getColumnIndex(UserColumn.FULL_NAME.toString())));
+                dis.setUser_Email(c.getString(c.getColumnIndex(UserColumn.EMAIL.toString())));
+                dis.setUser_Phone(c.getString(c.getColumnIndex(UserColumn.PHONE.toString())));
+                dis.setUser_Pass(c.getString(c.getColumnIndex(UserColumn.PASSWORD.toString())));
+                dis.setUser_Country(c.getString(c.getColumnIndex(UserColumn.COUNTRY.toString())));
+                dis.setUser_Picture(c.getString(c.getColumnIndex(UserColumn.PICTURE.toString())));
+                dis.setUser_Favorite_Scripture(c.getString(c.getColumnIndex(UserColumn.FAVORITE_SCRIPTURE.toString())));
                 return dis;
             }
         } catch (Exception e) {
@@ -251,17 +466,17 @@ public class Database {
                 c.moveToFirst();
                 for (int i = 0; i < c.getCount(); i++) {
                     c.moveToPosition(i);
-                    int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(NewsFeed_COLUMN[0])));
+                    int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(NewsfeedColumn.ID.toString())));
                     if (cur_id == id) {
                         News news = new News();
-                        news.setId(Integer.valueOf(c.getString(c.getColumnIndex(NewsFeed_COLUMN[0]))));
-                        news.setSerID(Integer.valueOf(c.getString(c.getColumnIndex(NewsFeed_COLUMN[1]))));
-                        news.setTitle(c.getString(c.getColumnIndex(NewsFeed_COLUMN[2])));
-                        news.setContent(c.getString(c.getColumnIndex(NewsFeed_COLUMN[3])));
-                        news.setCategory(c.getString(c.getColumnIndex(NewsFeed_COLUMN[4])));
-                        news.setImageURL(c.getString(c.getColumnIndex(NewsFeed_COLUMN[5])));
-                        news.setImagePath(c.getString(c.getColumnIndex(NewsFeed_COLUMN[6])));
-                        news.setPubDate(c.getString(c.getColumnIndex(NewsFeed_COLUMN[7])));
+                        news.setId(Integer.valueOf(c.getString(c.getColumnIndex(NewsfeedColumn.ID.toString()))));
+                        news.setSerID(Integer.valueOf(c.getString(c.getColumnIndex(NewsfeedColumn.NEWS_ID.toString()))));
+                        news.setTitle(c.getString(c.getColumnIndex(NewsfeedColumn.TITLE.toString())));
+                        news.setContent(c.getString(c.getColumnIndex(NewsfeedColumn.CONTENT.toString())));
+                        news.setCategory(c.getString(c.getColumnIndex(NewsfeedColumn.CATEGORY.toString())));
+                        news.setImageURL(c.getString(c.getColumnIndex(NewsfeedColumn.IMAGEURL.toString())));
+                        news.setImagePath(c.getString(c.getColumnIndex(NewsfeedColumn.IMAGEPATH.toString())));
+                        news.setPubDate(c.getString(c.getColumnIndex(NewsfeedColumn.PUBDATE.toString())));
                         return news;
                     }
                 }
@@ -284,8 +499,8 @@ public class Database {
                 c.moveToFirst();
                 for (int i = 0; i < c.getCount(); i++) {
                     c.moveToPosition(i);
-                    int ser_id = Integer.valueOf(c.getString(c.getColumnIndex(NewsFeed_COLUMN[1])));
-                    int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(NewsFeed_COLUMN[0])));
+                    int ser_id = Integer.valueOf(c.getString(c.getColumnIndex(NewsfeedColumn.NEWS_ID.toString())));
+                    int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(NewsfeedColumn.ID.toString())));
                     if (ser_id == id) {
                         News news = getNewsByID(cur_id);
                         return news;
@@ -308,7 +523,7 @@ public class Database {
             c.moveToFirst();
             for (int i = 0; i < c.getCount(); i++) {
                 c.moveToPosition(i);
-                int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(NewsFeed_COLUMN[0])));
+                int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(NewsfeedColumn.ID.toString())));
                 News new_news = getNewsByID(cur_id);
                 if (new_news != null) {
                     found.add(new_news);
@@ -338,16 +553,16 @@ public class Database {
                 c.moveToFirst();
                 for (int i = 0; i < c.getCount(); i++) {
                     c.moveToPosition(i);
-                    int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(TESTIMONY_COLUMN[0])));
+                    int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(TestimonyColumn.ID.toString())));
                     if (cur_id == id) {
                         Testimony testimony = new Testimony();
-                        testimony.setID(Integer.valueOf(c.getString(c.getColumnIndex(TESTIMONY_COLUMN[0]))));
-                        testimony.setSerID(Integer.valueOf(c.getString(c.getColumnIndex(TESTIMONY_COLUMN[1]))));
-                        testimony.setUser_ID(Integer.valueOf(c.getString(c.getColumnIndex(TESTIMONY_COLUMN[2]))));
-                        testimony.setContent(c.getString(c.getColumnIndex(TESTIMONY_COLUMN[3])));
-                        testimony.setStatus(Integer.valueOf(c.getString(c.getColumnIndex(TESTIMONY_COLUMN[4]))));
-                        testimony.setPubDate(c.getString(c.getColumnIndex(TESTIMONY_COLUMN[5])));
-                        testimony.setUserName(c.getString(c.getColumnIndex(TESTIMONY_COLUMN[6])));
+                        testimony.setID(Integer.valueOf(c.getString(c.getColumnIndex(TestimonyColumn.ID.toString()))));
+                        testimony.setSerID(Integer.valueOf(c.getString(c.getColumnIndex(TestimonyColumn.SERID.toString()))));
+                        testimony.setUser_ID(Integer.valueOf(c.getString(c.getColumnIndex(TestimonyColumn.USERID.toString()))));
+                        testimony.setContent(c.getString(c.getColumnIndex(TestimonyColumn.DESCRIPTION.toString())));
+                        testimony.setStatus(Integer.valueOf(c.getString(c.getColumnIndex(TestimonyColumn.STATUS.toString()))));
+                        testimony.setPubDate(c.getString(c.getColumnIndex(TestimonyColumn.PUBDATE.toString())));
+                        testimony.setUserName(c.getString(c.getColumnIndex(TestimonyColumn.USERNAME.toString())));
                         return testimony;
                     }
                 }
@@ -370,8 +585,8 @@ public class Database {
                 c.moveToFirst();
                 for (int i = 0; i < c.getCount(); i++) {
                     c.moveToPosition(i);
-                    int ser_id = Integer.valueOf(c.getString(c.getColumnIndex(TESTIMONY_COLUMN[1])));
-                    int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(TESTIMONY_COLUMN[0])));
+                    int ser_id = Integer.valueOf(c.getString(c.getColumnIndex(TestimonyColumn.SERID.toString())));
+                    int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(TestimonyColumn.ID.toString())));
                     if (ser_id == id) {
                         Testimony testimony = getTestimonyByID(cur_id);
                         return testimony;
@@ -394,7 +609,7 @@ public class Database {
             c.moveToFirst();
             for (int i = 0; i < c.getCount(); i++) {
                 c.moveToPosition(i);
-                int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(TESTIMONY_COLUMN[0])));
+                int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(TestimonyColumn.ID.toString())));
                 Testimony newTestimony = getTestimonyByID(cur_id);
                 if (newTestimony != null) {
                     found.add(newTestimony);
@@ -423,23 +638,23 @@ public class Database {
                 c.moveToFirst();
                 for (int i = 0; i < c.getCount(); i++) {
                     c.moveToPosition(i);
-                    int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(DISCIPLES_COLUMN[0])));
+                    int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(DisciplesColumn.ID.toString())));
                     if (cur_id == id) {
                         Disciple disciple = new Disciple();
-                        disciple.setID(Integer.valueOf(c.getString(c.getColumnIndex(DISCIPLES_COLUMN[0]))));
-                        disciple.setSerID(Integer.valueOf(c.getString(c.getColumnIndex(DISCIPLES_COLUMN[1]))));
-                        disciple.setFullName(c.getString(c.getColumnIndex(DISCIPLES_COLUMN[2])));
-                        disciple.setDisplayName(c.getString(c.getColumnIndex(DISCIPLES_COLUMN[3])));
-                        disciple.setEmail(c.getString(c.getColumnIndex(DISCIPLES_COLUMN[4])));
-                        disciple.setPhone(c.getString(c.getColumnIndex(DISCIPLES_COLUMN[5])));
-                        disciple.setCountry(c.getString(c.getColumnIndex(DISCIPLES_COLUMN[6])));
-                        disciple.setMentorID(Integer.valueOf(c.getString(c.getColumnIndex(DISCIPLES_COLUMN[7]))));
-                        disciple.setStage(c.getString(c.getColumnIndex(DISCIPLES_COLUMN[8])));
-                        disciple.setImageURL(c.getString(c.getColumnIndex(DISCIPLES_COLUMN[9])));
-                        disciple.setImagePath(c.getString(c.getColumnIndex(DISCIPLES_COLUMN[10])));
-                        disciple.setRole(c.getString(c.getColumnIndex(DISCIPLES_COLUMN[11])));
-                        disciple.setGender(c.getString(c.getColumnIndex(DISCIPLES_COLUMN[12])));
-                        disciple.setCreated(c.getString(c.getColumnIndex(DISCIPLES_COLUMN[13])));
+                        disciple.setID(Integer.valueOf(c.getString(c.getColumnIndex(DisciplesColumn.ID.toString()))));
+                        disciple.setSerID(Integer.valueOf(c.getString(c.getColumnIndex(DisciplesColumn.SERID.toString()))));
+                        disciple.setFullName(c.getString(c.getColumnIndex(DisciplesColumn.FULLNAME.toString())));
+                        disciple.setDisplayName(c.getString(c.getColumnIndex(DisciplesColumn.DISPLAYNAME.toString())));
+                        disciple.setEmail(c.getString(c.getColumnIndex(DisciplesColumn.EMAIL.toString())));
+                        disciple.setPhone(c.getString(c.getColumnIndex(DisciplesColumn.PHONE.toString())));
+                        disciple.setCountry(c.getString(c.getColumnIndex(DisciplesColumn.COUNTRY.toString())));
+                        disciple.setMentorID(Integer.valueOf(c.getString(c.getColumnIndex(DisciplesColumn.MENTORID.toString()))));
+                        disciple.setStage(c.getString(c.getColumnIndex(DisciplesColumn.STAGE.toString())));
+                        disciple.setImageURL(c.getString(c.getColumnIndex(DisciplesColumn.IMAGEURL.toString())));
+                        disciple.setImagePath(c.getString(c.getColumnIndex(DisciplesColumn.IMAGEPATH.toString())));
+                        disciple.setRole(c.getString(c.getColumnIndex(DisciplesColumn.ROLE.toString())));
+                        disciple.setGender(c.getString(c.getColumnIndex(DisciplesColumn.GENDER.toString())));
+                        disciple.setCreated(c.getString(c.getColumnIndex(DisciplesColumn.CREATED.toString())));
                         return disciple;
                     }
                 }
@@ -462,8 +677,8 @@ public class Database {
                 c.moveToFirst();
                 for (int i = 0; i < c.getCount(); i++) {
                     c.moveToPosition(i);
-                    int ser_id = Integer.valueOf(c.getString(c.getColumnIndex(DISCIPLES_COLUMN[1])));
-                    int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(DISCIPLES_COLUMN[0])));
+                    int ser_id = Integer.valueOf(c.getString(c.getColumnIndex(DisciplesColumn.SERID.toString())));
+                    int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(DisciplesColumn.ID.toString())));
                     if (ser_id == id) {
                         Disciple disciple = getDiscipleByID(cur_id);
                         return disciple;
@@ -486,8 +701,8 @@ public class Database {
                 c.moveToFirst();
                 for (int i = 0; i < c.getCount(); i++) {
                     c.moveToPosition(i);
-                    String phone_num = c.getString(c.getColumnIndex(DISCIPLES_COLUMN[5]));
-                    int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(DISCIPLES_COLUMN[0])));
+                    String phone_num = c.getString(c.getColumnIndex(DisciplesColumn.PHONE.toString()));
+                    int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(DisciplesColumn.ID.toString())));
                     if (phone_num.equals(phone)) {
                         Disciple disciple = getDiscipleByID(cur_id);
                         return disciple;
@@ -510,7 +725,7 @@ public class Database {
             c.moveToFirst();
             for (int i = 0; i < c.getCount(); i++) {
                 c.moveToPosition(i);
-                int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(DISCIPLES_COLUMN[0])));
+                int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(DisciplesColumn.ID.toString())));
                 Disciple disciple = getDiscipleByID(cur_id);
                 if (disciple != null) {
                     found.add(disciple);
@@ -542,11 +757,14 @@ public class Database {
             cv.put(Database.DISCIPLES_FIELDS[11], disciple.getGender());
             cv.put(Database.DISCIPLES_FIELDS[12], disciple.getCreated());
             if (disciple.getID() > 0) {
-                long x = DeepLife.myDATABASE.update(DB_Table, cv, disciple.getID());
+//                long x = DeepLife.myDATABASE.update(DB_Table, cv, disciple.getID()); // briggsm: pretty sure we don't need "DeepLife.myDATABASE." here.
+                long x = update(DB_Table, cv, disciple.getID());
                 return x;
             } else {
-                int id = DeepLife.myDATABASE.getDiscipleByPhone(disciple.getPhone()).getID();
-                long x = DeepLife.myDATABASE.update(DB_Table, cv, id);
+//                int id = DeepLife.myDATABASE.getDiscipleByPhone(disciple.getPhone()).getID(); // briggsm: pretty sure we don't need "DeepLife.myDATABASE." here.
+//                long x = DeepLife.myDATABASE.update(DB_Table, cv, id);
+                int id = getDiscipleByPhone(disciple.getPhone()).getID();
+                long x = update(DB_Table, cv, id);
                 return x;
 
             }
@@ -571,15 +789,15 @@ public class Database {
                 c.moveToFirst();
                 for (int i = 0; i < c.getCount(); i++) {
                     c.moveToPosition(i);
-                    int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(CATEGORY_COLUMN[0])));
-                    Log.i(TAG, "--> Get Category by SerID: " + c.getColumnIndex(CATEGORY_COLUMN[1]) + ", " + c.getColumnIndex(CATEGORY_COLUMN[2]));
+                    int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(CategoryColumn.ID.toString())));
+                    Log.i(TAG, "--> Get Category by SerID: " + c.getColumnIndex(CategoryColumn.SERID.toString()) + ", " + c.getColumnIndex(CategoryColumn.NAME.toString()));
                     if (cur_id == id) {
                         Category category = new Category();
-                        category.setID(Integer.valueOf(c.getString(c.getColumnIndex(CATEGORY_COLUMN[0]))));
-                        category.setSerID(Integer.valueOf(c.getString(c.getColumnIndex(CATEGORY_COLUMN[1]))));
-                        category.setName(c.getString(c.getColumnIndex(CATEGORY_COLUMN[2])));
-                        category.setParent(Integer.valueOf(c.getString(c.getColumnIndex(CATEGORY_COLUMN[3]))));
-                        category.setStatus(Integer.valueOf(c.getString(c.getColumnIndex(CATEGORY_COLUMN[4]))));
+                        category.setID(Integer.valueOf(c.getString(c.getColumnIndex(CategoryColumn.ID.toString()))));
+                        category.setSerID(Integer.valueOf(c.getString(c.getColumnIndex(CategoryColumn.SERID.toString()))));
+                        category.setName(c.getString(c.getColumnIndex(CategoryColumn.NAME.toString())));
+                        category.setParent(Integer.valueOf(c.getString(c.getColumnIndex(CategoryColumn.PARENT.toString()))));
+                        category.setStatus(Integer.valueOf(c.getString(c.getColumnIndex(CategoryColumn.STATUS.toString()))));
                         return category;
                     }
                 }
@@ -601,8 +819,8 @@ public class Database {
                 c.moveToFirst();
                 for (int i = 0; i < c.getCount(); i++) {
                     c.moveToPosition(i);
-                    int ser_id = Integer.valueOf(c.getString(c.getColumnIndex(CATEGORY_COLUMN[1])));
-                    int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(CATEGORY_COLUMN[0])));
+                    int ser_id = Integer.valueOf(c.getString(c.getColumnIndex(CategoryColumn.SERID.toString())));
+                    int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(CategoryColumn.ID.toString())));
                     if (ser_id == id) {
                         Category category = getCategoryByID(cur_id);
                         return category;
@@ -625,8 +843,8 @@ public class Database {
                 c.moveToFirst();
                 for (int i = 0; i < c.getCount(); i++) {
                     c.moveToPosition(i);
-                    int par_id = Integer.valueOf(c.getString(c.getColumnIndex(CATEGORY_COLUMN[3])));
-                    int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(CATEGORY_COLUMN[0])));
+                    int par_id = Integer.valueOf(c.getString(c.getColumnIndex(CategoryColumn.PARENT.toString())));
+                    int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(CategoryColumn.ID.toString())));
                     if (par_id == id) {
                         Category category = getCategoryByID(cur_id);
                         return category;
@@ -650,8 +868,8 @@ public class Database {
                 c.moveToFirst();
                 for (int i = 0; i < c.getCount(); i++) {
                     c.moveToPosition(i);
-                    int par_id = Integer.valueOf(c.getString(c.getColumnIndex(CATEGORY_COLUMN[3])));
-                    int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(CATEGORY_COLUMN[0])));
+                    int par_id = Integer.valueOf(c.getString(c.getColumnIndex(CategoryColumn.PARENT.toString())));
+                    int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(CategoryColumn.ID.toString())));
                     if (par_id == id) {
                         Category category = getCategoryByID(cur_id);
                         if (category != null) {
@@ -676,7 +894,7 @@ public class Database {
             c.moveToFirst();
             for (int i = 0; i < c.getCount(); i++) {
                 c.moveToPosition(i);
-                int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(CATEGORY_COLUMN[0])));
+                int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(CategoryColumn.ID.toString())));
                 Category category = getCategoryByID(cur_id);
                 if (category != null && category.getID() == 0) {
                     found.add(category);
@@ -707,18 +925,18 @@ public class Database {
                 c.moveToFirst();
                 for (int i = 0; i < c.getCount(); i++) {
                     c.moveToPosition(i);
-                    int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(QUESTION_LIST_COLUMN[0])));
+                    int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(QuestionListColumn.ID.toString())));
                     if (cur_id == id) {
                         WbsQuestion wbsQuestion = new WbsQuestion();
-                        wbsQuestion.setID(Integer.valueOf(c.getString(c.getColumnIndex(QUESTION_LIST_COLUMN[0]))));
-                        wbsQuestion.setSerID(Integer.valueOf(c.getString(c.getColumnIndex(QUESTION_LIST_COLUMN[1]))));
-                        wbsQuestion.setCategory(Integer.valueOf(c.getString(c.getColumnIndex(QUESTION_LIST_COLUMN[2]))));
-                        wbsQuestion.setQuestion(c.getString(c.getColumnIndex(QUESTION_LIST_COLUMN[3])));
-                        wbsQuestion.setDescription(c.getString(c.getColumnIndex(QUESTION_LIST_COLUMN[4])));
-                        wbsQuestion.setMandatory(Integer.valueOf(c.getString(c.getColumnIndex(QUESTION_LIST_COLUMN[5]))));
-                        wbsQuestion.setType(c.getString(c.getColumnIndex(QUESTION_LIST_COLUMN[6])).equalsIgnoreCase("YESNO") ? WbsQuestion.Type.YESNO : WbsQuestion.Type.NUMBER);
-                        wbsQuestion.setCountry(Integer.valueOf(c.getString(c.getColumnIndex(QUESTION_LIST_COLUMN[7]))));
-                        wbsQuestion.setCreated(c.getString(c.getColumnIndex(QUESTION_LIST_COLUMN[8])));
+                        wbsQuestion.setID(Integer.valueOf(c.getString(c.getColumnIndex(QuestionListColumn.ID.toString()))));
+                        wbsQuestion.setSerID(Integer.valueOf(c.getString(c.getColumnIndex(QuestionListColumn.SERID.toString()))));
+                        wbsQuestion.setCategory(Integer.valueOf(c.getString(c.getColumnIndex(QuestionListColumn.CATEGORY.toString()))));
+                        wbsQuestion.setQuestion(c.getString(c.getColumnIndex(QuestionListColumn.QUESTION.toString())));
+                        wbsQuestion.setDescription(c.getString(c.getColumnIndex(QuestionListColumn.DESCRIPTION.toString())));
+                        wbsQuestion.setMandatory(Integer.valueOf(c.getString(c.getColumnIndex(QuestionListColumn.MANDATORY.toString()))));
+                        wbsQuestion.setType(c.getString(c.getColumnIndex(QuestionListColumn.TYPE.toString())).equalsIgnoreCase("YESNO") ? WbsQuestion.Type.YESNO : WbsQuestion.Type.NUMBER);
+                        wbsQuestion.setCountry(Integer.valueOf(c.getString(c.getColumnIndex(QuestionListColumn.COUNTRY.toString()))));
+                        wbsQuestion.setCreated(c.getString(c.getColumnIndex(QuestionListColumn.CREATED.toString())));
                         return wbsQuestion;
                     }
                 }
@@ -740,8 +958,8 @@ public class Database {
                 c.moveToFirst();
                 for (int i = 0; i < c.getCount(); i++) {
                     c.moveToPosition(i);
-                    int ser_id = Integer.valueOf(c.getString(c.getColumnIndex(QUESTION_LIST_COLUMN[1])));
-                    int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(QUESTION_LIST_COLUMN[0])));
+                    int ser_id = Integer.valueOf(c.getString(c.getColumnIndex(QuestionListColumn.SERID.toString())));
+                    int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(QuestionListColumn.ID.toString())));
                     if (ser_id == id) {
                         WbsQuestion wbsQuestion = getWinBuildSendQuestionByID(cur_id);
                         return wbsQuestion;
@@ -764,8 +982,8 @@ public class Database {
             c.moveToFirst();
             for (int i = 0; i < c.getCount(); i++) {
                 c.moveToPosition(i);
-                int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(QUESTION_LIST_COLUMN[0])));
-                int cat_id = Integer.valueOf(c.getString(c.getColumnIndex(QUESTION_LIST_COLUMN[2])));
+                int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(QuestionListColumn.ID.toString())));
+                int cat_id = Integer.valueOf(c.getString(c.getColumnIndex(QuestionListColumn.CATEGORY.toString())));
                 if (cat_id == categoryID) {
                     WbsQuestion wbsQuestion = getWinBuildSendQuestionByID(cur_id);
                     if (wbsQuestion != null) {
@@ -809,15 +1027,15 @@ public class Database {
                 c.moveToFirst();
                 for (int i = 0; i < c.getCount(); i++) {
                     c.moveToPosition(i);
-                    int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(QUESTION_ANSWER_COLUMN[0])));
+                    int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(QuestionAnswerColumn.ID.toString())));
                     if (cur_id == id) {
                         Answer answer = new Answer();
-                        answer.setID(Integer.valueOf(c.getString(c.getColumnIndex(QUESTION_ANSWER_COLUMN[0]))));
-                        answer.setSerID(Integer.valueOf(c.getString(c.getColumnIndex(QUESTION_ANSWER_COLUMN[1]))));
-                        answer.setDisciplePhone(c.getString(c.getColumnIndex(QUESTION_ANSWER_COLUMN[2])));
-                        answer.setQuestionID(Integer.valueOf(c.getString(c.getColumnIndex(QUESTION_ANSWER_COLUMN[3]))));
-                        answer.setAnswer(c.getString(c.getColumnIndex(QUESTION_ANSWER_COLUMN[4])));
-                        answer.setBuildStage(c.getString(c.getColumnIndex(QUESTION_ANSWER_COLUMN[5])));
+                        answer.setID(Integer.valueOf(c.getString(c.getColumnIndex(QuestionAnswerColumn.ID.toString()))));
+                        answer.setSerID(Integer.valueOf(c.getString(c.getColumnIndex(QuestionAnswerColumn.SERID.toString()))));
+                        answer.setDisciplePhone(c.getString(c.getColumnIndex(QuestionAnswerColumn.DISCIPLEPHONE.toString())));
+                        answer.setQuestionID(Integer.valueOf(c.getString(c.getColumnIndex(QuestionAnswerColumn.QUESTION_ID.toString()))));
+                        answer.setAnswer(c.getString(c.getColumnIndex(QuestionAnswerColumn.ANSWER.toString())));
+                        answer.setBuildStage(c.getString(c.getColumnIndex(QuestionAnswerColumn.BUILDSTAGE.toString())));
                         return answer;
                     }
                 }
@@ -830,6 +1048,7 @@ public class Database {
     }
 
     public Answer getAnswerBySerID(int id) {
+        // briggsm:  This function seems to be implemented wrong - it's not even looking at "SerID".
         Log.i(TAG, "Get getAnswerBySerID by ServerID: ");
         String DB_Table = Table_QUESTION_ANSWER;
         try {
@@ -838,8 +1057,8 @@ public class Database {
                 c.moveToFirst();
                 for (int i = 0; i < c.getCount(); i++) {
                     c.moveToPosition(i);
-                    int qst_id = Integer.valueOf(c.getString(c.getColumnIndex(QUESTION_ANSWER_COLUMN[2])));
-                    int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(QUESTION_ANSWER_COLUMN[0])));
+                    int qst_id = Integer.valueOf(c.getString(c.getColumnIndex(QuestionAnswerColumn.QUESTION_ID.toString())));
+                    int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(QuestionAnswerColumn.ID.toString())));
                     if (qst_id == id) {
                         Answer answer = getAnswerByID(cur_id);
                         return answer;
@@ -862,8 +1081,8 @@ public class Database {
                 c.moveToFirst();
                 for (int i = 0; i < c.getCount(); i++) {
                     c.moveToPosition(i);
-                    int qst_id = Integer.valueOf(c.getString(c.getColumnIndex(QUESTION_ANSWER_COLUMN[3])));
-                    int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(QUESTION_ANSWER_COLUMN[0])));
+                    int qst_id = Integer.valueOf(c.getString(c.getColumnIndex(QuestionAnswerColumn.QUESTION_ID.toString())));
+                    int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(QuestionAnswerColumn.ID.toString())));
                     if (qst_id == id) {
                         Answer answer = getAnswerByID(cur_id);
                         return answer;
@@ -886,9 +1105,9 @@ public class Database {
                 c.moveToFirst();
                 for (int i = 0; i < c.getCount(); i++) {
                     c.moveToPosition(i);
-                    int qst_id = Integer.valueOf(c.getString(c.getColumnIndex(QUESTION_ANSWER_COLUMN[3])));
-                    int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(QUESTION_ANSWER_COLUMN[0])));
-                    String dis_ph = c.getString(c.getColumnIndex(QUESTION_ANSWER_COLUMN[2]));
+                    int qst_id = Integer.valueOf(c.getString(c.getColumnIndex(QuestionAnswerColumn.QUESTION_ID.toString())));
+                    int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(QuestionAnswerColumn.ID.toString())));
+                    String dis_ph = c.getString(c.getColumnIndex(QuestionAnswerColumn.DISCIPLEPHONE.toString()));
                     if (qst_id == questionID && disciplePhone.equals(dis_ph)) {
                         Answer answer = getAnswerByID(cur_id);
                         return answer;
@@ -912,9 +1131,13 @@ public class Database {
             cv.put(Database.QUESTION_ANSWER_FIELDS[2], answer.getQuestionID());
             cv.put(Database.QUESTION_ANSWER_FIELDS[3], answer.getAnswer());
             cv.put(Database.QUESTION_ANSWER_FIELDS[4], answer.getBuildStage());
-            int id = DeepLife.myDATABASE.getAnswerByQuestionIDandDisciplePhone(answer.getQuestionID(), answer.getDisciplePhone()).getID();
-            long x = DeepLife.myDATABASE.update(DB_Table, cv, id);
+//            int id = DeepLife.myDATABASE.getAnswerByQuestionIDandDisciplePhone(answer.getQuestionID(), answer.getDisciplePhone()).getID(); // briggsm: pretty sure we don't need "DeepLife.myDATABASE." here.
+//            long x = DeepLife.myDATABASE.update(DB_Table, cv, id);
+            int id = getAnswerByQuestionIDandDisciplePhone(answer.getQuestionID(), answer.getDisciplePhone()).getID();
+            long x = update(DB_Table, cv, id);
+
             return x;
+
         } catch (Exception e) {
             Log.i(TAG, "Failed UPDATE updateAnswer: " + e.toString());
             return 0;
@@ -945,7 +1168,8 @@ public class Database {
             cv.put(Database.QUESTION_ANSWER_FIELDS[4], answer.getBuildStage());
             Answer oldAnswer1 = getAnswerBySerID(answer.getSerID());
             if (oldAnswer1 == null) {
-                long x = DeepLife.myDATABASE.insert(DB_Table, cv);
+//                long x = DeepLife.myDATABASE.insert(DB_Table, cv);  // briggsm: pretty sure we don't need "DeepLife.myDATABASE." here.
+                long x = insert(DB_Table, cv);
                 return x;
             }
             return 0;
@@ -971,14 +1195,14 @@ public class Database {
                 c.moveToFirst();
                 for (int i = 0; i < c.getCount(); i++) {
                     c.moveToPosition(i);
-                    int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(COUNTRY_COLUMN[0])));
+                    int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(CountryColumn.ID.toString())));
                     if (cur_id == id) {
                         Country country = new Country();
-                        country.setID(Integer.valueOf(c.getString(c.getColumnIndex(COUNTRY_COLUMN[0]))));
-                        country.setSerID(Integer.valueOf(c.getString(c.getColumnIndex(COUNTRY_COLUMN[1]))));
-                        country.setISO3(c.getString(c.getColumnIndex(COUNTRY_COLUMN[2])));
-                        country.setName(c.getString(c.getColumnIndex(COUNTRY_COLUMN[3])));
-                        country.setCode(Integer.valueOf(c.getString(c.getColumnIndex(COUNTRY_COLUMN[4]))));
+                        country.setID(Integer.valueOf(c.getString(c.getColumnIndex(CountryColumn.ID.toString()))));
+                        country.setSerID(Integer.valueOf(c.getString(c.getColumnIndex(CountryColumn.SERID.toString()))));
+                        country.setISO3(c.getString(c.getColumnIndex(CountryColumn.ISO3.toString())));
+                        country.setName(c.getString(c.getColumnIndex(CountryColumn.NAME.toString())));
+                        country.setCode(Integer.valueOf(c.getString(c.getColumnIndex(CountryColumn.CODE.toString()))));
                         return country;
                     }
                 }
@@ -1000,8 +1224,8 @@ public class Database {
                 c.moveToFirst();
                 for (int i = 0; i < c.getCount(); i++) {
                     c.moveToPosition(i);
-                    int ser_id = Integer.valueOf(c.getString(c.getColumnIndex(COUNTRY_COLUMN[1])));
-                    int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(COUNTRY_COLUMN[0])));
+                    int ser_id = Integer.valueOf(c.getString(c.getColumnIndex(CountryColumn.SERID.toString())));
+                    int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(CountryColumn.ID.toString())));
                     if (ser_id == id) {
                         Country country = getCountryByID(cur_id);
                         return country;
@@ -1024,7 +1248,7 @@ public class Database {
             c.moveToFirst();
             for (int i = 0; i < c.getCount(); i++) {
                 c.moveToPosition(i);
-                int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(COUNTRY_COLUMN[0])));
+                int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(CountryColumn.ID.toString())));
                 Country country = getCountryByID(cur_id);
                 if (country != null) {
                     found.add(country);
@@ -1039,22 +1263,27 @@ public class Database {
 
     public ArrayList<Logs> getSendLogs() {
         Log.i(TAG, "SendLogs:\n");
-        ArrayList<Logs> Found = new ArrayList<Logs>();
+        String DB_Table = Table_LOGS;
+        ArrayList<Logs> Found = new ArrayList<>();
+
         try {
-            Cursor c = myDatabase.query(Table_LOGS, LOGS_COLUMN, null, null, null, null, null);
+            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
             if (c != null && c.getCount() > 0) {
                 c.moveToFirst();
                 for (int i = 0; i < c.getCount(); i++) {
                     c.moveToPosition(i);
-                    String Log_Task = c.getString(c.getColumnIndex(LOGS_COLUMN[2]));
-                    Log.i(TAG, "Comparing-> \n" + SyncService.SyncTask.SEND_LOG + " | " + Log_Task);
-                    if (SyncService.SyncTask.SEND_LOG.equalsName(Log_Task)) {
-                        Log.i(TAG, "SendLogs Count:-> " + c.getCount());
+                    String Log_Task = c.getString(c.getColumnIndex(LogsColumn.TASK.toString()));
+                    Log.i(TAG, "Comparing-> \n" + Logs.Task.SEND_LOG + " | " + Log_Task);
+                    if (Logs.Task.SEND_LOG.equalsName(Log_Task)) {
+                        Log.i(TAG, "SendLogs Count:-> " + c.getCount());  // briggsm: think this is wrong. 'c' might have 10 rows, but only 2 of them SendLogs. This would return 10. Right?
                         Logs newLogs = new Logs();
-                        newLogs.setID(Integer.valueOf(c.getString(c.getColumnIndex(LOGS_COLUMN[0]))));
-                        newLogs.setType(c.getString(c.getColumnIndex(LOGS_COLUMN[1])));
-                        newLogs.setTask(c.getString(c.getColumnIndex(LOGS_COLUMN[2])));
-                        newLogs.setValue(c.getString(c.getColumnIndex(LOGS_COLUMN[3])));
+                        newLogs.setID(Integer.valueOf(c.getString(c.getColumnIndex(LogsColumn.ID.toString()))));
+//                        newLogs.setType(c.getString(c.getColumnIndex(LogsColumn.TYPE.toString())));
+//                        newLogs.setTask(c.getString(c.getColumnIndex(LogsColumn.TASK.toString())));
+                        newLogs.setType(Logs.Type.fromString(c.getString(c.getColumnIndex(LogsColumn.TYPE.toString()))));
+                        newLogs.setTask(Logs.Task.fromString(c.getString(c.getColumnIndex(LogsColumn.TASK.toString()))));
+
+                        newLogs.setValue(c.getString(c.getColumnIndex(LogsColumn.VALUE.toString())));
                         Log.i(TAG, "Found for SendLogs:-> \n" + newLogs.toString());
                         Found.add(newLogs);
                     }
@@ -1066,7 +1295,59 @@ public class Database {
             return null;
         }
         return Found;
+
+
+        /*
+        // briggsm: !!! Add a loop here, right? !!! Probably, shouldn't do it this way actually. Need to return ALL logs at once.
+        Cursor c = getLogsCursorAtCorrectPosition(SyncService.Task.SEND_LOG);
+        if (c != null) {
+            Log.i(TAG, "getSendLogs: Found at least 1 SEND_LOG");
+            Logs newLogs = new Logs();
+            newLogs.setID(Integer.valueOf(c.getString(c.getColumnIndex(LogsColumn.ID.toString()))));
+            newLogs.setType(c.getString(c.getColumnIndex(LogsColumn.TYPE.toString())));
+            newLogs.setTask(c.getString(c.getColumnIndex(LogsColumn.TASK.toString())));
+            newLogs.setValue(c.getString(c.getColumnIndex(LogsColumn.VALUE.toString())));
+            Log.i(TAG, "Found for SendLogs:-> \n" + newLogs.toString());
+            Found.add(newLogs);
+        }
+        return Found;
+        */
     }
+
+    // private ok???
+    //public
+
+    /*
+    // private ok???
+    public Cursor getLogsCursorAtCorrectPosition(SyncService.Task logTask) {
+        // Return null if Log doesn't exist,
+        // Otherwise return a cursor object which already points at correct row.
+        // Note: If there more than one matching row, then only the first one is returned
+        //      so, this function should probably be called by a loop.
+        Log.i(TAG, "getLogsCursorAtCorrectPosition: ");
+        String DB_Table = Table_LOGS;
+
+        //ArrayList<Logs> Found = new ArrayList<Logs>();
+        try {
+            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
+            if (c != null && c.getCount() > 0) {
+                c.moveToFirst();
+                for (int i = 0; i < c.getCount(); i++) {
+                    c.moveToPosition(i);
+                    String Log_Task = c.getString(c.getColumnIndex(LogsColumn.TASK.toString()));
+                    Log.i(TAG, "Comparing-> \n" + logTask + " | " + Log_Task);
+                    if (logTask.equalsName(Log_Task)) {
+                        return c;
+                    }
+                }
+            }
+        } catch (Exception e) {
+            Log.i(TAG, "Failed getLogsCursorAtCorrecPosition: " + e.toString());
+            return null;
+        }
+        return null;
+    }
+    */
 
     public ImageSync getTopImageSync() {
         String DB_Table = Table_IMAGE_SYNC;
@@ -1076,9 +1357,9 @@ public class Database {
             if (c.getCount() > 0) {
                 c.moveToPosition(c.getCount() - 1);
                 ImageSync dis = new ImageSync();
-                dis.setId(c.getString(c.getColumnIndex(IMAGE_SYNC_COLUMN[0])));
-                dis.setFilePath(c.getString(c.getColumnIndex(IMAGE_SYNC_COLUMN[1])));
-                dis.setParam(c.getString(c.getColumnIndex(IMAGE_SYNC_COLUMN[2])));
+                dis.setId(c.getString(c.getColumnIndex(ImageSyncColumn.ID.toString())));
+                dis.setFilePath(c.getString(c.getColumnIndex(ImageSyncColumn.FILENAME.toString())));
+                dis.setParam(c.getString(c.getColumnIndex(ImageSyncColumn.PARAM.toString())));
                 return dis;
             } else {
                 return null;
@@ -1091,18 +1372,19 @@ public class Database {
 
     public ArrayList<Disciple> getSendDisciples() {
         Log.i(TAG, "getSendDisciples:\n");
+        String DB_Table = Table_LOGS;
         ArrayList<Disciple> Found = new ArrayList<Disciple>();
         try {
-            Cursor c = myDatabase.query(Table_LOGS, LOGS_COLUMN, null, null, null, null, null);
+            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
             if (c != null && c.getCount() > 0) {
                 c.moveToFirst();
                 for (int i = 0; i < c.getCount(); i++) {
                     c.moveToPosition(i);
-                    String Log_Task = c.getString(c.getColumnIndex(LOGS_COLUMN[2]));
-                    String Log_Value = c.getString(c.getColumnIndex(LOGS_COLUMN[3]));
-                    int Log_ID = Integer.valueOf(c.getString(c.getColumnIndex(LOGS_COLUMN[0])));
-                    Log.i(TAG, "Comparing-> \n" + SyncService.SyncTask.SEND_DISCIPLES + " | " + Log_Task);
-                    if (SyncService.SyncTask.SEND_DISCIPLES.equalsName(Log_Task)) {
+                    String Log_Task = c.getString(c.getColumnIndex(LogsColumn.TASK.toString()));
+                    String Log_Value = c.getString(c.getColumnIndex(LogsColumn.VALUE.toString()));
+                    int Log_ID = Integer.valueOf(c.getString(c.getColumnIndex(LogsColumn.ID.toString())));
+                    Log.i(TAG, "Comparing-> \n" + Logs.Task.SEND_DISCIPLES + " | " + Log_Task);
+                    if (Logs.Task.SEND_DISCIPLES.equalsName(Log_Task)) {
                         Log.i(TAG, "SendDisciples Count:-> " + c.getCount());
                         Disciple sendDisciple = getDiscipleByPhone(Log_Value);
                         if (sendDisciple != null) {
@@ -1122,22 +1404,23 @@ public class Database {
 
     public ArrayList<Disciple> getUpdateDisciples() {
         Log.i(TAG, "getUpdateDisciples:\n");
+        String DB_Table = Table_LOGS;
         ArrayList<Disciple> Found = new ArrayList<Disciple>();
         try {
-            Cursor c = myDatabase.query(Table_LOGS, LOGS_COLUMN, null, null, null, null, null);
+            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
             if (c != null && c.getCount() > 0) {
                 c.moveToFirst();
                 for (int i = 0; i < c.getCount(); i++) {
                     c.moveToPosition(i);
-                    int ID = Integer.valueOf(c.getString(c.getColumnIndex(LOGS_COLUMN[0])));
-                    String Log_Task = c.getString(c.getColumnIndex(LOGS_COLUMN[2]));
-                    String Task_Value = c.getString(c.getColumnIndex(LOGS_COLUMN[3]));
-                    Log.i(TAG, "Comparing-> \n" + SyncService.SyncTask.UPDATE_DISCIPLE + " | " + Log_Task);
-                    if (SyncService.SyncTask.UPDATE_DISCIPLE.equalsName(Log_Task)) {
+                    int Log_ID = Integer.valueOf(c.getString(c.getColumnIndex(LogsColumn.ID.toString())));
+                    String Log_Task = c.getString(c.getColumnIndex(LogsColumn.TASK.toString()));
+                    String Task_Value = c.getString(c.getColumnIndex(LogsColumn.VALUE.toString()));
+                    Log.i(TAG, "Comparing-> \n" + Logs.Task.UPDATE_DISCIPLE + " | " + Log_Task);
+                    if (Logs.Task.UPDATE_DISCIPLE.equalsName(Log_Task)) {
                         Log.i(TAG, "UpdateDisciples Count:-> " + c.getCount());
                         Disciple updateDisciple = getDiscipleByPhone(Task_Value);
                         if (updateDisciple != null) {
-                            updateDisciple.setID(ID);
+                            updateDisciple.setID(Log_ID);
                             Found.add(updateDisciple);
                         }
                     }
@@ -1151,22 +1434,24 @@ public class Database {
 
     public ArrayList<Testimony> getSendTestimony() {
         Log.i(TAG, "getSendTestimony:\n");
+        String DB_Table = Table_LOGS;
         ArrayList<Testimony> Found = new ArrayList<Testimony>();
         try {
-            Cursor c = myDatabase.query(Table_LOGS, LOGS_COLUMN, null, null, null, null, null);
+            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
             if (c != null && c.getCount() > 0) {
                 c.moveToFirst();
                 for (int i = 0; i < c.getCount(); i++) {
                     c.moveToPosition(i);
-                    String str = c.getString(c.getColumnIndex(LOGS_COLUMN[2]));
-                    int id = Integer.valueOf(c.getString(c.getColumnIndex(LOGS_COLUMN[3])));
-                    int ID = Integer.valueOf(c.getString(c.getColumnIndex(LOGS_COLUMN[0])));
-                    Log.i(TAG, "Comparing-> \n" + SyncService.SyncTask.SEND_TESTIMONY + " | " + str);
-                    if (SyncService.SyncTask.SEND_TESTIMONY.equals(str)) {
+                    int Log_ID = Integer.valueOf(c.getString(c.getColumnIndex(LogsColumn.ID.toString())));
+                    String Log_Task = c.getString(c.getColumnIndex(LogsColumn.TASK.toString()));
+                    int Task_Value = Integer.valueOf(c.getString(c.getColumnIndex(LogsColumn.VALUE.toString())));
+
+                    Log.i(TAG, "Comparing-> \n" + Logs.Task.SEND_TESTIMONY + " | " + Log_Task);
+                    if (Logs.Task.SEND_TESTIMONY.equals(Log_Task)) {
                         Log.i(TAG, "SendTestimony Count:-> " + c.getCount());
-                        Testimony newTestimony = getTestimonyByID(id);
+                        Testimony newTestimony = getTestimonyByID(Task_Value);
                         if (newTestimony != null) {
-                            newTestimony.setID(ID);
+                            newTestimony.setID(Log_ID);
                             Log.i(TAG, "Found for Testimony Send:-> \n" + newTestimony.toString());
                             Found.add(newTestimony);
                         }
@@ -1181,22 +1466,23 @@ public class Database {
 
     public ArrayList<Answer> getSendAnswers() {
         Log.i(TAG, "getSendAnswers:\n");
+        String DB_Table = Table_LOGS;
         ArrayList<Answer> Found = new ArrayList<Answer>();
         try {
-            Cursor c = myDatabase.query(Table_LOGS, LOGS_COLUMN, null, null, null, null, null);
+            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
             if (c != null && c.getCount() > 0) {
                 c.moveToFirst();
                 for (int i = 0; i < c.getCount(); i++) {
                     c.moveToPosition(i);
-                    String Task_Name = c.getString(c.getColumnIndex(LOGS_COLUMN[2]));
-                    int AnswerID = Integer.valueOf(c.getString(c.getColumnIndex(LOGS_COLUMN[3])));
-                    int LogID = Integer.valueOf(c.getString(c.getColumnIndex(LOGS_COLUMN[0])));
-                    Log.i(TAG, "Comparing-> \n" + SyncService.SyncTask.SEND_TESTIMONY + " | " + Task_Name);
-                    if (SyncService.SyncTask.SEND_TESTIMONY.equalsName(Task_Name)) {
+                    String Log_Task = c.getString(c.getColumnIndex(LogsColumn.TASK.toString()));
+                    int Task_Value = Integer.valueOf(c.getString(c.getColumnIndex(LogsColumn.VALUE.toString())));
+                    int Log_ID = Integer.valueOf(c.getString(c.getColumnIndex(LogsColumn.ID.toString())));
+                    Log.i(TAG, "Comparing-> \n" + Logs.Task.SEND_TESTIMONY + " | " + Log_Task);
+                    if (Logs.Task.SEND_TESTIMONY.equalsName(Log_Task)) {
                         Log.i(TAG, "SendAnswer Count:-> " + c.getCount());
-                        Answer sendAnswer = getAnswerByID(AnswerID);
+                        Answer sendAnswer = getAnswerByID(Task_Value);
                         if (sendAnswer != null) {
-                            sendAnswer.setID(LogID);
+                            sendAnswer.setID(Log_ID);
                             Log.i(TAG, "Found for SendAnswer Send:-> \n" + sendAnswer.toString());
                             Found.add(sendAnswer);
                         }
@@ -1212,18 +1498,19 @@ public class Database {
 
     public ArrayList<Schedule> getSendSchedules() {
         Log.i(TAG, "SendSchedules:\n");
+        String DB_Table = Table_LOGS;
         ArrayList<Schedule> Found = new ArrayList<Schedule>();
         try {
-            Cursor c = myDatabase.query(Table_LOGS, LOGS_COLUMN, null, null, null, null, null);
+            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
             if (c != null && c.getCount() > 0) {
                 c.moveToFirst();
                 for (int i = 0; i < c.getCount(); i++) {
                     c.moveToPosition(i);
-                    String str = c.getString(c.getColumnIndex(LOGS_COLUMN[2]));
-                    String id = c.getString(c.getColumnIndex(LOGS_COLUMN[3]));
-                    String ID = c.getString(c.getColumnIndex(LOGS_COLUMN[0]));
-                    Log.i(TAG, "SendSchedule Comparing-> \n" + SyncService.SyncTask.SEND_SCHEDULE + " | " + str);
-                    if (SyncService.SyncTask.SEND_SCHEDULE.equalsName(str)) {
+                    String str = c.getString(c.getColumnIndex(LogsColumn.TASK.toString()));
+                    String id = c.getString(c.getColumnIndex(LogsColumn.VALUE.toString()));
+                    String ID = c.getString(c.getColumnIndex(LogsColumn.TYPE.toString()));
+                    Log.i(TAG, "SendSchedule Comparing-> \n" + Logs.Task.SEND_SCHEDULE + " | " + str);
+                    if (Logs.Task.SEND_SCHEDULE.equalsName(str)) {
 //                        Log.i(TAG, "SendSchedule Count:-> " + c.getCount());
 //                        Schedule newSchedule = getScheduleWithId(id);
 //                        if(newSchedule !=null){
@@ -1242,18 +1529,19 @@ public class Database {
 
     public ArrayList<Schedule> getUpdateSchedules() {
         Log.i(TAG, "UpdateDisciples:\n");
+        String DB_Table = Table_LOGS;
         ArrayList<Schedule> Found = new ArrayList<Schedule>();
         try {
-            Cursor c = myDatabase.query(Table_LOGS, LOGS_COLUMN, null, null, null, null, null);
+            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
             if (c != null && c.getCount() > 0) {
                 c.moveToFirst();
                 for (int i = 0; i < c.getCount(); i++) {
                     c.moveToPosition(i);
-                    String ID = c.getString(c.getColumnIndex(LOGS_COLUMN[0]));
-                    String str = c.getString(c.getColumnIndex(LOGS_COLUMN[2]));
-                    String id = c.getString(c.getColumnIndex(LOGS_COLUMN[3]));
-                    Log.i(TAG, "Comparing-> \n" + SyncService.SyncTask.UPDATE_SCHEDULES + " | " + str);
-                    if (SyncService.SyncTask.UPDATE_SCHEDULES.equalsName(str)) {
+                    String ID = c.getString(c.getColumnIndex(LogsColumn.ID.toString()));
+                    String str = c.getString(c.getColumnIndex(LogsColumn.TASK.toString()));
+                    String id = c.getString(c.getColumnIndex(LogsColumn.VALUE.toString()));
+                    Log.i(TAG, "Comparing-> \n" + Logs.Task.UPDATE_SCHEDULES + " | " + str);
+                    if (Logs.Task.UPDATE_SCHEDULES.equalsName(str)) {
 //                        Log.i(TAG, "Update Schedule Count:-> " + c.getCount());
 //                        Schedule newschedule = getScheduleWithId(id);
 //                        if(newschedule !=null){
@@ -1271,18 +1559,19 @@ public class Database {
 
     public ArrayList<ReportItem> getSendReports() {
         Log.i(TAG, "SendReports:\n");
+        String DB_Table = Table_LOGS;
         ArrayList<ReportItem> Found = new ArrayList<ReportItem>();
         try {
-            Cursor c = myDatabase.query(Table_LOGS, LOGS_COLUMN, null, null, null, null, null);
+            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
             if (c != null && c.getCount() > 0) {
                 c.moveToFirst();
                 for (int i = 0; i < c.getCount(); i++) {
                     c.moveToPosition(i);
-                    String str = c.getString(c.getColumnIndex(LOGS_COLUMN[2]));
-                    String id = c.getString(c.getColumnIndex(LOGS_COLUMN[3]));
-                    String ID = c.getString(c.getColumnIndex(LOGS_COLUMN[0]));
-                    Log.i(TAG, "Comparing-> \n" + SyncService.SyncTask.SEND_REPORT + " | " + str);
-                    if (SyncService.SyncTask.SEND_REPORT.equalsName(str)) {
+                    String str = c.getString(c.getColumnIndex(LogsColumn.TASK.toString()));
+                    String id = c.getString(c.getColumnIndex(LogsColumn.VALUE.toString()));
+                    String ID = c.getString(c.getColumnIndex(LogsColumn.ID.toString()));
+                    Log.i(TAG, "Comparing-> \n" + Logs.Task.SEND_REPORT + " | " + str);
+                    if (Logs.Task.SEND_REPORT.equalsName(str)) {
                         Log.i(TAG, "SendDisciples Count:-> " + c.getCount());
 //                        ReportItem newReport = get_Report_by_id(id);
 //                        if(newReport !=null){
@@ -1316,15 +1605,15 @@ public class Database {
                 for (int i = 0; i < c.getCount(); i++) {
                     c.moveToPosition(i);
                     User user = new User();
-                    user.setID(Integer.valueOf(c.getString(c.getColumnIndex(USER_COLUMN[0]))));
-                    user.setSerID(Integer.valueOf(c.getString(c.getColumnIndex(USER_COLUMN[1]))));
-                    user.setFull_Name(c.getString(c.getColumnIndex(USER_COLUMN[2])));
-                    user.setUser_Email(c.getString(c.getColumnIndex(USER_COLUMN[3])));
-                    user.setUser_Phone(c.getString(c.getColumnIndex(USER_COLUMN[4])));
-                    user.setUser_Pass(c.getString(c.getColumnIndex(USER_COLUMN[5])));
-                    user.setUser_Country(c.getString(c.getColumnIndex(USER_COLUMN[6])));
-                    user.setUser_Picture(c.getString(c.getColumnIndex(USER_COLUMN[7])));
-                    user.setUser_Favorite_Scripture(c.getString(c.getColumnIndex(USER_COLUMN[8])));
+                    user.setID(Integer.valueOf(c.getString(c.getColumnIndex(UserColumn.ID.toString()))));
+                    user.setSerID(Integer.valueOf(c.getString(c.getColumnIndex(UserColumn.SERID.toString()))));
+                    user.setFull_Name(c.getString(c.getColumnIndex(UserColumn.FULL_NAME.toString())));
+                    user.setUser_Email(c.getString(c.getColumnIndex(UserColumn.EMAIL.toString())));
+                    user.setUser_Phone(c.getString(c.getColumnIndex(UserColumn.PHONE.toString())));
+                    user.setUser_Pass(c.getString(c.getColumnIndex(UserColumn.PASSWORD.toString())));
+                    user.setUser_Country(c.getString(c.getColumnIndex(UserColumn.COUNTRY.toString())));
+                    user.setUser_Picture(c.getString(c.getColumnIndex(UserColumn.PICTURE.toString())));
+                    user.setUser_Favorite_Scripture(c.getString(c.getColumnIndex(UserColumn.FAVORITE_SCRIPTURE.toString())));
                     return user;
                 }
             }
@@ -1349,8 +1638,10 @@ public class Database {
             cv.put(Database.USER_FIELDS[5], mainUser.getUser_Country());
             cv.put(Database.USER_FIELDS[6], mainUser.getUser_Picture());
             cv.put(Database.USER_FIELDS[7], mainUser.getUser_Favorite_Scripture());
-            DeepLife.myDATABASE.Delete_All(DB_Table);
-            long x = DeepLife.myDATABASE.insert(DB_Table, cv);
+//            DeepLife.myDATABASE.Delete_All(DB_Table); // briggsm: pretty sure we don't need "DeepLife.myDATABASE." here.
+//            long x = DeepLife.myDATABASE.insert(DB_Table, cv);
+            Delete_All(DB_Table);
+            long x = insert(DB_Table, cv);
             return x;
         } catch (Exception e) {
             Log.i(TAG, "Failed UPDATE updateMainUser: " + e.toString());
@@ -1373,16 +1664,17 @@ public class Database {
             if (c.getCount() > 0) {
                 c.moveToFirst();
                 for (int i = 0; i < c.getCount(); i++) {
+                    // briggsm: think we're missing a check for id!
                     c.moveToPosition(i);
                     LearningTool learningTool = new LearningTool();
-                    learningTool.setID(Integer.valueOf(c.getString(c.getColumnIndex(LEARNING_COLUMN[0]))));
-                    learningTool.setSerID(Integer.valueOf(c.getString(c.getColumnIndex(LEARNING_COLUMN[1]))));
-                    learningTool.setTitle(c.getString(c.getColumnIndex(LEARNING_COLUMN[2])));
-                    learningTool.setContent(c.getString(c.getColumnIndex(LEARNING_COLUMN[3])));
-                    learningTool.setVideoURL(c.getString(c.getColumnIndex(LEARNING_COLUMN[4])));
-                    learningTool.setCountry(Integer.valueOf(c.getString(c.getColumnIndex(LEARNING_COLUMN[5]))));
-                    learningTool.setDefaultLearn(c.getString(c.getColumnIndex(LEARNING_COLUMN[6])));
-                    learningTool.setCreated(c.getString(c.getColumnIndex(LEARNING_COLUMN[7])));
+                    learningTool.setID(Integer.valueOf(c.getString(c.getColumnIndex(LearningColumn.ID.toString()))));
+                    learningTool.setSerID(Integer.valueOf(c.getString(c.getColumnIndex(LearningColumn.SERID.toString()))));
+                    learningTool.setTitle(c.getString(c.getColumnIndex(LearningColumn.TITLE.toString())));
+                    learningTool.setContent(c.getString(c.getColumnIndex(LearningColumn.DESCRIPTION.toString())));
+                    learningTool.setVideoURL(c.getString(c.getColumnIndex(LearningColumn.VIDEOURL.toString())));
+                    learningTool.setCountry(Integer.valueOf(c.getString(c.getColumnIndex(LearningColumn.COUNTRY.toString()))));
+                    learningTool.setDefaultLearn(c.getString(c.getColumnIndex(LearningColumn.ISDEFAULT.toString())));
+                    learningTool.setCreated(c.getString(c.getColumnIndex(LearningColumn.CREATED.toString())));
                     return learningTool;
                 }
             }
@@ -1403,8 +1695,9 @@ public class Database {
                 c.moveToFirst();
                 for (int i = 0; i < c.getCount(); i++) {
                     c.moveToPosition(i);
-                    int ser_id = Integer.valueOf(c.getString(c.getColumnIndex(LEARNING_COLUMN[1])));
-                    int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(LEARNING_COLUMN[0])));
+                    int ser_id = Integer.valueOf(c.getString(c.getColumnIndex(LearningColumn.SERID.toString())));
+                    int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(LearningColumn.ID.toString())));
+
                     if (ser_id == id) {
                         LearningTool learningTool = getLearningToolByID(cur_id);
                         return learningTool;
@@ -1427,7 +1720,7 @@ public class Database {
             c.moveToFirst();
             for (int i = 0; i < c.getCount(); i++) {
                 c.moveToPosition(i);
-                int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(COUNTRY_COLUMN[0])));
+                int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(CountryColumn.ID.toString())));
                 LearningTool learningTool = getLearningToolByID(cur_id);
                 if (learningTool != null) {
                     found.add(learningTool);
@@ -1451,10 +1744,10 @@ public class Database {
                 for (int i = 0; i < c.getCount(); i++) {
                     c.moveToPosition(i);
                     DiscipleTreeCount discipleTreeCount = new DiscipleTreeCount();
-                    discipleTreeCount.setID(Integer.valueOf(c.getString(c.getColumnIndex(DISCIPLE_TREE_COLUMN[0]))));
-                    discipleTreeCount.setSerID(Integer.valueOf(c.getString(c.getColumnIndex(DISCIPLE_TREE_COLUMN[1]))));
-                    discipleTreeCount.setUserID(Integer.valueOf(c.getString(c.getColumnIndex(DISCIPLE_TREE_COLUMN[2]))));
-                    discipleTreeCount.setCount(Integer.valueOf(c.getString(c.getColumnIndex(DISCIPLE_TREE_COLUMN[3]))));
+                    discipleTreeCount.setID(Integer.valueOf(c.getString(c.getColumnIndex(DiscipleTreeColumn.ID.toString()))));
+                    discipleTreeCount.setSerID(Integer.valueOf(c.getString(c.getColumnIndex(DiscipleTreeColumn.SERID.toString()))));
+                    discipleTreeCount.setUserID(Integer.valueOf(c.getString(c.getColumnIndex(DiscipleTreeColumn.USERID.toString()))));
+                    discipleTreeCount.setCount(Integer.valueOf(c.getString(c.getColumnIndex(DiscipleTreeColumn.COUNT.toString()))));
                     return discipleTreeCount;
                 }
             }
@@ -1470,36 +1763,46 @@ public class Database {
     private String[] getColumns(String DB_Table) {
         String[] strs = null;
         if (DB_Table == Table_DISCIPLES) {
-            strs = DISCIPLES_COLUMN;
+            strs = getStrArrFromEnum(DisciplesColumn.class);
         } else if (DB_Table == Table_LOGS) {
-            strs = LOGS_COLUMN;
+            strs = getStrArrFromEnum(LogsColumn.class);
         } else if (DB_Table == Table_USER) {
-            strs = USER_COLUMN;
+            strs = getStrArrFromEnum(UserColumn.class);
         } else if (DB_Table == Table_SCHEDULES) {
-            strs = SCHEDULES_COLUMN;
+            strs = getStrArrFromEnum(SchedulesColumn.class);
         } else if (DB_Table == Table_QUESTION_LIST) {
-            strs = QUESTION_LIST_COLUMN;
+            strs = getStrArrFromEnum(QuestionListColumn.class);
         } else if (DB_Table == Table_QUESTION_ANSWER) {
-            strs = QUESTION_ANSWER_COLUMN;
+            strs = getStrArrFromEnum(QuestionAnswerColumn.class);
         } else if (DB_Table == Table_Reports) {
-            strs = REPORT_COLUMN;
+            strs = getStrArrFromEnum(ReportColumn.class);
         } else if (DB_Table == Table_Report_Forms) {
-            strs = REPORT_FORM_COLUMN;
+            strs = getStrArrFromEnum(ReportFormColumn.class);
         } else if (DB_Table == Table_COUNTRY) {
-            strs = COUNTRY_COLUMN;
+            strs = getStrArrFromEnum(CountryColumn.class);
         } else if (DB_Table == Table_NEWSFEED) {
-            strs = NewsFeed_COLUMN;
+            strs = getStrArrFromEnum(NewsfeedColumn.class);
         } else if (DB_Table == Table_TESTIMONY) {
-            strs = TESTIMONY_COLUMN;
+            strs = getStrArrFromEnum(TestimonyColumn.class);
         } else if (DB_Table == Table_CATEGORIES) {
-            strs = CATEGORY_COLUMN;
+            strs = getStrArrFromEnum(CategoryColumn.class);
         } else if (DB_Table == Table_IMAGE_SYNC) {
-            strs = IMAGE_SYNC_COLUMN;
+            strs = getStrArrFromEnum(ImageSyncColumn.class);
         } else if (DB_Table == Table_LEARNING) {
-            strs = LEARNING_COLUMN;
+            strs = getStrArrFromEnum(LearningColumn.class);
         } else if (DB_Table == Table_DISCIPLE_TREE) {
-            strs = DISCIPLE_TREE_COLUMN;
+            strs = getStrArrFromEnum(DiscipleTreeColumn.class);
         }
         return strs;
+    }
+
+    public static <E extends Enum<E>> String[] getStrArrFromEnum(Class<E> e) {
+        Enum<E>[] enumConstants = e.getEnumConstants();
+        int numConstants = enumConstants.length;
+        String[] strArr = new String[numConstants];
+        for (int i = 0; i < numConstants; i++) {
+            strArr[i] = enumConstants[i].toString();
+        }
+        return  strArr;
     }
 }
