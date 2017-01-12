@@ -17,7 +17,7 @@ import me.tatarka.support.job.JobScheduler;
  */
 
 public class DeepLife extends Application {
-    public static final String DEEP_URL  = "hhttp://deeplifestaging.briggs-inc.com";
+    public static final String DEEP_URL  = "http://deeplifestaging.briggs-inc.com";
     public static final String FORGOTEN_URL  = DEEP_URL+"/forgot";
 //    public static final String DEEP_URL  = "http://192.168.8.101/DeepLife_Web/public";
     public static final String API_URL  = DEEP_URL+"/deep_api";

@@ -37,6 +37,7 @@ public class Login extends AppCompatActivity {
     public static Spinner mySpinner;
     public static EditText TextCode,UserName,UserPass;
     private static String LoginChoice;
+    private static int CountryChoicePos = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -73,6 +74,7 @@ public class Login extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 TextCode.setText("+"+myCountries.get(position).getCode());
+                CountryChoicePos = position;
             }
 
             @Override
@@ -117,14 +119,15 @@ public class Login extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        myCountries = DeepLife.myDATABASE.getAllCountries();
         UpdateView();
     }
     public static void UpdateView(){
+        myCountries = DeepLife.myDATABASE.getAllCountries();
         if(myCountries != null){
             mySpinner.setAdapter(new CountryListAdapter(myContext,R.layout.login_countries_item,myCountries));
-        }else {
-            myCountries = DeepLife.myDATABASE.getAllCountries();
+            if(CountryChoicePos>0){
+                mySpinner.setSelection(CountryChoicePos);
+            }
         }
     }
     public static void GetNextActivity(){
