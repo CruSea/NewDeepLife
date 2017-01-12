@@ -2,6 +2,8 @@
 <resources>
   <string name="app_name">DeepLife</string>
   <string name="action_settings">Настройки</string>
+  <string name="navigation_drawer_open">Open</string>
+  <string name="navigation_drawer_close">Close</string>
   <string-array name="gender">
     <item>Мужской</item>
     <item>женский</item>
