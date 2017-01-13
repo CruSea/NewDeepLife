@@ -48,7 +48,6 @@ import deeplife.gcme.com.deeplife.Models.User;
 import deeplife.gcme.com.deeplife.Processing.ImageProcessing;
 import deeplife.gcme.com.deeplife.R;
 import deeplife.gcme.com.deeplife.SyncService.SyncDatabase;
-import deeplife.gcme.com.deeplife.SyncService.SyncService;
 
 /**
  * Created by bengeos on 12/17/16.
@@ -129,8 +128,8 @@ public class DiscipleAddActivity extends AppCompatActivity {
                     long x = mySyncDatabase.AddDisciple(myDisciple);
                     if(x>0){
                         Logs logs = new Logs();
-                        logs.setType("Disciple");
-                        logs.setTask(SyncService.Sync_Tasks[1]);
+                        logs.setType(Logs.Type.DISCIPLE);
+                        logs.setTask(Logs.Task.SEND_DISCIPLES);  // briggsm: Biniam says Send_Disciples.  Why not AddNew_Disciples? What's difference?
                         logs.setValue(myDisciple.getPhone());
                         mySyncDatabase.AddLog(logs);
                         DisciplesFragment.UpdateList();

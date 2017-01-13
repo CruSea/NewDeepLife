@@ -23,8 +23,8 @@ import deeplife.gcme.com.deeplife.DeepLife;
 import deeplife.gcme.com.deeplife.Login;
 import deeplife.gcme.com.deeplife.Models.User;
 import deeplife.gcme.com.deeplife.R;
-import deeplife.gcme.com.deeplife.SendParam;
 import deeplife.gcme.com.deeplife.SyncService.SyncDatabase;
+import deeplife.gcme.com.deeplife.SyncService.SyncService;
 import kotlin.Pair;
 
 /**
@@ -57,14 +57,14 @@ public class LoginAccess {
     private static final String TAG = "LoginAccess";
     public boolean LogInAuthnticate(){
         if(myUser.getUser_Email()!=null){
-            Send_Param.add(new kotlin.Pair<String, String>(SendParam.USER_NAME, myUser.getUser_Email()));
+            Send_Param.add(new kotlin.Pair<String, String>(SyncService.ApiRequest.USER_NAME.toString(), myUser.getUser_Email()));
         }else {
-            Send_Param.add(new kotlin.Pair<String, String>(SendParam.USER_NAME, myUser.getUser_Phone()));
+            Send_Param.add(new kotlin.Pair<String, String>(SyncService.ApiRequest.USER_NAME.toString(), myUser.getUser_Phone()));
         }
-        Send_Param.add(new kotlin.Pair<String, String>(SendParam.USER_PASS, myUser.getUser_Pass()));
-        Send_Param.add(new kotlin.Pair<String, String>(SendParam.COUNTRY, myUser.getUser_Country()));
-        Send_Param.add(new kotlin.Pair<String, String>(SendParam.SERVICE, SendParam.Service.LOG_IN));
-        Send_Param.add(new kotlin.Pair<String, String>(SendParam.PARAM, "[]"));
+        Send_Param.add(new kotlin.Pair<String, String>(SyncService.ApiRequest.USER_PASS.toString(), myUser.getUser_Pass()));
+        Send_Param.add(new kotlin.Pair<String, String>(SyncService.ApiRequest.COUNTRY.toString(), myUser.getUser_Country()));
+        Send_Param.add(new kotlin.Pair<String, String>(SyncService.ApiRequest.SERVICE.toString(), SyncService.ApiService.LOG_IN.toString()));
+        Send_Param.add(new kotlin.Pair<String, String>(SyncService.ApiRequest.PARAM.toString(), "[]"));
 
         try{
             Fuel.post(DeepLife.API_URL,Send_Param).responseString(new Handler<String>() {
@@ -86,17 +86,21 @@ public class LoginAccess {
                                     Login.GetNextActivity();
                                 }else {
                                     Login.DialogState(0);
+                                    Log.w(TAG, "LogInAuthenticate onSuccess(): state <= 0");
                                     Login.showDialog(DeepLife.getContext().getString(R.string.dlg_msg_login_failure));
                                 }
                             }else {
                                 Login.DialogState(0);
+                                Log.w(TAG, "LogInAuthenticate onSuccess(): user == null");
                                 Login.showDialog(DeepLife.getContext().getString(R.string.dlg_msg_login_failure));
                             }
                         }else {
                             Login.DialogState(0);
+                            Log.w(TAG, "LogInAuthenticate onSuccess(): JSONObject 'Response' is null");
                             Login.showDialog(DeepLife.getContext().getString(R.string.dlg_msg_login_failure));
                         }
                     } catch (JSONException e) {
+                        Log.e(TAG, "LogInAuthenticate onSuccess(): JSONException");
                         e.printStackTrace();
                     }
                 }
@@ -111,11 +115,11 @@ public class LoginAccess {
         return false;
     }
     public boolean GetMetaData(){
-        Send_Param.add(new kotlin.Pair<String, String>(SendParam.USER_NAME, ""));
-        Send_Param.add(new kotlin.Pair<String, String>(SendParam.USER_PASS, ""));
-        Send_Param.add(new kotlin.Pair<String, String>(SendParam.COUNTRY, ""));
-        Send_Param.add(new kotlin.Pair<String, String>(SendParam.SERVICE, SendParam.Service.META_DATA));
-        Send_Param.add(new kotlin.Pair<String, String>(SendParam.PARAM, "[]"));
+        Send_Param.add(new kotlin.Pair<String, String>(SyncService.ApiRequest.USER_NAME.toString(), ""));
+        Send_Param.add(new kotlin.Pair<String, String>(SyncService.ApiRequest.USER_PASS.toString(), ""));
+        Send_Param.add(new kotlin.Pair<String, String>(SyncService.ApiRequest.COUNTRY.toString(), ""));
+        Send_Param.add(new kotlin.Pair<String, String>(SyncService.ApiRequest.SERVICE.toString(), SyncService.ApiService.META_DATA.toString()));
+        Send_Param.add(new kotlin.Pair<String, String>(SyncService.ApiRequest.PARAM.toString(), "[]"));
         try{
             myFuel.post(DeepLife.API_URL,Send_Param).responseString(new Handler<String>() {
                 @Override
@@ -149,11 +153,11 @@ public class LoginAccess {
     }
 
     public boolean SignupAuthnticate(final User user){
-        Send_Param.add(new kotlin.Pair<String, String>(SendParam.USER_NAME, user.getUser_Email()));
-        Send_Param.add(new kotlin.Pair<String, String>(SendParam.USER_PASS, user.getUser_Pass()));
-        Send_Param.add(new kotlin.Pair<String, String>(SendParam.COUNTRY, user.getUser_Country()));
-        Send_Param.add(new kotlin.Pair<String, String>(SendParam.SERVICE, SendParam.Service.SIGN_UP));
-        Send_Param.add(new kotlin.Pair<String, String>(SendParam.PARAM, myParser.toJson(user)));
+        Send_Param.add(new kotlin.Pair<String, String>(SyncService.ApiRequest.USER_NAME.toString(), user.getUser_Email()));
+        Send_Param.add(new kotlin.Pair<String, String>(SyncService.ApiRequest.USER_PASS.toString(), user.getUser_Pass()));
+        Send_Param.add(new kotlin.Pair<String, String>(SyncService.ApiRequest.COUNTRY.toString(), user.getUser_Country()));
+        Send_Param.add(new kotlin.Pair<String, String>(SyncService.ApiRequest.SERVICE.toString(), SyncService.ApiService.SIGN_UP.toString()));
+        Send_Param.add(new kotlin.Pair<String, String>(SyncService.ApiRequest.PARAM.toString(), myParser.toJson(user)));
         myFuel.post(DeepLife.API_URL,Send_Param).responseString(new Handler<String>() {
             @Override
             public void success(@NotNull Request request, @NotNull Response response, String s) {
@@ -166,9 +170,9 @@ public class LoginAccess {
                         mySyncDatabase.ProcessResponse(s);
                         DeepLife.myDATABASE.Delete_All(deeplife.gcme.com.deeplife.Database.Database.Table_USER);
                         ContentValues cv = new ContentValues();
-                        cv.put(Database.USER_FIELDS[1], user.getUser_Email());
-                        cv.put(Database.USER_FIELDS[2], user.getUser_Phone());
-                        cv.put(Database.USER_FIELDS[3], user.getUser_Pass());
+                        cv.put(Database.UserColumn.EMAIL.toString(), user.getUser_Email());
+                        cv.put(Database.UserColumn.PHONE.toString(), user.getUser_Phone());
+                        cv.put(Database.UserColumn.PASSWORD.toString(), user.getUser_Pass());
                         long state = DeepLife.myDATABASE.insert(Database.Table_USER,cv);
                         if(state>0){
                             Login.GetNextActivity();

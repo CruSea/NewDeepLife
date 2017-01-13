@@ -22,7 +22,6 @@ import deeplife.gcme.com.deeplife.DeepLife;
 import deeplife.gcme.com.deeplife.Models.Logs;
 import deeplife.gcme.com.deeplife.R;
 import deeplife.gcme.com.deeplife.SyncService.SyncDatabase;
-import deeplife.gcme.com.deeplife.SyncService.SyncService;
 import deeplife.gcme.com.deeplife.WinBuildSend.WinBuildSendActivity;
 
 /**
@@ -88,8 +87,8 @@ public class DiscipleListAdapter extends RecyclerView.Adapter<DiscipleListAdapte
                     case DialogInterface.BUTTON_POSITIVE:
                         DeepLife.myDATABASE.Delete_By_ID(Database.Table_DISCIPLES,discipleid);
                         Logs logs = new Logs();
-                        logs.setType(SyncService.Sync_Tasks[2]);
-                        logs.setTask(SyncService.Sync_Tasks[0]);
+                        logs.setType(Logs.Type.REMOVE_DISCIPLE);
+                        logs.setTask(Logs.Task.SEND_LOG);
                         logs.setValue(disciplePhone);
                         mySyncDatabase.AddLog(logs);
                         DisciplesFragment.UpdateList();

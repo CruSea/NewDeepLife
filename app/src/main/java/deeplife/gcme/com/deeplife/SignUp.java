@@ -41,6 +41,7 @@ import deeplife.gcme.com.deeplife.Database.Database;
 import deeplife.gcme.com.deeplife.Models.Country;
 import deeplife.gcme.com.deeplife.Models.User;
 import deeplife.gcme.com.deeplife.SyncService.SyncDatabase;
+import deeplife.gcme.com.deeplife.SyncService.SyncService;
 import kotlin.Pair;
 
 /**
@@ -174,11 +175,11 @@ public class SignUp extends AppCompatActivity {
         user.add(NewUser);
         List<Pair<String, String>> Send_Param;
         Send_Param = new ArrayList<Pair<String, String>>();
-        Send_Param.add(new kotlin.Pair<String, String>(SendParam.USER_NAME, NewUser.getUser_Phone()));
-        Send_Param.add(new kotlin.Pair<String, String>(SendParam.USER_PASS, NewUser.getUser_Pass()));
-        Send_Param.add(new kotlin.Pair<String, String>(SendParam.COUNTRY, NewUser.getUser_Country()));
-        Send_Param.add(new kotlin.Pair<String, String>(SendParam.SERVICE, SendParam.Service.SIGN_UP));
-        Send_Param.add(new kotlin.Pair<String, String>(SendParam.PARAM, myParser.toJson(user)));
+        Send_Param.add(new kotlin.Pair<String, String>(SyncService.ApiRequest.USER_NAME.toString(), NewUser.getUser_Phone()));
+        Send_Param.add(new kotlin.Pair<String, String>(SyncService.ApiRequest.USER_PASS.toString(), NewUser.getUser_Pass()));
+        Send_Param.add(new kotlin.Pair<String, String>(SyncService.ApiRequest.COUNTRY.toString(), NewUser.getUser_Country()));
+        Send_Param.add(new kotlin.Pair<String, String>(SyncService.ApiRequest.SERVICE.toString(), SyncService.ApiService.SIGN_UP.toString()));
+        Send_Param.add(new kotlin.Pair<String, String>(SyncService.ApiRequest.PARAM.toString(), myParser.toJson(user)));
         Fuel.post(DeepLife.API_URL, Send_Param).responseString(new Handler<String>() {
             @Override
             public void success(Request request, Response response, String s) {
@@ -197,6 +198,8 @@ public class SignUp extends AppCompatActivity {
                         DeepLife.myDATABASE.Delete_All(Database.Table_USER);
 
                         ContentValues cv = new ContentValues();
+                        /*
+                        // briggsm: Below indexes seems wrong
                         cv.put(Database.USER_FIELDS[0],NewUser.getUser_Name());
                         cv.put(Database.USER_FIELDS[1],NewUser.getUser_Email());
                         cv.put(Database.USER_FIELDS[2],NewUser.getUser_Phone());
@@ -204,6 +207,15 @@ public class SignUp extends AppCompatActivity {
                         cv.put(Database.USER_FIELDS[4], NewUser.getUser_Country());
                         cv.put(Database.USER_FIELDS[5],"");
                         cv.put(Database.USER_FIELDS[6],"");
+                        */
+                        cv.put(Database.UserColumn.FULL_NAME.toString(),NewUser.getUser_Name());
+                        cv.put(Database.UserColumn.EMAIL.toString(),NewUser.getUser_Email());
+                        cv.put(Database.UserColumn.PHONE.toString(),NewUser.getUser_Phone());
+                        cv.put(Database.UserColumn.PASSWORD.toString(),NewUser.getUser_Pass());
+                        cv.put(Database.UserColumn.COUNTRY.toString(), NewUser.getUser_Country());
+                        cv.put(Database.UserColumn.PICTURE.toString(),"");
+                        cv.put(Database.UserColumn.FAVORITE_SCRIPTURE.toString(),"");
+
                         long x = DeepLife.myDATABASE.insert(Database.Table_USER, cv);
                         Log.i(TAG, "Main User Adding-> " + x);
 
