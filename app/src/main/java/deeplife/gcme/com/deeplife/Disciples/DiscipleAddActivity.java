@@ -44,6 +44,7 @@ import deeplife.gcme.com.deeplife.DeepLife;
 import deeplife.gcme.com.deeplife.FileManager.FileManager;
 import deeplife.gcme.com.deeplife.Models.Country;
 import deeplife.gcme.com.deeplife.Models.Logs;
+import deeplife.gcme.com.deeplife.Models.User;
 import deeplife.gcme.com.deeplife.Processing.ImageProcessing;
 import deeplife.gcme.com.deeplife.R;
 import deeplife.gcme.com.deeplife.SyncService.SyncDatabase;
@@ -70,6 +71,7 @@ public class DiscipleAddActivity extends AppCompatActivity {
     private FileManager myFileManager;
     private File DiscipleImageFile;
     private Context myContext;
+    private User myUser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,6 +88,8 @@ public class DiscipleAddActivity extends AppCompatActivity {
         myActivity = this;
         myContext = this;
 
+        myUser = DeepLife.myDATABASE.getMainUser();
+
         myCountry = (Spinner) findViewById(R.id.spn_discipleadd_country);
         myGender = (Spinner) findViewById(R.id.spn_discipleadd_country);
         FullName = (EditText) findViewById(R.id.txt_discipleadd_fullname);
@@ -99,6 +103,8 @@ public class DiscipleAddActivity extends AppCompatActivity {
         myCountries = DeepLife.myDATABASE.getAllCountries();
         if(myCountries != null){
             myCountry.setAdapter(new CountryListAdapter(this,R.layout.login_countries_item,myCountries));
+            int xx = Integer.valueOf(myUser.getUser_Country());
+            Country country = DeepLife.myDATABASE.getCountryByID(xx);
         }
         myCountry.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -109,7 +115,9 @@ public class DiscipleAddActivity extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
+                int xx = Integer.valueOf(myUser.getUser_Country());
+                int pos = DeepLife.myDATABASE.getCountryBySerID(xx).getID();
+                parent.setSelection(pos);
             }
         });
         AddDisciple.setOnClickListener(new View.OnClickListener() {

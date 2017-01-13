@@ -89,22 +89,27 @@ public class Login extends AppCompatActivity {
         Login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(myCountries == null || myCountries.size() == 0){
-                    myCountries = DeepLife.myDATABASE.getAllCountries();
-                    UpdateView();
-                }else {
-                    User user = new User();
-                    if(UserName.getText().toString().contains("@")){
-                        user.setUser_Email(UserName.getText().toString());
+                try{
+                    if(myCountries == null || myCountries.size() == 0){
+                        myCountries = DeepLife.myDATABASE.getAllCountries();
+                        UpdateView();
                     }else {
-                        user.setUser_Phone(""+myCountries.get(mySpinner.getSelectedItemPosition()).getCode()+""+UserName.getText().toString());
+                        User user = new User();
+                        if(UserName.getText().toString().contains("@")){
+                            user.setUser_Email(UserName.getText().toString());
+                        }else {
+                            user.setUser_Phone(""+myCountries.get(mySpinner.getSelectedItemPosition()).getCode()+""+UserName.getText().toString());
+                        }
+                        user.setUser_Pass(UserPass.getText().toString());
+                        user.setUser_Country(""+myCountries.get(mySpinner.getSelectedItemPosition()).getSerID());
+                        loginAccess = new LoginAccess(user);
+
+                        progressDialog.setMessage(getString(R.string.dlg_msg_authenticating_user));
+                        progressDialog.show();
+                        loginAccess.LogInAuthnticate();
                     }
-                    user.setUser_Pass(UserPass.getText().toString());
-                    user.setUser_Country(""+myCountries.get(mySpinner.getSelectedItemPosition()).getSerID());
-                    loginAccess = new LoginAccess(user);
-                    progressDialog.setMessage(getString(R.string.dlg_msg_authenticating_user));
-                    progressDialog.show();
-                    loginAccess.LogInAuthnticate();
+                }catch (Exception e){
+
                 }
 
             }
