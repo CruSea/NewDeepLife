@@ -52,7 +52,7 @@ public class DiscipleListAdapter extends RecyclerView.Adapter<DiscipleListAdapte
         holder.FullName.setText(Disciples.get(position).getFullName());
         holder.Email.setText(Disciples.get(position).getEmail());
         holder.Phone.setText("+"+Disciples.get(position).getPhone());
-        holder.btn_WinBuild.setText(Disciples.get(position).getStage());
+        holder.btn_WinBuild.setText(Disciples.get(position).getStage().toString());
         if(Disciples.get(position).getImagePath() != null){
             File file = new File(Disciples.get(position).getImagePath());
             if(file.isFile()){

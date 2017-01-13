@@ -191,6 +191,7 @@ public class SyncService extends JobService {
     }
 
     public Logs getParam(){
+        // Parameter Populator
         Logs myLogs = new Logs();
         if(DeepLife.myDATABASE.getSendLogs().size()>0){
             Log.i(TAG,"GET LOG TO SEND -> \n");

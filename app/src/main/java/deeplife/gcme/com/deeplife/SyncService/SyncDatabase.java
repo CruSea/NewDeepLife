@@ -179,11 +179,11 @@ public class SyncDatabase {
         cv.put(Database.DisciplesColumn.PHONE.toString(), disciple.getPhone());
         cv.put(Database.DisciplesColumn.COUNTRY.toString(), disciple.getCountry());
         cv.put(Database.DisciplesColumn.MENTORID.toString(), disciple.getMentorID());
-        cv.put(Database.DisciplesColumn.STAGE.toString(), disciple.getStage());
+        cv.put(Database.DisciplesColumn.STAGE.toString(), disciple.getStage().toString());
         cv.put(Database.DisciplesColumn.IMAGEURL.toString(), disciple.getImageURL());
         cv.put(Database.DisciplesColumn.IMAGEPATH.toString(), disciple.getImagePath());
-        cv.put(Database.DisciplesColumn.ROLE.toString(), disciple.getRole());
-        cv.put(Database.DisciplesColumn.GENDER.toString(), disciple.getGender());
+        cv.put(Database.DisciplesColumn.ROLE.toString(), disciple.getRole().toString());
+        cv.put(Database.DisciplesColumn.GENDER.toString(), disciple.getGender().toString());
         cv.put(Database.DisciplesColumn.CREATED.toString(), disciple.getCreated());
         Disciple old_disciple = DeepLife.myDATABASE.getDiscipleByPhone(disciple.getPhone());
         if(old_disciple == null){

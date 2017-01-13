@@ -631,7 +631,7 @@ public class Database {
 
 
     public Disciple getDiscipleByID(int id) {
-        Log.i(TAG, "Get Disciple by ID: ");
+        Log.i(TAG, "getDiscipleByID: " + id);
         String DB_Table = Table_DISCIPLES;
         try {
             Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
@@ -650,18 +650,18 @@ public class Database {
                         disciple.setPhone(c.getString(c.getColumnIndex(DisciplesColumn.PHONE.toString())));
                         disciple.setCountry(c.getString(c.getColumnIndex(DisciplesColumn.COUNTRY.toString())));
                         disciple.setMentorID(Integer.valueOf(c.getString(c.getColumnIndex(DisciplesColumn.MENTORID.toString()))));
-                        disciple.setStage(c.getString(c.getColumnIndex(DisciplesColumn.STAGE.toString())));
+                        disciple.setStage(Disciple.Stage.fromString(c.getString(c.getColumnIndex(DisciplesColumn.STAGE.toString()))));
                         disciple.setImageURL(c.getString(c.getColumnIndex(DisciplesColumn.IMAGEURL.toString())));
                         disciple.setImagePath(c.getString(c.getColumnIndex(DisciplesColumn.IMAGEPATH.toString())));
-                        disciple.setRole(c.getString(c.getColumnIndex(DisciplesColumn.ROLE.toString())));
-                        disciple.setGender(c.getString(c.getColumnIndex(DisciplesColumn.GENDER.toString())));
+                        disciple.setRole(Disciple.Role.fromString(c.getString(c.getColumnIndex(DisciplesColumn.ROLE.toString()))));
+                        disciple.setGender(Disciple.Gender.fromString(c.getString(c.getColumnIndex(DisciplesColumn.GENDER.toString()))));
                         disciple.setCreated(c.getString(c.getColumnIndex(DisciplesColumn.CREATED.toString())));
                         return disciple;
                     }
                 }
             }
         } catch (Exception e) {
-            Log.i(TAG, "Failed Get Disciple by ID: " + e.toString());
+            Log.e(TAG, "Failed Get Disciple by ID: " + e.toString());
             return null;
         }
         return null;
@@ -687,14 +687,14 @@ public class Database {
                 }
             }
         } catch (Exception e) {
-            Log.i(TAG, "Failed Get Disciple by Server ID: " + e.toString());
+            Log.e(TAG, "Failed Get Disciple by Server ID: " + e.toString());
             return null;
         }
         return null;
     }
 
     public Disciple getDiscipleByPhone(String phone) {
-        Log.i(TAG, "Get Disciple by Server ID: ");
+        Log.i(TAG, "Get Disciple by Phone: " + phone);
         String DB_Table = Table_DISCIPLES;
         try {
             Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
@@ -711,7 +711,7 @@ public class Database {
                 }
             }
         } catch (Exception e) {
-            Log.i(TAG, "Failed Get Disciple by Server ID: " + e.toString());
+            Log.e(TAG, "Failed Get Disciple by Phone: " + e.toString());
             return null;
         }
         return null;
@@ -730,7 +730,7 @@ public class Database {
                 Disciple disciple = getDiscipleByID(cur_id);
                 if (disciple != null) {
                     found.add(disciple);
-                    Log.i(TAG, "Get All Disciples: " + disciple.getID());
+                    Log.i(TAG, "Added to 'found' array Disciple w/ ID: " + disciple.getID());
                 }
             }
         } catch (Exception e) {
@@ -751,11 +751,11 @@ public class Database {
             cv.put(DisciplesColumn.PHONE.toString(), disciple.getPhone());
             cv.put(DisciplesColumn.COUNTRY.toString(), disciple.getCountry());
             cv.put(DisciplesColumn.MENTORID.toString(), disciple.getMentorID());
-            cv.put(DisciplesColumn.STAGE.toString(), disciple.getStage());
+            cv.put(DisciplesColumn.STAGE.toString(), disciple.getStage().toString());
             cv.put(DisciplesColumn.IMAGEURL.toString(), disciple.getImageURL());
             cv.put(DisciplesColumn.IMAGEPATH.toString(), disciple.getImagePath());
-            cv.put(DisciplesColumn.ROLE.toString(), disciple.getRole());
-            cv.put(DisciplesColumn.GENDER.toString(), disciple.getGender());
+            cv.put(DisciplesColumn.ROLE.toString(), disciple.getRole().toString());
+            cv.put(DisciplesColumn.GENDER.toString(), disciple.getGender().toString());
             cv.put(DisciplesColumn.CREATED.toString(), disciple.getCreated());
             if (disciple.getID() > 0) {
 //                long x = DeepLife.myDATABASE.update(DB_Table, cv, disciple.getID()); // briggsm: pretty sure we don't need "DeepLife.myDATABASE." here.
@@ -1006,7 +1006,7 @@ public class Database {
         ArrayList<WbsQuestion> found = new ArrayList<WbsQuestion>();
         if (SerID > 0) {
             found = getWinBuildSendQuestionsByCategory(SerID);
-            Log.i(TAG, "Get All WinBuildQuestion: " + SerID);
+            Log.i(TAG, "Get All WinBuildSendQuestions: " + SerID);
             return found;
         }
         return found;
@@ -1036,7 +1036,7 @@ public class Database {
                         answer.setDisciplePhone(c.getString(c.getColumnIndex(QuestionAnswerColumn.DISCIPLEPHONE.toString())));
                         answer.setQuestionID(Integer.valueOf(c.getString(c.getColumnIndex(QuestionAnswerColumn.QUESTION_ID.toString()))));
                         answer.setAnswer(c.getString(c.getColumnIndex(QuestionAnswerColumn.ANSWER.toString())));
-                        answer.setBuildStage(c.getString(c.getColumnIndex(QuestionAnswerColumn.BUILDSTAGE.toString())));
+                        answer.setBuildStage(Disciple.Stage.fromString(c.getString(c.getColumnIndex(QuestionAnswerColumn.BUILDSTAGE.toString()))));
                         return answer;
                     }
                 }
@@ -1131,7 +1131,7 @@ public class Database {
             cv.put(QuestionAnswerColumn.DISCIPLEPHONE.toString(), answer.getDisciplePhone());
             cv.put(QuestionAnswerColumn.QUESTION_ID.toString(), answer.getQuestionID());
             cv.put(QuestionAnswerColumn.ANSWER.toString(), answer.getAnswer());
-            cv.put(QuestionAnswerColumn.BUILDSTAGE.toString(), answer.getBuildStage());
+            cv.put(QuestionAnswerColumn.BUILDSTAGE.toString(), answer.getBuildStage().toString());
 //            int id = DeepLife.myDATABASE.getAnswerByQuestionIDandDisciplePhone(answer.getQuestionID(), answer.getDisciplePhone()).getID(); // briggsm: pretty sure we don't need "DeepLife.myDATABASE." here.
 //            long x = DeepLife.myDATABASE.update(DB_Table, cv, id);
             int id = getAnswerByQuestionIDandDisciplePhone(answer.getQuestionID(), answer.getDisciplePhone()).getID();
@@ -1166,7 +1166,7 @@ public class Database {
             cv.put(QuestionAnswerColumn.DISCIPLEPHONE.toString(), answer.getDisciplePhone());
             cv.put(QuestionAnswerColumn.QUESTION_ID.toString(), answer.getQuestionID());
             cv.put(QuestionAnswerColumn.ANSWER.toString(), answer.getAnswer());
-            cv.put(QuestionAnswerColumn.BUILDSTAGE.toString(), answer.getBuildStage());
+            cv.put(QuestionAnswerColumn.BUILDSTAGE.toString(), answer.getBuildStage().toString());
             Answer oldAnswer1 = getAnswerBySerID(answer.getSerID());
             if (oldAnswer1 == null) {
 //                long x = DeepLife.myDATABASE.insert(DB_Table, cv);  // briggsm: pretty sure we don't need "DeepLife.myDATABASE." here.

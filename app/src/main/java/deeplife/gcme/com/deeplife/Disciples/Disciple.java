@@ -5,8 +5,51 @@ package deeplife.gcme.com.deeplife.Disciples;
  */
 
 public class Disciple {
+    public enum Stage {
+        WIN("Win", 1), //briggsm: does this need to be UPPERCASE (the string) ???
+        BUILD("Build", 2),
+        SEND("Send", 3);
+
+        private final String name;
+        private final int serverId;
+        Stage(String s, int i) { this.name = s; this.serverId = i; }
+        public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
+        @Override public String toString() { return this.name; }
+        public int toServerId() { return this.serverId; }
+        public static Stage fromString(String s) { if (s != null) { for (Stage t : Stage.values()) { if (s.equalsIgnoreCase(t.toString())) { return t; } } } throw new IllegalArgumentException("No constant in <Stage> Enum found with text: " + s); }
+    }
+
+    public enum Gender {
+        MALE("Male"),
+        FEMALE("Female");
+
+        private final String name;
+        Gender(String s) { this.name = s; }
+        public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
+        @Override public String toString() { return this.name; }
+        public static Gender fromString(String s) { if (s != null) { for (Gender t : Gender.values()) { if (s.equalsIgnoreCase(t.toString())) { return t; } } } throw new IllegalArgumentException("No constant in <Gender> Enum found with text: " + s); }
+    }
+
+    // briggsm: Role Needed???
+    public enum Role {
+        DEFAULT("0"),
+        USER("1"),
+        SUPER_ADMIN("2"),
+        AREA_ADMIN("3"),
+        COUNTRY_ADMIN("4");
+
+        private final String name;
+        Role(String s) { this.name = s; }
+        public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
+        @Override public String toString() { return this.name; }
+        public static Role fromString(String s) { if (s != null) { for (Role t : Role.values()) { if (s.equalsIgnoreCase(t.toString())) { return t; } } } return DEFAULT; }
+    }
+
     private int ID,SerID,MentorID;
-    private String FullName,DisplayName,Email,Phone,Country,Stage,Gender,ImageURL,ImagePath,Role,Created;
+    private String FullName,DisplayName,Email,Phone,Country,ImageURL,ImagePath,Created;
+    private Stage stage;
+    private Gender gender;
+    private Role role;
 
     public Disciple() {
     }
@@ -75,22 +118,6 @@ public class Disciple {
         Country = country;
     }
 
-    public String getStage() {
-        return Stage;
-    }
-
-    public void setStage(String stage) {
-        Stage = stage;
-    }
-
-    public String getGender() {
-        return Gender;
-    }
-
-    public void setGender(String gender) {
-        Gender = gender;
-    }
-
     public String getImageURL() {
         return ImageURL;
     }
@@ -107,19 +134,35 @@ public class Disciple {
         ImagePath = imagePath;
     }
 
-    public String getRole() {
-        return Role;
-    }
-
-    public void setRole(String role) {
-        Role = role;
-    }
-
     public String getCreated() {
         return Created;
     }
 
     public void setCreated(String created) {
         Created = created;
+    }
+
+    public Disciple.Stage getStage() {
+        return stage;
+    }
+
+    public void setStage(Disciple.Stage stage) {
+        this.stage = stage;
+    }
+
+    public Disciple.Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Disciple.Gender gender) {
+        this.gender = gender;
+    }
+
+    public Disciple.Role getRole() {
+        return role;
+    }
+
+    public void setRole(Disciple.Role role) {
+        this.role = role;
     }
 }

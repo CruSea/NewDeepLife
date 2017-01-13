@@ -13,41 +13,24 @@ public class Logs {
 
     // === Type ===
     public enum Type {
-        SEND_LOG ("Send_Log"),
-        SEND_DISCIPLES ("Send_Disciples"),
-        REMOVE_DISCIPLE ("Remove_Disciple"),
-        UPDATE_DISCIPLE ("Update_Disciple"),
-        SEND_SCHEDULE ("Send_Schedule"),
-        SEND_REPORT ("Send_Report"),
-        SEND_TESTIMONY ("Send_Testimony"),
-        UPDATE_SCHEDULES ("Update_Schedules"),
-        ADD_NEW_DISCIPLES ("AddNew_Disciples"),
-        UPDATE_DISCIPLES ("Update_Disciples"),
-        SEND_ANSWERS ("Send_Answers"),
-        ADD_NEW_ANSWERS ("AddNew_Answers"),
-
-        DISCIPLE ("Disciple");
+        // From apiController.php in Web App:
+        DISCIPLE("Disciple"),
+        SCHEDULE("Schedule"),
+        REMOVE_DISCIPLE("Remove_Disciple"),
+        REMOVE_SCHEDULE("Remove_Schedule"),
+        NEWS_FEEDS("NewsFeeds");
 
 
         private final String name;
         private Type(String s) { this.name = s; }
         public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
         @Override public String toString() { return this.name; }
-        public static Type fromString(String s) {
-            if (s != null) {
-                for (Type t : Type.values()) {
-                    if (s.equalsIgnoreCase(t.toString())) {
-                        return t;
-                    }
-                }
-            }
-            //return null;
-            throw new IllegalArgumentException("No constant in Enum found with text: " + s);
-        }
+        public static Type fromString(String s) { if (s != null) { for (Type t : Type.values()) { if (s.equalsIgnoreCase(t.toString())) { return t; } } } throw new IllegalArgumentException("No constant in <Type> Enum found with text: " + s); }
     }
 
     // === Task ===
     public enum Task {
+        // briggsm: I'm not able to find a list of all the possible different "Tasks". Biniam, can you fine-tune this enum?
         SEND_LOG("Send_Log"),
         SEND_DISCIPLES("Send_Disciples"),
         REMOVE_DISCIPLE("Remove_Disciple"),
@@ -66,22 +49,10 @@ public class Logs {
         private Task(String s) { this.name = s; }
         public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
         @Override public String toString() { return this.name; }
-        public static Task fromString(String s) {
-            if (s != null) {
-                for (Task t : Task.values()) {
-                    if (s.equalsIgnoreCase(t.toString())) {
-                        return t;
-                    }
-                }
-            }
-            //return null;
-            throw new IllegalArgumentException("No constant in Enum found with text: " + s);
-        }
+        public static Task fromString(String s) { if (s != null) { for (Task t : Task.values()) { if (s.equalsIgnoreCase(t.toString())) { return t; } } } throw new IllegalArgumentException("No constant in <Task> Enum found with text: " + s); }
     }
 
     private int ID;
-//    private String type,task,value,Service;
-//    private String type,task,value;
     private String value;
 
     // Enum's

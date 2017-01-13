@@ -17,6 +17,7 @@ import android.widget.ToggleButton;
 import java.util.List;
 
 import deeplife.gcme.com.deeplife.DeepLife;
+import deeplife.gcme.com.deeplife.Disciples.Disciple;
 import deeplife.gcme.com.deeplife.Models.Answer;
 import deeplife.gcme.com.deeplife.Models.Logs;
 import deeplife.gcme.com.deeplife.R;
@@ -32,10 +33,10 @@ public class WinBuildSendItemsAdapter extends RecyclerView.Adapter<WinBuildSendI
     public static Context myContext;
     public static String DisciplePhone;
     public static SyncDatabase mySyncDatabase;
-    public static String BuildStage;
+    public static Disciple.Stage BuildStage;
     private int count;
 
-    public WinBuildSendItemsAdapter(List<WbsQuestion> wbsQuestions, Context context, String disciplePhone, String buildStage) {
+    public WinBuildSendItemsAdapter(List<WbsQuestion> wbsQuestions, Context context, String disciplePhone, Disciple.Stage buildStage) {
         this.wbsQuestions = wbsQuestions;
         this.count = wbsQuestions.size();
         mySyncDatabase = new SyncDatabase();

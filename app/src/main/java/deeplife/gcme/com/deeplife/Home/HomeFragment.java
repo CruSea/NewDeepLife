@@ -3,14 +3,11 @@ package deeplife.gcme.com.deeplife.Home;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import deeplife.gcme.com.deeplife.DeepLife;
@@ -53,12 +50,12 @@ public class HomeFragment extends Fragment {
         if(myDisciples != null){
 
             for(Disciple dis : myDisciples){
-                if(dis.getStage().toLowerCase().equals("win")){
-                    WinCount +=1;
-                }else if(dis.getStage().toLowerCase().equals("build")){
-                    BuildCount +=1;
-                }else if(dis.getStage().toLowerCase().equals("send")){
-                    SendCount +=1;
+                if (dis.getStage() == Disciple.Stage.WIN) {
+                    WinCount += 1;
+                } else if (dis.getStage() == Disciple.Stage.BUILD) {
+                    BuildCount += 1;
+                } else if (dis.getStage() == Disciple.Stage.SEND) {
+                    SendCount += 1;
                 }
             }
         }

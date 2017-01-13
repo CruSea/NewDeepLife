@@ -183,16 +183,16 @@ public class DiscipleAddActivity extends AppCompatActivity {
             myDisciple.setEmail(Email.getText().toString());
             myDisciple.setPhone(myCountries.get(CountryPos).getCode()+Phone.getText().toString());
             myDisciple.setCountry(""+myCountries.get(CountryPos).getSerID());
-            myDisciple.setRole("0");
+            myDisciple.setRole(Disciple.Role.DEFAULT);
             myDisciple.setDisplayName(FullName.getText().toString());
-            myDisciple.setGender(myGender.getSelectedItem().toString());
+            myDisciple.setGender(myGender.getSelectedItemPosition() == 0 ? Disciple.Gender.MALE : Disciple.Gender.FEMALE); // briggsm: Will this always work? Think we need to determine based on position because of i18n.
             if(DiscipleImageFile.isFile()){
                 myDisciple.setImagePath(myFileManager.getFileAt("Disciples",myDisciple.getPhone()+DiscipleImageFile.getName()).getAbsolutePath());
             }else {
                 myDisciple.setImagePath("0");
             }
             myDisciple.setImageURL("0");
-            myDisciple.setStage("WIN");
+            myDisciple.setStage(Disciple.Stage.WIN);
             myDisciple.setMentorID(0);
             myDisciple.setCreated("Today");
             myDisciple.setSerID(0);

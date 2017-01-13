@@ -1,12 +1,15 @@
 package deeplife.gcme.com.deeplife.Models;
 
+import deeplife.gcme.com.deeplife.Disciples.Disciple;
+
 /**
  * Created by bengeos on 12/20/16.
  */
 
 public class Answer {
     private int ID,SerID,QuestionID;
-    private String DisciplePhone,Answer,BuildStage;
+    private String DisciplePhone,Answer;
+    Disciple.Stage buildStage;
 
     public int getID() {
         return ID;
@@ -48,11 +51,11 @@ public class Answer {
         Answer = answer;
     }
 
-    public String getBuildStage() {
-        return BuildStage;
+    public Disciple.Stage getBuildStage() {
+        return buildStage;
     }
 
-    public void setBuildStage(String buildStage) {
-        BuildStage = buildStage;
+    public void setBuildStage(Disciple.Stage buildStage) {
+        this.buildStage = buildStage;
     }
 }
