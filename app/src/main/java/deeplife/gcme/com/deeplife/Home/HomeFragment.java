@@ -50,11 +50,11 @@ public class HomeFragment extends Fragment {
         if(myDisciples != null){
 
             for(Disciple dis : myDisciples){
-                if (dis.getStage() == Disciple.Stage.WIN) {
+                if (dis.getStage() == Disciple.STAGE.WIN) {
                     WinCount += 1;
-                } else if (dis.getStage() == Disciple.Stage.BUILD) {
+                } else if (dis.getStage() == Disciple.STAGE.BUILD) {
                     BuildCount += 1;
-                } else if (dis.getStage() == Disciple.Stage.SEND) {
+                } else if (dis.getStage() == Disciple.STAGE.SEND) {
                     SendCount += 1;
                 }
             }

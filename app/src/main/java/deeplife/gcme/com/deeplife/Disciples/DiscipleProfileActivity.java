@@ -183,8 +183,8 @@ public class DiscipleProfileActivity extends AppCompatActivity {
             myDisciple.setDisplayName(FullName.getText().toString());
             DeepLife.myDATABASE.updateDisciple(myDisciple);
             Logs logs = new Logs();
-            logs.setType(Logs.Type.DISCIPLE);
-            logs.setTask(Logs.Task.SEND_DISCIPLES);
+            logs.setType(Logs.TYPE.DISCIPLE);
+            logs.setTask(Logs.TASK.SEND_DISCIPLES);
             logs.setValue(myDisciple.getPhone());
             mySyncDatabase.AddLog(logs);
             EditMode(false);

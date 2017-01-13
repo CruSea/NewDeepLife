@@ -44,7 +44,7 @@ public class WinBuildSendActivity extends AppCompatActivity {
     public static TextView DiscipleName;
     public static String DisciplePhone;
     //public static int Stage;  // briggsm: don't think we need 2 different "stage" variables, so I got rid of this one.
-    public static Disciple.Stage buildStage;
+    public static Disciple.STAGE buildStage;
     public static Disciple myDisciple;
     public static List<Category> categories;
     private Toolbar toolbar;
@@ -84,20 +84,20 @@ public class WinBuildSendActivity extends AppCompatActivity {
         Btn_Win.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UpdateQuestionList(Disciple.Stage.WIN);
+                UpdateQuestionList(Disciple.STAGE.WIN);
             }
         });
 
         Btn_Build.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UpdateQuestionList(Disciple.Stage.BUILD);
+                UpdateQuestionList(Disciple.STAGE.BUILD);
             }
         });
         Btn_Send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UpdateQuestionList(Disciple.Stage.SEND);
+                UpdateQuestionList(Disciple.STAGE.SEND);
             }
         });
         DiscipleName.setText(myDisciple.getDisplayName());
@@ -109,7 +109,7 @@ public class WinBuildSendActivity extends AppCompatActivity {
         }
 
     }
-    public void UpdateQuestionList(Disciple.Stage stage){
+    public void UpdateQuestionList(Disciple.STAGE stage){
         ArrayList<WbsQuestion> SendQuestions = DeepLife.myDATABASE.getWinBuildSendQuestionsByCategorySerID(stage.toServerId());
         if(SendQuestions != null){
             List<Category> items = DeepLife.myDATABASE.getCategoriesByParentID(stage.toServerId());
@@ -124,11 +124,11 @@ public class WinBuildSendActivity extends AppCompatActivity {
                     }
                 }
             }
-            if (buildStage == Disciple.Stage.WIN) {
+            if (buildStage == Disciple.STAGE.WIN) {
                 L_Win.setBackgroundColor(Color.rgb(254,191,10));
                 L_Build.setBackgroundColor(Color.rgb(00,188,216));
                 L_Send.setBackgroundColor(Color.rgb(00,188,216));
-            } else if (buildStage == Disciple.Stage.BUILD) {
+            } else if (buildStage == Disciple.STAGE.BUILD) {
                 L_Win.setBackgroundColor(Color.rgb(00,188,216));
                 L_Build.setBackgroundColor(Color.rgb(254,191,10));
                 L_Send.setBackgroundColor(Color.rgb(00,188,216));
@@ -176,9 +176,9 @@ public class WinBuildSendActivity extends AppCompatActivity {
             }
         }
         if(WinBuilSend == 0){
-            buildStage = Disciple.Stage.WIN;
+            buildStage = Disciple.STAGE.WIN;
         }else {
-            buildStage = Disciple.Stage.BUILD;
+            buildStage = Disciple.STAGE.BUILD;
             WinBuilSend = 1;
             Questions = DeepLife.myDATABASE.getWinBuildSendQuestionsByCategorySerID(2);
             for(WbsQuestion WinQuestioons : Questions){
@@ -197,9 +197,9 @@ public class WinBuildSendActivity extends AppCompatActivity {
             }
             //if(WinBuilSend == 0 && Stage > 1){  // briggsm: took out check for Steve > 1, cuz it looks useless to me.
             if (WinBuilSend == 0) {
-                buildStage = Disciple.Stage.BUILD;
+                buildStage = Disciple.STAGE.BUILD;
             }else {
-                buildStage = Disciple.Stage.SEND;
+                buildStage = Disciple.STAGE.SEND;
                 WinBuilSend = 1;
                 Questions = DeepLife.myDATABASE.getWinBuildSendQuestionsByCategorySerID(3);
                 for(WbsQuestion WinQuestioons : Questions){
@@ -218,14 +218,14 @@ public class WinBuildSendActivity extends AppCompatActivity {
                 }
                 //if(WinBuilSend == 0 && Stage > 2){ // briggsm: took out check for Steve > 1, cuz it looks useless to me.
                 if (WinBuilSend == 0) {
-                    buildStage = Disciple.Stage.SEND;
+                    buildStage = Disciple.STAGE.SEND;
                 }else {
-                    buildStage = Disciple.Stage.SEND;
+                    buildStage = Disciple.STAGE.SEND;
                 }
             }
         }
 
-        if(buildStage == Disciple.Stage.WIN){
+        if(buildStage == Disciple.STAGE.WIN){
             Btn_Win.setEnabled(true);
             Btn_Win.setTypeface(Btn_Win.getTypeface(),Typeface.BOLD);
             Btn_Win.setText("->" + DeepLife.getContext().getString(R.string.text_win) + "<-");
@@ -240,8 +240,8 @@ public class WinBuildSendActivity extends AppCompatActivity {
             Btn_Send.setTypeface(Btn_Send.getTypeface(),Typeface.ITALIC);
             Btn_Send.setText(R.string.text_send);
 
-            myDisciple.setStage(Disciple.Stage.WIN);
-        }else if(buildStage == Disciple.Stage.BUILD){
+            myDisciple.setStage(Disciple.STAGE.WIN);
+        }else if(buildStage == Disciple.STAGE.BUILD){
             Btn_Win.setEnabled(true);
             Btn_Win.setTypeface(Btn_Win.getTypeface(),Typeface.ITALIC);
             Btn_Win.setText(R.string.text_win);
@@ -256,7 +256,7 @@ public class WinBuildSendActivity extends AppCompatActivity {
             Btn_Send.setTypeface(Btn_Send.getTypeface(),Typeface.ITALIC);
             Btn_Send.setText(DeepLife.getContext().getString(R.string.text_send));
 
-            myDisciple.setStage(Disciple.Stage.BUILD);
+            myDisciple.setStage(Disciple.STAGE.BUILD);
         }else {
             // SEND
             Btn_Win.setEnabled(true);
@@ -273,7 +273,7 @@ public class WinBuildSendActivity extends AppCompatActivity {
             Btn_Send.setTypeface(Btn_Send.getTypeface(),Typeface.BOLD);
             Btn_Send.setText("->" + DeepLife.getContext().getString(R.string.text_send) + "<-");
 
-            myDisciple.setStage(Disciple.Stage.SEND);
+            myDisciple.setStage(Disciple.STAGE.SEND);
         }
         DeepLife.myDATABASE.updateDisciple(myDisciple);
     }

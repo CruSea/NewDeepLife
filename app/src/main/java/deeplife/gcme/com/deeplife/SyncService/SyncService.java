@@ -40,7 +40,8 @@ import me.tatarka.support.job.JobService;
 public class SyncService extends JobService {
     public static final String TAG = "SyncService";
 
-    public enum ApiRequest {
+    // === API_REQUEST ===
+    public enum API_REQUEST {
         USER_NAME("User_Name"),
         USER_PASS("User_Pass"),
         COUNTRY("Country"),
@@ -48,13 +49,13 @@ public class SyncService extends JobService {
         PARAM("Param");
 
         private final String name;
-        ApiRequest(String s) { this.name = s; }
+        API_REQUEST(String s) { this.name = s; }
         public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
         @Override public String toString() { return this.name; }
     }
 
-    // === ApiService ===
-    public enum ApiService {
+    // === API_SERVICE ===
+    public enum API_SERVICE {
         // From apiController.php in Web App:
         GETALL_DISCIPLES("GetAll_Disciples"),
         GETNEW_DISCIPLES("GetNew_Disciples"),
@@ -100,7 +101,7 @@ public class SyncService extends JobService {
 
 
         private final String name;
-        ApiService(String s) { this.name = s; }
+        API_SERVICE(String s) { this.name = s; }
         public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
         @Override public String toString() { return this.name; }
     }
@@ -131,20 +132,20 @@ public class SyncService extends JobService {
             getService();
             if(user != null ){
                 if(user.getUser_Email() != null){
-                    Send_Param.add(new kotlin.Pair<String, String>(ApiRequest.USER_NAME.toString(), user.getUser_Email()));
+                    Send_Param.add(new kotlin.Pair<String, String>(API_REQUEST.USER_NAME.toString(), user.getUser_Email()));
                 }else {
-                    Send_Param.add(new kotlin.Pair<String, String>(ApiRequest.USER_NAME.toString(), user.getUser_Phone()));
+                    Send_Param.add(new kotlin.Pair<String, String>(API_REQUEST.USER_NAME.toString(), user.getUser_Phone()));
                 }
-                Send_Param.add(new kotlin.Pair<String, String>(ApiRequest.USER_PASS.toString(), user.getUser_Pass()));
-                Send_Param.add(new kotlin.Pair<String, String>(ApiRequest.COUNTRY.toString(), user.getUser_Country()));
-                Send_Param.add(new kotlin.Pair<String, String>(ApiRequest.SERVICE.toString(), myLogs.getService().toString()));
-                Send_Param.add(new kotlin.Pair<String, String>(ApiRequest.PARAM.toString(), myParser.toJson(myLogs.getParam())));
+                Send_Param.add(new kotlin.Pair<String, String>(API_REQUEST.USER_PASS.toString(), user.getUser_Pass()));
+                Send_Param.add(new kotlin.Pair<String, String>(API_REQUEST.COUNTRY.toString(), user.getUser_Country()));
+                Send_Param.add(new kotlin.Pair<String, String>(API_REQUEST.SERVICE.toString(), myLogs.getService().toString()));
+                Send_Param.add(new kotlin.Pair<String, String>(API_REQUEST.PARAM.toString(), myParser.toJson(myLogs.getParam())));
             }else{
-                Send_Param.add(new kotlin.Pair<String, String>(ApiRequest.USER_NAME.toString(), " "));
-                Send_Param.add(new kotlin.Pair<String, String>(ApiRequest.USER_PASS.toString(), " "));
-                Send_Param.add(new kotlin.Pair<String, String>(ApiRequest.COUNTRY.toString(), " "));
-                Send_Param.add(new kotlin.Pair<String, String>(ApiRequest.SERVICE.toString(), myLogs.getService().toString()));
-                Send_Param.add(new kotlin.Pair<String, String>(ApiRequest.PARAM.toString(), myParser.toJson(myLogs.getParam())));
+                Send_Param.add(new kotlin.Pair<String, String>(API_REQUEST.USER_NAME.toString(), " "));
+                Send_Param.add(new kotlin.Pair<String, String>(API_REQUEST.USER_PASS.toString(), " "));
+                Send_Param.add(new kotlin.Pair<String, String>(API_REQUEST.COUNTRY.toString(), " "));
+                Send_Param.add(new kotlin.Pair<String, String>(API_REQUEST.SERVICE.toString(), myLogs.getService().toString()));
+                Send_Param.add(new kotlin.Pair<String, String>(API_REQUEST.PARAM.toString(), myParser.toJson(myLogs.getParam())));
             }
             // Temp
 //            Log.i(TAG, "Enum test1: " + Task.ADD_NEW_ANSWERS);
@@ -199,15 +200,15 @@ public class SyncService extends JobService {
             for(int i=0;i<foundData.size();i++){
                 myLogs.getParam().add(foundData.get(i));
             }
-            myLogs.setService(ApiService.SEND_LOG);
+            myLogs.setService(API_SERVICE.SEND_LOG);
         }else if(DeepLife.myDATABASE.getSendDisciples().size()>0){
             Log.i(TAG,"GET DISCIPLES TO SEND -> \n");
             ArrayList<Disciple> foundData = DeepLife.myDATABASE.getSendDisciples();
             for(int i=0;i<foundData.size();i++){
                 myLogs.getParam().add(foundData.get(i));
             }
-            //myLogs.setService(ApiService.SEND_DISCIPLES);  // briggsm: Are we sure? Biniam had AddNew_Disciples here. Is that right? I'm changing to Send_Disciples.
-            myLogs.setService(ApiService.ADDNEW_DISCIPLES);
+            //myLogs.setService(API_SERVICE.SEND_DISCIPLES);  // briggsm: Are we sure? Biniam had AddNew_Disciples here. Is that right? I'm changing to Send_Disciples.
+            myLogs.setService(API_SERVICE.ADDNEW_DISCIPLES);
         }else if(DeepLife.myDATABASE.getTopImageSync() != null){
             Log.i(TAG,"GET Images TO SEND -> \n");
             ImageSync tosync = DeepLife.myDATABASE.getTopImageSync();
@@ -217,14 +218,14 @@ public class SyncService extends JobService {
             img.setId(tosync.getId());
             myLogs.getParam().add(img);
             //myLogs.setService(tosync.getParam());
-            myLogs.setService(ApiService.valueOf(tosync.getParam())); // briggsm: not 100% sure this will work... TODO: debug.
+            myLogs.setService(API_SERVICE.valueOf(tosync.getParam())); // briggsm: not 100% sure this will work... TODO: debug.
         }else if(DeepLife.myDATABASE.getUpdateDisciples().size()>0){
             Log.i(TAG,"GET DISCIPLES TO UPDATE -> \n");
             ArrayList<Disciple> foundData = DeepLife.myDATABASE.getUpdateDisciples();
             for(int i=0;i<foundData.size();i++){
                 myLogs.getParam().add(foundData.get(i));
             }
-            myLogs.setService(ApiService.UPDATE_DISCIPLES);
+            myLogs.setService(API_SERVICE.UPDATE_DISCIPLES);
         }else if(DeepLife.myDATABASE.getSendAnswers().size()>0){
             Log.i(TAG,"GET Answers TO Send -> \n");
             ArrayList<Answer> foundData = DeepLife.myDATABASE.getSendAnswers();
@@ -232,37 +233,37 @@ public class SyncService extends JobService {
                 myLogs.getParam().add(foundData.get(i));
             }
             //myLogs.setService(Sync_Tasks[12]); // briggsm: Are we sure? Biniam had AddNewAnswers here. Is that right? I'm changing to Send_Answers
-            //myLogs.setService(ApiService.SEND_ANSWERS);
-            myLogs.setService(ApiService.ADDNEW_ANSWERS);
+            //myLogs.setService(API_SERVICE.SEND_ANSWERS);
+            myLogs.setService(API_SERVICE.ADDNEW_ANSWERS);
         }else if(DeepLife.myDATABASE.getSendSchedules().size()>0){
             Log.i(TAG,"GET Schedules TO Send -> \n");
             ArrayList<Schedule> foundData = DeepLife.myDATABASE.getSendSchedules();
             for(int i=0;i<foundData.size();i++){
                 myLogs.getParam().add(foundData.get(i));
             }
-            //myLogs.setService(ApiService.SEND_SCHEDULE);
-            myLogs.setService(ApiService.ADDNEW_SCHEDULES);
+            //myLogs.setService(API_SERVICE.SEND_SCHEDULE);
+            myLogs.setService(API_SERVICE.ADDNEW_SCHEDULES);
         }else if(DeepLife.myDATABASE.getUpdateSchedules().size()>0){
             Log.i(TAG,"GET Schedules TO UPDATE -> \n");
             ArrayList<Schedule> foundData = DeepLife.myDATABASE.getUpdateSchedules();
             for(int i=0;i<foundData.size();i++){
                 myLogs.getParam().add(foundData.get(i));
             }
-            myLogs.setService(ApiService.UPDATE_SCHEDULES);
+            myLogs.setService(API_SERVICE.UPDATE_SCHEDULES);
         }else if(DeepLife.myDATABASE.getSendReports().size()>0){
             Log.i(TAG,"GET Reports TO Send -> \n");
             ArrayList<ReportItem> foundData = DeepLife.myDATABASE.getSendReports();
             for(int i=0;i<foundData.size();i++){
                 myLogs.getParam().add(foundData.get(i));
             }
-            myLogs.setService(ApiService.SEND_REPORT);
+            myLogs.setService(API_SERVICE.SEND_REPORT);
         }else if(DeepLife.myDATABASE.getSendTestimony().size()>0){
             Log.i(TAG,"GET Testimony TO Send -> \n");
             ArrayList<Testimony> foundData = DeepLife.myDATABASE.getSendTestimony();
             for(int i=0;i<foundData.size();i++){
                 myLogs.getParam().add(foundData.get(i));
             }
-            myLogs.setService(ApiService.SEND_TESTIMONY);
+            myLogs.setService(API_SERVICE.SEND_TESTIMONY);
         }
         return myLogs;
     }

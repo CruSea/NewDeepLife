@@ -9,7 +9,7 @@ import deeplife.gcme.com.deeplife.Disciples.Disciple;
 public class Answer {
     private int ID,SerID,QuestionID;
     private String DisciplePhone,Answer;
-    Disciple.Stage buildStage;
+    Disciple.STAGE buildStage;
 
     public int getID() {
         return ID;
@@ -51,11 +51,11 @@ public class Answer {
         Answer = answer;
     }
 
-    public Disciple.Stage getBuildStage() {
+    public Disciple.STAGE getBuildStage() {
         return buildStage;
     }
 
-    public void setBuildStage(Disciple.Stage buildStage) {
+    public void setBuildStage(Disciple.STAGE buildStage) {
         this.buildStage = buildStage;
     }
 }

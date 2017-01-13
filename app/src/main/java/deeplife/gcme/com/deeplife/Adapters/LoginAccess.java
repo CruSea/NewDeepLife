@@ -57,14 +57,14 @@ public class LoginAccess {
     private static final String TAG = "LoginAccess";
     public boolean LogInAuthnticate(){
         if(myUser.getUser_Email()!=null){
-            Send_Param.add(new kotlin.Pair<String, String>(SyncService.ApiRequest.USER_NAME.toString(), myUser.getUser_Email()));
+            Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.USER_NAME.toString(), myUser.getUser_Email()));
         }else {
-            Send_Param.add(new kotlin.Pair<String, String>(SyncService.ApiRequest.USER_NAME.toString(), myUser.getUser_Phone()));
+            Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.USER_NAME.toString(), myUser.getUser_Phone()));
         }
-        Send_Param.add(new kotlin.Pair<String, String>(SyncService.ApiRequest.USER_PASS.toString(), myUser.getUser_Pass()));
-        Send_Param.add(new kotlin.Pair<String, String>(SyncService.ApiRequest.COUNTRY.toString(), myUser.getUser_Country()));
-        Send_Param.add(new kotlin.Pair<String, String>(SyncService.ApiRequest.SERVICE.toString(), SyncService.ApiService.LOG_IN.toString()));
-        Send_Param.add(new kotlin.Pair<String, String>(SyncService.ApiRequest.PARAM.toString(), "[]"));
+        Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.USER_PASS.toString(), myUser.getUser_Pass()));
+        Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.COUNTRY.toString(), myUser.getUser_Country()));
+        Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.SERVICE.toString(), SyncService.API_SERVICE.LOG_IN.toString()));
+        Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.PARAM.toString(), "[]"));
 
         try{
             Fuel.post(DeepLife.API_URL,Send_Param).responseString(new Handler<String>() {
@@ -115,11 +115,11 @@ public class LoginAccess {
         return false;
     }
     public boolean GetMetaData(){
-        Send_Param.add(new kotlin.Pair<String, String>(SyncService.ApiRequest.USER_NAME.toString(), ""));
-        Send_Param.add(new kotlin.Pair<String, String>(SyncService.ApiRequest.USER_PASS.toString(), ""));
-        Send_Param.add(new kotlin.Pair<String, String>(SyncService.ApiRequest.COUNTRY.toString(), ""));
-        Send_Param.add(new kotlin.Pair<String, String>(SyncService.ApiRequest.SERVICE.toString(), SyncService.ApiService.META_DATA.toString()));
-        Send_Param.add(new kotlin.Pair<String, String>(SyncService.ApiRequest.PARAM.toString(), "[]"));
+        Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.USER_NAME.toString(), ""));
+        Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.USER_PASS.toString(), ""));
+        Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.COUNTRY.toString(), ""));
+        Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.SERVICE.toString(), SyncService.API_SERVICE.META_DATA.toString()));
+        Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.PARAM.toString(), "[]"));
         try{
             myFuel.post(DeepLife.API_URL,Send_Param).responseString(new Handler<String>() {
                 @Override
@@ -153,11 +153,11 @@ public class LoginAccess {
     }
 
     public boolean SignupAuthnticate(final User user){
-        Send_Param.add(new kotlin.Pair<String, String>(SyncService.ApiRequest.USER_NAME.toString(), user.getUser_Email()));
-        Send_Param.add(new kotlin.Pair<String, String>(SyncService.ApiRequest.USER_PASS.toString(), user.getUser_Pass()));
-        Send_Param.add(new kotlin.Pair<String, String>(SyncService.ApiRequest.COUNTRY.toString(), user.getUser_Country()));
-        Send_Param.add(new kotlin.Pair<String, String>(SyncService.ApiRequest.SERVICE.toString(), SyncService.ApiService.SIGN_UP.toString()));
-        Send_Param.add(new kotlin.Pair<String, String>(SyncService.ApiRequest.PARAM.toString(), myParser.toJson(user)));
+        Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.USER_NAME.toString(), user.getUser_Email()));
+        Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.USER_PASS.toString(), user.getUser_Pass()));
+        Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.COUNTRY.toString(), user.getUser_Country()));
+        Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.SERVICE.toString(), SyncService.API_SERVICE.SIGN_UP.toString()));
+        Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.PARAM.toString(), myParser.toJson(user)));
         myFuel.post(DeepLife.API_URL,Send_Param).responseString(new Handler<String>() {
             @Override
             public void success(@NotNull Request request, @NotNull Response response, String s) {

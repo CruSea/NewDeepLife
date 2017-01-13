@@ -12,7 +12,7 @@ import deeplife.gcme.com.deeplife.SyncService.SyncService;
 public class Logs {
 
     // === Type ===
-    public enum Type {
+    public enum TYPE {
         // From apiController.php in Web App:
         DISCIPLE("Disciple"),
         SCHEDULE("Schedule"),
@@ -22,14 +22,14 @@ public class Logs {
 
 
         private final String name;
-        private Type(String s) { this.name = s; }
+        private TYPE(String s) { this.name = s; }
         public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
         @Override public String toString() { return this.name; }
-        public static Type fromString(String s) { if (s != null) { for (Type t : Type.values()) { if (s.equalsIgnoreCase(t.toString())) { return t; } } } throw new IllegalArgumentException("No constant in <Type> Enum found with text: " + s); }
+        public static TYPE fromString(String s) { if (s != null) { for (TYPE t : TYPE.values()) { if (s.equalsIgnoreCase(t.toString())) { return t; } } } throw new IllegalArgumentException("No constant in <Type> Enum found with text: " + s); }
     }
 
     // === Task ===
-    public enum Task {
+    public enum TASK {
         // briggsm: I'm not able to find a list of all the possible different "Tasks". Biniam, can you fine-tune this enum?
         SEND_LOG("Send_Log"),
         SEND_DISCIPLES("Send_Disciples"),
@@ -46,25 +46,25 @@ public class Logs {
 
 
         private final String name;
-        private Task(String s) { this.name = s; }
+        private TASK(String s) { this.name = s; }
         public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
         @Override public String toString() { return this.name; }
-        public static Task fromString(String s) { if (s != null) { for (Task t : Task.values()) { if (s.equalsIgnoreCase(t.toString())) { return t; } } } throw new IllegalArgumentException("No constant in <Task> Enum found with text: " + s); }
+        public static TASK fromString(String s) { if (s != null) { for (TASK t : TASK.values()) { if (s.equalsIgnoreCase(t.toString())) { return t; } } } throw new IllegalArgumentException("No constant in <Task> Enum found with text: " + s); }
     }
 
     private int ID;
     private String value;
 
     // Enum's
-    private Type type;
-    private Task task;
-    private SyncService.ApiService Service;
+    private TYPE type;
+    private TASK task;
+    private SyncService.API_SERVICE Service;
 
     private List<Object> Param;
 
     public Logs() {
         Param = new ArrayList<Object>();
-        Service = SyncService.ApiService.UPDATE;
+        Service = SyncService.API_SERVICE.UPDATE;
     }
 
     public int getID() {
@@ -75,19 +75,19 @@ public class Logs {
         this.ID = ID;
     }
 
-    public Type getType() {
+    public TYPE getType() {
         return type;
     }
 
-    public void setType(Type type) {
+    public void setType(TYPE type) {
         this.type = type;
     }
 
-    public Task getTask() {
+    public TASK getTask() {
         return task;
     }
 
-    public void setTask(Task task) {
+    public void setTask(TASK task) {
         this.task = task;
     }
 
@@ -108,11 +108,11 @@ public class Logs {
     }
 
 
-    public SyncService.ApiService getService() {
+    public SyncService.API_SERVICE getService() {
         return Service;
     }
 
-    public void setService(SyncService.ApiService service) {
+    public void setService(SyncService.API_SERVICE service) {
         Service = service;
     }
 }

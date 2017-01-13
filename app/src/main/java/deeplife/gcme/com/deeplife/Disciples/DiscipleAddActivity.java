@@ -91,7 +91,7 @@ public class DiscipleAddActivity extends AppCompatActivity {
         myUser = DeepLife.myDATABASE.getMainUser();
 
         myCountry = (Spinner) findViewById(R.id.spn_discipleadd_country);
-        myGender = (Spinner) findViewById(R.id.spn_discipleadd_country);
+        myGender = (Spinner) findViewById(R.id.spn_discipleadd_gender);
         FullName = (EditText) findViewById(R.id.txt_discipleadd_fullname);
         Email = (EditText) findViewById(R.id.txt_discipleadd_email);
         Phone = (EditText) findViewById(R.id.txt_discipleadd_phone);
@@ -128,8 +128,8 @@ public class DiscipleAddActivity extends AppCompatActivity {
                     long x = mySyncDatabase.AddDisciple(myDisciple);
                     if(x>0){
                         Logs logs = new Logs();
-                        logs.setType(Logs.Type.DISCIPLE);
-                        logs.setTask(Logs.Task.SEND_DISCIPLES);  // briggsm: Biniam says Send_Disciples.  Why not AddNew_Disciples? What's difference?
+                        logs.setType(Logs.TYPE.DISCIPLE);
+                        logs.setTask(Logs.TASK.SEND_DISCIPLES);  // briggsm: Biniam says Send_Disciples.  Why not AddNew_Disciples? What's difference?
                         logs.setValue(myDisciple.getPhone());
                         mySyncDatabase.AddLog(logs);
                         DisciplesFragment.UpdateList();
@@ -191,16 +191,16 @@ public class DiscipleAddActivity extends AppCompatActivity {
             myDisciple.setEmail(Email.getText().toString());
             myDisciple.setPhone(myCountries.get(CountryPos).getCode()+Phone.getText().toString());
             myDisciple.setCountry(""+myCountries.get(CountryPos).getSerID());
-            myDisciple.setRole(Disciple.Role.DEFAULT);
+            myDisciple.setRole(Disciple.ROLE.DEFAULT);
             myDisciple.setDisplayName(FullName.getText().toString());
-            myDisciple.setGender(myGender.getSelectedItemPosition() == 0 ? Disciple.Gender.MALE : Disciple.Gender.FEMALE); // briggsm: Will this always work? Think we need to determine based on position because of i18n.
+            myDisciple.setGender(myGender.getSelectedItemPosition() == 0 ? Disciple.GENDER.MALE : Disciple.GENDER.FEMALE); // briggsm: Will this always work? Think we need to determine based on position because of i18n.
             if(DiscipleImageFile.isFile()){
                 myDisciple.setImagePath(myFileManager.getFileAt("Disciples",myDisciple.getPhone()+DiscipleImageFile.getName()).getAbsolutePath());
             }else {
                 myDisciple.setImagePath("0");
             }
             myDisciple.setImageURL("0");
-            myDisciple.setStage(Disciple.Stage.WIN);
+            myDisciple.setStage(Disciple.STAGE.WIN);
             myDisciple.setMentorID(0);
             myDisciple.setCreated("Today");
             myDisciple.setSerID(0);
