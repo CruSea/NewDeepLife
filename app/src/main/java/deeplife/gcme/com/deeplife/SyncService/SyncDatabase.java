@@ -30,60 +30,115 @@ import deeplife.gcme.com.deeplife.WinBuildSend.WbsQuestion;
 
 public class SyncDatabase {
     private static final String TAG = "SyncDatabase";
+
+    public enum ApiResponseKey {
+        RESPONSE("Response"),
+        NEWSFEEDS("NewsFeeds"),
+        TESTIMONIES("Testimonies"),
+        DISCIPLES("Disciples"),
+        QUESTIONS("Questions"),
+        CATEGORIES("Categories"),
+        ANSWERS("Answers"),
+        LOG_RESPONSE("Log_Response"),
+        PROFILE("Profile"),
+        LEARNINGTOOLS("LearningTools"),
+        ID("id"),
+        CONTENT("content"),
+        IMAGE_URL("image_url"),
+        PUBLISH_DATE("publish_date"),
+        USER_ID("user_id"),
+        CREATED("created"),
+        USER_NAME("user_name"),
+        DISPLAYNAME("displayName"),
+        EMAIL("email"),
+        PHONE_NO("phone_no"),
+        MENTOR_ID("mentor_id"),
+        ROLE_ID("role_id"),
+        GENDER("gender"),
+        CATEGORY("category"),
+        QUESTION("question"),
+        MANDATORY("mandatory"),
+        TYPE("type"),
+        COUNTRY("country"),
+        PARENT("parent"),
+        STATUS("status"),
+        DISCIPLE_PHONE("disciple_phone"),
+        QUESTION_ID("question_id"),
+        ANSWER("answer"),
+        STAGE("stage"),
+        PASS("pass"),
+        PICTURE("picture"),
+        FIRSTNAME("firstName"),
+        TITLE("title"),
+        DESCRIPTION("description"),
+        IFRAMCODE("iframcode"),
+        DEFAULT_LEARN("default_learn"),
+        ISO3("iso3"),
+        NAME("name"),
+        CODE("code"),
+        LOG_ID("Log_ID");
+
+
+        private final String name;
+        ApiResponseKey(String s) { this.name = s; }
+        public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
+        @Override public String toString() { return this.name; }
+    }
+
     public static void ProcessResponse(String jsonArray){
         Gson myGson = new Gson();
         try {
             JSONObject myObject = (JSONObject) new JSONTokener(jsonArray).nextValue();
             Log.i(TAG, "Server Response -> \n" + myObject.toString());
-            if (!myObject.isNull("Response")) {
-                JSONObject json_response = myObject.getJSONObject("Response");
-                if (!json_response.isNull("NewsFeeds")) {
-                    JSONArray json_newsfeeds = json_response.getJSONArray("NewsFeeds");
+            if (!myObject.isNull(ApiResponseKey.RESPONSE.toString())) {
+                JSONObject json_response = myObject.getJSONObject(ApiResponseKey.RESPONSE.toString());
+                if (!json_response.isNull(ApiResponseKey.NEWSFEEDS.toString())) {
+                    JSONArray json_newsfeeds = json_response.getJSONArray(ApiResponseKey.NEWSFEEDS.toString());
                     Log.i(TAG, "News Feeds: \n" + json_newsfeeds.toString());
                     Add_News(json_newsfeeds);
                 }
-                if (!json_response.isNull("Testimonies")) {
-                    JSONArray json_testimonies = json_response.getJSONArray("Testimonies");
+                if (!json_response.isNull(ApiResponseKey.TESTIMONIES.toString())) {
+                    JSONArray json_testimonies = json_response.getJSONArray(ApiResponseKey.TESTIMONIES.toString());
                     Log.i(TAG, "Testimonies: \n" + json_testimonies.toString());
                     Add_Testimony(json_testimonies);
                 }
-                if (!json_response.isNull("Disciples")) {
-                    JSONArray json_disciples = json_response.getJSONArray("Disciples");
+                if (!json_response.isNull(ApiResponseKey.DISCIPLES.toString())) {
+                    JSONArray json_disciples = json_response.getJSONArray(ApiResponseKey.DISCIPLES.toString());
                     Log.i(TAG, "Disciples: \n" + json_disciples.toString());
                     Add_Disciples(json_disciples);
                 }
-                if (!json_response.isNull("Questions")) {
-                    JSONArray json_questions = json_response.getJSONArray("Questions");
+                if (!json_response.isNull(ApiResponseKey.QUESTIONS.toString())) {
+                    JSONArray json_questions = json_response.getJSONArray(ApiResponseKey.QUESTIONS.toString());
                     Log.i(TAG, "Questions: \n" + json_questions.toString());
                     Add_Questions(json_questions);
                 }
-                if (!json_response.isNull("Categories")) {
-                    JSONArray json_categories = json_response.getJSONArray("Categories");
+                if (!json_response.isNull(ApiResponseKey.CATEGORIES.toString())) {
+                    JSONArray json_categories = json_response.getJSONArray(ApiResponseKey.CATEGORIES.toString());
                     Log.i(TAG, "Categories: \n" + json_categories.toString());
                     Add_Category(json_categories);
                 }
-                if (!json_response.isNull("Answers")) {
-                    JSONArray json_answers = json_response.getJSONArray("Answers");
+                if (!json_response.isNull(ApiResponseKey.ANSWERS.toString())) {
+                    JSONArray json_answers = json_response.getJSONArray(ApiResponseKey.ANSWERS.toString());
                     Log.i(TAG, "Answers: \n" + json_answers.toString());
                     Add_Answers(json_answers);
                 }
-                if (!json_response.isNull("Country")) {
-                    JSONArray json_answers = json_response.getJSONArray("Country");
+                if (!json_response.isNull(ApiResponseKey.COUNTRY.toString())) {
+                    JSONArray json_answers = json_response.getJSONArray(ApiResponseKey.COUNTRY.toString());
                     Log.i(TAG, "Country: \n" + json_answers.toString());
                     Add_Countries(json_answers);
                 }
-                if (!json_response.isNull("Log_Response")) {
-                    JSONArray json_logs = json_response.getJSONArray("Log_Response");
+                if (!json_response.isNull(ApiResponseKey.LOG_RESPONSE.toString())) {
+                    JSONArray json_logs = json_response.getJSONArray(ApiResponseKey.LOG_RESPONSE.toString());
                     Log.i(TAG, "Deleting Logs: \n" + json_logs.toString());
                     Delete_Logs(json_logs);
                 }
-                if (!json_response.isNull("Profile")) {
-                    JSONObject json_user_profile = json_response.getJSONObject("Profile");
+                if (!json_response.isNull(ApiResponseKey.PROFILE.toString())) {
+                    JSONObject json_user_profile = json_response.getJSONObject(ApiResponseKey.PROFILE.toString());
                     Log.i(TAG, "Updating Main User: \n" + json_user_profile.toString());
                     Update_MainUser(json_user_profile);
                 }
-                if (!json_response.isNull("LearningTools")) {
-                    JSONObject json_learning_tools = json_response.getJSONObject("LearningTools");
+                if (!json_response.isNull(ApiResponseKey.LEARNINGTOOLS.toString())) {
+                    JSONObject json_learning_tools = json_response.getJSONObject(ApiResponseKey.LEARNINGTOOLS.toString());
                     Log.i(TAG, "Add Learning tools: \n" + json_learning_tools.toString());
                     Add_LearningTools(json_learning_tools);
                 }
@@ -102,14 +157,14 @@ public class SyncDatabase {
                 for(int i=0;i<json_newses.length();i++){
                     JSONObject obj = json_newses.getJSONObject(i);
                     ContentValues cv = new ContentValues();
-                    cv.put(Database.NewsfeedColumn.NEWS_ID.toString(), obj.getString("id"));
-                    cv.put(Database.NewsfeedColumn.TITLE.toString(), obj.getString("title"));
-                    cv.put(Database.NewsfeedColumn.CONTENT.toString(), obj.getString("content"));
-                    cv.put(Database.NewsfeedColumn.CATEGORY.toString(), obj.getString("category"));
-                    cv.put(Database.NewsfeedColumn.IMAGEURL.toString(), obj.getString("image_url"));
+                    cv.put(Database.NewsfeedColumn.NEWS_ID.toString(), obj.getString(ApiResponseKey.ID.toString()));
+                    cv.put(Database.NewsfeedColumn.TITLE.toString(), obj.getString(ApiResponseKey.TITLE.toString()));
+                    cv.put(Database.NewsfeedColumn.CONTENT.toString(), obj.getString(ApiResponseKey.CONTENT.toString()));
+                    cv.put(Database.NewsfeedColumn.CATEGORY.toString(), obj.getString(ApiResponseKey.CATEGORY.toString()));
+                    cv.put(Database.NewsfeedColumn.IMAGEURL.toString(), obj.getString(ApiResponseKey.IMAGE_URL.toString()));
                     cv.put(Database.NewsfeedColumn.IMAGEPATH.toString(), "");
-                    cv.put(Database.NewsfeedColumn.PUBDATE.toString(), obj.getString("publish_date"));
-                    News news = DeepLife.myDATABASE.getNewsBySerID(Integer.valueOf(obj.getString("id")));
+                    cv.put(Database.NewsfeedColumn.PUBDATE.toString(), obj.getString(ApiResponseKey.PUBLISH_DATE.toString()));
+                    News news = DeepLife.myDATABASE.getNewsBySerID(Integer.valueOf(obj.getString(ApiResponseKey.ID.toString())));
                     if(news == null){
                         long x = DeepLife.myDATABASE.insert(Database.Table_NEWSFEED,cv);
                         if(x>0){
@@ -140,13 +195,13 @@ public class SyncDatabase {
                 for(int i=0;i<json_testimony.length();i++){
                     JSONObject obj = json_testimony.getJSONObject(i);
                     ContentValues cv = new ContentValues();
-                    cv.put(Database.TestimonyColumn.SERID.toString(), obj.getString("id"));
-                    cv.put(Database.TestimonyColumn.USERID.toString(), obj.getString("user_id"));
-                    cv.put(Database.TestimonyColumn.DESCRIPTION.toString(), obj.getString("description"));
-                    cv.put(Database.TestimonyColumn.STATUS.toString(), obj.getString("status"));
-                    cv.put(Database.TestimonyColumn.PUBDATE.toString(), obj.getString("created"));
-                    cv.put(Database.TestimonyColumn.USERNAME.toString(), obj.getString("user_name"));
-                    Testimony testimony = DeepLife.myDATABASE.getTestimonyBySerID(Integer.valueOf(obj.getString("id")));
+                    cv.put(Database.TestimonyColumn.SERID.toString(), obj.getString(ApiResponseKey.ID.toString()));
+                    cv.put(Database.TestimonyColumn.USERID.toString(), obj.getString(ApiResponseKey.USER_ID.toString()));
+                    cv.put(Database.TestimonyColumn.DESCRIPTION.toString(), obj.getString(ApiResponseKey.DESCRIPTION.toString()));
+                    cv.put(Database.TestimonyColumn.STATUS.toString(), obj.getString(ApiResponseKey.STATUS.toString()));
+                    cv.put(Database.TestimonyColumn.PUBDATE.toString(), obj.getString(ApiResponseKey.CREATED.toString()));
+                    cv.put(Database.TestimonyColumn.USERNAME.toString(), obj.getString(ApiResponseKey.USER_NAME.toString()));
+                    Testimony testimony = DeepLife.myDATABASE.getTestimonyBySerID(Integer.valueOf(obj.getString(ApiResponseKey.ID.toString())));
                     if(testimony == null){
                         long x = DeepLife.myDATABASE.insert(Database.Table_TESTIMONY,cv);
                         if(x>0){
@@ -219,20 +274,20 @@ public class SyncDatabase {
                     for(int i=0;i<json_disciples.length();i++){
                         JSONObject obj = json_disciples.getJSONObject(i);
                         ContentValues cv = new ContentValues();
-                        cv.put(Database.DisciplesColumn.SERID.toString(), obj.getString("id"));
-                        cv.put(Database.DisciplesColumn.FULLNAME.toString(), obj.getString("firstName"));
-                        cv.put(Database.DisciplesColumn.DISPLAYNAME.toString(), obj.getString("displayName"));
-                        cv.put(Database.DisciplesColumn.EMAIL.toString(), obj.getString("email"));
-                        cv.put(Database.DisciplesColumn.PHONE.toString(), obj.getString("phone_no"));
-                        cv.put(Database.DisciplesColumn.COUNTRY.toString(), obj.getString("country"));
-                        cv.put(Database.DisciplesColumn.MENTORID.toString(), obj.getString("mentor_id"));
-                        cv.put(Database.DisciplesColumn.STAGE.toString(), obj.getString("stage"));
-                        cv.put(Database.DisciplesColumn.IMAGEURL.toString(), obj.getString("picture"));
+                        cv.put(Database.DisciplesColumn.SERID.toString(), obj.getString(ApiResponseKey.ID.toString()));
+                        cv.put(Database.DisciplesColumn.FULLNAME.toString(), obj.getString(ApiResponseKey.FIRSTNAME.toString()));
+                        cv.put(Database.DisciplesColumn.DISPLAYNAME.toString(), obj.getString(ApiResponseKey.DISPLAYNAME.toString()));
+                        cv.put(Database.DisciplesColumn.EMAIL.toString(), obj.getString(ApiResponseKey.EMAIL.toString()));
+                        cv.put(Database.DisciplesColumn.PHONE.toString(), obj.getString(ApiResponseKey.PHONE_NO.toString()));
+                        cv.put(Database.DisciplesColumn.COUNTRY.toString(), obj.getString(ApiResponseKey.COUNTRY.toString()));
+                        cv.put(Database.DisciplesColumn.MENTORID.toString(), obj.getString(ApiResponseKey.MENTOR_ID.toString()));
+                        cv.put(Database.DisciplesColumn.STAGE.toString(), obj.getString(ApiResponseKey.STAGE.toString()));
+                        cv.put(Database.DisciplesColumn.IMAGEURL.toString(), obj.getString(ApiResponseKey.PICTURE.toString()));
                         cv.put(Database.DisciplesColumn.IMAGEPATH.toString(), "");
-                        cv.put(Database.DisciplesColumn.ROLE.toString(), obj.getString("role_id"));
-                        cv.put(Database.DisciplesColumn.GENDER.toString(), obj.getString("gender"));
-                        cv.put(Database.DisciplesColumn.CREATED.toString(), obj.getString("created"));
-                        Disciple disciple = DeepLife.myDATABASE.getDiscipleByPhone(obj.getString("phone_no"));
+                        cv.put(Database.DisciplesColumn.ROLE.toString(), obj.getString(ApiResponseKey.ROLE_ID.toString()));
+                        cv.put(Database.DisciplesColumn.GENDER.toString(), obj.getString(ApiResponseKey.GENDER.toString()));
+                        cv.put(Database.DisciplesColumn.CREATED.toString(), obj.getString(ApiResponseKey.CREATED.toString()));
+                        Disciple disciple = DeepLife.myDATABASE.getDiscipleByPhone(obj.getString(ApiResponseKey.PHONE_NO.toString()));
                         if(disciple == null){
                             long x = DeepLife.myDATABASE.insert(Database.Table_DISCIPLES,cv);
                             if(x>0){
@@ -265,15 +320,15 @@ public class SyncDatabase {
                 for(int i=0;i<json_questions.length();i++){
                     JSONObject obj = json_questions.getJSONObject(i);
                     ContentValues cv = new ContentValues();
-                    cv.put(Database.QuestionListColumn.SERID.toString(), obj.getString("id"));
-                    cv.put(Database.QuestionListColumn.CATEGORY.toString(), obj.getString("category"));
-                    cv.put(Database.QuestionListColumn.QUESTION.toString(), obj.getString("question"));
-                    cv.put(Database.QuestionListColumn.DESCRIPTION.toString(), obj.getString("description"));
-                    cv.put(Database.QuestionListColumn.MANDATORY.toString(), obj.getString("mandatory"));
-                    cv.put(Database.QuestionListColumn.TYPE.toString(), obj.getString("type"));
-                    cv.put(Database.QuestionListColumn.COUNTRY.toString(), obj.getString("country"));
-                    cv.put(Database.QuestionListColumn.CREATED.toString(), obj.getString("created"));
-                    WbsQuestion wbsQuestion = DeepLife.myDATABASE.getWinBuildSendQuestionBySerID(Integer.valueOf(obj.getString("id")));
+                    cv.put(Database.QuestionListColumn.SERID.toString(), obj.getString(ApiResponseKey.ID.toString()));
+                    cv.put(Database.QuestionListColumn.CATEGORY.toString(), obj.getString(ApiResponseKey.CATEGORY.toString()));
+                    cv.put(Database.QuestionListColumn.QUESTION.toString(), obj.getString(ApiResponseKey.QUESTION.toString()));
+                    cv.put(Database.QuestionListColumn.DESCRIPTION.toString(), obj.getString(ApiResponseKey.DESCRIPTION.toString()));
+                    cv.put(Database.QuestionListColumn.MANDATORY.toString(), obj.getString(ApiResponseKey.MANDATORY.toString()));
+                    cv.put(Database.QuestionListColumn.TYPE.toString(), obj.getString(ApiResponseKey.TYPE.toString()));
+                    cv.put(Database.QuestionListColumn.COUNTRY.toString(), obj.getString(ApiResponseKey.COUNTRY.toString()));
+                    cv.put(Database.QuestionListColumn.CREATED.toString(), obj.getString(ApiResponseKey.CREATED.toString()));
+                    WbsQuestion wbsQuestion = DeepLife.myDATABASE.getWinBuildSendQuestionBySerID(Integer.valueOf(obj.getString(ApiResponseKey.ID.toString())));
                     if(wbsQuestion == null){
                         long x = DeepLife.myDATABASE.insert(Database.Table_QUESTION_LIST,cv);
                         if(x>0){
@@ -303,12 +358,12 @@ public class SyncDatabase {
                 for(int i=0;i<json_questions.length();i++){
                     JSONObject obj = json_questions.getJSONObject(i);
                     ContentValues cv = new ContentValues();
-                    cv.put(Database.CategoryColumn.SERID.toString(), obj.getString("id"));
-                    cv.put(Database.CategoryColumn.NAME.toString(), obj.getString("name"));
-                    cv.put(Database.CategoryColumn.PARENT.toString(), obj.getString("parent"));
-                    cv.put(Database.CategoryColumn.STATUS.toString(), obj.getString("status"));
-                    cv.put(Database.CategoryColumn.CREATED.toString(), obj.getString("created"));;
-                    Category category = DeepLife.myDATABASE.getCategoryByID(Integer.valueOf(obj.getString("id")));
+                    cv.put(Database.CategoryColumn.SERID.toString(), obj.getString(ApiResponseKey.ID.toString()));
+                    cv.put(Database.CategoryColumn.NAME.toString(), obj.getString(ApiResponseKey.NAME.toString()));
+                    cv.put(Database.CategoryColumn.PARENT.toString(), obj.getString(ApiResponseKey.PARENT.toString()));
+                    cv.put(Database.CategoryColumn.STATUS.toString(), obj.getString(ApiResponseKey.STATUS.toString()));
+                    cv.put(Database.CategoryColumn.CREATED.toString(), obj.getString(ApiResponseKey.CREATED.toString()));;
+                    Category category = DeepLife.myDATABASE.getCategoryByID(Integer.valueOf(obj.getString(ApiResponseKey.ID.toString())));
                     if(category == null){
                         long x = DeepLife.myDATABASE.insert(Database.Table_CATEGORIES,cv);
                         if(x>0){
@@ -338,12 +393,12 @@ public class SyncDatabase {
                 for(int i=0;i<json_answers.length();i++){
                     JSONObject obj = json_answers.getJSONObject(i);
                     ContentValues cv = new ContentValues();
-                    cv.put(Database.QuestionAnswerColumn.SERID.toString(), obj.getString("id"));
-                    cv.put(Database.QuestionAnswerColumn.DISCIPLEPHONE.toString(), obj.getString("disciple_phone"));
-                    cv.put(Database.QuestionAnswerColumn.QUESTION_ID.toString(), obj.getString("question_id"));
-                    cv.put(Database.QuestionAnswerColumn.ANSWER.toString(), obj.getString("answer"));
-                    cv.put(Database.QuestionAnswerColumn.BUILDSTAGE.toString(), obj.getString("stage"));;
-                    Answer answer = DeepLife.myDATABASE.getAnswerBySerID(Integer.valueOf(obj.getString("id")));
+                    cv.put(Database.QuestionAnswerColumn.SERID.toString(), obj.getString(ApiResponseKey.ID.toString()));
+                    cv.put(Database.QuestionAnswerColumn.DISCIPLEPHONE.toString(), obj.getString(ApiResponseKey.DISCIPLE_PHONE.toString()));
+                    cv.put(Database.QuestionAnswerColumn.QUESTION_ID.toString(), obj.getString(ApiResponseKey.QUESTION_ID.toString()));
+                    cv.put(Database.QuestionAnswerColumn.ANSWER.toString(), obj.getString(ApiResponseKey.ANSWER.toString()));
+                    cv.put(Database.QuestionAnswerColumn.BUILDSTAGE.toString(), obj.getString(ApiResponseKey.STAGE.toString()));;
+                    Answer answer = DeepLife.myDATABASE.getAnswerBySerID(Integer.valueOf(obj.getString(ApiResponseKey.ID.toString())));
                     if(answer == null){
                         long x = DeepLife.myDATABASE.insert(Database.Table_QUESTION_ANSWER,cv);
                         if(x>0){
@@ -372,13 +427,13 @@ public class SyncDatabase {
                 Log.i(TAG,"Adding MainUser  -> \n"+json_mainuser.toString());
                 JSONObject obj = json_mainuser;
                 ContentValues cv = new ContentValues();
-                cv.put(Database.UserColumn.SERID.toString(), obj.getString("id"));
-                cv.put(Database.UserColumn.FULL_NAME.toString(), obj.getString("firstName"));
-                cv.put(Database.UserColumn.EMAIL.toString(), obj.getString("email"));
-                cv.put(Database.UserColumn.PHONE.toString(), obj.getString("phone_no"));
-                cv.put(Database.UserColumn.PASSWORD.toString(), "pass");
-                cv.put(Database.UserColumn.COUNTRY.toString(), obj.getString("country"));
-                cv.put(Database.UserColumn.PICTURE.toString(), obj.getString("picture"));
+                cv.put(Database.UserColumn.SERID.toString(), obj.getString(ApiResponseKey.ID.toString()));
+                cv.put(Database.UserColumn.FULL_NAME.toString(), obj.getString(ApiResponseKey.FIRSTNAME.toString()));
+                cv.put(Database.UserColumn.EMAIL.toString(), obj.getString(ApiResponseKey.EMAIL.toString()));
+                cv.put(Database.UserColumn.PHONE.toString(), obj.getString(ApiResponseKey.PHONE_NO.toString()));
+                cv.put(Database.UserColumn.PASSWORD.toString(), ApiResponseKey.PASS.toString());
+                cv.put(Database.UserColumn.COUNTRY.toString(), obj.getString(ApiResponseKey.COUNTRY.toString()));
+                cv.put(Database.UserColumn.PICTURE.toString(), obj.getString(ApiResponseKey.PICTURE.toString()));
                 cv.put(Database.UserColumn.FAVORITE_SCRIPTURE.toString(), "");
                 DeepLife.myDATABASE.Delete_All(Database.Table_USER);
                 long x = DeepLife.myDATABASE.insert(Database.Table_USER,cv);
@@ -398,14 +453,14 @@ public class SyncDatabase {
                 Log.i(TAG,"Adding LearningTools  -> \n"+json_learnings.toString());
                 JSONObject obj = json_learnings;
                 ContentValues cv = new ContentValues();
-                cv.put(Database.LearningColumn.SERID.toString(), obj.getString("id"));
-                cv.put(Database.LearningColumn.TITLE.toString(), obj.getString("title"));
-                cv.put(Database.LearningColumn.DESCRIPTION.toString(), obj.getString("description"));
-                cv.put(Database.LearningColumn.VIDEOURL.toString(), obj.getString("iframcode"));
-                cv.put(Database.LearningColumn.COUNTRY.toString(), obj.getString("country"));
-                cv.put(Database.LearningColumn.ISDEFAULT.toString(), obj.getString("default_learn"));
-                cv.put(Database.LearningColumn.CREATED.toString(), obj.getString("created"));
-                LearningTool learningTool = DeepLife.myDATABASE.getLearningToolsBySerID(Integer.valueOf(obj.getString("id")));
+                cv.put(Database.LearningColumn.SERID.toString(), obj.getString(ApiResponseKey.ID.toString()));
+                cv.put(Database.LearningColumn.TITLE.toString(), obj.getString(ApiResponseKey.TITLE.toString()));
+                cv.put(Database.LearningColumn.DESCRIPTION.toString(), obj.getString(ApiResponseKey.DESCRIPTION.toString()));
+                cv.put(Database.LearningColumn.VIDEOURL.toString(), obj.getString(ApiResponseKey.IFRAMCODE.toString()));
+                cv.put(Database.LearningColumn.COUNTRY.toString(), obj.getString(ApiResponseKey.COUNTRY.toString()));
+                cv.put(Database.LearningColumn.ISDEFAULT.toString(), obj.getString(ApiResponseKey.DEFAULT_LEARN.toString()));
+                cv.put(Database.LearningColumn.CREATED.toString(), obj.getString(ApiResponseKey.CREATED.toString()));
+                LearningTool learningTool = DeepLife.myDATABASE.getLearningToolsBySerID(Integer.valueOf(obj.getString(ApiResponseKey.ID.toString())));
                 if(learningTool != null){
                     long x = DeepLife.myDATABASE.insert(Database.Table_USER,cv);
                     if(x>0){
@@ -434,12 +489,12 @@ public class SyncDatabase {
                     Log.i(TAG,"Updating MainUser  -> \n"+json_mainuser.toString());
                     JSONObject obj = json_mainuser;
                     ContentValues cv = new ContentValues();
-                    cv.put(Database.UserColumn.SERID.toString(), obj.getString("id"));
-                    cv.put(Database.UserColumn.FULL_NAME.toString(), obj.getString("firstName"));
-                    cv.put(Database.UserColumn.EMAIL.toString(), obj.getString("email"));
-                    cv.put(Database.UserColumn.PHONE.toString(), obj.getString("phone_no"));
-                    cv.put(Database.UserColumn.COUNTRY.toString(), obj.getString("country"));
-                    cv.put(Database.UserColumn.PICTURE.toString(), obj.getString("picture"));
+                    cv.put(Database.UserColumn.SERID.toString(), obj.getString(ApiResponseKey.ID.toString()));
+                    cv.put(Database.UserColumn.FULL_NAME.toString(), obj.getString(ApiResponseKey.FIRSTNAME.toString()));
+                    cv.put(Database.UserColumn.EMAIL.toString(), obj.getString(ApiResponseKey.EMAIL.toString()));
+                    cv.put(Database.UserColumn.PHONE.toString(), obj.getString(ApiResponseKey.PHONE_NO.toString()));
+                    cv.put(Database.UserColumn.COUNTRY.toString(), obj.getString(ApiResponseKey.COUNTRY.toString()));
+                    cv.put(Database.UserColumn.PICTURE.toString(), obj.getString(ApiResponseKey.PICTURE.toString()));
                     cv.put(Database.UserColumn.FAVORITE_SCRIPTURE.toString(), "");
                     long x = DeepLife.myDATABASE.update(Database.Table_USER,cv,user.getID());
                     if(x>0){
@@ -453,13 +508,13 @@ public class SyncDatabase {
                     Log.i(TAG,"Updating MainUser  -> \n"+json_mainuser.toString());
                     JSONObject obj = json_mainuser;
                     ContentValues cv = new ContentValues();
-                    cv.put(Database.UserColumn.SERID.toString(), obj.getString("id"));
-                    cv.put(Database.UserColumn.FULL_NAME.toString(), obj.getString("firstName"));
-                    cv.put(Database.UserColumn.EMAIL.toString(), obj.getString("email"));
-                    cv.put(Database.UserColumn.PHONE.toString(), obj.getString("phone_no"));
-                    cv.put(Database.UserColumn.PASSWORD.toString(), "pass");
-                    cv.put(Database.UserColumn.COUNTRY.toString(), obj.getString("country"));
-                    cv.put(Database.UserColumn.PICTURE.toString(), obj.getString("picture"));
+                    cv.put(Database.UserColumn.SERID.toString(), obj.getString(ApiResponseKey.ID.toString()));
+                    cv.put(Database.UserColumn.FULL_NAME.toString(), obj.getString(ApiResponseKey.FIRSTNAME.toString()));
+                    cv.put(Database.UserColumn.EMAIL.toString(), obj.getString(ApiResponseKey.EMAIL.toString()));
+                    cv.put(Database.UserColumn.PHONE.toString(), obj.getString(ApiResponseKey.PHONE_NO.toString()));
+                    cv.put(Database.UserColumn.PASSWORD.toString(), ApiResponseKey.PASS.toString());
+                    cv.put(Database.UserColumn.COUNTRY.toString(), obj.getString(ApiResponseKey.COUNTRY.toString()));
+                    cv.put(Database.UserColumn.PICTURE.toString(), obj.getString(ApiResponseKey.PICTURE.toString()));
                     cv.put(Database.UserColumn.FAVORITE_SCRIPTURE.toString(), "");
                     long x = DeepLife.myDATABASE.insert(Database.Table_USER,cv);
                     if(x>0){
@@ -481,11 +536,11 @@ public class SyncDatabase {
                 for(int i=0;i<json_countries.length();i++){
                     JSONObject obj = json_countries.getJSONObject(i);
                     ContentValues cv = new ContentValues();
-                    cv.put(Database.CountryColumn.SERID.toString(), obj.getString("id"));
-                    cv.put(Database.CountryColumn.ISO3.toString(), obj.getString("iso3"));
-                    cv.put(Database.CountryColumn.NAME.toString(), obj.getString("name"));
-                    cv.put(Database.CountryColumn.CODE.toString(), obj.getString("code"));
-                    Country country = DeepLife.myDATABASE.getCountryByID(Integer.valueOf(obj.getString("id")));
+                    cv.put(Database.CountryColumn.SERID.toString(), obj.getString(ApiResponseKey.ID.toString()));
+                    cv.put(Database.CountryColumn.ISO3.toString(), obj.getString(ApiResponseKey.ISO3.toString()));
+                    cv.put(Database.CountryColumn.NAME.toString(), obj.getString(ApiResponseKey.NAME.toString()));
+                    cv.put(Database.CountryColumn.CODE.toString(), obj.getString(ApiResponseKey.CODE.toString()));
+                    Country country = DeepLife.myDATABASE.getCountryByID(Integer.valueOf(obj.getString(ApiResponseKey.ID.toString())));
                     if(country == null){
                         long x = DeepLife.myDATABASE.insert(Database.Table_COUNTRY,cv);
                         if(x>0){
@@ -516,7 +571,7 @@ public class SyncDatabase {
                 for(int i=0;i<json_logs.length();i++){
                     JSONObject obj = json_logs.getJSONObject(i);
                     Log.i(TAG, "Deleting  -> Logs: " + obj.toString());
-                    int id = Integer.valueOf(obj.getString("Log_ID"));
+                    int id = Integer.valueOf(obj.getString(ApiResponseKey.LOG_ID.toString()));
                     Log.i(TAG, "Deleting -> LogID: " + id);
                     if(id>0){
                         long val = DeepLife.myDATABASE.remove(Database.Table_LOGS, id);

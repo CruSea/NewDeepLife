@@ -75,7 +75,7 @@ public class LoginAccess {
                     JSONObject myObject = null;
                     try {
                         myObject = (JSONObject) new JSONTokener(s).nextValue();
-                        if (!myObject.isNull("Response")) {
+                        if (!myObject.isNull(SyncDatabase.ApiResponseKey.RESPONSE.toString())) {
                             mySyncDatabase.ProcessResponse(s);
                             User user = DeepLife.myDATABASE.getMainUser();
                             if(user != null){
@@ -129,7 +129,7 @@ public class LoginAccess {
                     JSONObject myObject = null;
                     try {
                         myObject = (JSONObject) new JSONTokener(s).nextValue();
-                        if (!myObject.isNull("Response")) {
+                        if (!myObject.isNull(SyncDatabase.ApiResponseKey.RESPONSE.toString())) {
                             mySyncDatabase.ProcessResponse(s);
                             Login.DialogState(0);
                             Login.showDialog(DeepLife.getContext().getString(R.string.dlg_msg_login));
@@ -166,7 +166,7 @@ public class LoginAccess {
                 JSONObject myObject = null;
                 try {
                     myObject = (JSONObject) new JSONTokener(s).nextValue();
-                    if (!myObject.isNull("Response")) {
+                    if (!myObject.isNull(SyncDatabase.ApiResponseKey.RESPONSE.toString())) {
                         mySyncDatabase.ProcessResponse(s);
                         DeepLife.myDATABASE.Delete_All(deeplife.gcme.com.deeplife.Database.Database.Table_USER);
                         ContentValues cv = new ContentValues();

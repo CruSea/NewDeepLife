@@ -189,7 +189,7 @@ public class SignUp extends AppCompatActivity {
                     Log.i(TAG, "Server Response -> \n" + s);
                     JSONObject myObject = (JSONObject) new JSONTokener(s).nextValue();
 
-                    if (!myObject.isNull("Response")) {
+                    if (!myObject.isNull(SyncDatabase.ApiResponseKey.RESPONSE.toString())) {
                         mySyncDatabase.ProcessResponse(s);
 
                         DeepLife.myDATABASE.Delete_All(Database.Table_DISCIPLES);
