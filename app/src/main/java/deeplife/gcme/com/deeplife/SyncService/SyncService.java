@@ -152,7 +152,6 @@ public class SyncService extends JobService {
 //            Log.i(TAG, "Enum test3: " + Task.valueOf("ADD_NEW_ANSWERS"));
 //            Log.i(TAG, "Enum test4: " + Task.SEND_ANSWERS);
 
-
             Log.i(TAG, "Prepared Request: \n" + Send_Param.toString());
             Log.i(TAG,"Service Started for \n"+DeepLife.API_URL);
             Fuel.post(DeepLife.API_URL, Send_Param).responseString(new Handler<String>() {
@@ -219,6 +218,7 @@ public class SyncService extends JobService {
             myLogs.setService(ApiService.valueOf(tosync.getParam())); // briggsm: not 100% sure this will work... TODO: debug.
         }else if(DeepLife.myDATABASE.getUpdateDisciples().size()>0){
             Log.i(TAG,"GET DISCIPLES TO UPDATE -> \n");
+            
             ArrayList<Disciple> foundData = DeepLife.myDATABASE.getUpdateDisciples();
             for(int i=0;i<foundData.size();i++){
                 myLogs.getParam().add(foundData.get(i));

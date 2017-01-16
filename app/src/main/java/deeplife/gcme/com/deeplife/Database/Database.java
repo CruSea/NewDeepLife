@@ -542,8 +542,6 @@ public class Database {
     ////////  Testimonies   /////////
     /////////////////////////////////
     /////////////////////////////////
-
-
     public Testimony getTestimonyByID(int id) {
         Log.i(TAG, "Get Testimony By ID: " + id);
         String DB_Table = Table_TESTIMONY;
@@ -628,8 +626,6 @@ public class Database {
     ///////  Disciples   ///////////
     ////////////////////////////////
     ////////////////////////////////
-
-
     public Disciple getDiscipleByID(int id) {
         Log.i(TAG, "Get Disciple by ID: ");
         String DB_Table = Table_DISCIPLES;
@@ -779,8 +775,6 @@ public class Database {
     ///////  CATEGORY    ///////////
     ////////////////////////////////
     ////////////////////////////////
-
-
     public Category getCategoryByID(int id) {
         Log.i(TAG, "Get Category by ID: " + id);
         String DB_Table = Table_CATEGORIES;
@@ -1425,7 +1419,7 @@ public class Database {
                     int Task_Value = Integer.valueOf(c.getString(c.getColumnIndex(LogsColumn.VALUE.toString())));
                     int Log_ID = Integer.valueOf(c.getString(c.getColumnIndex(LogsColumn.ID.toString())));
                     Log.i(TAG, "Comparing-> \n" + Logs.Task.SEND_TESTIMONY + " | " + Log_Task);
-                    if (Logs.Task.SEND_TESTIMONY.equalsName(Log_Task)) {
+                    if (Logs.Task.SEND_ANSWERS.equalsName(Log_Task)) {
                         Log.i(TAG, "SendAnswer Count:-> " + c.getCount());
                         Answer sendAnswer = getAnswerByID(Task_Value);
                         if (sendAnswer != null) {

@@ -146,6 +146,7 @@ public class WinBuildSendItemsAdapter extends RecyclerView.Adapter<WinBuildSendI
                     Logs logs = new Logs();
                     logs.setTask(Logs.Task.SEND_ANSWERS);
                     logs.setService(SyncService.ApiService.ADDNEW_ANSWERS);
+                    logs.setType(Logs.Type.ADD_NEW_ANSWERS);
                     logs.setValue(""+x);
                     mySyncDatabase.AddLog(logs);
                 }
@@ -160,6 +161,7 @@ public class WinBuildSendItemsAdapter extends RecyclerView.Adapter<WinBuildSendI
                         Logs logs = new Logs();
                         logs.setTask(Logs.Task.SEND_ANSWERS);
                         logs.setService(SyncService.ApiService.ADDNEW_ANSWERS);
+                        logs.setType(Logs.Type.ADD_NEW_ANSWERS);
                         logs.setValue(""+x);
                         mySyncDatabase.AddLog(logs);
                     }
@@ -174,6 +176,7 @@ public class WinBuildSendItemsAdapter extends RecyclerView.Adapter<WinBuildSendI
                         Logs logs = new Logs();
                         logs.setTask(Logs.Task.SEND_ANSWERS);
                         logs.setService(SyncService.ApiService.ADDNEW_ANSWERS);
+                        logs.setType(Logs.Type.ADD_NEW_ANSWERS);
                         logs.setValue(""+x);
                         mySyncDatabase.AddLog(logs);
                     }
@@ -185,6 +188,7 @@ public class WinBuildSendItemsAdapter extends RecyclerView.Adapter<WinBuildSendI
                         Logs logs = new Logs();
                         logs.setTask(Logs.Task.SEND_ANSWERS);
                         logs.setService(SyncService.ApiService.ADDNEW_ANSWERS);
+                        logs.setType(Logs.Type.ADD_NEW_ANSWERS);
                         logs.setValue(""+x);
                         mySyncDatabase.AddLog(logs);
                     }

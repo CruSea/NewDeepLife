@@ -17,13 +17,16 @@ import me.tatarka.support.job.JobScheduler;
  */
 
 public class DeepLife extends Application {
-    public static final String DEEP_URL  = "http://deeplifestaging.briggs-inc.com";
+//    public static final String DEEP_URL  = "http://deeplifestaging.briggs-inc.com";
+    public static final String DEEP_URL  = "http://192.168.0.44/DeepLife_Web/public";
+
+
     public static final String FORGOTEN_URL  = DEEP_URL+"/forgot";
-//    public static final String DEEP_URL  = "http://192.168.8.101/DeepLife_Web/public";
     public static final String API_URL  = DEEP_URL+"/deep_api";
     public static final String PROFILE_PIC_URL  = DEEP_URL+"/img/profile/";
-    public static int ImageDownloadCount = 0;
 
+
+    public static int ImageDownloadCount = 0;
     private static final int REQUEST_PHONE_CALL = 11;
 
     private static final String TAG = "DeepLifeApplication";
