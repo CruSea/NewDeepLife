@@ -90,7 +90,7 @@ public class SyncDatabase {
         Gson myGson = new Gson();
         try {
             JSONObject myObject = (JSONObject) new JSONTokener(jsonArray).nextValue();
-            //Log.i(TAG, "Server Response -> \n" + myObject.toString());
+            //Log.i(TAG, "Server Response (ProcessResponse): " + myObject.toString());
             if (!myObject.isNull(ApiResponseKey.RESPONSE.toString())) {
                 JSONObject json_response = myObject.getJSONObject(ApiResponseKey.RESPONSE.toString());
                 if (!json_response.isNull(ApiResponseKey.NEWSFEEDS.toString())) {
@@ -139,7 +139,7 @@ public class SyncDatabase {
                     Update_MainUser(json_user_profile);
                 }
                 if (!json_response.isNull(ApiResponseKey.LEARNINGTOOLS.toString())) {
-                    JSONObject json_learning_tools = json_response.getJSONObject(ApiResponseKey.LEARNINGTOOLS.toString());
+                    JSONArray json_learning_tools = json_response.getJSONArray(ApiResponseKey.LEARNINGTOOLS.toString());
                     Log.i(TAG, "Add Learning tools: \n" + json_learning_tools.toString());
                     Add_LearningTools(json_learning_tools);
                 }
@@ -147,6 +147,7 @@ public class SyncDatabase {
                 Log.i(TAG, "ProcessResponse: No 'Response' JSON object!");
             }
         } catch (JSONException e) {
+            Log.e(TAG, "ProcessResponse: JSON Exception: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -448,33 +449,35 @@ public class SyncDatabase {
             Log.i(TAG,e.toString());
         }
     }
-    public static void Add_LearningTools(JSONObject json_learnings){
+    public static void Add_LearningTools(JSONArray json_learnings){
         try{
             if(json_learnings.length()>0){
                 Log.i(TAG,"Adding LearningTools  -> \n"+json_learnings.toString());
-                JSONObject obj = json_learnings;
-                ContentValues cv = new ContentValues();
-                cv.put(Database.LearningColumn.SERID.toString(), obj.getString(ApiResponseKey.ID.toString()));
-                cv.put(Database.LearningColumn.TITLE.toString(), obj.getString(ApiResponseKey.TITLE.toString()));
-                cv.put(Database.LearningColumn.DESCRIPTION.toString(), obj.getString(ApiResponseKey.DESCRIPTION.toString()));
-                cv.put(Database.LearningColumn.VIDEOURL.toString(), obj.getString(ApiResponseKey.IFRAMCODE.toString()));
-                cv.put(Database.LearningColumn.COUNTRY.toString(), obj.getString(ApiResponseKey.COUNTRY_LC.toString()));
-                cv.put(Database.LearningColumn.ISDEFAULT.toString(), obj.getString(ApiResponseKey.DEFAULT_LEARN.toString()));
-                cv.put(Database.LearningColumn.CREATED.toString(), obj.getString(ApiResponseKey.CREATED.toString()));
-                LearningTool learningTool = DeepLife.myDATABASE.getLearningToolsBySerID(Integer.valueOf(obj.getString(ApiResponseKey.ID.toString())));
-                if(learningTool != null){
-                    long x = DeepLife.myDATABASE.insert(Database.Table_USER,cv);
-                    if(x>0){
-                        Log.i(TAG,"Successfully Added: Learning Tools -> \n"+cv.toString());
-                    }else {
-                        Log.i(TAG,"Error During Adding: Learning Tools -> \n"+cv.toString());
-                    }
-                }else {
-                    long x = DeepLife.myDATABASE.update(Database.Table_USER,cv,learningTool.getID());
-                    if(x>0){
-                        Log.i(TAG,"Successfully Updated: Learning Tools -> \n"+cv.toString());
-                    }else {
-                        Log.i(TAG,"Error During Updated: Learning Tools -> \n"+cv.toString());
+                for (int i = 0; i < json_learnings.length(); i++) {
+                    JSONObject obj = json_learnings.getJSONObject(i);
+                    ContentValues cv = new ContentValues();
+                    cv.put(Database.LearningColumn.SERID.toString(), obj.getString(ApiResponseKey.ID.toString()));
+                    cv.put(Database.LearningColumn.TITLE.toString(), obj.getString(ApiResponseKey.TITLE.toString()));
+                    cv.put(Database.LearningColumn.DESCRIPTION.toString(), obj.getString(ApiResponseKey.DESCRIPTION.toString()));
+                    cv.put(Database.LearningColumn.VIDEOURL.toString(), obj.getString(ApiResponseKey.IFRAMCODE.toString()));
+                    cv.put(Database.LearningColumn.COUNTRY.toString(), obj.getString(ApiResponseKey.COUNTRY_LC.toString()));
+                    cv.put(Database.LearningColumn.ISDEFAULT.toString(), obj.getString(ApiResponseKey.DEFAULT_LEARN.toString()));
+                    cv.put(Database.LearningColumn.CREATED.toString(), obj.getString(ApiResponseKey.CREATED.toString()));
+                    LearningTool learningTool = DeepLife.myDATABASE.getLearningToolsBySerID(Integer.valueOf(obj.getString(ApiResponseKey.ID.toString())));
+                    if (learningTool != null) {
+                        long x = DeepLife.myDATABASE.insert(Database.Table_USER, cv);
+                        if (x > 0) {
+                            Log.i(TAG, "Successfully Added: Learning Tools -> \n" + cv.toString());
+                        } else {
+                            Log.i(TAG, "Error During Adding: Learning Tools -> \n" + cv.toString());
+                        }
+                    } else {
+                        long x = DeepLife.myDATABASE.update(Database.Table_USER, cv, learningTool.getID());
+                        if (x > 0) {
+                            Log.i(TAG, "Successfully Updated: Learning Tools -> \n" + cv.toString());
+                        } else {
+                            Log.i(TAG, "Error During Updated: Learning Tools -> \n" + cv.toString());
+                        }
                     }
                 }
             }
