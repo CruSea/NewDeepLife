@@ -125,6 +125,7 @@ public class SyncService extends JobService {
 
     @Override
     public boolean onStartJob(me.tatarka.support.job.JobParameters params) {
+        Log.i(TAG, "---------------------------------------------");
         Log.i(TAG, "The Job scheduler started");
         try{
             user = DeepLife.myDATABASE.getMainUser();
@@ -154,13 +155,13 @@ public class SyncService extends JobService {
 //            Log.i(TAG, "Enum test4: " + Task.SEND_ANSWERS);
 
 
-            Log.i(TAG, "Prepared Request: \n" + Send_Param.toString());
-            Log.i(TAG,"Service Started for \n"+DeepLife.API_URL);
+            Log.i(TAG, "Prepared Request: " + Send_Param.toString());
+            Log.i(TAG,"Service Started for: " + DeepLife.API_URL);
             Fuel.post(DeepLife.API_URL, Send_Param).responseString(new Handler<String>() {
                 @Override
                 public void success(@NotNull Request request, @NotNull Response response, String s) {
-                    Log.i(TAG, "Request: \n" + request);
-                    Log.i(TAG, "Response: \n" + s);
+                    Log.i(TAG, "Request: " + request);
+                    Log.i(TAG, "Response: " + s);
                     mySyncDatabase.ProcessResponse(s);
                 }
 
@@ -184,7 +185,8 @@ public class SyncService extends JobService {
     public void getService(){
         Logs found = getParam();
         if(found != null){
-            myLogs = getParam();
+            //myLogs = getParam();  // briggsm: Don't need to call getParam() twice.
+            myLogs = found;
         }else {
             myLogs = new Logs();
         }

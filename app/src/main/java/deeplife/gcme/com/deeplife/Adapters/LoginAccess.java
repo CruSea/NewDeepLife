@@ -124,8 +124,8 @@ public class LoginAccess {
             myFuel.post(DeepLife.API_URL,Send_Param).responseString(new Handler<String>() {
                 @Override
                 public void success(@NotNull Request request, @NotNull Response response, String s) {
-                    Log.i(TAG, "Server Request  -> \n" + request.toString());
-                    Log.i(TAG, "Server Response -> \n" + s);
+                    Log.i(TAG, "Server Request (Meta Data): " + request.toString());
+                    Log.i(TAG, "Server Response (Meta Data): " + s);
                     JSONObject myObject = null;
                     try {
                         myObject = (JSONObject) new JSONTokener(s).nextValue();

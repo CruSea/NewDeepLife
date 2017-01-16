@@ -89,7 +89,7 @@ public class SyncDatabase {
         Gson myGson = new Gson();
         try {
             JSONObject myObject = (JSONObject) new JSONTokener(jsonArray).nextValue();
-            Log.i(TAG, "Server Response -> \n" + myObject.toString());
+            //Log.i(TAG, "Server Response -> \n" + myObject.toString());
             if (!myObject.isNull(ApiResponseKey.RESPONSE.toString())) {
                 JSONObject json_response = myObject.getJSONObject(ApiResponseKey.RESPONSE.toString());
                 if (!json_response.isNull(ApiResponseKey.NEWSFEEDS.toString())) {
@@ -354,7 +354,7 @@ public class SyncDatabase {
     public static void Add_Category(JSONArray json_questions){
         try{
             if(json_questions.length()>0){
-                Log.i(TAG,"Adding New Category  -> \n"+json_questions.toString());
+                //Log.i(TAG,"Adding/Updating New Categories  -> \n"+json_questions.toString());
                 for(int i=0;i<json_questions.length();i++){
                     JSONObject obj = json_questions.getJSONObject(i);
                     ContentValues cv = new ContentValues();
@@ -373,9 +373,9 @@ public class SyncDatabase {
                         }
                     }else {
                         long x = DeepLife.myDATABASE.update(Database.Table_CATEGORIES,cv,category.getID());
-                        Log.i(TAG,"Updated: Category -> \n"+cv.toString());
+                        //Log.i(TAG,"Updated: Category -> \n"+cv.toString());
                         if(x>0){
-                            Log.i(TAG,"Successfully Updated: Category Updated -> \n"+cv.toString());
+                            //Log.i(TAG,"Successfully Updated: Category Updated -> \n"+cv.toString());
                         }else {
                             Log.i(TAG,"Error During Updating: Category -> \n"+cv.toString());
                         }

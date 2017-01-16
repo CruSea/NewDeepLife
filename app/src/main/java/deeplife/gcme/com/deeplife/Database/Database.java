@@ -337,11 +337,11 @@ public class Database {
     }
 
     public long update(String DB_Table, ContentValues cv, int id) {
-        Log.i(TAG, "Updating Table: " + DB_Table);
+        //Log.i(TAG, "Updating Table: " + DB_Table);
         String[] args = {"" + id};
         long state = myDatabase.update(DB_Table, cv, "id = ?", args);
-        Log.i(TAG, "Updating Data: " + cv.toString());
-        Log.i(TAG, "Updating Completed: " + state + "\n");
+        //Log.i(TAG, "Updating Data: " + cv.toString());
+        //Log.i(TAG, "Updating Completed: " + state + "\n");
         return state;
     }
 
@@ -782,7 +782,7 @@ public class Database {
 
 
     public Category getCategoryByID(int id) {
-        Log.i(TAG, "Get Category by ID: " + id);
+        //Log.i(TAG, "Get Category by ID: " + id);
         String DB_Table = Table_CATEGORIES;
         try {
             Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
@@ -791,7 +791,7 @@ public class Database {
                 for (int i = 0; i < c.getCount(); i++) {
                     c.moveToPosition(i);
                     int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(CategoryColumn.ID.toString())));
-                    Log.i(TAG, "--> Get Category by SerID: " + c.getColumnIndex(CategoryColumn.SERID.toString()) + ", " + c.getColumnIndex(CategoryColumn.NAME.toString()));
+                    //Log.i(TAG, "--> Get Category by SerID: " + c.getColumnIndex(CategoryColumn.SERID.toString()) + ", " + c.getColumnIndex(CategoryColumn.NAME.toString()));
                     if (cur_id == id) {
                         Category category = new Category();
                         category.setID(Integer.valueOf(c.getString(c.getColumnIndex(CategoryColumn.ID.toString()))));
@@ -1263,7 +1263,7 @@ public class Database {
     }
 
     public ArrayList<Logs> getSendLogs() {
-        Log.i(TAG, "SendLogs:\n");
+        //Log.i(TAG, "SendLogs:\n");
         String DB_Table = Table_LOGS;
         ArrayList<Logs> Found = new ArrayList<>();
 
@@ -1318,7 +1318,7 @@ public class Database {
     }
 
     public ArrayList<Disciple> getSendDisciples() {
-        Log.i(TAG, "getSendDisciples:\n");
+        //Log.i(TAG, "getSendDisciples:\n");
         String DB_Table = Table_LOGS;
         ArrayList<Disciple> Found = new ArrayList<Disciple>();
         try {
@@ -1350,7 +1350,7 @@ public class Database {
     }
 
     public ArrayList<Disciple> getUpdateDisciples() {
-        Log.i(TAG, "getUpdateDisciples:\n");
+        //Log.i(TAG, "getUpdateDisciples:\n");
         String DB_Table = Table_LOGS;
         ArrayList<Disciple> Found = new ArrayList<Disciple>();
         try {
@@ -1380,7 +1380,7 @@ public class Database {
     }
 
     public ArrayList<Testimony> getSendTestimony() {
-        Log.i(TAG, "getSendTestimony:\n");
+        //Log.i(TAG, "getSendTestimony:\n");
         String DB_Table = Table_LOGS;
         ArrayList<Testimony> Found = new ArrayList<Testimony>();
         try {
@@ -1412,7 +1412,7 @@ public class Database {
     }
 
     public ArrayList<Answer> getSendAnswers() {
-        Log.i(TAG, "getSendAnswers:\n");
+        //Log.i(TAG, "getSendAnswers:\n");
         String DB_Table = Table_LOGS;
         ArrayList<Answer> Found = new ArrayList<Answer>();
         try {
@@ -1444,7 +1444,7 @@ public class Database {
 
 
     public ArrayList<Schedule> getSendSchedules() {
-        Log.i(TAG, "SendSchedules:\n");
+        //Log.i(TAG, "SendSchedules:\n");
         String DB_Table = Table_LOGS;
         ArrayList<Schedule> Found = new ArrayList<Schedule>();
         try {
@@ -1475,7 +1475,7 @@ public class Database {
     }
 
     public ArrayList<Schedule> getUpdateSchedules() {
-        Log.i(TAG, "UpdateDisciples:\n");
+        //Log.i(TAG, "UpdateDisciples:\n");
         String DB_Table = Table_LOGS;
         ArrayList<Schedule> Found = new ArrayList<Schedule>();
         try {
@@ -1505,7 +1505,7 @@ public class Database {
     }
 
     public ArrayList<ReportItem> getSendReports() {
-        Log.i(TAG, "SendReports:\n");
+        //Log.i(TAG, "SendReports:\n");
         String DB_Table = Table_LOGS;
         ArrayList<ReportItem> Found = new ArrayList<ReportItem>();
         try {
@@ -1543,7 +1543,7 @@ public class Database {
     /////////////////////////////////
 
     public User getMainUser() {
-        Log.i(TAG, "Get getMainUser: ");
+        //Log.i(TAG, "Get getMainUser: ");
         String DB_Table = Table_USER;
         try {
             Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
