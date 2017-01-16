@@ -1189,7 +1189,7 @@ public class Database {
     public Country getCountryByID(int id) {
         String DB_Table = Table_COUNTRY;
         News found = new News();
-        Log.i(TAG, "Get Country By ID: " + id);
+        //Log.i(TAG, "Get Country By ID: " + id);
         try {
             Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
             if (c.getCount() > 0) {
@@ -1253,7 +1253,7 @@ public class Database {
                 Country country = getCountryByID(cur_id);
                 if (country != null) {
                     found.add(country);
-                    Log.i(TAG, "Get All Countries: " + country.getID());
+                    //Log.i(TAG, "Get All Countries: " + country.getID());
                 }
             }
         } catch (Exception e) {
@@ -1671,7 +1671,7 @@ public class Database {
                 LearningTool learningTool = getLearningToolByID(cur_id);
                 if (learningTool != null) {
                     found.add(learningTool);
-                    Log.i(TAG, "Get All Countries: " + learningTool.getID());
+                    Log.i(TAG, "Get All Learning Tools: " + learningTool.getID());
                 }
             }
         } catch (Exception e) {

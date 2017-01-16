@@ -39,6 +39,7 @@ public class SyncDatabase {
         QUESTIONS("Questions"),
         CATEGORIES("Categories"),
         ANSWERS("Answers"),
+        COUNTRY_UC("Country"),
         LOG_RESPONSE("Log_Response"),
         PROFILE("Profile"),
         LEARNINGTOOLS("LearningTools"),
@@ -59,7 +60,7 @@ public class SyncDatabase {
         QUESTION("question"),
         MANDATORY("mandatory"),
         TYPE("type"),
-        COUNTRY("country"),
+        COUNTRY_LC("country"),
         PARENT("parent"),
         STATUS("status"),
         DISCIPLE_PHONE("disciple_phone"),
@@ -122,8 +123,8 @@ public class SyncDatabase {
                     Log.i(TAG, "Answers: \n" + json_answers.toString());
                     Add_Answers(json_answers);
                 }
-                if (!json_response.isNull(ApiResponseKey.COUNTRY.toString())) {
-                    JSONArray json_answers = json_response.getJSONArray(ApiResponseKey.COUNTRY.toString());
+                if (!json_response.isNull(ApiResponseKey.COUNTRY_UC.toString())) {
+                    JSONArray json_answers = json_response.getJSONArray(ApiResponseKey.COUNTRY_UC.toString());
                     Log.i(TAG, "Country: \n" + json_answers.toString());
                     Add_Countries(json_answers);
                 }
@@ -279,7 +280,7 @@ public class SyncDatabase {
                         cv.put(Database.DisciplesColumn.DISPLAYNAME.toString(), obj.getString(ApiResponseKey.DISPLAYNAME.toString()));
                         cv.put(Database.DisciplesColumn.EMAIL.toString(), obj.getString(ApiResponseKey.EMAIL.toString()));
                         cv.put(Database.DisciplesColumn.PHONE.toString(), obj.getString(ApiResponseKey.PHONE_NO.toString()));
-                        cv.put(Database.DisciplesColumn.COUNTRY.toString(), obj.getString(ApiResponseKey.COUNTRY.toString()));
+                        cv.put(Database.DisciplesColumn.COUNTRY.toString(), obj.getString(ApiResponseKey.COUNTRY_LC.toString()));
                         cv.put(Database.DisciplesColumn.MENTORID.toString(), obj.getString(ApiResponseKey.MENTOR_ID.toString()));
                         cv.put(Database.DisciplesColumn.STAGE.toString(), obj.getString(ApiResponseKey.STAGE.toString()));
                         cv.put(Database.DisciplesColumn.IMAGEURL.toString(), obj.getString(ApiResponseKey.PICTURE.toString()));
@@ -326,7 +327,7 @@ public class SyncDatabase {
                     cv.put(Database.QuestionListColumn.DESCRIPTION.toString(), obj.getString(ApiResponseKey.DESCRIPTION.toString()));
                     cv.put(Database.QuestionListColumn.MANDATORY.toString(), obj.getString(ApiResponseKey.MANDATORY.toString()));
                     cv.put(Database.QuestionListColumn.TYPE.toString(), obj.getString(ApiResponseKey.TYPE.toString()));
-                    cv.put(Database.QuestionListColumn.COUNTRY.toString(), obj.getString(ApiResponseKey.COUNTRY.toString()));
+                    cv.put(Database.QuestionListColumn.COUNTRY.toString(), obj.getString(ApiResponseKey.COUNTRY_LC.toString()));
                     cv.put(Database.QuestionListColumn.CREATED.toString(), obj.getString(ApiResponseKey.CREATED.toString()));
                     WbsQuestion wbsQuestion = DeepLife.myDATABASE.getWinBuildSendQuestionBySerID(Integer.valueOf(obj.getString(ApiResponseKey.ID.toString())));
                     if(wbsQuestion == null){
@@ -432,7 +433,7 @@ public class SyncDatabase {
                 cv.put(Database.UserColumn.EMAIL.toString(), obj.getString(ApiResponseKey.EMAIL.toString()));
                 cv.put(Database.UserColumn.PHONE.toString(), obj.getString(ApiResponseKey.PHONE_NO.toString()));
                 cv.put(Database.UserColumn.PASSWORD.toString(), ApiResponseKey.PASS.toString());
-                cv.put(Database.UserColumn.COUNTRY.toString(), obj.getString(ApiResponseKey.COUNTRY.toString()));
+                cv.put(Database.UserColumn.COUNTRY.toString(), obj.getString(ApiResponseKey.COUNTRY_LC.toString()));
                 cv.put(Database.UserColumn.PICTURE.toString(), obj.getString(ApiResponseKey.PICTURE.toString()));
                 cv.put(Database.UserColumn.FAVORITE_SCRIPTURE.toString(), "");
                 DeepLife.myDATABASE.Delete_All(Database.Table_USER);
@@ -457,7 +458,7 @@ public class SyncDatabase {
                 cv.put(Database.LearningColumn.TITLE.toString(), obj.getString(ApiResponseKey.TITLE.toString()));
                 cv.put(Database.LearningColumn.DESCRIPTION.toString(), obj.getString(ApiResponseKey.DESCRIPTION.toString()));
                 cv.put(Database.LearningColumn.VIDEOURL.toString(), obj.getString(ApiResponseKey.IFRAMCODE.toString()));
-                cv.put(Database.LearningColumn.COUNTRY.toString(), obj.getString(ApiResponseKey.COUNTRY.toString()));
+                cv.put(Database.LearningColumn.COUNTRY.toString(), obj.getString(ApiResponseKey.COUNTRY_LC.toString()));
                 cv.put(Database.LearningColumn.ISDEFAULT.toString(), obj.getString(ApiResponseKey.DEFAULT_LEARN.toString()));
                 cv.put(Database.LearningColumn.CREATED.toString(), obj.getString(ApiResponseKey.CREATED.toString()));
                 LearningTool learningTool = DeepLife.myDATABASE.getLearningToolsBySerID(Integer.valueOf(obj.getString(ApiResponseKey.ID.toString())));
@@ -493,7 +494,7 @@ public class SyncDatabase {
                     cv.put(Database.UserColumn.FULL_NAME.toString(), obj.getString(ApiResponseKey.FIRSTNAME.toString()));
                     cv.put(Database.UserColumn.EMAIL.toString(), obj.getString(ApiResponseKey.EMAIL.toString()));
                     cv.put(Database.UserColumn.PHONE.toString(), obj.getString(ApiResponseKey.PHONE_NO.toString()));
-                    cv.put(Database.UserColumn.COUNTRY.toString(), obj.getString(ApiResponseKey.COUNTRY.toString()));
+                    cv.put(Database.UserColumn.COUNTRY.toString(), obj.getString(ApiResponseKey.COUNTRY_LC.toString()));
                     cv.put(Database.UserColumn.PICTURE.toString(), obj.getString(ApiResponseKey.PICTURE.toString()));
                     cv.put(Database.UserColumn.FAVORITE_SCRIPTURE.toString(), "");
                     long x = DeepLife.myDATABASE.update(Database.Table_USER,cv,user.getID());
@@ -513,7 +514,7 @@ public class SyncDatabase {
                     cv.put(Database.UserColumn.EMAIL.toString(), obj.getString(ApiResponseKey.EMAIL.toString()));
                     cv.put(Database.UserColumn.PHONE.toString(), obj.getString(ApiResponseKey.PHONE_NO.toString()));
                     cv.put(Database.UserColumn.PASSWORD.toString(), ApiResponseKey.PASS.toString());
-                    cv.put(Database.UserColumn.COUNTRY.toString(), obj.getString(ApiResponseKey.COUNTRY.toString()));
+                    cv.put(Database.UserColumn.COUNTRY.toString(), obj.getString(ApiResponseKey.COUNTRY_LC.toString()));
                     cv.put(Database.UserColumn.PICTURE.toString(), obj.getString(ApiResponseKey.PICTURE.toString()));
                     cv.put(Database.UserColumn.FAVORITE_SCRIPTURE.toString(), "");
                     long x = DeepLife.myDATABASE.insert(Database.Table_USER,cv);
