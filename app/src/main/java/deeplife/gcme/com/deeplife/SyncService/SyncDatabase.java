@@ -90,61 +90,61 @@ public class SyncDatabase {
         Gson myGson = new Gson();
         try {
             JSONObject myObject = (JSONObject) new JSONTokener(jsonArray).nextValue();
-            //Log.i(TAG, "Server Response (ProcessResponse): " + myObject.toString());
+            Log.d(TAG, "Server Response (ProcessResponse): " + myObject.toString());
             if (!myObject.isNull(ApiResponseKey.RESPONSE.toString())) {
                 JSONObject json_response = myObject.getJSONObject(ApiResponseKey.RESPONSE.toString());
                 if (!json_response.isNull(ApiResponseKey.NEWSFEEDS.toString())) {
                     JSONArray json_newsfeeds = json_response.getJSONArray(ApiResponseKey.NEWSFEEDS.toString());
-                    Log.i(TAG, "News Feeds: \n" + json_newsfeeds.toString());
+                    Log.d(TAG, "News Feeds: \n" + json_newsfeeds.toString());
                     Add_News(json_newsfeeds);
                 }
                 if (!json_response.isNull(ApiResponseKey.TESTIMONIES.toString())) {
                     JSONArray json_testimonies = json_response.getJSONArray(ApiResponseKey.TESTIMONIES.toString());
-                    Log.i(TAG, "Testimonies: \n" + json_testimonies.toString());
+                    Log.d(TAG, "Testimonies: \n" + json_testimonies.toString());
                     Add_Testimony(json_testimonies);
                 }
                 if (!json_response.isNull(ApiResponseKey.DISCIPLES.toString())) {
                     JSONArray json_disciples = json_response.getJSONArray(ApiResponseKey.DISCIPLES.toString());
-                    Log.i(TAG, "Disciples: \n" + json_disciples.toString());
+                    Log.d(TAG, "Disciples: \n" + json_disciples.toString());
                     Add_Disciples(json_disciples);
                 }
                 if (!json_response.isNull(ApiResponseKey.QUESTIONS.toString())) {
                     JSONArray json_questions = json_response.getJSONArray(ApiResponseKey.QUESTIONS.toString());
-                    Log.i(TAG, "Questions: \n" + json_questions.toString());
+                    Log.d(TAG, "Questions: \n" + json_questions.toString());
                     Add_Questions(json_questions);
                 }
                 if (!json_response.isNull(ApiResponseKey.CATEGORIES.toString())) {
                     JSONArray json_categories = json_response.getJSONArray(ApiResponseKey.CATEGORIES.toString());
-                    Log.i(TAG, "Categories: \n" + json_categories.toString());
+                    Log.d(TAG, "Categories: \n" + json_categories.toString());
                     Add_Category(json_categories);
                 }
                 if (!json_response.isNull(ApiResponseKey.ANSWERS.toString())) {
                     JSONArray json_answers = json_response.getJSONArray(ApiResponseKey.ANSWERS.toString());
-                    Log.i(TAG, "Answers: \n" + json_answers.toString());
+                    Log.d(TAG, "Answers: \n" + json_answers.toString());
                     Add_Answers(json_answers);
                 }
                 if (!json_response.isNull(ApiResponseKey.COUNTRY_UC.toString())) {
                     JSONArray json_answers = json_response.getJSONArray(ApiResponseKey.COUNTRY_UC.toString());
-                    Log.i(TAG, "Country: \n" + json_answers.toString());
+                    Log.d(TAG, "Country: \n" + json_answers.toString());
                     Add_Countries(json_answers);
                 }
                 if (!json_response.isNull(ApiResponseKey.LOG_RESPONSE.toString())) {
                     JSONArray json_logs = json_response.getJSONArray(ApiResponseKey.LOG_RESPONSE.toString());
-                    Log.i(TAG, "Deleting Logs: \n" + json_logs.toString());
+                    Log.d(TAG, "Deleting Logs: \n" + json_logs.toString());
                     Delete_Logs(json_logs);
                 }
                 if (!json_response.isNull(ApiResponseKey.PROFILE.toString())) {
                     JSONObject json_user_profile = json_response.getJSONObject(ApiResponseKey.PROFILE.toString());
-                    Log.i(TAG, "Updating Main User: \n" + json_user_profile.toString());
+                    Log.d(TAG, "Updating Main User: \n" + json_user_profile.toString());
                     Update_MainUser(json_user_profile);
                 }
                 if (!json_response.isNull(ApiResponseKey.LEARNINGTOOLS.toString())) {
                     JSONArray json_learning_tools = json_response.getJSONArray(ApiResponseKey.LEARNINGTOOLS.toString());
-                    Log.i(TAG, "Add Learning tools: \n" + json_learning_tools.toString());
+                    Log.d(TAG, "Add Learning tools: \n" + json_learning_tools.toString());
                     Add_LearningTools(json_learning_tools);
                 }
             } else {
-                Log.i(TAG, "ProcessResponse: No 'Response' JSON object!");
+                Log.w(TAG, "ProcessResponse: No 'Response' JSON object!");
             }
         } catch (JSONException e) {
             Log.e(TAG, "ProcessResponse: JSON Exception: " + e.getMessage());
@@ -155,7 +155,7 @@ public class SyncDatabase {
     public static void Add_News(JSONArray json_newses){
         try{
             if(json_newses.length()>0){
-                Log.i(TAG,"Adding New News -> \n"+json_newses.toString());
+                Log.d(TAG,"Adding New News -> \n"+json_newses.toString());
                 for(int i=0;i<json_newses.length();i++){
                     JSONObject obj = json_newses.getJSONObject(i);
                     ContentValues cv = new ContentValues();
@@ -170,30 +170,30 @@ public class SyncDatabase {
                     if(news == null){
                         long x = DeepLife.myDATABASE.insert(Database.Table_NEWSFEED,cv);
                         if(x>0){
-                            Log.i(TAG,"Successfully Added: News Added -> \n"+cv.toString());
+                            Log.d(TAG,"Successfully Added: News Added -> \n"+cv.toString());
                         }else {
-                            Log.i(TAG,"Error During Adding: News -> \n"+cv.toString());
+                            Log.e(TAG,"Error During Adding: News -> \n"+cv.toString());
                         }
 
                     }else {
                         long x = DeepLife.myDATABASE.update(Database.Table_NEWSFEED,cv,news.getId());
-                        Log.i(TAG,"Updated: News Updated -> \n"+cv.toString());
+                        Log.d(TAG,"Updated: News Updated -> \n"+cv.toString());
                         if(x>0){
-                            Log.i(TAG,"Successfully Updated: News Updated -> \n"+cv.toString());
+                            Log.d(TAG,"Successfully Updated: News Updated -> \n"+cv.toString());
                         }else {
-                            Log.i(TAG,"Error During Updating: News -> \n"+cv.toString());
+                            Log.e(TAG,"Error During Updating: News -> \n"+cv.toString());
                         }
                     }
                 }
             }
         }catch (Exception e){
-            Log.i(TAG,e.toString());
+            Log.e(TAG, "Add_News: Exception: " + e.getMessage());
         }
     }
     public static void Add_Testimony(JSONArray json_testimony){
         try{
             if(json_testimony.length()>0){
-                Log.i(TAG,"Adding New Testimony -> \n"+json_testimony.toString());
+                Log.d(TAG,"Adding New Testimony -> \n"+json_testimony.toString());
                 for(int i=0;i<json_testimony.length();i++){
                     JSONObject obj = json_testimony.getJSONObject(i);
                     ContentValues cv = new ContentValues();
@@ -207,24 +207,24 @@ public class SyncDatabase {
                     if(testimony == null){
                         long x = DeepLife.myDATABASE.insert(Database.Table_TESTIMONY,cv);
                         if(x>0){
-                            Log.i(TAG,"Successfully Added: Testimony Added -> \n"+cv.toString());
+                            Log.d(TAG,"Successfully Added: Testimony Added -> \n"+cv.toString());
                         }else {
-                            Log.i(TAG,"Error During Adding: Testimony -> \n"+cv.toString());
+                            Log.e(TAG,"Error During Adding: Testimony -> \n"+cv.toString());
                         }
                     }else {
                         long x = DeepLife.myDATABASE.update(Database.Table_TESTIMONY,cv,testimony.getID());
-                        Log.i(TAG,"Updated: Testimony Updated -> \n"+cv.toString());
+                        Log.d(TAG,"Updated: Testimony Updated -> \n"+cv.toString());
                         if(x>0){
-                            Log.i(TAG,"Successfully Updated: Testimony Updated -> \n"+cv.toString());
+                            Log.d(TAG,"Successfully Updated: Testimony Updated -> \n"+cv.toString());
                         }else {
-                            Log.i(TAG,"Error During Updating: Testimony -> \n"+cv.toString());
+                            Log.e(TAG,"Error During Updating: Testimony -> \n"+cv.toString());
                         }
                     }
                 }
                 TestimonyFragment.UpdateList();
             }
         }catch (Exception e){
-            Log.i(TAG,e.toString());
+            Log.e(TAG, "Add_Testimony: Exception: " + e.getMessage());
         }
     }
     public long AddDisciple(Disciple disciple){
@@ -246,9 +246,9 @@ public class SyncDatabase {
         if(old_disciple == null){
             long x = DeepLife.myDATABASE.insert(Database.Table_DISCIPLES,cv);
             if(x>0){
-                Log.i(TAG,"Successfully Added: Disciples Added -> \n"+cv.toString());
+                Log.d(TAG,"Successfully Added: Disciples Added -> \n"+cv.toString());
             }else {
-                Log.i(TAG,"Error During Adding: Disciples -> \n"+cv.toString());
+                Log.e(TAG,"Error During Adding: Disciples -> \n"+cv.toString());
             }
             return x;
         }
@@ -261,16 +261,16 @@ public class SyncDatabase {
         cv.put(Database.LogsColumn.VALUE.toString(), logs.getValue());
         long x = DeepLife.myDATABASE.insert(Database.Table_LOGS,cv);
         if(x>0){
-            Log.i(TAG,"Successfully Added: new Logs Added -> \n"+cv.toString());
+            Log.d(TAG,"Successfully Added: new Logs Added -> \n"+cv.toString());
         }else {
-            Log.i(TAG,"Error During Adding: Logs -> \n"+cv.toString());
+            Log.e(TAG,"Error During Adding: Logs -> \n"+cv.toString());
         }
         return x;
     }
     public static void Add_Disciples(JSONArray json_disciples){
         try{
             if(json_disciples.length()>0){
-                Log.i(TAG,"Adding New Disciples -> \n"+json_disciples.toString());
+                Log.d(TAG,"Adding New Disciples -> \n"+json_disciples.toString());
                 if(json_disciples.length()>0){
                     DeepLife.myDATABASE.Delete_All(Database.Table_DISCIPLES);
                     for(int i=0;i<json_disciples.length();i++){
@@ -293,18 +293,18 @@ public class SyncDatabase {
                         if(disciple == null){
                             long x = DeepLife.myDATABASE.insert(Database.Table_DISCIPLES,cv);
                             if(x>0){
-                                Log.i(TAG,"Successfully Added: Disciples Added -> \n"+cv.toString());
+                                Log.d(TAG,"Successfully Added: Disciples Added -> \n"+cv.toString());
                             }else {
-                                Log.i(TAG,"Error During Adding: Disciples -> \n"+cv.toString());
+                                Log.e(TAG,"Error During Adding: Disciples -> \n"+cv.toString());
                             }
                         }else {
                             cv.put(Database.DisciplesColumn.IMAGEPATH.toString(), disciple.getImagePath());
                             long x = DeepLife.myDATABASE.update(Database.Table_DISCIPLES,cv,disciple.getID());
-                            Log.i(TAG,"Updated: Testimony Updated -> \n"+cv.toString());
+                            Log.d(TAG,"Updated: Disciple Updated -> \n"+cv.toString());
                             if(x>0){
-                                Log.i(TAG,"Successfully Updated: Disciples Updated -> \n"+cv.toString());
+                                Log.d(TAG,"Successfully Updated: Disciples Updated -> \n"+cv.toString());
                             }else {
-                                Log.i(TAG,"Error During Updating: Disciples -> \n"+cv.toString());
+                                Log.e(TAG,"Error During Updating: Disciples -> \n"+cv.toString());
                             }
                         }
                     }
@@ -312,13 +312,13 @@ public class SyncDatabase {
 
             }
         }catch (Exception e){
-            Log.i(TAG,e.toString());
+            Log.e(TAG, "Add_Disciples: Exception: " + e.getMessage());
         }
     }
     public static void Add_Questions(JSONArray json_questions){
         try{
             if(json_questions.length()>0){
-                Log.i(TAG,"Adding New WinBuildSend Questions -> \n"+json_questions.toString());
+                Log.d(TAG,"Adding New WinBuildSend Questions -> \n"+json_questions.toString());
                 for(int i=0;i<json_questions.length();i++){
                     JSONObject obj = json_questions.getJSONObject(i);
                     ContentValues cv = new ContentValues();
@@ -334,29 +334,29 @@ public class SyncDatabase {
                     if(wbsQuestion == null){
                         long x = DeepLife.myDATABASE.insert(Database.Table_QUESTION_LIST,cv);
                         if(x>0){
-                            Log.i(TAG,"Successfully Added: WinBuildSend Questions Added -> \n"+cv.toString());
+                            Log.d(TAG,"Successfully Added: WinBuildSend Questions Added -> \n"+cv.toString());
                         }else {
-                            Log.i(TAG,"Error During Adding: WinBuildSend Questions -> \n"+cv.toString());
+                            Log.e(TAG,"Error During Adding: WinBuildSend Questions -> \n"+cv.toString());
                         }
                     }else {
                         long x = DeepLife.myDATABASE.update(Database.Table_QUESTION_LIST,cv, wbsQuestion.getID());
-                        Log.i(TAG,"Updated: WinBuildSend Questions Updated -> \n"+cv.toString());
+                        Log.d(TAG,"Updated: WinBuildSend Questions Updated -> \n"+cv.toString());
                         if(x>0){
-                            Log.i(TAG,"Successfully Updated: WinBuildSend Questions Updated -> \n"+cv.toString());
+                            Log.d(TAG,"Successfully Updated: WinBuildSend Questions Updated -> \n"+cv.toString());
                         }else {
-                            Log.i(TAG,"Error During Updating: WinBuildSend Questions -> \n"+cv.toString());
+                            Log.e(TAG,"Error During Updating: WinBuildSend Questions -> \n"+cv.toString());
                         }
                     }
                 }
             }
         }catch (Exception e){
-            Log.i(TAG,e.toString());
+            Log.e(TAG, "Add_Questions: Exception: " + e.getMessage());
         }
     }
     public static void Add_Category(JSONArray json_questions){
         try{
             if(json_questions.length()>0){
-                //Log.i(TAG,"Adding/Updating New Categories  -> \n"+json_questions.toString());
+                Log.d(TAG,"Adding/Updating New Categories  -> \n"+json_questions.toString());
                 for(int i=0;i<json_questions.length();i++){
                     JSONObject obj = json_questions.getJSONObject(i);
                     ContentValues cv = new ContentValues();
@@ -369,29 +369,29 @@ public class SyncDatabase {
                     if(category == null){
                         long x = DeepLife.myDATABASE.insert(Database.Table_CATEGORIES,cv);
                         if(x>0){
-                            Log.i(TAG,"Successfully Added: Category -> \n"+cv.toString());
+                            Log.d(TAG,"Successfully Added: Category -> \n"+cv.toString());
                         }else {
-                            Log.i(TAG,"Error During Adding: Category -> \n"+cv.toString());
+                            Log.e(TAG,"Error During Adding: Category -> \n"+cv.toString());
                         }
                     }else {
                         long x = DeepLife.myDATABASE.update(Database.Table_CATEGORIES,cv,category.getID());
-                        //Log.i(TAG,"Updated: Category -> \n"+cv.toString());
+                        Log.d(TAG,"Updated: Category -> \n"+cv.toString());
                         if(x>0){
-                            //Log.i(TAG,"Successfully Updated: Category Updated -> \n"+cv.toString());
+                            Log.d(TAG,"Successfully Updated: Category Updated -> \n"+cv.toString());
                         }else {
-                            Log.i(TAG,"Error During Updating: Category -> \n"+cv.toString());
+                            Log.e(TAG,"Error During Updating: Category -> \n"+cv.toString());
                         }
                     }
                 }
             }
         }catch (Exception e){
-            Log.i(TAG,e.toString());
+            Log.e(TAG, "Add_Category: Exception: " + e.getMessage());
         }
     }
     public static void Add_Answers(JSONArray json_answers){
         try{
             if(json_answers.length()>0){
-                Log.i(TAG,"Adding New Answers  -> \n"+json_answers.toString());
+                Log.d(TAG,"Adding New Answers  -> \n"+json_answers.toString());
                 for(int i=0;i<json_answers.length();i++){
                     JSONObject obj = json_answers.getJSONObject(i);
                     ContentValues cv = new ContentValues();
@@ -404,29 +404,29 @@ public class SyncDatabase {
                     if(answer == null){
                         long x = DeepLife.myDATABASE.insert(Database.Table_QUESTION_ANSWER,cv);
                         if(x>0){
-                            Log.i(TAG,"Successfully Added: Answers -> \n"+cv.toString());
+                            Log.d(TAG,"Successfully Added: Answers -> \n"+cv.toString());
                         }else {
-                            Log.i(TAG,"Error During Adding: Answers -> \n"+cv.toString());
+                            Log.e(TAG,"Error During Adding: Answers -> \n"+cv.toString());
                         }
                     }else {
                         long x = DeepLife.myDATABASE.update(Database.Table_QUESTION_ANSWER,cv,answer.getID());
-                        Log.i(TAG,"Updated: Answers -> \n"+cv.toString());
+                        Log.d(TAG,"Updated: Answers -> \n"+cv.toString());
                         if(x>0){
-                            Log.i(TAG,"Successfully Updated: Answers Updated -> \n"+cv.toString());
+                            Log.d(TAG,"Successfully Updated: Answers Updated -> \n"+cv.toString());
                         }else {
-                            Log.i(TAG,"Error During Updating: Answers -> \n"+cv.toString());
+                            Log.e(TAG,"Error During Updating: Answers -> \n"+cv.toString());
                         }
                     }
                 }
             }
         }catch (Exception e){
-            Log.i(TAG,e.toString());
+            Log.e(TAG, "Add_Answers: Exception: " + e.getMessage());
         }
     }
     public static void Add_MainUser(JSONObject json_mainuser){
         try{
             if(json_mainuser.length()>0){
-                Log.i(TAG,"Adding MainUser  -> \n"+json_mainuser.toString());
+                Log.d(TAG,"Adding MainUser  -> \n"+json_mainuser.toString());
                 JSONObject obj = json_mainuser;
                 ContentValues cv = new ContentValues();
                 cv.put(Database.UserColumn.SERID.toString(), obj.getString(ApiResponseKey.ID.toString()));
@@ -440,19 +440,19 @@ public class SyncDatabase {
                 DeepLife.myDATABASE.Delete_All(Database.Table_USER);
                 long x = DeepLife.myDATABASE.insert(Database.Table_USER,cv);
                 if(x>0){
-                    Log.i(TAG,"Successfully Added: Main User -> \n"+cv.toString());
+                    Log.d(TAG,"Successfully Added: Main User -> \n"+cv.toString());
                 }else {
-                    Log.i(TAG,"Error During Adding: Main User -> \n"+cv.toString());
+                    Log.e(TAG,"Error During Adding: Main User -> \n"+cv.toString());
                 }
             }
         }catch (Exception e){
-            Log.i(TAG,e.toString());
+            Log.e(TAG, "Add_MainUser: Exception: " + e.getMessage());
         }
     }
     public static void Add_LearningTools(JSONArray json_learnings){
         try{
             if(json_learnings.length()>0){
-                Log.i(TAG,"Adding LearningTools  -> \n"+json_learnings.toString());
+                Log.d(TAG,"Adding LearningTools  -> \n"+json_learnings.toString());
                 for (int i = 0; i < json_learnings.length(); i++) {
                     JSONObject obj = json_learnings.getJSONObject(i);
                     ContentValues cv = new ContentValues();
@@ -467,16 +467,16 @@ public class SyncDatabase {
                     if (learningTool == null) {
                         long x = DeepLife.myDATABASE.insert(Database.Table_LEARNING, cv);
                         if (x > 0) {
-                            Log.i(TAG, "Successfully Added: Learning Tools -> \n" + cv.toString());
+                            Log.d(TAG, "Successfully Added: Learning Tools -> \n" + cv.toString());
                         } else {
-                            Log.i(TAG, "Error During Adding: Learning Tools -> \n" + cv.toString());
+                            Log.e(TAG, "Error During Adding: Learning Tools -> \n" + cv.toString());
                         }
                     } else {
                         long x = DeepLife.myDATABASE.update(Database.Table_LEARNING, cv, learningTool.getID());
                         if (x > 0) {
-                            Log.i(TAG, "Successfully Updated: Learning Tools -> \n" + cv.toString());
+                            Log.d(TAG, "Successfully Updated: Learning Tools -> \n" + cv.toString());
                         } else {
-                            Log.i(TAG, "Error During Updated: Learning Tools -> \n" + cv.toString());
+                            Log.e(TAG, "Error During Updated: Learning Tools -> \n" + cv.toString());
                         }
                     }
                 }
@@ -490,7 +490,7 @@ public class SyncDatabase {
             User user = DeepLife.myDATABASE.getMainUser();
             if(user != null){
                 if(json_mainuser.length()>0){
-                    Log.i(TAG,"Updating MainUser  -> \n"+json_mainuser.toString());
+                    Log.d(TAG,"Updating MainUser  -> \n"+json_mainuser.toString());
                     JSONObject obj = json_mainuser;
                     ContentValues cv = new ContentValues();
                     cv.put(Database.UserColumn.SERID.toString(), obj.getString(ApiResponseKey.ID.toString()));
@@ -502,14 +502,14 @@ public class SyncDatabase {
                     cv.put(Database.UserColumn.FAVORITE_SCRIPTURE.toString(), "");
                     long x = DeepLife.myDATABASE.update(Database.Table_USER,cv,user.getID());
                     if(x>0){
-                        Log.i(TAG,"Successfully Updated: Main User -> \n"+cv.toString());
+                        Log.d(TAG,"Successfully Updated: Main User -> \n"+cv.toString());
                     }else {
-                        Log.i(TAG,"Error During Updated: Main User -> \n"+cv.toString());
+                        Log.e(TAG,"Error During Updated: Main User -> \n"+cv.toString());
                     }
                 }
             }else {
                 if(json_mainuser.length()>0){
-                    Log.i(TAG,"Updating MainUser  -> \n"+json_mainuser.toString());
+                    Log.d(TAG,"Updating MainUser  -> \n"+json_mainuser.toString());
                     JSONObject obj = json_mainuser;
                     ContentValues cv = new ContentValues();
                     cv.put(Database.UserColumn.SERID.toString(), obj.getString(ApiResponseKey.ID.toString()));
@@ -522,21 +522,21 @@ public class SyncDatabase {
                     cv.put(Database.UserColumn.FAVORITE_SCRIPTURE.toString(), "");
                     long x = DeepLife.myDATABASE.insert(Database.Table_USER,cv);
                     if(x>0){
-                        Log.i(TAG,"Successfully Updated: Main User -> \n"+cv.toString());
+                        Log.d(TAG,"Successfully Updated: Main User -> \n"+cv.toString());
                     }else {
-                        Log.i(TAG,"Error During Updated: Main User -> \n"+cv.toString());
+                        Log.e(TAG,"Error During Updated: Main User -> \n"+cv.toString());
                     }
                 }
             }
 
         }catch (Exception e){
-            Log.i(TAG,e.toString());
+            Log.e(TAG, "Update_MainUser: Exception: " + e.getMessage());
         }
     }
     public static void Add_Countries(JSONArray json_countries){
         try{
             if(json_countries.length()>0){
-                Log.i(TAG,"Adding New Countries  -> \n"+json_countries.toString());
+                Log.d(TAG,"Adding New Countries  -> \n"+json_countries.toString());
                 for(int i=0;i<json_countries.length();i++){
                     JSONObject obj = json_countries.getJSONObject(i);
                     ContentValues cv = new ContentValues();
@@ -548,23 +548,23 @@ public class SyncDatabase {
                     if(country == null){
                         long x = DeepLife.myDATABASE.insert(Database.Table_COUNTRY,cv);
                         if(x>0){
-                            Log.i(TAG,"Successfully Added: Country -> \n"+cv.toString());
+                            Log.d(TAG,"Successfully Added: Country -> \n"+cv.toString());
                         }else {
-                            Log.i(TAG,"Error During Adding: Country -> \n"+cv.toString());
+                            Log.e(TAG,"Error During Adding: Country -> \n"+cv.toString());
                         }
                     }else {
                         long x = DeepLife.myDATABASE.update(Database.Table_COUNTRY,cv,country.getID());
-                        Log.i(TAG,"Updated: Answers -> \n"+cv.toString());
+                        Log.d(TAG,"Updated: Countries -> \n"+cv.toString());
                         if(x>0){
-                            Log.i(TAG,"Successfully Updated: Country Updated -> \n"+cv.toString());
+                            Log.d(TAG,"Successfully Updated: Country Updated -> \n"+cv.toString());
                         }else {
-                            Log.i(TAG,"Error During Updating: Country -> \n"+cv.toString());
+                            Log.e(TAG,"Error During Updating: Country -> \n"+cv.toString());
                         }
                     }
                 }
             }
         }catch (Exception e){
-            Log.i(TAG,e.toString());
+            Log.e(TAG, "Add_Countries: Exception: " + e.getMessage());
         }
     }
     private static void Delete_Logs(JSONArray json_logs) {
@@ -584,7 +584,7 @@ public class SyncDatabase {
                 }
             }
         }catch (Exception e){
-
+            Log.e(TAG, "Delete_Logs: Exception: " + e.getMessage());
         }
     }
 }

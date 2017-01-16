@@ -148,28 +148,23 @@ public class SyncService extends JobService {
                 Send_Param.add(new kotlin.Pair<String, String>(API_REQUEST.SERVICE.toString(), myLogs.getService().toString()));
                 Send_Param.add(new kotlin.Pair<String, String>(API_REQUEST.PARAM.toString(), myParser.toJson(myLogs.getParam())));
             }
-            // Temp
-//            Log.i(TAG, "Enum test1: " + Task.ADD_NEW_ANSWERS);
-//            Log.i(TAG, "Enum test2: " + Task.ADD_NEW_ANSWERS.name());
-//            Log.i(TAG, "Enum test3: " + Task.valueOf("ADD_NEW_ANSWERS"));
-//            Log.i(TAG, "Enum test4: " + Task.SEND_ANSWERS);
-            Log.i(TAG, "Prepared Request: " + Send_Param.toString());
-            Log.i(TAG,"Service Started for: " + DeepLife.API_URL);
+            Log.i(TAG, "API Request: " + Send_Param.toString());
             Fuel.post(DeepLife.API_URL, Send_Param).responseString(new Handler<String>() {
                 @Override
                 public void success(@NotNull Request request, @NotNull Response response, String s) {
-                    Log.i(TAG, "Request: " + request);
+                    Log.d(TAG, "Request: " + request);
                     Log.i(TAG, "Response: " + s);
                     mySyncDatabase.ProcessResponse(s);
                 }
 
                 @Override
                 public void failure(@NotNull Request request, @NotNull Response response, @NotNull FuelError fuelError) {
-                    Log.i(TAG, "Fuel failure: \n" + fuelError.toString());
+                    Log.e(TAG, "Fuel failure: \n" + fuelError.toString());
                 }
             });
+            Log.i(TAG, "API Request SENT to: " + DeepLife.API_URL);
         }catch (Exception e){
-            Log.i(TAG, "The Job scheduler Failed ...."+e.toString());
+            Log.e(TAG, "The Job scheduler Failed ...."+e.toString());
         }
         jobFinished(params, false);
         return true;
