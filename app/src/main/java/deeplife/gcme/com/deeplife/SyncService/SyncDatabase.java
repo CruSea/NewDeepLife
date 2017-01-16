@@ -464,15 +464,15 @@ public class SyncDatabase {
                     cv.put(Database.LearningColumn.ISDEFAULT.toString(), obj.getString(ApiResponseKey.DEFAULT_LEARN.toString()));
                     cv.put(Database.LearningColumn.CREATED.toString(), obj.getString(ApiResponseKey.CREATED.toString()));
                     LearningTool learningTool = DeepLife.myDATABASE.getLearningToolsBySerID(Integer.valueOf(obj.getString(ApiResponseKey.ID.toString())));
-                    if (learningTool != null) {
-                        long x = DeepLife.myDATABASE.insert(Database.Table_USER, cv);
+                    if (learningTool == null) {
+                        long x = DeepLife.myDATABASE.insert(Database.Table_LEARNING, cv);
                         if (x > 0) {
                             Log.i(TAG, "Successfully Added: Learning Tools -> \n" + cv.toString());
                         } else {
                             Log.i(TAG, "Error During Adding: Learning Tools -> \n" + cv.toString());
                         }
                     } else {
-                        long x = DeepLife.myDATABASE.update(Database.Table_USER, cv, learningTool.getID());
+                        long x = DeepLife.myDATABASE.update(Database.Table_LEARNING, cv, learningTool.getID());
                         if (x > 0) {
                             Log.i(TAG, "Successfully Updated: Learning Tools -> \n" + cv.toString());
                         } else {
@@ -482,7 +482,7 @@ public class SyncDatabase {
                 }
             }
         }catch (Exception e){
-            Log.i(TAG,e.toString());
+            Log.e(TAG, "Add_LearningTools: Exception: " + e.getMessage());
         }
     }
     public static void Update_MainUser(JSONObject json_mainuser){
