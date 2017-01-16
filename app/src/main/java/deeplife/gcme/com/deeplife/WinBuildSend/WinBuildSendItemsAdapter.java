@@ -17,6 +17,7 @@ import android.widget.ToggleButton;
 import java.util.List;
 
 import deeplife.gcme.com.deeplife.DeepLife;
+import deeplife.gcme.com.deeplife.Disciples.Disciple;
 import deeplife.gcme.com.deeplife.Models.Answer;
 import deeplife.gcme.com.deeplife.Models.Logs;
 import deeplife.gcme.com.deeplife.R;
@@ -32,10 +33,10 @@ public class WinBuildSendItemsAdapter extends RecyclerView.Adapter<WinBuildSendI
     public static Context myContext;
     public static String DisciplePhone;
     public static SyncDatabase mySyncDatabase;
-    public static String BuildStage;
+    public static Disciple.STAGE BuildStage;
     private int count;
 
-    public WinBuildSendItemsAdapter(List<WbsQuestion> wbsQuestions, Context context, String disciplePhone, String buildStage) {
+    public WinBuildSendItemsAdapter(List<WbsQuestion> wbsQuestions, Context context, String disciplePhone, Disciple.STAGE buildStage) {
         this.wbsQuestions = wbsQuestions;
         this.count = wbsQuestions.size();
         mySyncDatabase = new SyncDatabase();
@@ -144,9 +145,9 @@ public class WinBuildSendItemsAdapter extends RecyclerView.Adapter<WinBuildSendI
                 long x = DeepLife.myDATABASE.add_updateAnswer(answer);
                 if(x>0){
                     Logs logs = new Logs();
-                    logs.setTask(Logs.Task.SEND_ANSWERS);
-                    logs.setService(SyncService.ApiService.ADDNEW_ANSWERS);
-                    logs.setType(Logs.Type.ADD_NEW_ANSWERS);
+                    logs.setTask(Logs.TASK.SEND_ANSWERS);
+                    logs.setType(Logs.TYPE.ADD_NEW_ANSWERS);
+                    logs.setService(SyncService.API_SERVICE.ADDNEW_ANSWERS);
                     logs.setValue(""+x);
                     mySyncDatabase.AddLog(logs);
                 }
@@ -159,9 +160,9 @@ public class WinBuildSendItemsAdapter extends RecyclerView.Adapter<WinBuildSendI
                     long x = DeepLife.myDATABASE.add_updateAnswer(answer);
                     if(x>0){
                         Logs logs = new Logs();
-                        logs.setTask(Logs.Task.SEND_ANSWERS);
-                        logs.setService(SyncService.ApiService.ADDNEW_ANSWERS);
-                        logs.setType(Logs.Type.ADD_NEW_ANSWERS);
+                        logs.setTask(Logs.TASK.SEND_ANSWERS);
+                        logs.setType(Logs.TYPE.ADD_NEW_ANSWERS);
+                        logs.setService(SyncService.API_SERVICE.ADDNEW_ANSWERS);
                         logs.setValue(""+x);
                         mySyncDatabase.AddLog(logs);
                     }
@@ -174,9 +175,9 @@ public class WinBuildSendItemsAdapter extends RecyclerView.Adapter<WinBuildSendI
                     long x = DeepLife.myDATABASE.add_updateAnswer(answer);
                     if(x>0){
                         Logs logs = new Logs();
-                        logs.setTask(Logs.Task.SEND_ANSWERS);
-                        logs.setService(SyncService.ApiService.ADDNEW_ANSWERS);
-                        logs.setType(Logs.Type.ADD_NEW_ANSWERS);
+                        logs.setTask(Logs.TASK.SEND_ANSWERS);
+                        logs.setType(Logs.TYPE.ADD_NEW_ANSWERS);
+                        logs.setService(SyncService.API_SERVICE.ADDNEW_ANSWERS);
                         logs.setValue(""+x);
                         mySyncDatabase.AddLog(logs);
                     }
@@ -186,9 +187,9 @@ public class WinBuildSendItemsAdapter extends RecyclerView.Adapter<WinBuildSendI
                     long x = DeepLife.myDATABASE.add_updateAnswer(answer);
                     if(x>0){
                         Logs logs = new Logs();
-                        logs.setTask(Logs.Task.SEND_ANSWERS);
-                        logs.setService(SyncService.ApiService.ADDNEW_ANSWERS);
-                        logs.setType(Logs.Type.ADD_NEW_ANSWERS);
+                        logs.setTask(Logs.TASK.SEND_ANSWERS);
+                        logs.setType(Logs.TYPE.ADD_NEW_ANSWERS);
+                        logs.setService(SyncService.API_SERVICE.ADDNEW_ANSWERS);
                         logs.setValue(""+x);
                         mySyncDatabase.AddLog(logs);
                     }

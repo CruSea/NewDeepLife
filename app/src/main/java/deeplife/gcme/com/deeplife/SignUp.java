@@ -175,11 +175,11 @@ public class SignUp extends AppCompatActivity {
         user.add(NewUser);
         List<Pair<String, String>> Send_Param;
         Send_Param = new ArrayList<Pair<String, String>>();
-        Send_Param.add(new kotlin.Pair<String, String>(SyncService.ApiRequest.USER_NAME.toString(), NewUser.getUser_Phone()));
-        Send_Param.add(new kotlin.Pair<String, String>(SyncService.ApiRequest.USER_PASS.toString(), NewUser.getUser_Pass()));
-        Send_Param.add(new kotlin.Pair<String, String>(SyncService.ApiRequest.COUNTRY.toString(), NewUser.getUser_Country()));
-        Send_Param.add(new kotlin.Pair<String, String>(SyncService.ApiRequest.SERVICE.toString(), SyncService.ApiService.SIGN_UP.toString()));
-        Send_Param.add(new kotlin.Pair<String, String>(SyncService.ApiRequest.PARAM.toString(), myParser.toJson(user)));
+        Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.USER_NAME.toString(), NewUser.getUser_Phone()));
+        Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.USER_PASS.toString(), NewUser.getUser_Pass()));
+        Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.COUNTRY.toString(), NewUser.getUser_Country()));
+        Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.SERVICE.toString(), SyncService.API_SERVICE.SIGN_UP.toString()));
+        Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.PARAM.toString(), myParser.toJson(user)));
         Fuel.post(DeepLife.API_URL, Send_Param).responseString(new Handler<String>() {
             @Override
             public void success(Request request, Response response, String s) {
@@ -189,7 +189,7 @@ public class SignUp extends AppCompatActivity {
                     Log.i(TAG, "Server Response -> \n" + s);
                     JSONObject myObject = (JSONObject) new JSONTokener(s).nextValue();
 
-                    if (!myObject.isNull("Response")) {
+                    if (!myObject.isNull(SyncDatabase.ApiResponseKey.RESPONSE.toString())) {
                         mySyncDatabase.ProcessResponse(s);
 
                         DeepLife.myDATABASE.Delete_All(Database.Table_DISCIPLES);

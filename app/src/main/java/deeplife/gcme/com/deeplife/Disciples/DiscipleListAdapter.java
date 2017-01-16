@@ -52,7 +52,7 @@ public class DiscipleListAdapter extends RecyclerView.Adapter<DiscipleListAdapte
         holder.FullName.setText(Disciples.get(position).getFullName());
         holder.Email.setText(Disciples.get(position).getEmail());
         holder.Phone.setText("+"+Disciples.get(position).getPhone());
-        holder.btn_WinBuild.setText(Disciples.get(position).getStage());
+        holder.btn_WinBuild.setText(Disciples.get(position).getStage().toString());
         if(Disciples.get(position).getImagePath() != null){
             File file = new File(Disciples.get(position).getImagePath());
             if(file.isFile()){
@@ -87,8 +87,8 @@ public class DiscipleListAdapter extends RecyclerView.Adapter<DiscipleListAdapte
                     case DialogInterface.BUTTON_POSITIVE:
                         DeepLife.myDATABASE.Delete_By_ID(Database.Table_DISCIPLES,discipleid);
                         Logs logs = new Logs();
-                        logs.setType(Logs.Type.REMOVE_DISCIPLE);
-                        logs.setTask(Logs.Task.SEND_LOG);
+                        logs.setType(Logs.TYPE.REMOVE_DISCIPLE);
+                        logs.setTask(Logs.TASK.SEND_LOG);
                         logs.setValue(disciplePhone);
                         mySyncDatabase.AddLog(logs);
                         DisciplesFragment.UpdateList();

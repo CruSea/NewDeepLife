@@ -41,7 +41,7 @@ public class LearningFragment extends Fragment {
         myContext = getActivity();
 //        ArrayList<LearningTool> items = DeepLife.myDATABASE.getAllLearningTools();
 //        Toast.makeText(getContext(),"There are "+items.size(),Toast.LENGTH_LONG).show();
-//        mAdapter = new LearningToolsListAdpapter(items, getContext());
+//        mAdapter = new LearningToolsListAdapter(items, getContext());
 //        myRecyclerView.setAdapter(mAdapter);
         return view;
     }

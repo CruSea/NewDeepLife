@@ -9,21 +9,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.VideoView;
 
-import java.net.URI;
 import java.util.List;
 
-import deeplife.gcme.com.deeplife.News.NewsListAdapter;
 import deeplife.gcme.com.deeplife.R;
 
 /**
  * Created by bengeos on 12/7/16.
  */
 
-public class LearningToolsListAdpapter extends RecyclerView.Adapter<LearningToolsListAdpapter.DataObjectHolder> {
+public class LearningToolsListAdapter extends RecyclerView.Adapter<LearningToolsListAdapter.DataObjectHolder> {
     private List<LearningTool> LearningTools;
     private Context myContext;
 
-    public LearningToolsListAdpapter(List<LearningTool> learningTools, Context myContext) {
+    public LearningToolsListAdapter(List<LearningTool> learningTools, Context myContext) {
         LearningTools = learningTools;
         this.myContext = myContext;
     }
@@ -31,7 +29,7 @@ public class LearningToolsListAdpapter extends RecyclerView.Adapter<LearningTool
     @Override
     public DataObjectHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.learning_fragment_item, parent, false);
-        LearningToolsListAdpapter.DataObjectHolder dataObjectHolder = new LearningToolsListAdpapter.DataObjectHolder(view);
+        LearningToolsListAdapter.DataObjectHolder dataObjectHolder = new LearningToolsListAdapter.DataObjectHolder(view);
         return dataObjectHolder;
     }
 
