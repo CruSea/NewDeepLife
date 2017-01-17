@@ -22,7 +22,8 @@
             android:layout_height="wrap_content"
             app:tabIndicatorColor="@color/colorSecondary"
             app:tabMode="fixed"
-            app:tabGravity="center"/>
+            app:tabGravity="center"
+            app:layout_scrollFlags="scroll|enterAlways" />
 
     </android.support.design.widget.AppBarLayout>
 
