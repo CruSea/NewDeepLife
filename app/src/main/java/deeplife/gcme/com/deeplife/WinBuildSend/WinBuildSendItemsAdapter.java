@@ -54,31 +54,31 @@ public class WinBuildSendItemsAdapter extends RecyclerView.Adapter<WinBuildSendI
 
     @Override
     public void onBindViewHolder(DataObjectHolder holder, int position) {
-        Answer answer = DeepLife.myDATABASE.getAnswerByQuestionIDandDisciplePhone(wbsQuestions.get(position).getSerID(),DisciplePhone);
-        if(wbsQuestions.get(position).getType() == WbsQuestion.Type.YESNO) {
+        Answer answer = DeepLife.myDATABASE.getAnswerByQuestionIDandDisciplePhone(wbsQuestions.get(position).getSerID(), DisciplePhone);
+        if (wbsQuestions.get(position).getType() == WbsQuestion.Type.YESNO) {
             holder.frameLayout1.setVisibility(View.VISIBLE);
             holder.frameLayout2.setVisibility(View.GONE);
             holder.frameLayout3.setVisibility(View.GONE);
 
-            if(answer != null){
-                if(answer.getAnswer().equals("YES")){
+            if (answer != null) {
+                if (answer.getAnswer().equals("YES")) {
                     holder.btnToggle.setChecked(true);
-                }else {
+                } else {
                     holder.btnToggle.setChecked(false);
                 }
 
             }
 
-        }else if(wbsQuestions.get(position).getType() == WbsQuestion.Type.NUMBER) {
+        } else if (wbsQuestions.get(position).getType() == WbsQuestion.Type.NUMBER) {
             holder.frameLayout1.setVisibility(View.GONE);
             holder.frameLayout2.setVisibility(View.VISIBLE);
             holder.frameLayout3.setVisibility(View.GONE);
 
-            if(answer != null){
+            if (answer != null) {
                 int value = Integer.valueOf(answer.getAnswer());
-                holder.QuestionValue.setText(""+value);
+                holder.QuestionValue.setText("" + value);
             }
-        }else {
+        } else {
             // Folder
             holder.frameLayout1.setVisibility(View.GONE);
             holder.frameLayout2.setVisibility(View.GONE);
@@ -96,12 +96,13 @@ public class WinBuildSendItemsAdapter extends RecyclerView.Adapter<WinBuildSendI
     }
 
     public static class DataObjectHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
-        TextView Question1,Question2,Question3,Email,Phone;
-        Button btnInc,btnDec;
+        TextView Question1, Question2, Question3, Email, Phone;
+        Button btnInc, btnDec;
         ToggleButton btnToggle;
         ImageView NewsImage;
-        TextView QuestionValue,ReadNote1,ReadNote2;
-        FrameLayout frameLayout1,frameLayout2,frameLayout3;
+        TextView QuestionValue, ReadNote1, ReadNote2;
+        FrameLayout frameLayout1, frameLayout2, frameLayout3;
+
         public DataObjectHolder(View itemView) {
             super(itemView);
             frameLayout1 = (FrameLayout) itemView.findViewById(R.id.frame1);
@@ -137,67 +138,67 @@ public class WinBuildSendItemsAdapter extends RecyclerView.Adapter<WinBuildSendI
             answer.setQuestionID(wbsQuestions.get(getAdapterPosition()).getSerID());
             answer.setSerID(0);
             answer.setBuildStage(BuildStage);
-            if(v.getId() == R.id.btn_winbuildsend_inc){
+            if (v.getId() == R.id.btn_winbuildsend_inc) {
                 int value = Integer.valueOf(QuestionValue.getText().toString());
                 value = value + 1;
-                QuestionValue.setText(""+value);
-                answer.setAnswer(""+value);
+                QuestionValue.setText("" + value);
+                answer.setAnswer("" + value);
                 long x = DeepLife.myDATABASE.add_updateAnswer(answer);
-                if(x>0){
+                if (x > 0) {
                     Logs logs = new Logs();
                     logs.setTask(Logs.TASK.SEND_ANSWERS);
                     logs.setType(Logs.TYPE.ADD_NEW_ANSWERS);
                     logs.setService(SyncService.API_SERVICE.ADDNEW_ANSWERS);
-                    logs.setValue(""+x);
+                    logs.setValue("" + x);
                     mySyncDatabase.AddLog(logs);
                 }
-            }else if(v.getId() == R.id.btn_winbuildsend_dec){
+            } else if (v.getId() == R.id.btn_winbuildsend_dec) {
                 int value = Integer.valueOf(QuestionValue.getText().toString());
-                if(value > 0){
+                if (value > 0) {
                     value = value - 1;
-                    QuestionValue.setText(""+value);
-                    answer.setAnswer(""+value);
+                    QuestionValue.setText("" + value);
+                    answer.setAnswer("" + value);
                     long x = DeepLife.myDATABASE.add_updateAnswer(answer);
-                    if(x>0){
+                    if (x > 0) {
                         Logs logs = new Logs();
                         logs.setTask(Logs.TASK.SEND_ANSWERS);
                         logs.setType(Logs.TYPE.ADD_NEW_ANSWERS);
                         logs.setService(SyncService.API_SERVICE.ADDNEW_ANSWERS);
-                        logs.setValue(""+x);
+                        logs.setValue("" + x);
                         mySyncDatabase.AddLog(logs);
                     }
                 }
 
-            }else if(v.getId() == R.id.tgl_winbuildsend_state){
-                if(btnToggle.isChecked()){
-                    Toast.makeText(myContext,"Checked",Toast.LENGTH_LONG).show();
+            } else if (v.getId() == R.id.tgl_winbuildsend_state) {
+                if (btnToggle.isChecked()) {
+                    Toast.makeText(myContext, "Checked", Toast.LENGTH_LONG).show();
                     answer.setAnswer("YES");
                     long x = DeepLife.myDATABASE.add_updateAnswer(answer);
-                    if(x>0){
+                    if (x > 0) {
                         Logs logs = new Logs();
                         logs.setTask(Logs.TASK.SEND_ANSWERS);
                         logs.setType(Logs.TYPE.ADD_NEW_ANSWERS);
                         logs.setService(SyncService.API_SERVICE.ADDNEW_ANSWERS);
-                        logs.setValue(""+x);
+                        logs.setValue("" + x);
                         mySyncDatabase.AddLog(logs);
                     }
-                }else {
-                    Toast.makeText(myContext,"Not Checked",Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(myContext, "Not Checked", Toast.LENGTH_LONG).show();
                     answer.setAnswer("NO");
                     long x = DeepLife.myDATABASE.add_updateAnswer(answer);
-                    if(x>0){
+                    if (x > 0) {
                         Logs logs = new Logs();
                         logs.setTask(Logs.TASK.SEND_ANSWERS);
                         logs.setType(Logs.TYPE.ADD_NEW_ANSWERS);
                         logs.setService(SyncService.API_SERVICE.ADDNEW_ANSWERS);
-                        logs.setValue(""+x);
+                        logs.setValue("" + x);
                         mySyncDatabase.AddLog(logs);
                     }
 
                 }
-            }else if(v.getId() == R.id.txt_readnote1 || v.getId() == R.id.txt_readnote2){
+            } else if (v.getId() == R.id.txt_readnote1 || v.getId() == R.id.txt_readnote2) {
                 showDialog(wbsQuestions.get(getAdapterPosition()).getDescription());
-                Toast.makeText(myContext,"Showing Dialog for Description",Toast.LENGTH_LONG).show();
+                Toast.makeText(myContext, "Showing Dialog for Description", Toast.LENGTH_LONG).show();
             }
 
             WinBuildSendActivity.checkStage();
@@ -209,11 +210,12 @@ public class WinBuildSendItemsAdapter extends RecyclerView.Adapter<WinBuildSendI
             return true;
         }
     }
+
     public static void showDialog(final String message) {
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                switch (which){
+                switch (which) {
                     case DialogInterface.BUTTON_POSITIVE:
                         break;
                     case DialogInterface.BUTTON_NEGATIVE:

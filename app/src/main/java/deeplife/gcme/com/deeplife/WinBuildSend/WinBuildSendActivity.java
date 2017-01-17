@@ -37,9 +37,9 @@ public class WinBuildSendActivity extends AppCompatActivity {
     private static RecyclerView myRecyclerView;
     private static RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    public static LinearLayout L_Win,L_Build,L_Send;
+    public static LinearLayout L_Win, L_Build, L_Send;
     private static Context myContext;
-    public static Button Btn_Win,Btn_Build,Btn_Send;
+    public static Button Btn_Win, Btn_Build, Btn_Send;
     public static ImageView DiscipleImage;
     public static TextView DiscipleName;
     public static String DisciplePhone;
@@ -48,6 +48,7 @@ public class WinBuildSendActivity extends AppCompatActivity {
     public static Disciple myDisciple;
     public static List<Category> categories;
     private Toolbar toolbar;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,7 +78,7 @@ public class WinBuildSendActivity extends AppCompatActivity {
         L_Send = (LinearLayout) findViewById(R.id.lyt_send);
 
         int sum = DeepLife.myDATABASE.count(Database.Table_QUESTION_LIST);
-        Toast.makeText(this,"There are: "+sum,Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "There are: " + sum, Toast.LENGTH_LONG).show();
         checkStage();
         UpdateQuestionList(buildStage);
 
@@ -101,96 +102,99 @@ public class WinBuildSendActivity extends AppCompatActivity {
             }
         });
         DiscipleName.setText(myDisciple.getDisplayName());
-        if(myDisciple.getImagePath() != null){
+        if (myDisciple.getImagePath() != null) {
             File file = new File(myDisciple.getImagePath());
-            if(file.isFile()){
+            if (file.isFile()) {
                 DiscipleImage.setImageBitmap(BitmapFactory.decodeFile(file.getAbsolutePath()));
             }
         }
 
     }
-    public void UpdateQuestionList(Disciple.STAGE stage){
+
+    public void UpdateQuestionList(Disciple.STAGE stage) {
         ArrayList<WbsQuestion> SendQuestions = DeepLife.myDATABASE.getWinBuildSendQuestionsByCategorySerID(stage.toServerId());
-        if(SendQuestions != null){
+        if (SendQuestions != null) {
             List<Category> items = DeepLife.myDATABASE.getCategoriesByParentID(stage.toServerId());
-            if(items.size()>0){
-                for(Category category :items){
+            if (items.size() > 0) {
+                for (Category category : items) {
                     WbsQuestion question = new WbsQuestion();
                     question.setQuestion(category.getName());
                     question.setType(WbsQuestion.Type.FOLDER);
                     ArrayList<WbsQuestion> FoundQuestion = DeepLife.myDATABASE.getWinBuildSendQuestionsByCategorySerID(category.getSerID());
-                    if(FoundQuestion.size()>0){
+                    if (FoundQuestion.size() > 0) {
                         SendQuestions.add(question);
                     }
                 }
             }
             if (buildStage == Disciple.STAGE.WIN) {
-                L_Win.setBackgroundColor(Color.rgb(254,191,10));
-                L_Build.setBackgroundColor(Color.rgb(00,188,216));
-                L_Send.setBackgroundColor(Color.rgb(00,188,216));
+                L_Win.setBackgroundColor(Color.rgb(254, 191, 10));
+                L_Build.setBackgroundColor(Color.rgb(00, 188, 216));
+                L_Send.setBackgroundColor(Color.rgb(00, 188, 216));
             } else if (buildStage == Disciple.STAGE.BUILD) {
-                L_Win.setBackgroundColor(Color.rgb(00,188,216));
-                L_Build.setBackgroundColor(Color.rgb(254,191,10));
-                L_Send.setBackgroundColor(Color.rgb(00,188,216));
+                L_Win.setBackgroundColor(Color.rgb(00, 188, 216));
+                L_Build.setBackgroundColor(Color.rgb(254, 191, 10));
+                L_Send.setBackgroundColor(Color.rgb(00, 188, 216));
             } else {
                 // SEND
-                L_Win.setBackgroundColor(Color.rgb(00,188,216));
-                L_Build.setBackgroundColor(Color.rgb(00,188,216));
-                L_Send.setBackgroundColor(Color.rgb(254,191,10));
+                L_Win.setBackgroundColor(Color.rgb(00, 188, 216));
+                L_Build.setBackgroundColor(Color.rgb(00, 188, 216));
+                L_Send.setBackgroundColor(Color.rgb(254, 191, 10));
             }
 
             UpdateGUIAdapter(SendQuestions);
             Disciple disciple = DeepLife.myDATABASE.getDiscipleByPhone(DisciplePhone);
-            if(disciple != null){
+            if (disciple != null) {
                 disciple.setStage(buildStage);
                 DeepLife.myDATABASE.updateDisciple(disciple);
 
             }
         }
     }
-    public static void UpdateGUIAdapter(List<WbsQuestion> datas){
+
+    public static void UpdateGUIAdapter(List<WbsQuestion> datas) {
         mAdapter = new WinBuildSendItemsAdapter(datas, myContext, DisciplePhone, buildStage);
         myRecyclerView.setAdapter(mAdapter);
-        try{
+        try {
             DisciplesFragment.UpdateList();
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
     }
+
     public static void checkStage() {
-        Toast.makeText(myContext,"Checking for Stage change",Toast.LENGTH_LONG).show();
+        Toast.makeText(myContext, "Checking for Stage change", Toast.LENGTH_LONG).show();
         int WinBuilSend = 1;
         ArrayList<WbsQuestion> Questions = DeepLife.myDATABASE.getWinBuildSendQuestionsByCategorySerID(1);
-        for(WbsQuestion WinQuestioons : Questions){
-            if(WinQuestioons.getMandatory() != 0){
-                Answer answer = DeepLife.myDATABASE.getAnswerByQuestionIDandDisciplePhone(WinQuestioons.getSerID(),DisciplePhone);
-                if(answer != null){
-                    if(answer.getAnswer().equals("NO") || answer.getAnswer().equals("0")){
-                        WinBuilSend =0;
+        for (WbsQuestion WinQuestioons : Questions) {
+            if (WinQuestioons.getMandatory() != 0) {
+                Answer answer = DeepLife.myDATABASE.getAnswerByQuestionIDandDisciplePhone(WinQuestioons.getSerID(), DisciplePhone);
+                if (answer != null) {
+                    if (answer.getAnswer().equals("NO") || answer.getAnswer().equals("0")) {
+                        WinBuilSend = 0;
                         break;
                     }
-                }else {
+                } else {
                     WinBuilSend = 0;
                     break;
                 }
             }
         }
-        if(WinBuilSend == 0){
+        if (WinBuilSend == 0) {
             buildStage = Disciple.STAGE.WIN;
-        }else {
+        } else {
             buildStage = Disciple.STAGE.BUILD;
             WinBuilSend = 1;
             Questions = DeepLife.myDATABASE.getWinBuildSendQuestionsByCategorySerID(2);
-            for(WbsQuestion WinQuestioons : Questions){
-                if(WinQuestioons.getMandatory() != 0){
-                    Answer answer = DeepLife.myDATABASE.getAnswerByQuestionIDandDisciplePhone(WinQuestioons.getSerID(),DisciplePhone);
-                    if(answer != null){
-                        if(answer.getAnswer().equals("NO") || answer.getAnswer().equals("0")){
-                            WinBuilSend =0;
+            for (WbsQuestion WinQuestioons : Questions) {
+                if (WinQuestioons.getMandatory() != 0) {
+                    Answer answer = DeepLife.myDATABASE.getAnswerByQuestionIDandDisciplePhone(WinQuestioons.getSerID(), DisciplePhone);
+                    if (answer != null) {
+                        if (answer.getAnswer().equals("NO") || answer.getAnswer().equals("0")) {
+                            WinBuilSend = 0;
                             break;
                         }
-                    }else {
-                        WinBuilSend =0;
+                    } else {
+                        WinBuilSend = 0;
                         break;
                     }
                 }
@@ -198,20 +202,20 @@ public class WinBuildSendActivity extends AppCompatActivity {
             //if(WinBuilSend == 0 && Stage > 1){  // briggsm: took out check for Steve > 1, cuz it looks useless to me.
             if (WinBuilSend == 0) {
                 buildStage = Disciple.STAGE.BUILD;
-            }else {
+            } else {
                 buildStage = Disciple.STAGE.SEND;
                 WinBuilSend = 1;
                 Questions = DeepLife.myDATABASE.getWinBuildSendQuestionsByCategorySerID(3);
-                for(WbsQuestion WinQuestioons : Questions){
-                    if(WinQuestioons.getMandatory() != 0){
-                        Answer answer = DeepLife.myDATABASE.getAnswerByQuestionIDandDisciplePhone(WinQuestioons.getSerID(),DisciplePhone);
-                        if(answer != null){
-                            if(answer.getAnswer().equals("NO") || answer.getAnswer().equals("0")){
-                                WinBuilSend =0;
+                for (WbsQuestion WinQuestioons : Questions) {
+                    if (WinQuestioons.getMandatory() != 0) {
+                        Answer answer = DeepLife.myDATABASE.getAnswerByQuestionIDandDisciplePhone(WinQuestioons.getSerID(), DisciplePhone);
+                        if (answer != null) {
+                            if (answer.getAnswer().equals("NO") || answer.getAnswer().equals("0")) {
+                                WinBuilSend = 0;
                                 break;
                             }
-                        }else {
-                            WinBuilSend =0;
+                        } else {
+                            WinBuilSend = 0;
                             break;
                         }
                     }
@@ -219,58 +223,58 @@ public class WinBuildSendActivity extends AppCompatActivity {
                 //if(WinBuilSend == 0 && Stage > 2){ // briggsm: took out check for Steve > 1, cuz it looks useless to me.
                 if (WinBuilSend == 0) {
                     buildStage = Disciple.STAGE.SEND;
-                }else {
+                } else {
                     buildStage = Disciple.STAGE.SEND;
                 }
             }
         }
 
-        if(buildStage == Disciple.STAGE.WIN){
+        if (buildStage == Disciple.STAGE.WIN) {
             Btn_Win.setEnabled(true);
-            Btn_Win.setTypeface(Btn_Win.getTypeface(),Typeface.BOLD);
+            Btn_Win.setTypeface(Btn_Win.getTypeface(), Typeface.BOLD);
             Btn_Win.setText("->" + DeepLife.getContext().getString(R.string.text_win) + "<-");
 
 
             Btn_Build.setEnabled(false);
-            Btn_Build.setTypeface(Btn_Build.getTypeface(),Typeface.ITALIC);
+            Btn_Build.setTypeface(Btn_Build.getTypeface(), Typeface.ITALIC);
             Btn_Build.setText(R.string.text_build);
 
 
             Btn_Send.setEnabled(false);
-            Btn_Send.setTypeface(Btn_Send.getTypeface(),Typeface.ITALIC);
+            Btn_Send.setTypeface(Btn_Send.getTypeface(), Typeface.ITALIC);
             Btn_Send.setText(R.string.text_send);
 
             myDisciple.setStage(Disciple.STAGE.WIN);
-        }else if(buildStage == Disciple.STAGE.BUILD){
+        } else if (buildStage == Disciple.STAGE.BUILD) {
             Btn_Win.setEnabled(true);
-            Btn_Win.setTypeface(Btn_Win.getTypeface(),Typeface.ITALIC);
+            Btn_Win.setTypeface(Btn_Win.getTypeface(), Typeface.ITALIC);
             Btn_Win.setText(R.string.text_win);
             Btn_Win.setTextColor(Color.GRAY);
             Btn_Win.setActivated(false);
 
             Btn_Build.setEnabled(true);
-            Btn_Build.setTypeface(Btn_Build.getTypeface(),Typeface.BOLD);
+            Btn_Build.setTypeface(Btn_Build.getTypeface(), Typeface.BOLD);
             Btn_Build.setText("->" + DeepLife.getContext().getString(R.string.text_build) + "<-");
 
             Btn_Send.setEnabled(false);
-            Btn_Send.setTypeface(Btn_Send.getTypeface(),Typeface.ITALIC);
+            Btn_Send.setTypeface(Btn_Send.getTypeface(), Typeface.ITALIC);
             Btn_Send.setText(DeepLife.getContext().getString(R.string.text_send));
 
             myDisciple.setStage(Disciple.STAGE.BUILD);
-        }else {
+        } else {
             // SEND
             Btn_Win.setEnabled(true);
-            Btn_Win.setTypeface(Btn_Win.getTypeface(),Typeface.ITALIC);
+            Btn_Win.setTypeface(Btn_Win.getTypeface(), Typeface.ITALIC);
             Btn_Win.setTextColor(Color.GRAY);
             Btn_Win.setText(DeepLife.getContext().getString(R.string.text_win));
 
             Btn_Build.setEnabled(true);
-            Btn_Build.setTypeface(Btn_Build.getTypeface(),Typeface.ITALIC);
+            Btn_Build.setTypeface(Btn_Build.getTypeface(), Typeface.ITALIC);
             Btn_Build.setTextColor(Color.GRAY);
             Btn_Build.setText(DeepLife.getContext().getString(R.string.text_build));
 
             Btn_Send.setEnabled(true);
-            Btn_Send.setTypeface(Btn_Send.getTypeface(),Typeface.BOLD);
+            Btn_Send.setTypeface(Btn_Send.getTypeface(), Typeface.BOLD);
             Btn_Send.setText("->" + DeepLife.getContext().getString(R.string.text_send) + "<-");
 
             myDisciple.setStage(Disciple.STAGE.SEND);

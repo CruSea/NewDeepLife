@@ -50,8 +50,8 @@ import kotlin.Pair;
 
 public class SignUp extends AppCompatActivity {
     private static final String TAG = "SignUp";
-    public static EditText UserFull,UserEmail,UserPhone,UserPass1,UserPass2,TextCode;
-    public static Spinner UserGender,UserCountry;
+    public static EditText UserFull, UserEmail, UserPhone, UserPass1, UserPass2, TextCode;
+    public static Spinner UserGender, UserCountry;
     public static Context myContext;
     public static Button SignUp;
     public static User NewUser;
@@ -59,8 +59,9 @@ public class SignUp extends AppCompatActivity {
     private Gson myParser;
     public static int CountryPos;
     public static List<Country> myCountries;
-    private  AlertDialog.Builder builder;
-    private TextInputLayout inputLayoutName, inputLayoutEmail, inputLayoutPassword1,inputLayoutPassword2,inputLayoutPhone;
+    private AlertDialog.Builder builder;
+    private TextInputLayout inputLayoutName, inputLayoutEmail, inputLayoutPassword1, inputLayoutPassword2, inputLayoutPhone;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -99,19 +100,20 @@ public class SignUp extends AppCompatActivity {
         UserPass2.addTextChangedListener(new MyTextWatcher(UserPass2));
 
         myCountries = DeepLife.myDATABASE.getAllCountries();
-        if(myCountries != null){
-            UserCountry.setAdapter(new CountryListAdapter(this,R.layout.login_countries_item,myCountries));
+        if (myCountries != null) {
+            UserCountry.setAdapter(new CountryListAdapter(this, R.layout.login_countries_item, myCountries));
         }
         UserCountry.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                TextCode.setText("+"+myCountries.get(position).getCode());
+                TextCode.setText("+" + myCountries.get(position).getCode());
                 CountryPos = position;
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                if(myCountries.size()>0){
-                    TextCode.setText("+"+myCountries.get(0).getCode());
+                if (myCountries.size() > 0) {
+                    TextCode.setText("+" + myCountries.get(0).getCode());
                 }
             }
         });
@@ -124,6 +126,7 @@ public class SignUp extends AppCompatActivity {
         });
 
     }
+
     public void ShowDialog(String message) {
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             @Override
@@ -140,6 +143,7 @@ public class SignUp extends AppCompatActivity {
                 .setMessage(message)
                 .setPositiveButton(R.string.dlg_btn_ok, dialogClickListener).show();
     }
+
     private void submitForm() {
         if (!validateName()) {
             return;
@@ -161,8 +165,8 @@ public class SignUp extends AppCompatActivity {
         NewUser = new User();
         NewUser.setUser_Name(UserFull.getText().toString());
         NewUser.setUser_Pass(UserPass1.getText().toString());
-        NewUser.setUser_Country(""+myCountries.get(CountryPos).getSerID());
-        NewUser.setUser_Phone(""+myCountries.get(CountryPos).getCode()+UserPhone.getText().toString());
+        NewUser.setUser_Country("" + myCountries.get(CountryPos).getSerID());
+        NewUser.setUser_Phone("" + myCountries.get(CountryPos).getCode() + UserPhone.getText().toString());
         NewUser.setUser_Email(UserEmail.getText().toString());
         NewUser.setUser_Gender(UserGender.getSelectedItem().toString());
 
@@ -208,13 +212,13 @@ public class SignUp extends AppCompatActivity {
                         cv.put(Database.USER_FIELDS[5],"");
                         cv.put(Database.USER_FIELDS[6],"");
                         */
-                        cv.put(Database.UserColumn.FULL_NAME.toString(),NewUser.getUser_Name());
-                        cv.put(Database.UserColumn.EMAIL.toString(),NewUser.getUser_Email());
-                        cv.put(Database.UserColumn.PHONE.toString(),NewUser.getUser_Phone());
-                        cv.put(Database.UserColumn.PASSWORD.toString(),NewUser.getUser_Pass());
+                        cv.put(Database.UserColumn.FULL_NAME.toString(), NewUser.getUser_Name());
+                        cv.put(Database.UserColumn.EMAIL.toString(), NewUser.getUser_Email());
+                        cv.put(Database.UserColumn.PHONE.toString(), NewUser.getUser_Phone());
+                        cv.put(Database.UserColumn.PASSWORD.toString(), NewUser.getUser_Pass());
                         cv.put(Database.UserColumn.COUNTRY.toString(), NewUser.getUser_Country());
-                        cv.put(Database.UserColumn.PICTURE.toString(),"");
-                        cv.put(Database.UserColumn.FAVORITE_SCRIPTURE.toString(),"");
+                        cv.put(Database.UserColumn.PICTURE.toString(), "");
+                        cv.put(Database.UserColumn.FAVORITE_SCRIPTURE.toString(), "");
 
                         long x = DeepLife.myDATABASE.insert(Database.Table_USER, cv);
                         Log.i(TAG, "Main User Adding-> " + x);
@@ -233,6 +237,7 @@ public class SignUp extends AppCompatActivity {
                 }
 
             }
+
             @Override
             public void failure(Request request, Response response, FuelError fuelError) {
                 Log.i(TAG, "Server Response -> \n" + response.toString());
@@ -283,7 +288,7 @@ public class SignUp extends AppCompatActivity {
     }
 
     private boolean validatePassword1() {
-        if (UserPass1.getText().toString().trim().isEmpty() || UserPass1.getText().toString().length()<7) {
+        if (UserPass1.getText().toString().trim().isEmpty() || UserPass1.getText().toString().length() < 7) {
             inputLayoutPassword1.setError(getString(R.string.err_msg_password1));
             requestFocus(UserPass1);
             return false;
@@ -293,8 +298,9 @@ public class SignUp extends AppCompatActivity {
 
         return true;
     }
+
     private boolean validatePassword2() {
-        if (UserPass2.getText().toString().trim().isEmpty() || UserPass2.getText().toString().length()<7 || !UserPass1.getText().toString().equals(UserPass2.getText().toString())) {
+        if (UserPass2.getText().toString().trim().isEmpty() || UserPass2.getText().toString().length() < 7 || !UserPass1.getText().toString().equals(UserPass2.getText().toString())) {
             inputLayoutPassword1.setError(getString(R.string.err_msg_password2));
             requestFocus(UserPass2);
             return false;
@@ -314,6 +320,7 @@ public class SignUp extends AppCompatActivity {
             getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
         }
     }
+
     private class MyTextWatcher implements TextWatcher {
 
         private View view;

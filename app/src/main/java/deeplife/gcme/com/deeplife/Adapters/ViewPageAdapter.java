@@ -25,10 +25,12 @@ public class ViewPageAdapter extends FragmentPagerAdapter {
         myFragmentList = new ArrayList<Fragment>();
         Titles = new ArrayList<String>();
     }
-    public void addFragment(Fragment fragment,String title){
+
+    public void addFragment(Fragment fragment, String title) {
         myFragmentList.add(fragment);
         Titles.add(title);
     }
+
     @Override
     public Fragment getItem(int position) {
         return myFragmentList.get(position);

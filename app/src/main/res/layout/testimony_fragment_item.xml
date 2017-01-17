@@ -14,10 +14,12 @@
         android:layout_margin="3dp"
         card_view:cardCornerRadius="0dp"
         card_view:contentPadding="10dp">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:orientation="vertical"
             android:layout_height="wrap_content">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:orientation="horizontal"
@@ -25,25 +27,30 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_height="wrap_content">
+
                 <FrameLayout
                     android:layout_width="60dp"
                     android:layout_height="60dp">
+
                     <ImageView
                         android:id="@+id/img_testimony_image"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@drawable/bengeos"/>
+                        android:background="@drawable/bengeos" />
+
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        android:background="@drawable/cover_page"/>
+                        android:background="@drawable/cover_page" />
                 </FrameLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:orientation="vertical"
                     android:layout_marginLeft="10dp"
                     android:layout_height="wrap_content">
+
                     <TextView
                         android:id="@+id/txt_testimony_person"
                         android:layout_width="match_parent"
@@ -51,27 +58,30 @@
                         android:textStyle="bold"
                         android:textSize="20sp"
                         android:textColor="@color/colorPrimary"
-                        tools:text="Biniam Kassahun"/>
+                        tools:text="Biniam Kassahun" />
+
                     <TextView
                         android:id="@+id/txt_testimony_time"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        tools:text="About a Minute Ago"/>
+                        tools:text="About a Minute Ago" />
 
 
                 </LinearLayout>
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:orientation="vertical"
                 android:padding="5dp"
                 android:layout_height="wrap_content">
+
                 <TextView
                     android:id="@+id/txt_testimony_content"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
-                    tools:text="Who had great time in zimbuwabe lauinching deeplife android application in last April. it was totaly mind blowing event. i liked it very very much"/>
+                    tools:text="Who had great time in zimbuwabe lauinching deeplife android application in last April. it was totaly mind blowing event. i liked it very very much" />
             </LinearLayout>
         </LinearLayout>
 

@@ -21,7 +21,7 @@ import deeplife.gcme.com.deeplife.R;
  */
 
 public class ProfileShowActivity extends AppCompatActivity {
-    private EditText FullName,Email,Country,Phone,Gender;
+    private EditText FullName, Email, Country, Phone, Gender;
     private TextView DisplayName;
     private User myUser;
     Button editBtn;
@@ -34,7 +34,7 @@ public class ProfileShowActivity extends AppCompatActivity {
         Init();
     }
 
-    public void Init(){
+    public void Init() {
         DisplayName = (TextView) findViewById(R.id.txt_disciple_profile_displayname);
         FullName = (EditText) findViewById(R.id.txt_disciple_profile_fullname);
         Email = (EditText) findViewById(R.id.txt_disciple_profile_email);
@@ -55,7 +55,7 @@ public class ProfileShowActivity extends AppCompatActivity {
         Country.setText(country.getName());
         Country.setEnabled(false);
 
-        Phone.setText("+"+myUser.getUser_Phone());
+        Phone.setText("+" + myUser.getUser_Phone());
         Phone.setEnabled(false);
 
         Gender.setText(myUser.getUser_Gender());

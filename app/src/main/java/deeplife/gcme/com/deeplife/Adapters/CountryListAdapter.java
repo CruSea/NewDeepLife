@@ -21,6 +21,7 @@ import deeplife.gcme.com.deeplife.R;
 public class CountryListAdapter extends ArrayAdapter<Country> {
     private Context myContext;
     private List<Country> myCountries;
+
     public CountryListAdapter(Context context, int resource, List<Country> countries) {
         super(context, resource, countries);
         myContext = context;

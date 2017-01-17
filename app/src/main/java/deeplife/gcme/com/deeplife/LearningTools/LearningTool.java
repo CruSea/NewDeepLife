@@ -5,8 +5,8 @@ package deeplife.gcme.com.deeplife.LearningTools;
  */
 
 public class LearningTool {
-    private int ID,SerID,Country;
-    private String Title,Content,VideoURL,DefaultLearn,Created;
+    private int ID, SerID, Country;
+    private String Title, Content, VideoURL, DefaultLearn, Created;
 
     public int getID() {
         return ID;

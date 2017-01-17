@@ -7,8 +7,8 @@ import deeplife.gcme.com.deeplife.Disciples.Disciple;
  */
 
 public class Answer {
-    private int ID,SerID,QuestionID;
-    private String DisciplePhone,Answer;
+    private int ID, SerID, QuestionID;
+    private String DisciplePhone, Answer;
     Disciple.STAGE buildStage;
 
     public int getID() {

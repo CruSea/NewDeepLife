@@ -4,7 +4,7 @@ package deeplife.gcme.com.deeplife.Models;
  * Created by BENGEOS on 2/19/16.
  */
 public class ReportItem {
-    private String id,Report_ID,Category,Question,Value;
+    private String id, Report_ID, Category, Question, Value;
 
     public String getId() {
         return id;

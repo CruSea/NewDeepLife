@@ -45,9 +45,10 @@ public class LearningToolsListAdapter extends RecyclerView.Adapter<LearningTools
     }
 
     public static class DataObjectHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
-        TextView Title,Content;
+        TextView Title, Content;
         ImageView LearningImage;
         VideoView Video;
+
         public DataObjectHolder(View itemView) {
             super(itemView);
             Title = (TextView) itemView.findViewById(R.id.txt_learning_title);
@@ -59,7 +60,7 @@ public class LearningToolsListAdapter extends RecyclerView.Adapter<LearningTools
 
         @Override
         public void onClick(View v) {
-            if(v.getId() == R.id.vdo_learning_video){
+            if (v.getId() == R.id.vdo_learning_video) {
                 Video.start();
             }
         }

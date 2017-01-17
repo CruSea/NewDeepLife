@@ -16,11 +16,35 @@ public class Disciple {
         */
         private final String name;
         private final int serverId;
-        STAGE(String s, int i) { this.name = s; this.serverId = i; }
-        public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
-        @Override public String toString() { return this.name; }
-        public int toServerId() { return this.serverId; }
-        public static STAGE fromString(String s) { if (s != null) { for (STAGE t : STAGE.values()) { if (s.equalsIgnoreCase(t.toString())) { return t; } } } throw new IllegalArgumentException("No constant in <Stage> Enum found with text: " + s); }
+
+        STAGE(String s, int i) {
+            this.name = s;
+            this.serverId = i;
+        }
+
+        public boolean equalsName(String otherName) {
+            return (otherName == null) ? false : name.equals(otherName);
+        }
+
+        @Override
+        public String toString() {
+            return this.name;
+        }
+
+        public int toServerId() {
+            return this.serverId;
+        }
+
+        public static STAGE fromString(String s) {
+            if (s != null) {
+                for (STAGE t : STAGE.values()) {
+                    if (s.equalsIgnoreCase(t.toString())) {
+                        return t;
+                    }
+                }
+            }
+            throw new IllegalArgumentException("No constant in <Stage> Enum found with text: " + s);
+        }
     }
 
     public enum GENDER {
@@ -28,10 +52,30 @@ public class Disciple {
         FEMALE("Female");
 
         private final String name;
-        GENDER(String s) { this.name = s; }
-        public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
-        @Override public String toString() { return this.name; }
-        public static GENDER fromString(String s) { if (s != null) { for (GENDER t : GENDER.values()) { if (s.equalsIgnoreCase(t.toString())) { return t; } } } throw new IllegalArgumentException("No constant in <Gender> Enum found with text: " + s); }
+
+        GENDER(String s) {
+            this.name = s;
+        }
+
+        public boolean equalsName(String otherName) {
+            return (otherName == null) ? false : name.equals(otherName);
+        }
+
+        @Override
+        public String toString() {
+            return this.name;
+        }
+
+        public static GENDER fromString(String s) {
+            if (s != null) {
+                for (GENDER t : GENDER.values()) {
+                    if (s.equalsIgnoreCase(t.toString())) {
+                        return t;
+                    }
+                }
+            }
+            throw new IllegalArgumentException("No constant in <Gender> Enum found with text: " + s);
+        }
     }
 
     // briggsm: Role Needed???
@@ -43,14 +87,34 @@ public class Disciple {
         COUNTRY_ADMIN("4");
 
         private final String name;
-        ROLE(String s) { this.name = s; }
-        public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
-        @Override public String toString() { return this.name; }
-        public static ROLE fromString(String s) { if (s != null) { for (ROLE t : ROLE.values()) { if (s.equalsIgnoreCase(t.toString())) { return t; } } } return DEFAULT; }
+
+        ROLE(String s) {
+            this.name = s;
+        }
+
+        public boolean equalsName(String otherName) {
+            return (otherName == null) ? false : name.equals(otherName);
+        }
+
+        @Override
+        public String toString() {
+            return this.name;
+        }
+
+        public static ROLE fromString(String s) {
+            if (s != null) {
+                for (ROLE t : ROLE.values()) {
+                    if (s.equalsIgnoreCase(t.toString())) {
+                        return t;
+                    }
+                }
+            }
+            return DEFAULT;
+        }
     }
 
-    private int ID,SerID,MentorID;
-    private String FullName,DisplayName,Email,Phone,Country,ImageURL,ImagePath,Created;
+    private int ID, SerID, MentorID;
+    private String FullName, DisplayName, Email, Phone, Country, ImageURL, ImagePath, Created;
     private STAGE Stage;
     private GENDER Gender;
     private ROLE Role;

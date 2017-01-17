@@ -19,9 +19,10 @@ public class GetStartViewPagerAdapter extends FragmentPagerAdapter {
         myFragmentList = new ArrayList<Fragment>();
     }
 
-    public void AddFragent(Fragment fragment){
+    public void AddFragent(Fragment fragment) {
         myFragmentList.add(fragment);
     }
+
     @Override
     public Fragment getItem(int position) {
         return myFragmentList.get(position);

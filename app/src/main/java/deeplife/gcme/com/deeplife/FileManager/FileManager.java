@@ -16,17 +16,17 @@ import java.io.OutputStream;
 public class FileManager {
     private Context myContext;
     private File myFile;
-    public FileManager(Context context){
+
+    public FileManager(Context context) {
         myContext = context;
-        if(isExternalStorageWritable()){
+        if (isExternalStorageWritable()) {
             myFile = new File(Environment.getExternalStorageDirectory(), "DeepLife");
-            if(!myFile.isDirectory()){
+            if (!myFile.isDirectory()) {
                 myFile.mkdir();
             }
-        }
-        else{
+        } else {
             myFile = new File(context.getFilesDir().getPath(), "DeepLife");
-            if(!myFile.isDirectory()){
+            if (!myFile.isDirectory()) {
                 myFile.mkdir();
             }
         }
@@ -35,20 +35,21 @@ public class FileManager {
         createFolder("images");
     }
 
-    public boolean createFolder(String FolderName){
-        File Folder = new File(myFile,FolderName);
-        if(!Folder.isDirectory()){
+    public boolean createFolder(String FolderName) {
+        File Folder = new File(myFile, FolderName);
+        if (!Folder.isDirectory()) {
             Folder.mkdir();
             return true;
-        }else{
+        } else {
             return true;
         }
     }
 
-    public File getFile(String name){
-        File file = new File(myFile,name);
+    public File getFile(String name) {
+        File file = new File(myFile, name);
         return file;
     }
+
     public File createFileAt(String FolderName, String FileName) {
         if (createFolder(FolderName)) {
             File file = new File(getFile(FolderName), FileName);
@@ -57,11 +58,13 @@ public class FileManager {
             return null;
         }
     }
-    public File getFileAt(String FolderName, String FileName){
+
+    public File getFileAt(String FolderName, String FileName) {
         createFolder(FolderName);
         File file = new File(getFile(FolderName), FileName);
         return file;
     }
+
     public void CopyFile(File source, File destination) throws IOException {
         InputStream input = null;
         OutputStream output = null;

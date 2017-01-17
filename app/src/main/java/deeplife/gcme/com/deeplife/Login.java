@@ -29,13 +29,13 @@ import deeplife.gcme.com.deeplife.Models.User;
  */
 
 public class Login extends AppCompatActivity {
-    public static Button Login,SignUp,Forgotten;
+    public static Button Login, SignUp, Forgotten;
     public static Context myContext;
     private LoginAccess loginAccess;
     public static List<Country> myCountries;
     public static ProgressDialog progressDialog;
     public static Spinner mySpinner;
-    public static EditText TextCode,UserName,UserPass;
+    public static EditText TextCode, UserName, UserPass;
     private static String LoginChoice;
     private static int CountryChoicePos = 0;
 
@@ -48,9 +48,9 @@ public class Login extends AppCompatActivity {
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle(R.string.app_name);
         myCountries = DeepLife.myDATABASE.getAllCountries();
-        if(myCountries != null && myCountries.size()>0){
+        if (myCountries != null && myCountries.size() > 0) {
 
-        }else {
+        } else {
             progressDialog.setMessage(getString(R.string.dlg_msg_downloading_files));
             progressDialog.show();
             loginAccess = new LoginAccess(new User());
@@ -73,14 +73,14 @@ public class Login extends AppCompatActivity {
         mySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                TextCode.setText("+"+myCountries.get(position).getCode());
+                TextCode.setText("+" + myCountries.get(position).getCode());
                 CountryChoicePos = position;
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                if(myCountries.size()>0){
-                    TextCode.setText("+"+myCountries.get(0).getCode());
+                if (myCountries.size() > 0) {
+                    TextCode.setText("+" + myCountries.get(0).getCode());
                 }
             }
         });
@@ -89,26 +89,26 @@ public class Login extends AppCompatActivity {
         Login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try{
-                    if(myCountries == null || myCountries.size() == 0){
+                try {
+                    if (myCountries == null || myCountries.size() == 0) {
                         myCountries = DeepLife.myDATABASE.getAllCountries();
                         UpdateView();
-                    }else {
+                    } else {
                         User user = new User();
-                        if(UserName.getText().toString().contains("@")){
+                        if (UserName.getText().toString().contains("@")) {
                             user.setUser_Email(UserName.getText().toString());
-                        }else {
-                            user.setUser_Phone(""+myCountries.get(mySpinner.getSelectedItemPosition()).getCode()+""+UserName.getText().toString());
+                        } else {
+                            user.setUser_Phone("" + myCountries.get(mySpinner.getSelectedItemPosition()).getCode() + "" + UserName.getText().toString());
                         }
                         user.setUser_Pass(UserPass.getText().toString());
-                        user.setUser_Country(""+myCountries.get(mySpinner.getSelectedItemPosition()).getSerID());
+                        user.setUser_Country("" + myCountries.get(mySpinner.getSelectedItemPosition()).getSerID());
                         loginAccess = new LoginAccess(user);
 
                         progressDialog.setMessage(getString(R.string.dlg_msg_authenticating_user));
                         progressDialog.show();
                         loginAccess.LogInAuthnticate();
                     }
-                }catch (Exception e){
+                } catch (Exception e) {
 
                 }
 
@@ -126,40 +126,44 @@ public class Login extends AppCompatActivity {
         });
         UpdateView();
     }
-    public static void UpdateView(){
+
+    public static void UpdateView() {
         myCountries = DeepLife.myDATABASE.getAllCountries();
-        if(myCountries != null){
-            mySpinner.setAdapter(new CountryListAdapter(myContext,R.layout.login_countries_item,myCountries));
-            if(CountryChoicePos>0){
+        if (myCountries != null) {
+            mySpinner.setAdapter(new CountryListAdapter(myContext, R.layout.login_countries_item, myCountries));
+            if (CountryChoicePos > 0) {
                 mySpinner.setSelection(CountryChoicePos);
             }
         }
     }
-    public static void GetNextActivity(){
-        Toast.makeText(myContext, R.string.toast_msg_login_successful,Toast.LENGTH_LONG).show();
+
+    public static void GetNextActivity() {
+        Toast.makeText(myContext, R.string.toast_msg_login_successful, Toast.LENGTH_LONG).show();
         Intent intent = new Intent(myContext, deeplife.gcme.com.deeplife.MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         myContext.startActivity(intent);
     }
-    public static void DialogState(int state){
-        try{
-            if(state == 0){
+
+    public static void DialogState(int state) {
+        try {
+            if (state == 0) {
                 progressDialog.cancel();
                 UpdateView();
-            }else{
+            } else {
                 progressDialog.show();
             }
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
 
     }
+
     public static void showDialog(final String message) {
-        try{
+        try {
             DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    switch (which){
+                    switch (which) {
                         case DialogInterface.BUTTON_POSITIVE:
                             UpdateView();
                             break;
@@ -170,7 +174,7 @@ public class Login extends AppCompatActivity {
             builder.setMessage(message)
                     .setPositiveButton(R.string.dlg_btn_ok, dialogClickListener)
                     .show();
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
 

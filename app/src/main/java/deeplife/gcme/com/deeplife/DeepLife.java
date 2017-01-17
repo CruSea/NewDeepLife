@@ -17,13 +17,13 @@ import me.tatarka.support.job.JobScheduler;
  */
 
 public class DeepLife extends Application {
-    public static final String DEEP_URL  = "http://deeplifestaging.briggs-inc.com";
+    public static final String DEEP_URL = "http://deeplifestaging.briggs-inc.com";
 //    public static final String DEEP_URL  = "http://192.168.0.44/DeepLife_Web/public";
 
 
-    public static final String FORGOTEN_URL  = DEEP_URL+"/forgot";
-    public static final String API_URL  = DEEP_URL+"/deep_api";
-    public static final String PROFILE_PIC_URL  = DEEP_URL+"/img/profile/";
+    public static final String FORGOTEN_URL = DEEP_URL + "/forgot";
+    public static final String API_URL = DEEP_URL + "/deep_api";
+    public static final String PROFILE_PIC_URL = DEEP_URL + "/img/profile/";
 
 
     public static int ImageDownloadCount = 0;
@@ -40,7 +40,7 @@ public class DeepLife extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.i(TAG,"Application Started");
+        Log.i(TAG, "Application Started");
         mContext = this;
         myDATABASE = new Database(this);
 //        JobManager.create(this).addJobCreator(new SyncJob());
@@ -48,19 +48,19 @@ public class DeepLife extends Application {
         JobConstr();
     }
 
-    public void JobConstr(){
+    public void JobConstr() {
         JobInfo.Builder jobInfo;
-        jobInfo = new JobInfo.Builder(JOB_ID++,  new ComponentName(this,SyncService.class))
+        jobInfo = new JobInfo.Builder(JOB_ID++, new ComponentName(this, SyncService.class))
                 .setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED)
                 .setPeriodic(10000)
                 .setRequiresDeviceIdle(false)
                 .setRequiresCharging(false);
         myJobScheduler.cancelAll();
         int x = myJobScheduler.schedule(jobInfo.build());
-        if(x == android.app.job.JobScheduler.RESULT_SUCCESS){
+        if (x == android.app.job.JobScheduler.RESULT_SUCCESS) {
             List<JobInfo> xx = myJobScheduler.getAllPendingJobs();
-            Log.i(TAG,"The Job scheduler Constructed\n");
-        }else{
+            Log.i(TAG, "The Job scheduler Constructed\n");
+        } else {
             Log.i(TAG, "The Job scheduler Not Constructed");
         }
     }
@@ -76,6 +76,6 @@ public class DeepLife extends Application {
         for (int i = 0; i < numConstants; i++) {
             strArr[i] = enumConstants[i].toString();
         }
-        return  strArr;
+        return strArr;
     }
 }

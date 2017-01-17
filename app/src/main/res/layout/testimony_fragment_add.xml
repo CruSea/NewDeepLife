@@ -4,14 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    >
+    android:fitsSystemWindows="true">
+
     <android.support.design.widget.AppBarLayout
         android:id="@+id/add_disciple_actionbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        >
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/add_disciple_toolbar"
@@ -36,8 +35,8 @@
             android:layout_gravity="center_horizontal|center_vertical"
             android:paddingRight="10dp"
             android:paddingLeft="10dp"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -45,16 +44,18 @@
                 android:textColor="#000000"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:text="@string/form_text_share_your_testimony"/>
+                android:text="@string/form_text_share_your_testimony" />
+
             <EditText
                 android:layout_width="match_parent"
                 android:hint="@string/form_text_write_your_testimony"
                 android:gravity="center_horizontal|center_vertical"
                 android:layout_height="200dp" />
+
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/action_add_testimony"/>
+                android:text="@string/action_add_testimony" />
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 </android.support.design.widget.CoordinatorLayout>

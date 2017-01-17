@@ -6,5 +6,5 @@
         android:orderInCategory="100"
         myapp:showAsAction="ifRoom"
         android:icon="@drawable/icon_build_icon_white"
-        android:title="@string/toolbar_title_testimony_add"/>
+        android:title="@string/toolbar_title_testimony_add" />
 </menu>

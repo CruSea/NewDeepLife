@@ -57,7 +57,7 @@ public class DiscipleProfileActivity extends AppCompatActivity {
     private static final String TAG = "DiscipleProfileActivity";
     private Toolbar myToolbar;
     private TabLayout myTabLayout;
-    private EditText FullName,Email,Countr,Phone,Note;
+    private EditText FullName, Email, Countr, Phone, Note;
     private ImageButton DiscipleImageBtn;
     private ImageView DiscipleImage;
     private String DisciplePhone;
@@ -67,7 +67,7 @@ public class DiscipleProfileActivity extends AppCompatActivity {
     private String newImage = "";
     private FileManager myFileManager;
     private SyncDatabase mySyncDatabase;
-    private Button DisCall,DisMessage,DisComplete;
+    private Button DisCall, DisMessage, DisComplete;
     private Context myContext;
     private TextView DisplayName;
 
@@ -88,17 +88,17 @@ public class DiscipleProfileActivity extends AppCompatActivity {
     }
 
     private void FillForm() {
-        if(myDisciple != null){
+        if (myDisciple != null) {
             FullName.setText(myDisciple.getDisplayName());
             DisplayName.setText(myDisciple.getDisplayName());
             Email.setText(myDisciple.getEmail());
-            Phone.setText("+"+myDisciple.getPhone());
+            Phone.setText("+" + myDisciple.getPhone());
             Country country = DeepLife.myDATABASE.getCountryByID(Integer.valueOf(myDisciple.getCountry()));
             Countr.setText(country.getName());
             Countr.setEnabled(false);
-            if(myDisciple.getImagePath() != null){
+            if (myDisciple.getImagePath() != null) {
                 File file = new File(myDisciple.getImagePath());
-                if(file.isFile()){
+                if (file.isFile()) {
                     DiscipleImage.setImageBitmap(BitmapFactory.decodeFile(file.getAbsolutePath()));
                 }
             }
@@ -124,7 +124,7 @@ public class DiscipleProfileActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (ContextCompat.checkSelfPermission(myContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(myActivity, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 12);
-                }else {
+                } else {
                     Crop.pickImage(myActivity);
                 }
 
@@ -135,7 +135,7 @@ public class DiscipleProfileActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(myContext, WinBuildSendActivity.class);
                 Bundle b = new Bundle();
-                b.putString("DisciplePhone",myDisciple.getPhone().toString());
+                b.putString("DisciplePhone", myDisciple.getPhone().toString());
                 intent.putExtras(b);
                 myContext.startActivity(intent);
             }
@@ -143,12 +143,12 @@ public class DiscipleProfileActivity extends AppCompatActivity {
         DisCall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String phone = "+"+myDisciple.getPhone();
+                String phone = "+" + myDisciple.getPhone();
                 String number = "tel:" + phone;
                 Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse(number));
                 if (ContextCompat.checkSelfPermission(myContext, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(myActivity, new String[]{Manifest.permission.READ_PHONE_STATE}, 11);
-                }else {
+                } else {
                     myContext.startActivity(callIntent);
                 }
 
@@ -165,10 +165,11 @@ public class DiscipleProfileActivity extends AppCompatActivity {
         }
     }
 
-    private void EditMode(boolean state){
+    private void EditMode(boolean state) {
         FullName.setEnabled(state);
         Note.setEnabled(state);
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.disciple_profile_menu, menu);
@@ -177,9 +178,9 @@ public class DiscipleProfileActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == R.id.disciple_edit){
+        if (item.getItemId() == R.id.disciple_edit) {
             EditMode(true);
-        }else if(item.getItemId() == R.id.disciple_edit){
+        } else if (item.getItemId() == R.id.disciple_edit) {
             myDisciple.setDisplayName(FullName.getText().toString());
             DeepLife.myDATABASE.updateDisciple(myDisciple);
             Logs logs = new Logs();
@@ -195,7 +196,7 @@ public class DiscipleProfileActivity extends AppCompatActivity {
     private void beginCrop(Uri source) {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         Uri destination = Uri.fromFile(new File(getExternalCacheDir(), timeStamp));
-        Crop.of(source, destination).withAspect(720,720).start(this);
+        Crop.of(source, destination).withAspect(720, 720).start(this);
     }
 
     private void handleCrop(int resultCode, final Intent result) {
@@ -220,14 +221,15 @@ public class DiscipleProfileActivity extends AppCompatActivity {
                     }
                     return null;
                 }
+
                 @Override
                 protected void onPostExecute(Void dummy) {
                     if (imageFromCrop != null) {
                         DiscipleImage.setImageBitmap(imageFromCrop);
                         newImage = file.getName();
-                        File des = myFileManager.getFileAt("Disciples",myDisciple.getPhone()+file.getName());
+                        File des = myFileManager.getFileAt("Disciples", myDisciple.getPhone() + file.getName());
                         try {
-                            myFileManager.CopyFile(file,des);
+                            myFileManager.CopyFile(file, des);
                             myDisciple.setImagePath(des.getAbsolutePath());
                             DeepLife.myDATABASE.updateDisciple(myDisciple);
                         } catch (IOException e) {

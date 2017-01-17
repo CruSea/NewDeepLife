@@ -55,16 +55,16 @@ import deeplife.gcme.com.deeplife.SyncService.SyncDatabase;
 
 public class DiscipleAddActivity extends AppCompatActivity {
     private Toolbar toolbar;
-    private EditText FullName,Email,Phone,PhoneCode;
+    private EditText FullName, Email, Phone, PhoneCode;
     private ImageButton DiscipleImageAdd;
     private ImageView DiscipleImage;
     private Button AddDisciple;
-    private Spinner myCountry,myGender;
+    private Spinner myCountry, myGender;
     private List<Country> myCountries;
     private Disciple myDisciple;
     private int CountryPos = 0;
     private SyncDatabase mySyncDatabase;
-    private  AlertDialog.Builder builder;
+    private AlertDialog.Builder builder;
     private Activity myActivity;
     private Bitmap imageFromCrop = null;
     private String newImage = "";
@@ -72,6 +72,7 @@ public class DiscipleAddActivity extends AppCompatActivity {
     private File DiscipleImageFile;
     private Context myContext;
     private User myUser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,8 +102,8 @@ public class DiscipleAddActivity extends AppCompatActivity {
         DiscipleImageAdd = (ImageButton) findViewById(R.id.btn_discipleadd_image);
 
         myCountries = DeepLife.myDATABASE.getAllCountries();
-        if(myCountries != null){
-            myCountry.setAdapter(new CountryListAdapter(this,R.layout.login_countries_item,myCountries));
+        if (myCountries != null) {
+            myCountry.setAdapter(new CountryListAdapter(this, R.layout.login_countries_item, myCountries));
             int xx = Integer.valueOf(myUser.getUser_Country());
             Country country = DeepLife.myDATABASE.getCountryByID(xx);
         }
@@ -110,7 +111,7 @@ public class DiscipleAddActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 CountryPos = 0;
-                PhoneCode.setText("+"+myCountries.get(position).getCode());
+                PhoneCode.setText("+" + myCountries.get(position).getCode());
             }
 
             @Override
@@ -124,21 +125,21 @@ public class DiscipleAddActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 myDisciple = getDisciple();
-                if(myDisciple != null){
+                if (myDisciple != null) {
                     long x = mySyncDatabase.AddDisciple(myDisciple);
-                    if(x>0){
+                    if (x > 0) {
                         Logs logs = new Logs();
                         logs.setType(Logs.TYPE.DISCIPLE);
                         logs.setTask(Logs.TASK.SEND_DISCIPLES);  // briggsm: Biniam says Send_Disciples.  Why not AddNew_Disciples? What's difference?
                         logs.setValue(myDisciple.getPhone());
                         mySyncDatabase.AddLog(logs);
                         DisciplesFragment.UpdateList();
-                        ShowDialog(getString(R.string.dlg_msg_disciple_add_success),true);
+                        ShowDialog(getString(R.string.dlg_msg_disciple_add_success), true);
 
-                    }else {
-                        ShowDialog(getString(R.string.dlg_msg_disciple_add_failure),false);
+                    } else {
+                        ShowDialog(getString(R.string.dlg_msg_disciple_add_failure), false);
                     }
-                }else {
+                } else {
                     ShowDialog(getString(R.string.dlg_msg_disciple_add_failure_check), false);
                 }
             }
@@ -149,7 +150,7 @@ public class DiscipleAddActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (ContextCompat.checkSelfPermission(myContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(myActivity, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 12);
-                }else {
+                } else {
                     Crop.pickImage(myActivity);
                 }
             }
@@ -172,7 +173,7 @@ public class DiscipleAddActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 switch (which) {
                     case DialogInterface.BUTTON_POSITIVE:
-                        if(state){
+                        if (state) {
                             finish();
                         }
                         break;
@@ -184,19 +185,20 @@ public class DiscipleAddActivity extends AppCompatActivity {
                 .setMessage(message)
                 .setPositiveButton(R.string.dlg_btn_ok, dialogClickListener).show();
     }
-    public Disciple getDisciple(){
-        if(FullName.getText().toString().length()>2){
+
+    public Disciple getDisciple() {
+        if (FullName.getText().toString().length() > 2) {
             Disciple myDisciple = new Disciple();
             myDisciple.setFullName(FullName.getText().toString());
             myDisciple.setEmail(Email.getText().toString());
-            myDisciple.setPhone(myCountries.get(CountryPos).getCode()+Phone.getText().toString());
-            myDisciple.setCountry(""+myCountries.get(CountryPos).getSerID());
+            myDisciple.setPhone(myCountries.get(CountryPos).getCode() + Phone.getText().toString());
+            myDisciple.setCountry("" + myCountries.get(CountryPos).getSerID());
             myDisciple.setRole(Disciple.ROLE.DEFAULT);
             myDisciple.setDisplayName(FullName.getText().toString());
             myDisciple.setGender(myGender.getSelectedItemPosition() == 0 ? Disciple.GENDER.MALE : Disciple.GENDER.FEMALE); // briggsm: Will this always work? Think we need to determine based on position because of i18n.
-            if(DiscipleImageFile.isFile()){
-                myDisciple.setImagePath(myFileManager.getFileAt("Disciples",myDisciple.getPhone()+DiscipleImageFile.getName()).getAbsolutePath());
-            }else {
+            if (DiscipleImageFile.isFile()) {
+                myDisciple.setImagePath(myFileManager.getFileAt("Disciples", myDisciple.getPhone() + DiscipleImageFile.getName()).getAbsolutePath());
+            } else {
                 myDisciple.setImagePath("0");
             }
             myDisciple.setImageURL("0");
@@ -212,7 +214,7 @@ public class DiscipleAddActivity extends AppCompatActivity {
     private void beginCrop(Uri source) {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         Uri destination = Uri.fromFile(new File(getExternalCacheDir(), timeStamp));
-        Crop.of(source, destination).withAspect(720,720).start(this);
+        Crop.of(source, destination).withAspect(720, 720).start(this);
     }
 
     private void handleCrop(int resultCode, final Intent result) {
@@ -237,6 +239,7 @@ public class DiscipleAddActivity extends AppCompatActivity {
                     }
                     return null;
                 }
+
                 @Override
                 protected void onPostExecute(Void dummy) {
                     if (imageFromCrop != null) {

@@ -55,10 +55,11 @@ public class LoginAccess {
     }
 
     private static final String TAG = "LoginAccess";
-    public boolean LogInAuthnticate(){
-        if(myUser.getUser_Email()!=null){
+
+    public boolean LogInAuthnticate() {
+        if (myUser.getUser_Email() != null) {
             Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.USER_NAME.toString(), myUser.getUser_Email()));
-        }else {
+        } else {
             Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.USER_NAME.toString(), myUser.getUser_Phone()));
         }
         Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.USER_PASS.toString(), myUser.getUser_Pass()));
@@ -66,8 +67,8 @@ public class LoginAccess {
         Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.SERVICE.toString(), SyncService.API_SERVICE.LOG_IN.toString()));
         Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.PARAM.toString(), "[]"));
 
-        try{
-            Fuel.post(DeepLife.API_URL,Send_Param).responseString(new Handler<String>() {
+        try {
+            Fuel.post(DeepLife.API_URL, Send_Param).responseString(new Handler<String>() {
                 @Override
                 public void success(@NotNull Request request, @NotNull Response response, String s) {
                     Log.i(TAG, "Server Request  -> \n" + request.toString());
@@ -78,23 +79,23 @@ public class LoginAccess {
                         if (!myObject.isNull(SyncDatabase.ApiResponseKey.RESPONSE.toString())) {
                             mySyncDatabase.ProcessResponse(s);
                             User user = DeepLife.myDATABASE.getMainUser();
-                            if(user != null){
+                            if (user != null) {
                                 user.setUser_Pass(myUser.getUser_Pass());
                                 long state = DeepLife.myDATABASE.updateMainUser(user);
                                 User myUser1 = DeepLife.myDATABASE.getMainUser();
-                                if(state>0){
+                                if (state > 0) {
                                     Login.GetNextActivity();
-                                }else {
+                                } else {
                                     Login.DialogState(0);
                                     Log.w(TAG, "LogInAuthenticate onSuccess(): state <= 0");
                                     Login.showDialog(DeepLife.getContext().getString(R.string.dlg_msg_login_failure));
                                 }
-                            }else {
+                            } else {
                                 Login.DialogState(0);
                                 Log.w(TAG, "LogInAuthenticate onSuccess(): user == null");
                                 Login.showDialog(DeepLife.getContext().getString(R.string.dlg_msg_login_failure));
                             }
-                        }else {
+                        } else {
                             Login.DialogState(0);
                             Log.w(TAG, "LogInAuthenticate onSuccess(): JSONObject 'Response' is null");
                             Login.showDialog(DeepLife.getContext().getString(R.string.dlg_msg_login_failure));
@@ -104,24 +105,26 @@ public class LoginAccess {
                         e.printStackTrace();
                     }
                 }
+
                 @Override
                 public void failure(@NotNull Request request, @NotNull Response response, @NotNull FuelError fuelError) {
                     Log.i(TAG, "Server Response Error-> \n" + fuelError);
                 }
             });
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
         return false;
     }
-    public boolean GetMetaData(){
+
+    public boolean GetMetaData() {
         Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.USER_NAME.toString(), ""));
         Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.USER_PASS.toString(), ""));
         Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.COUNTRY.toString(), ""));
         Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.SERVICE.toString(), SyncService.API_SERVICE.META_DATA.toString()));
         Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.PARAM.toString(), "[]"));
-        try{
-            myFuel.post(DeepLife.API_URL,Send_Param).responseString(new Handler<String>() {
+        try {
+            myFuel.post(DeepLife.API_URL, Send_Param).responseString(new Handler<String>() {
                 @Override
                 public void success(@NotNull Request request, @NotNull Response response, String s) {
                     Log.i(TAG, "Server Request (Meta Data): " + request.toString());
@@ -133,32 +136,33 @@ public class LoginAccess {
                             mySyncDatabase.ProcessResponse(s);
                             Login.DialogState(0);
                             Login.showDialog(DeepLife.getContext().getString(R.string.dlg_msg_login));
-                        }else {
+                        } else {
                             Login.showDialog(DeepLife.getContext().getString(R.string.dlg_msg_meta_download_failed));
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
+
                 @Override
                 public void failure(@NotNull Request request, @NotNull Response response, @NotNull FuelError fuelError) {
                     Log.i(TAG, "Server Response Error-> \n" + fuelError);
                     Login.showDialog(DeepLife.getContext().getString(R.string.dlg_msg_meta_download_failed));
                 }
             });
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
         return false;
     }
 
-    public boolean SignupAuthnticate(final User user){
+    public boolean SignupAuthnticate(final User user) {
         Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.USER_NAME.toString(), user.getUser_Email()));
         Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.USER_PASS.toString(), user.getUser_Pass()));
         Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.COUNTRY.toString(), user.getUser_Country()));
         Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.SERVICE.toString(), SyncService.API_SERVICE.SIGN_UP.toString()));
         Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.PARAM.toString(), myParser.toJson(user)));
-        myFuel.post(DeepLife.API_URL,Send_Param).responseString(new Handler<String>() {
+        myFuel.post(DeepLife.API_URL, Send_Param).responseString(new Handler<String>() {
             @Override
             public void success(@NotNull Request request, @NotNull Response response, String s) {
                 Log.i(TAG, "Server Request  -> \n" + request.toString());
@@ -173,14 +177,14 @@ public class LoginAccess {
                         cv.put(Database.UserColumn.EMAIL.toString(), user.getUser_Email());
                         cv.put(Database.UserColumn.PHONE.toString(), user.getUser_Phone());
                         cv.put(Database.UserColumn.PASSWORD.toString(), user.getUser_Pass());
-                        long state = DeepLife.myDATABASE.insert(Database.Table_USER,cv);
-                        if(state>0){
+                        long state = DeepLife.myDATABASE.insert(Database.Table_USER, cv);
+                        if (state > 0) {
                             Login.GetNextActivity();
-                        }else {
+                        } else {
                             Login.DialogState(0);
                             Login.showDialog(DeepLife.getContext().getString(R.string.dlg_msg_login_failure));
                         }
-                    }else {
+                    } else {
                         Login.DialogState(0);
                         Login.showDialog(DeepLife.getContext().getString(R.string.dlg_msg_login_failure));
                     }
@@ -188,6 +192,7 @@ public class LoginAccess {
                     e.printStackTrace();
                 }
             }
+
             @Override
             public void failure(@NotNull Request request, @NotNull Response response, @NotNull FuelError fuelError) {
                 Log.i(TAG, "Server Response Error-> \n" + fuelError);

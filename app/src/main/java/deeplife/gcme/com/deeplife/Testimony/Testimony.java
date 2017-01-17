@@ -5,8 +5,8 @@ package deeplife.gcme.com.deeplife.Testimony;
  */
 
 public class Testimony {
-    private int ID,SerID,User_ID,Status;
-    private String Content,PubDate,UserName;
+    private int ID, SerID, User_ID, Status;
+    private String Content, PubDate, UserName;
 
     public int getID() {
         return ID;

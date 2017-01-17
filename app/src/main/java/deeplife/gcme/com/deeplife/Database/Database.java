@@ -93,9 +93,19 @@ public class Database {
         CREATED("Created");
 
         private final String name;
-        DisciplesColumn(String s) { this.name = s; }
-        public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
-        @Override public String toString() { return this.name; }
+
+        DisciplesColumn(String s) {
+            this.name = s;
+        }
+
+        public boolean equalsName(String otherName) {
+            return (otherName == null) ? false : name.equals(otherName);
+        }
+
+        @Override
+        public String toString() {
+            return this.name;
+        }
     }
 
     public enum SchedulesColumn {
@@ -107,9 +117,19 @@ public class Database {
         DESCRIPTION("Description");
 
         private final String name;
-        SchedulesColumn(String s) { this.name = s; }
-        public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
-        @Override public String toString() { return this.name; }
+
+        SchedulesColumn(String s) {
+            this.name = s;
+        }
+
+        public boolean equalsName(String otherName) {
+            return (otherName == null) ? false : name.equals(otherName);
+        }
+
+        @Override
+        public String toString() {
+            return this.name;
+        }
     }
 
     public enum ReportFormColumn {
@@ -119,9 +139,19 @@ public class Database {
         QUESTIONS("Questions");
 
         private final String name;
-        ReportFormColumn(String s) { this.name = s; }
-        public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
-        @Override public String toString() { return this.name; }
+
+        ReportFormColumn(String s) {
+            this.name = s;
+        }
+
+        public boolean equalsName(String otherName) {
+            return (otherName == null) ? false : name.equals(otherName);
+        }
+
+        @Override
+        public String toString() {
+            return this.name;
+        }
     }
 
     public enum NewsfeedColumn {
@@ -135,9 +165,19 @@ public class Database {
         PUBDATE("PubDate");
 
         private final String name;
-        NewsfeedColumn(String s) { this.name = s; }
-        public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
-        @Override public String toString() { return this.name; }
+
+        NewsfeedColumn(String s) {
+            this.name = s;
+        }
+
+        public boolean equalsName(String otherName) {
+            return (otherName == null) ? false : name.equals(otherName);
+        }
+
+        @Override
+        public String toString() {
+            return this.name;
+        }
     }
 
     public enum ReportColumn {
@@ -147,9 +187,19 @@ public class Database {
         DATE("Date");
 
         private final String name;
-        ReportColumn(String s) { this.name = s; }
-        public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
-        @Override public String toString() { return this.name; }
+
+        ReportColumn(String s) {
+            this.name = s;
+        }
+
+        public boolean equalsName(String otherName) {
+            return (otherName == null) ? false : name.equals(otherName);
+        }
+
+        @Override
+        public String toString() {
+            return this.name;
+        }
     }
 
     public enum CountryColumn {
@@ -160,9 +210,19 @@ public class Database {
         CODE("code");
 
         private final String name;
-        CountryColumn(String s) { this.name = s; }
-        public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
-        @Override public String toString() { return this.name; }
+
+        CountryColumn(String s) {
+            this.name = s;
+        }
+
+        public boolean equalsName(String otherName) {
+            return (otherName == null) ? false : name.equals(otherName);
+        }
+
+        @Override
+        public String toString() {
+            return this.name;
+        }
     }
 
     public enum LogsColumn {
@@ -172,9 +232,19 @@ public class Database {
         VALUE("Value");
 
         private final String name;
-        LogsColumn(String s) { this.name = s; }
-        public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
-        @Override public String toString() { return this.name; }
+
+        LogsColumn(String s) {
+            this.name = s;
+        }
+
+        public boolean equalsName(String otherName) {
+            return (otherName == null) ? false : name.equals(otherName);
+        }
+
+        @Override
+        public String toString() {
+            return this.name;
+        }
     }
 
     public enum UserColumn {
@@ -189,9 +259,19 @@ public class Database {
         FAVORITE_SCRIPTURE("Favorite_Scripture");
 
         private final String name;
-        UserColumn(String s) { this.name = s; }
-        public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
-        @Override public String toString() { return this.name; }
+
+        UserColumn(String s) {
+            this.name = s;
+        }
+
+        public boolean equalsName(String otherName) {
+            return (otherName == null) ? false : name.equals(otherName);
+        }
+
+        @Override
+        public String toString() {
+            return this.name;
+        }
     }
 
     public enum QuestionListColumn {
@@ -206,9 +286,19 @@ public class Database {
         CREATED("Created");
 
         private final String name;
-        QuestionListColumn(String s) { this.name = s; }
-        public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
-        @Override public String toString() { return this.name; }
+
+        QuestionListColumn(String s) {
+            this.name = s;
+        }
+
+        public boolean equalsName(String otherName) {
+            return (otherName == null) ? false : name.equals(otherName);
+        }
+
+        @Override
+        public String toString() {
+            return this.name;
+        }
     }
 
     public enum QuestionAnswerColumn {
@@ -220,9 +310,19 @@ public class Database {
         BUILDSTAGE("BuildStage");
 
         private final String name;
-        QuestionAnswerColumn(String s) { this.name = s; }
-        public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
-        @Override public String toString() { return this.name; }
+
+        QuestionAnswerColumn(String s) {
+            this.name = s;
+        }
+
+        public boolean equalsName(String otherName) {
+            return (otherName == null) ? false : name.equals(otherName);
+        }
+
+        @Override
+        public String toString() {
+            return this.name;
+        }
     }
 
     public enum TestimonyColumn {
@@ -235,9 +335,19 @@ public class Database {
         USERNAME("UserName");
 
         private final String name;
-        TestimonyColumn(String s) { this.name = s; }
-        public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
-        @Override public String toString() { return this.name; }
+
+        TestimonyColumn(String s) {
+            this.name = s;
+        }
+
+        public boolean equalsName(String otherName) {
+            return (otherName == null) ? false : name.equals(otherName);
+        }
+
+        @Override
+        public String toString() {
+            return this.name;
+        }
     }
 
     public enum ImageSyncColumn {
@@ -246,9 +356,19 @@ public class Database {
         PARAM("Param");
 
         private final String name;
-        ImageSyncColumn(String s) { this.name = s; }
-        public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
-        @Override public String toString() { return this.name; }
+
+        ImageSyncColumn(String s) {
+            this.name = s;
+        }
+
+        public boolean equalsName(String otherName) {
+            return (otherName == null) ? false : name.equals(otherName);
+        }
+
+        @Override
+        public String toString() {
+            return this.name;
+        }
     }
 
     public enum CategoryColumn {
@@ -260,9 +380,19 @@ public class Database {
         CREATED("Created");
 
         private final String name;
-        CategoryColumn(String s) { this.name = s; }
-        public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
-        @Override public String toString() { return this.name; }
+
+        CategoryColumn(String s) {
+            this.name = s;
+        }
+
+        public boolean equalsName(String otherName) {
+            return (otherName == null) ? false : name.equals(otherName);
+        }
+
+        @Override
+        public String toString() {
+            return this.name;
+        }
     }
 
     public enum LearningColumn {
@@ -276,9 +406,19 @@ public class Database {
         CREATED("Created");
 
         private final String name;
-        LearningColumn(String s) { this.name = s; }
-        public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
-        @Override public String toString() { return this.name; }
+
+        LearningColumn(String s) {
+            this.name = s;
+        }
+
+        public boolean equalsName(String otherName) {
+            return (otherName == null) ? false : name.equals(otherName);
+        }
+
+        @Override
+        public String toString() {
+            return this.name;
+        }
     }
 
     public enum DiscipleTreeColumn {
@@ -288,9 +428,19 @@ public class Database {
         COUNT("Count");
 
         private final String name;
-        DiscipleTreeColumn(String s) { this.name = s; }
-        public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
-        @Override public String toString() { return this.name; }
+
+        DiscipleTreeColumn(String s) {
+            this.name = s;
+        }
+
+        public boolean equalsName(String otherName) {
+            return (otherName == null) ? false : name.equals(otherName);
+        }
+
+        @Override
+        public String toString() {
+            return this.name;
+        }
     }
 
     private SQLiteDatabase myDatabase;
@@ -770,6 +920,7 @@ public class Database {
             return 0;
         }
     }
+
     ////////////////////////////////
     ////////////////////////////////
     ///////  CATEGORY    ///////////

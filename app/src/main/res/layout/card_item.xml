@@ -63,6 +63,7 @@
                     android:textSize="40sp"
                     android:textColor="#ffffff"
                     android:text="41" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

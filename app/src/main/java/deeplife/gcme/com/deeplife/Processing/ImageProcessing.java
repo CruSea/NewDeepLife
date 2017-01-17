@@ -18,14 +18,15 @@ public class ImageProcessing {
     Context myContext;
 
     FileManager fileManager;
-    public ImageProcessing(Context context){
+
+    public ImageProcessing(Context context) {
         fileManager = new FileManager(context);
     }
 
     public File createImage(String folder) {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_"+".jpg";
-        File newImage = fileManager.createFileAt(folder,imageFileName);
+        String imageFileName = "JPEG_" + timeStamp + "_" + ".jpg";
+        File newImage = fileManager.createFileAt(folder, imageFileName);
         return newImage;
 
     }

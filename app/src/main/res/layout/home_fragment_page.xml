@@ -51,16 +51,19 @@
                             android:gravity="center_vertical"
                             android:layout_marginLeft="20dp"
                             android:layout_height="wrap_content">
+
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:gravity="center_horizontal|center_vertical"
                                 android:layout_height="wrap_content">
+
                                 <ImageView
                                     android:layout_width="50dp"
                                     android:layout_height="50dp"
                                     android:layout_gravity="center_vertical"
                                     android:background="@drawable/icon_disciple_tree_white" />
                             </LinearLayout>
+
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_weight="1"
@@ -68,32 +71,36 @@
                                 android:orientation="vertical"
                                 android:layout_marginLeft="20dp"
                                 android:layout_height="wrap_content">
+
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="@string/ui_disciple_tree"
                                     android:textStyle="bold"
                                     android:textColor="#ffffff"
-                                    android:textSize="25sp"/>
+                                    android:textSize="25sp" />
+
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:gravity="center_vertical"
                                     android:orientation="horizontal"
                                     android:layout_height="wrap_content">
+
                                     <TextView
                                         android:id="@+id/txt_home_disciple"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:textColor="#ffffff"
                                         android:textSize="30sp"
-                                        tools:text="241"/>
+                                        tools:text="241" />
+
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="10dp"
                                         android:textColor="#ffffff"
                                         android:textSize="20sp"
-                                        android:text="@string/ui_total_disciples"/>
+                                        android:text="@string/ui_total_disciples" />
                                 </LinearLayout>
                             </LinearLayout>
 
@@ -104,6 +111,7 @@
                 </android.support.v7.widget.CardView>
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -131,16 +139,19 @@
                             android:gravity="center_vertical"
                             android:layout_marginLeft="20dp"
                             android:layout_height="wrap_content">
+
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:gravity="center_horizontal|center_vertical"
                                 android:layout_height="wrap_content">
+
                                 <ImageView
                                     android:layout_width="50dp"
                                     android:layout_height="50dp"
                                     android:layout_gravity="center_vertical"
                                     android:background="@drawable/icon_win_icon_white" />
                             </LinearLayout>
+
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_weight="1"
@@ -148,32 +159,36 @@
                                 android:orientation="vertical"
                                 android:layout_marginLeft="20dp"
                                 android:layout_height="wrap_content">
+
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="@string/text_win"
                                     android:textStyle="bold"
                                     android:textColor="#ffffff"
-                                    android:textSize="25sp"/>
+                                    android:textSize="25sp" />
+
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:gravity="center_vertical"
                                     android:orientation="horizontal"
                                     android:layout_height="wrap_content">
+
                                     <TextView
                                         android:id="@+id/txt_home_win"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:textColor="#ffffff"
                                         android:textSize="30sp"
-                                        tools:text="241"/>
+                                        tools:text="241" />
+
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="10dp"
                                         android:textColor="#ffffff"
                                         android:textSize="20sp"
-                                        android:text="@string/text_disciples"/>
+                                        android:text="@string/text_disciples" />
                                 </LinearLayout>
                             </LinearLayout>
 
@@ -184,6 +199,7 @@
                 </android.support.v7.widget.CardView>
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -211,16 +227,19 @@
                             android:gravity="center_vertical"
                             android:layout_marginLeft="20dp"
                             android:layout_height="wrap_content">
+
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:gravity="center_horizontal|center_vertical"
                                 android:layout_height="wrap_content">
+
                                 <ImageView
                                     android:layout_width="50dp"
                                     android:layout_height="50dp"
                                     android:layout_gravity="center_vertical"
                                     android:background="@drawable/icon_build_icon_white" />
                             </LinearLayout>
+
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_weight="1"
@@ -228,32 +247,36 @@
                                 android:orientation="vertical"
                                 android:layout_marginLeft="20dp"
                                 android:layout_height="wrap_content">
+
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="@string/text_build"
                                     android:textStyle="bold"
                                     android:textColor="#ffffff"
-                                    android:textSize="25sp"/>
+                                    android:textSize="25sp" />
+
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:gravity="center_vertical"
                                     android:orientation="horizontal"
                                     android:layout_height="wrap_content">
+
                                     <TextView
                                         android:id="@+id/txt_home_build"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:textColor="#ffffff"
                                         android:textSize="30sp"
-                                        tools:text="241"/>
+                                        tools:text="241" />
+
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="10dp"
                                         android:textColor="#ffffff"
                                         android:textSize="20sp"
-                                        android:text="@string/text_disciples"/>
+                                        android:text="@string/text_disciples" />
                                 </LinearLayout>
                             </LinearLayout>
 
@@ -264,6 +287,7 @@
                 </android.support.v7.widget.CardView>
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -291,16 +315,19 @@
                             android:gravity="center_vertical"
                             android:layout_marginLeft="20dp"
                             android:layout_height="wrap_content">
+
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:gravity="center_horizontal|center_vertical"
                                 android:layout_height="wrap_content">
+
                                 <ImageView
                                     android:layout_width="50dp"
                                     android:layout_height="50dp"
                                     android:layout_gravity="center_vertical"
                                     android:background="@drawable/icon_send_icon_white" />
                             </LinearLayout>
+
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_weight="1"
@@ -308,32 +335,36 @@
                                 android:orientation="vertical"
                                 android:layout_marginLeft="20dp"
                                 android:layout_height="wrap_content">
+
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="@string/text_send"
                                     android:textStyle="bold"
                                     android:textColor="#ffffff"
-                                    android:textSize="25sp"/>
+                                    android:textSize="25sp" />
+
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:gravity="center_vertical"
                                     android:orientation="horizontal"
                                     android:layout_height="wrap_content">
+
                                     <TextView
                                         android:id="@+id/txt_home_send"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:textColor="#ffffff"
                                         android:textSize="30sp"
-                                        tools:text="241"/>
+                                        tools:text="241" />
+
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="10dp"
                                         android:textColor="#ffffff"
                                         android:textSize="20sp"
-                                        android:text="@string/text_disciples"/>
+                                        android:text="@string/text_disciples" />
                                 </LinearLayout>
                             </LinearLayout>
 

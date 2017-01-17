@@ -51,11 +51,11 @@ public class DiscipleListAdapter extends RecyclerView.Adapter<DiscipleListAdapte
     public void onBindViewHolder(DataObjectHolder holder, int position) {
         holder.FullName.setText(Disciples.get(position).getFullName());
         holder.Email.setText(Disciples.get(position).getEmail());
-        holder.Phone.setText("+"+Disciples.get(position).getPhone());
+        holder.Phone.setText("+" + Disciples.get(position).getPhone());
         holder.btn_WinBuild.setText(Disciples.get(position).getStage().toString());
-        if(Disciples.get(position).getImagePath() != null){
+        if (Disciples.get(position).getImagePath() != null) {
             File file = new File(Disciples.get(position).getImagePath());
-            if(file.isFile()){
+            if (file.isFile()) {
                 holder.DiscipleImage.setImageBitmap(BitmapFactory.decodeFile(file.getAbsolutePath()));
             }
         }
@@ -79,13 +79,14 @@ public class DiscipleListAdapter extends RecyclerView.Adapter<DiscipleListAdapte
                 .setMessage(message)
                 .setPositiveButton(R.string.dlg_btn_ok, dialogClickListener).show();
     }
+
     public static void DeleteDiscipleDialog(final int discipleid, final String disciplePhone) {
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 switch (which) {
                     case DialogInterface.BUTTON_POSITIVE:
-                        DeepLife.myDATABASE.Delete_By_ID(Database.Table_DISCIPLES,discipleid);
+                        DeepLife.myDATABASE.Delete_By_ID(Database.Table_DISCIPLES, discipleid);
                         Logs logs = new Logs();
                         logs.setType(Logs.TYPE.REMOVE_DISCIPLE);
                         logs.setTask(Logs.TASK.SEND_LOG);
@@ -104,15 +105,17 @@ public class DiscipleListAdapter extends RecyclerView.Adapter<DiscipleListAdapte
                 .setNegativeButton(R.string.dlg_btn_no_dont_delete, dialogClickListener)
                 .setPositiveButton(R.string.dlg_btn_yes, dialogClickListener).show();
     }
+
     @Override
     public int getItemCount() {
         return Disciples.size();
     }
 
     public static class DataObjectHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
-        TextView FullName,Email,Phone;
+        TextView FullName, Email, Phone;
         Button btn_WinBuild;
         ImageView DiscipleImage;
+
         public DataObjectHolder(View itemView) {
             super(itemView);
             FullName = (TextView) itemView.findViewById(R.id.txt_disciple_name);
@@ -127,16 +130,16 @@ public class DiscipleListAdapter extends RecyclerView.Adapter<DiscipleListAdapte
 
         @Override
         public void onClick(View v) {
-            if(v.getId() == R.id.btn_win_build_send){
+            if (v.getId() == R.id.btn_win_build_send) {
                 Intent intent = new Intent(myContext, WinBuildSendActivity.class);
                 Bundle b = new Bundle();
-                b.putString("DisciplePhone",Disciples.get(getAdapterPosition()).getPhone().toString());
+                b.putString("DisciplePhone", Disciples.get(getAdapterPosition()).getPhone().toString());
                 intent.putExtras(b);
                 myContext.startActivity(intent);
-            }else {
+            } else {
                 Intent intent = new Intent(myContext, DiscipleProfileActivity.class);
                 Bundle b = new Bundle();
-                b.putString("DisciplePhone",Disciples.get(getAdapterPosition()).getPhone().toString());
+                b.putString("DisciplePhone", Disciples.get(getAdapterPosition()).getPhone().toString());
                 intent.putExtras(b);
                 myContext.startActivity(intent);
             }
@@ -146,7 +149,7 @@ public class DiscipleListAdapter extends RecyclerView.Adapter<DiscipleListAdapte
         public boolean onLongClick(View v) {
             int discipleid = Disciples.get(getAdapterPosition()).getID();
             String disciplePhone = Disciples.get(getAdapterPosition()).getPhone();
-            DeleteDiscipleDialog(discipleid,disciplePhone);
+            DeleteDiscipleDialog(discipleid, disciplePhone);
             return true;
         }
     }

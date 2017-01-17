@@ -17,14 +17,14 @@ import deeplife.gcme.com.deeplife.DeepLife;
 /**
  * Created by BENGEOS on 4/16/16.
  */
-public class FileDownloader extends AsyncTask<String,String,String> {
+public class FileDownloader extends AsyncTask<String, String, String> {
     private FileManager fileManager;
     private Context myContext;
-    private String fileName,folderName,fileURL;
+    private String fileName, folderName, fileURL;
     public static final String TAG = "FileDownloader";
 
 
-    public FileDownloader(Context context, String file_url, String folder_Name, String file_Name){
+    public FileDownloader(Context context, String file_url, String folder_Name, String file_Name) {
         this.myContext = context;
         this.fileName = file_Name;
         this.folderName = folder_Name;
@@ -32,6 +32,7 @@ public class FileDownloader extends AsyncTask<String,String,String> {
         fileManager = new FileManager(context);
 
     }
+
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
@@ -41,8 +42,8 @@ public class FileDownloader extends AsyncTask<String,String,String> {
 
     @Override
     protected String doInBackground(String... params) {
-        Download(fileURL,fileName,folderName);
-        Log.i(TAG, "Downloading " + fileName+ "Finished");
+        Download(fileURL, fileName, folderName);
+        Log.i(TAG, "Downloading " + fileName + "Finished");
         return null;
     }
 
@@ -51,10 +52,11 @@ public class FileDownloader extends AsyncTask<String,String,String> {
         super.onPostExecute(s);
         DeepLife.ImageDownloadCount -= 1;
     }
-    protected void Download(String url, String filename, String foldername){
+
+    protected void Download(String url, String filename, String foldername) {
         int count = 0;
         long total = 0;
-        try{
+        try {
             URL web_url = new URL(url);
             URLConnection connection = web_url.openConnection();
             connection.connect();
@@ -62,21 +64,21 @@ public class FileDownloader extends AsyncTask<String,String,String> {
             connection.setConnectTimeout(10000);
             int filelength = connection.getContentLength();
             InputStream input = new BufferedInputStream(web_url.openStream());
-            File destination = fileManager.createFileAt(foldername,filename);
-            Log.i(TAG, "Download Destination "+destination.getAbsolutePath());
+            File destination = fileManager.createFileAt(foldername, filename);
+            Log.i(TAG, "Download Destination " + destination.getAbsolutePath());
             OutputStream output = new FileOutputStream(destination);
             byte data[] = new byte[1024];
-            while((count = input.read(data)) != -1){
+            while ((count = input.read(data)) != -1) {
                 total += count;
-                output.write(data,0,count);
+                output.write(data, 0, count);
             }
-            Log.i(TAG, "Downloaded " + filename+":->"+total);
+            Log.i(TAG, "Downloaded " + filename + ":->" + total);
             output.flush();
             output.close();
             input.close();
-        }catch (Exception e){
-            Log.i(TAG, "Downloading "+filename+" interrupted :-> "+total);
-            Log.i(TAG, "Downloading error"+e.toString());
+        } catch (Exception e) {
+            Log.i(TAG, "Downloading " + filename + " interrupted :-> " + total);
+            Log.i(TAG, "Downloading error" + e.toString());
         }
     }
 }

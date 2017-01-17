@@ -5,8 +5,8 @@ package deeplife.gcme.com.deeplife.News;
  */
 
 public class News {
-    private int id,SerID;
-    private String Title,Content,ImageURL,ImagePath,Category,PubDate;
+    private int id, SerID;
+    private String Title, Content, ImageURL, ImagePath, Category, PubDate;
 
     public int getId() {
         return id;
