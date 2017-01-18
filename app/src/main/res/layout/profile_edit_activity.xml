@@ -14,37 +14,40 @@
         android:layout_marginTop="16dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginLeft="16dp" />
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp" />
 
     <TextView
         android:text="@string/form_text_personal_information"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:id="@+id/textView13"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         app:layout_constraintTop_toBottomOf="@+id/imageView4"
         app:layout_constraintLeft_toLeftOf="parent"
         android:textSize="20sp"
-        android:layout_marginEnd="16dp"
+
         app:layout_constraintRight_toRightOf="parent"
         tools:layout_constraintRight_creator="1"
         tools:layout_constraintLeft_creator="1"
         android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp" />
+        android:layout_marginStart="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp" />
 
     <Button
         android:text="@string/action_save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/profileEditSaveBtn"
-        android:layout_marginEnd="16dp"
+
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginTop="16dp"
         app:layout_constraintTop_toTopOf="parent"
         android:background="@color/colorPrimary"
         android:textColor="@color/white"
-        android:layout_marginRight="16dp" />
+        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp" />
 
     <Button
         android:text="@string/action_cancel"
@@ -52,12 +55,13 @@
         android:layout_height="wrap_content"
         android:id="@+id/profileEditCancelBtn"
         app:layout_constraintRight_toLeftOf="@+id/profileEditSaveBtn"
-        android:layout_marginEnd="8dp"
+
         android:layout_marginTop="16dp"
         app:layout_constraintTop_toTopOf="parent"
         android:background="@color/colorPrimary"
         android:textColor="@color/white"
-        android:layout_marginRight="8dp" />
+        android:layout_marginRight="8dp"
+        android:layout_marginEnd="8dp" />
 
     <ScrollView
         android:layout_width="0dp"

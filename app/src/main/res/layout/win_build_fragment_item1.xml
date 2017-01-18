@@ -33,6 +33,7 @@
                     android:orientation="vertical"
                     android:gravity="center_vertical"
                     android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:layout_weight="2">
 
                     <TextView
@@ -50,6 +51,7 @@
                         android:layout_marginTop="6dp"
                         android:layout_marginBottom="10dp"
                         android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
                         android:layout_height="match_parent">
 
                         <TextView
@@ -62,6 +64,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="20dp"
+                            android:layout_marginStart="20dp"
                             android:textColor="@color/bg_login"
                             android:text="Read Note" />
                     </LinearLayout>
@@ -120,6 +123,7 @@
                         android:layout_marginTop="6dp"
                         android:layout_marginBottom="10dp"
                         android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
                         android:layout_height="match_parent">
 
                         <TextView
@@ -132,6 +136,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="20dp"
+                            android:layout_marginStart="20dp"
                             android:textColor="@color/bg_login"
                             android:text="@string/action_read_note" />
                     </LinearLayout>
@@ -163,7 +168,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_marginLeft="10dp"
+                            android:layout_marginStart="10dp"
                             android:layout_marginRight="10dp"
+                            android:layout_marginEnd="10dp"
                             android:gravity="center_horizontal|center_vertical"
                             android:textSize="35sp"
                             android:inputType="number"
@@ -196,6 +203,7 @@
                 android:layout_width="2dp"
                 android:layout_height="70dp"
                 android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:background="@color/bg_logins"></LinearLayout>
 
             <LinearLayout
@@ -219,6 +227,7 @@
                         android:gravity="center_horizontal|center_vertical"
                         android:layout_marginTop="5dp"
                         android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
                         android:text=""
                         android:textSize="17sp"
                         android:textColor="#000000" />

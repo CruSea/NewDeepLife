@@ -80,12 +80,14 @@
                             android:layout_width="80dp"
                             android:layout_height="80dp"
                             android:layout_marginRight="50dp"
+                            android:layout_marginEnd="50dp"
                             android:background="@drawable/phone_message_icon" />
 
                         <ImageView
                             android:layout_width="80dp"
                             android:layout_height="80dp"
                             android:layout_marginLeft="50dp"
+                            android:layout_marginStart="50dp"
                             android:background="@drawable/phone_call_icon" />
                     </LinearLayout>
                 </LinearLayout>
@@ -94,6 +96,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:paddingLeft="10dp"
+                    android:paddingStart="10dp"
                     android:orientation="vertical">
 
                     <LinearLayout
@@ -107,6 +110,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="12dp"
+                            android:layout_marginStart="12dp"
                             android:id="@+id/disciple_btn_edit_profile_cover" />
 
 
@@ -132,6 +136,7 @@
                                 android:textStyle="bold"
                                 android:textSize="20sp"
                                 android:layout_marginLeft="10dp"
+                                android:layout_marginStart="10dp"
                                 android:text="@string/form_text_full_name" />
 
                             <EditText
@@ -168,6 +173,7 @@
                                 android:textStyle="bold"
                                 android:textSize="20sp"
                                 android:layout_marginLeft="10dp"
+                                android:layout_marginStart="10dp"
                                 android:text="@string/form_text_gender" />
 
                             <EditText
@@ -204,6 +210,7 @@
                                 android:textStyle="bold"
                                 android:textSize="20sp"
                                 android:layout_marginLeft="10dp"
+                                android:layout_marginStart="10dp"
                                 android:text="@string/form_text_email" />
 
                             <EditText
@@ -240,6 +247,7 @@
                                 android:textStyle="bold"
                                 android:textSize="20sp"
                                 android:layout_marginLeft="10dp"
+                                android:layout_marginStart="10dp"
                                 android:text="@string/form_text_country" />
 
                             <EditText
@@ -276,6 +284,7 @@
                                 android:textStyle="bold"
                                 android:textSize="20sp"
                                 android:layout_marginLeft="10dp"
+                                android:layout_marginStart="10dp"
                                 android:text="@string/form_text_phone" />
 
                             <EditText

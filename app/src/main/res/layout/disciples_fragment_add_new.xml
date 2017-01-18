@@ -72,7 +72,9 @@
                     android:background="@color/bg_login"
                     android:gravity="center_vertical"
                     android:paddingLeft="10dp"
+                    android:paddingStart="10dp"
                     android:paddingRight="20dp"
+                    android:paddingEnd="20dp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -81,6 +83,7 @@
                         android:textColor="@color/white"
                         android:textStyle="bold"
                         android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
                         android:text="@string/form_text_full_name" />
 
                     <android.support.design.widget.TextInputLayout
@@ -107,7 +110,9 @@
                     android:gravity="center_vertical"
                     android:layout_marginTop="5dp"
                     android:paddingLeft="10dp"
+                    android:paddingStart="10dp"
                     android:paddingRight="20dp"
+                    android:paddingEnd="20dp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -116,6 +121,7 @@
                         android:textColor="@color/white"
                         android:textStyle="bold"
                         android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
                         android:text="@string/form_text_email" />
 
                     <android.support.design.widget.TextInputLayout
@@ -144,7 +150,9 @@
                     android:orientation="horizontal"
                     android:layout_marginTop="5dp"
                     android:paddingLeft="10dp"
+                    android:paddingStart="10dp"
                     android:paddingRight="20dp"
+                    android:paddingEnd="20dp"
                     android:background="@color/bg_login">
 
                     <TextView
@@ -153,6 +161,7 @@
                         android:textColor="@color/white"
                         android:textStyle="bold"
                         android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
                         android:text="@string/form_text_country" />
 
                     <Spinner
@@ -172,7 +181,9 @@
                     android:background="@color/bg_login"
                     android:layout_marginTop="5dp"
                     android:paddingLeft="10dp"
+                    android:paddingStart="10dp"
                     android:paddingRight="20dp"
+                    android:paddingEnd="20dp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -181,6 +192,7 @@
                         android:textColor="@color/white"
                         android:textStyle="bold"
                         android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
                         android:text="@string/form_text_phone" />
 
                     <EditText
@@ -221,7 +233,9 @@
                     android:gravity="center_vertical"
                     android:layout_marginTop="5dp"
                     android:paddingLeft="10dp"
+                    android:paddingStart="10dp"
                     android:paddingRight="20dp"
+                    android:paddingEnd="20dp"
                     android:layout_height="wrap_content">
 
                     <TextView
@@ -230,6 +244,7 @@
                         android:textColor="@color/white"
                         android:textStyle="bold"
                         android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
                         android:text="@string/form_text_gender" />
 
                     <Spinner

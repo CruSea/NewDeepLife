@@ -89,6 +89,7 @@
                             android:textStyle="bold"
                             android:textSize="20sp"
                             android:layout_marginLeft="10dp"
+                            android:layout_marginStart="10dp"
                             android:text="@string/form_text_full_name" />
 
                         <EditText
@@ -126,6 +127,7 @@
                             android:textStyle="bold"
                             android:textSize="20sp"
                             android:layout_marginLeft="10dp"
+                            android:layout_marginStart="10dp"
                             android:text="@string/form_text_email" />
 
                         <EditText
@@ -164,6 +166,7 @@
                             android:textStyle="bold"
                             android:textSize="20sp"
                             android:layout_marginLeft="10dp"
+                            android:layout_marginStart="10dp"
                             android:text="@string/form_text_country" />
 
                         <EditText
@@ -203,6 +206,7 @@
                             android:textStyle="bold"
                             android:textSize="20sp"
                             android:layout_marginLeft="10dp"
+                            android:layout_marginStart="10dp"
                             android:text="@string/form_text_phone" />
 
                         <EditText
@@ -242,6 +246,7 @@
                             android:textStyle="bold"
                             android:textSize="20sp"
                             android:layout_marginLeft="10dp"
+                            android:layout_marginStart="10dp"
                             android:text="@string/form_text_gender" />
 
                         <EditText
