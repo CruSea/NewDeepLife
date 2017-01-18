@@ -17,7 +17,7 @@
         card_view:contentPadding="5dp">
 
         <FrameLayout
-            android:id="@+id/frame1"
+            android:id="@+id/wbs_frame_yesno_question"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -43,7 +43,7 @@
                         android:text="This is the Question Place "
                         android:textSize="17sp"
                         android:textColor="#000000"
-                        android:id="@+id/txt_wbs_question1" />
+                        android:id="@+id/txt_wbs_yesno_question" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -57,10 +57,11 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="*Mandatory" />
+                            android:text="@string/text_star_mandatory"
+                            android:id="@+id/txt_wbs_yesno_mandatory" />
 
                         <TextView
-                            android:id="@+id/txt_readnote1"
+                            android:id="@+id/txt_wbs_yesno_readnote"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="20dp"
@@ -78,7 +79,7 @@
                     android:layout_weight="4">
 
                     <ToggleButton
-                        android:id="@+id/tgl_wbs_state"
+                        android:id="@+id/tgl_wbs_yesno_state"
                         android:layout_width="100dp"
                         android:layout_height="55dp"
                         android:textOff=""
@@ -91,7 +92,7 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/frame2">
+            android:id="@+id/wbs_frame_numeric_question">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -114,7 +115,7 @@
                         android:layout_marginTop="5dp"
                         android:textSize="17sp"
                         android:textColor="#000000"
-                        android:id="@+id/txt_wbs_question2"
+                        android:id="@+id/txt_wbs_numeric_question"
                         tools:text="This is the Question Place " />
 
                     <LinearLayout
@@ -129,10 +130,11 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/text_star_mandatory" />
+                            android:text="@string/text_star_mandatory"
+                            android:id="@+id/txt_wbs_numeric_mandatory" />
 
                         <TextView
-                            android:id="@+id/txt_readnote2"
+                            android:id="@+id/txt_wbs_numeric_readnote"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="20dp"
@@ -153,7 +155,7 @@
                         android:layout_width="30dp"
                         android:layout_height="50dp"
                         android:background="@drawable/btn_decrs"
-                        android:id="@+id/btn_wbs_dec" />
+                        android:id="@+id/btn_wbs_numeric_dec" />
 
                     <FrameLayout
                         android:layout_width="wrap_content"
@@ -164,7 +166,7 @@
                             android:layout_height="match_parent" />
 
                         <TextView
-                            android:id="@+id/txt_wbs_value"
+                            android:id="@+id/txt_wbs_numeric_value"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_marginLeft="10dp"
@@ -182,7 +184,7 @@
                         android:layout_width="30dp"
                         android:layout_height="50dp"
                         android:background="@drawable/btn_incrs"
-                        android:id="@+id/btn_wbs_inc" />
+                        android:id="@+id/btn_wbs_numeric_inc" />
 
                 </LinearLayout>
             </LinearLayout>
@@ -191,7 +193,7 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/frame3">
+            android:id="@+id/wbs_frame_folder">
 
             <LinearLayout
                 android:layout_width="100dp"
@@ -221,7 +223,7 @@
                     android:layout_weight="2">
 
                     <TextView
-                        android:id="@+id/txt_wbs_question3"
+                        android:id="@+id/txt_wbs_folder_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal|center_vertical"

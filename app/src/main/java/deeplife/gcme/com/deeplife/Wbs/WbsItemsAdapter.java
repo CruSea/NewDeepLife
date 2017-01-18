@@ -56,38 +56,38 @@ public class WbsItemsAdapter extends RecyclerView.Adapter<WbsItemsAdapter.DataOb
     public void onBindViewHolder(DataObjectHolder holder, int position) {
         Answer answer = DeepLife.myDATABASE.getAnswerByQuestionIDandDisciplePhone(wbsQuestions.get(position).getSerID(), DisciplePhone);
         if (wbsQuestions.get(position).getType() == WbsQuestion.Type.YESNO) {
-            holder.frameLayout1.setVisibility(View.VISIBLE);
-            holder.frameLayout2.setVisibility(View.GONE);
-            holder.frameLayout3.setVisibility(View.GONE);
+            holder.frameLayoutYesNo.setVisibility(View.VISIBLE);
+            holder.frameLayoutNumeric.setVisibility(View.GONE);
+            holder.frameLayoutFolder.setVisibility(View.GONE);
 
             if (answer != null) {
                 if (answer.getAnswer().equals("YES")) {
-                    holder.btnToggle.setChecked(true);
+                    holder.btnToggleYesNo.setChecked(true);
                 } else {
-                    holder.btnToggle.setChecked(false);
+                    holder.btnToggleYesNo.setChecked(false);
                 }
 
             }
 
         } else if (wbsQuestions.get(position).getType() == WbsQuestion.Type.NUMBER) {
-            holder.frameLayout1.setVisibility(View.GONE);
-            holder.frameLayout2.setVisibility(View.VISIBLE);
-            holder.frameLayout3.setVisibility(View.GONE);
+            holder.frameLayoutYesNo.setVisibility(View.GONE);
+            holder.frameLayoutNumeric.setVisibility(View.VISIBLE);
+            holder.frameLayoutFolder.setVisibility(View.GONE);
 
             if (answer != null) {
                 int value = Integer.valueOf(answer.getAnswer());
-                holder.QuestionValue.setText("" + value);
+                holder.QuestionNumericValue.setText("" + value);
             }
         } else {
             // Folder
-            holder.frameLayout1.setVisibility(View.GONE);
-            holder.frameLayout2.setVisibility(View.GONE);
-            holder.frameLayout3.setVisibility(View.VISIBLE);
+            holder.frameLayoutYesNo.setVisibility(View.GONE);
+            holder.frameLayoutNumeric.setVisibility(View.GONE);
+            holder.frameLayoutFolder.setVisibility(View.VISIBLE);
         }
 
-        holder.Question1.setText(wbsQuestions.get(position).getQuestion());
-        holder.Question2.setText(wbsQuestions.get(position).getQuestion());
-        holder.Question3.setText(wbsQuestions.get(position).getQuestion());
+        holder.QuestionYesNo.setText(wbsQuestions.get(position).getQuestion());
+        holder.QuestionNumeric.setText(wbsQuestions.get(position).getQuestion());
+        holder.FolderName.setText(wbsQuestions.get(position).getQuestion());
     }
 
     @Override
@@ -96,37 +96,37 @@ public class WbsItemsAdapter extends RecyclerView.Adapter<WbsItemsAdapter.DataOb
     }
 
     public static class DataObjectHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
-        TextView Question1, Question2, Question3, Email, Phone;
+        TextView QuestionYesNo, QuestionNumeric, FolderName, Email, Phone;
         Button btnInc, btnDec;
-        ToggleButton btnToggle;
+        ToggleButton btnToggleYesNo;
         ImageView NewsImage;
-        TextView QuestionValue, ReadNote1, ReadNote2;
-        FrameLayout frameLayout1, frameLayout2, frameLayout3;
+        TextView QuestionNumericValue, ReadNoteYesNo, ReadNoteNumeric;
+        FrameLayout frameLayoutYesNo, frameLayoutNumeric, frameLayoutFolder;
 
         public DataObjectHolder(View itemView) {
             super(itemView);
-            frameLayout1 = (FrameLayout) itemView.findViewById(R.id.frame1);
-            frameLayout2 = (FrameLayout) itemView.findViewById(R.id.frame2);
-            frameLayout3 = (FrameLayout) itemView.findViewById(R.id.frame3);
+            frameLayoutYesNo = (FrameLayout) itemView.findViewById(R.id.wbs_frame_yesno_question);
+            frameLayoutNumeric = (FrameLayout) itemView.findViewById(R.id.wbs_frame_numeric_question);
+            frameLayoutFolder = (FrameLayout) itemView.findViewById(R.id.wbs_frame_folder);
 
-            ReadNote1 = (TextView) itemView.findViewById(R.id.txt_readnote1);
-            ReadNote1.setOnClickListener(this);
-            ReadNote2 = (TextView) itemView.findViewById(R.id.txt_readnote2);
-            ReadNote2.setOnClickListener(this);
+            ReadNoteYesNo = (TextView) itemView.findViewById(R.id.txt_wbs_yesno_readnote);
+            ReadNoteYesNo.setOnClickListener(this);
+            ReadNoteNumeric = (TextView) itemView.findViewById(R.id.txt_wbs_numeric_readnote);
+            ReadNoteNumeric.setOnClickListener(this);
 
-            btnToggle = (ToggleButton) itemView.findViewById(R.id.tgl_wbs_state);
-            btnToggle.setOnClickListener(this);
+            btnToggleYesNo = (ToggleButton) itemView.findViewById(R.id.tgl_wbs_yesno_state);
+            btnToggleYesNo.setOnClickListener(this);
 
-            Question1 = (TextView) itemView.findViewById(R.id.txt_wbs_question1);
-            Question2 = (TextView) itemView.findViewById(R.id.txt_wbs_question2);
-            Question3 = (TextView) itemView.findViewById(R.id.txt_wbs_question3);
+            QuestionYesNo = (TextView) itemView.findViewById(R.id.txt_wbs_yesno_question);
+            QuestionNumeric = (TextView) itemView.findViewById(R.id.txt_wbs_numeric_question);
+            FolderName = (TextView) itemView.findViewById(R.id.txt_wbs_folder_name);
 
-            btnInc = (Button) itemView.findViewById(R.id.btn_wbs_inc);
+            btnInc = (Button) itemView.findViewById(R.id.btn_wbs_numeric_inc);
             btnInc.setOnClickListener(this);
-            btnDec = (Button) itemView.findViewById(R.id.btn_wbs_dec);
+            btnDec = (Button) itemView.findViewById(R.id.btn_wbs_numeric_dec);
             btnDec.setOnClickListener(this);
 
-            QuestionValue = (TextView) itemView.findViewById(R.id.txt_wbs_value);
+            QuestionNumericValue = (TextView) itemView.findViewById(R.id.txt_wbs_numeric_value);
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);
         }
@@ -138,10 +138,10 @@ public class WbsItemsAdapter extends RecyclerView.Adapter<WbsItemsAdapter.DataOb
             answer.setQuestionID(wbsQuestions.get(getAdapterPosition()).getSerID());
             answer.setSerID(0);
             answer.setBuildStage(BuildStage);
-            if (v.getId() == R.id.btn_wbs_inc) {
-                int value = Integer.valueOf(QuestionValue.getText().toString());
+            if (v.getId() == R.id.btn_wbs_numeric_inc) {
+                int value = Integer.valueOf(QuestionNumericValue.getText().toString());
                 value = value + 1;
-                QuestionValue.setText("" + value);
+                QuestionNumericValue.setText("" + value);
                 answer.setAnswer("" + value);
                 long x = DeepLife.myDATABASE.add_updateAnswer(answer);
                 if (x > 0) {
@@ -152,11 +152,11 @@ public class WbsItemsAdapter extends RecyclerView.Adapter<WbsItemsAdapter.DataOb
                     logs.setValue("" + x);
                     mySyncDatabase.AddLog(logs);
                 }
-            } else if (v.getId() == R.id.btn_wbs_dec) {
-                int value = Integer.valueOf(QuestionValue.getText().toString());
+            } else if (v.getId() == R.id.btn_wbs_numeric_dec) {
+                int value = Integer.valueOf(QuestionNumericValue.getText().toString());
                 if (value > 0) {
                     value = value - 1;
-                    QuestionValue.setText("" + value);
+                    QuestionNumericValue.setText("" + value);
                     answer.setAnswer("" + value);
                     long x = DeepLife.myDATABASE.add_updateAnswer(answer);
                     if (x > 0) {
@@ -169,8 +169,8 @@ public class WbsItemsAdapter extends RecyclerView.Adapter<WbsItemsAdapter.DataOb
                     }
                 }
 
-            } else if (v.getId() == R.id.tgl_wbs_state) {
-                if (btnToggle.isChecked()) {
+            } else if (v.getId() == R.id.tgl_wbs_yesno_state) {
+                if (btnToggleYesNo.isChecked()) {
                     Toast.makeText(myContext, "Checked", Toast.LENGTH_LONG).show();
                     answer.setAnswer("YES");
                     long x = DeepLife.myDATABASE.add_updateAnswer(answer);
@@ -196,7 +196,7 @@ public class WbsItemsAdapter extends RecyclerView.Adapter<WbsItemsAdapter.DataOb
                     }
 
                 }
-            } else if (v.getId() == R.id.txt_readnote1 || v.getId() == R.id.txt_readnote2) {
+            } else if (v.getId() == R.id.txt_wbs_yesno_readnote || v.getId() == R.id.txt_wbs_numeric_readnote) {
                 showDialog(wbsQuestions.get(getAdapterPosition()).getDescription());
                 Toast.makeText(myContext, "Showing Dialog for Description", Toast.LENGTH_LONG).show();
             }
