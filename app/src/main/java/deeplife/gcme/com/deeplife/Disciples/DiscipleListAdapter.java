@@ -52,15 +52,13 @@ public class DiscipleListAdapter extends RecyclerView.Adapter<DiscipleListAdapte
         holder.FullName.setText(Disciples.get(position).getFullName());
         holder.Email.setText(Disciples.get(position).getEmail());
         holder.Phone.setText("+" + Disciples.get(position).getPhone());
-        holder.btn_WinBuild.setText(Disciples.get(position).getStage().toString());
+        holder.btn_WinBuild.setText(Disciples.get(position).getStage() == Disciple.STAGE.SEND ? R.string.text_send : Disciples.get(position).getStage() == Disciple.STAGE.BUILD ? R.string.text_build : R.string.text_win);
         if (Disciples.get(position).getImagePath() != null) {
             File file = new File(Disciples.get(position).getImagePath());
             if (file.isFile()) {
                 holder.DiscipleImage.setImageBitmap(BitmapFactory.decodeFile(file.getAbsolutePath()));
             }
         }
-
-
     }
 
     public void ShowDialog(String message) {
