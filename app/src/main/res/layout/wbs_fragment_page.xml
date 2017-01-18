@@ -15,7 +15,7 @@
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/add_winbuild_toolbar"
+            android:id="@+id/add_wbs_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:layout_marginTop="10dp"
@@ -54,7 +54,7 @@
                         android:layout_height="120dp">
 
                         <ImageView
-                            android:id="@+id/img_winbuildsend_image"
+                            android:id="@+id/img_wbs_image"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:background="@drawable/bengeos" />
@@ -67,7 +67,7 @@
                     </FrameLayout>
 
                     <TextView
-                        android:id="@+id/txt_winbuildsend_fullname"
+                        android:id="@+id/txt_wbs_fullname"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         tools:text="Biniam Kassahun"
@@ -85,7 +85,7 @@
                         android:weightSum="3">
 
                         <Button
-                            android:id="@+id/btn_winbuildsend_win"
+                            android:id="@+id/btn_wbs_win"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             style="@style/AppTheme.Button1"
@@ -93,7 +93,7 @@
                             android:text="@string/text_win" />
 
                         <Button
-                            android:id="@+id/btn_winbuildsend_build"
+                            android:id="@+id/btn_wbs_build"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             style="@style/AppTheme.Button1"
@@ -101,7 +101,7 @@
                             android:text="@string/text_build" />
 
                         <Button
-                            android:id="@+id/btn_winbuildsend_send"
+                            android:id="@+id/btn_wbs_send"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             style="@style/AppTheme.Button1"

@@ -96,7 +96,7 @@
                         android:layout_height="match_parent">
 
                         <Button
-                            android:id="@+id/btn_win_build_send"
+                            android:id="@+id/btn_wbs"
                             android:layout_width="100dp"
                             android:layout_height="wrap_content"
                             android:theme="@style/AppTheme.Button1"

@@ -47,7 +47,7 @@ import deeplife.gcme.com.deeplife.Models.Logs;
 import deeplife.gcme.com.deeplife.Processing.ImageProcessing;
 import deeplife.gcme.com.deeplife.R;
 import deeplife.gcme.com.deeplife.SyncService.SyncDatabase;
-import deeplife.gcme.com.deeplife.WinBuildSend.WinBuildSendActivity;
+import deeplife.gcme.com.deeplife.Wbs.WbsActivity;
 
 /**
  * Created by bengeos on 12/25/16.
@@ -133,7 +133,7 @@ public class DiscipleProfileActivity extends AppCompatActivity {
         DisComplete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(myContext, WinBuildSendActivity.class);
+                Intent intent = new Intent(myContext, WbsActivity.class);
                 Bundle b = new Bundle();
                 b.putString("DisciplePhone", myDisciple.getPhone().toString());
                 intent.putExtras(b);

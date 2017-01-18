@@ -22,7 +22,7 @@ import deeplife.gcme.com.deeplife.DeepLife;
 import deeplife.gcme.com.deeplife.Models.Logs;
 import deeplife.gcme.com.deeplife.R;
 import deeplife.gcme.com.deeplife.SyncService.SyncDatabase;
-import deeplife.gcme.com.deeplife.WinBuildSend.WinBuildSendActivity;
+import deeplife.gcme.com.deeplife.Wbs.WbsActivity;
 
 /**
  * Created by bengeos on 12/7/16.
@@ -52,7 +52,7 @@ public class DiscipleListAdapter extends RecyclerView.Adapter<DiscipleListAdapte
         holder.FullName.setText(Disciples.get(position).getFullName());
         holder.Email.setText(Disciples.get(position).getEmail());
         holder.Phone.setText("+" + Disciples.get(position).getPhone());
-        holder.btn_WinBuild.setText(Disciples.get(position).getStage() == Disciple.STAGE.SEND ? R.string.text_send : Disciples.get(position).getStage() == Disciple.STAGE.BUILD ? R.string.text_build : R.string.text_win);
+        holder.btnWbs.setText(Disciples.get(position).getStage() == Disciple.STAGE.SEND ? R.string.text_send : Disciples.get(position).getStage() == Disciple.STAGE.BUILD ? R.string.text_build : R.string.text_win);
         if (Disciples.get(position).getImagePath() != null) {
             File file = new File(Disciples.get(position).getImagePath());
             if (file.isFile()) {
@@ -111,7 +111,7 @@ public class DiscipleListAdapter extends RecyclerView.Adapter<DiscipleListAdapte
 
     public static class DataObjectHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         TextView FullName, Email, Phone;
-        Button btn_WinBuild;
+        Button btnWbs;
         ImageView DiscipleImage;
 
         public DataObjectHolder(View itemView) {
@@ -120,16 +120,16 @@ public class DiscipleListAdapter extends RecyclerView.Adapter<DiscipleListAdapte
             Email = (TextView) itemView.findViewById(R.id.txt_disciple_email);
             Phone = (TextView) itemView.findViewById(R.id.txt_disciple_phone);
             DiscipleImage = (ImageView) itemView.findViewById(R.id.img_disciple_image);
-            btn_WinBuild = (Button) itemView.findViewById(R.id.btn_win_build_send);
-            btn_WinBuild.setOnClickListener(this);
+            btnWbs = (Button) itemView.findViewById(R.id.btn_wbs);
+            btnWbs.setOnClickListener(this);
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-            if (v.getId() == R.id.btn_win_build_send) {
-                Intent intent = new Intent(myContext, WinBuildSendActivity.class);
+            if (v.getId() == R.id.btn_wbs) {
+                Intent intent = new Intent(myContext, WbsActivity.class);
                 Bundle b = new Bundle();
                 b.putString("DisciplePhone", Disciples.get(getAdapterPosition()).getPhone().toString());
                 intent.putExtras(b);

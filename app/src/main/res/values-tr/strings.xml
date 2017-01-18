@@ -52,7 +52,7 @@
     <string name="form_text_country">Ülke</string>
     <string name="form_text_phone">Telefon</string>
     <string name="form_text_phone_number">Telefon numarası</string>
-    <string name="text_win_build_send">Win | inşa | göndermek</string>
+    <string name="text_wbs">Win | inşa | göndermek</string>
     <string name="action_send_sms">SMS gönder</string>
     <string name="action_call_now">Şimdi ara</string>
     <string name="text_notes">Notlar</string>

@@ -23,7 +23,7 @@ import deeplife.gcme.com.deeplife.Models.Schedule;
 import deeplife.gcme.com.deeplife.Models.User;
 import deeplife.gcme.com.deeplife.News.News;
 import deeplife.gcme.com.deeplife.Testimony.Testimony;
-import deeplife.gcme.com.deeplife.WinBuildSend.WbsQuestion;
+import deeplife.gcme.com.deeplife.Wbs.WbsQuestion;
 
 import static deeplife.gcme.com.deeplife.DeepLife.getStrArrFromEnum;
 
@@ -1062,8 +1062,8 @@ public class Database {
     ////////////////////////////////
 
 
-    public WbsQuestion getWinBuildSendQuestionByID(int id) {
-        Log.d(TAG, "Get WinBuildQuestion by ID: ");
+    public WbsQuestion getWbsQuestionByID(int id) {
+        Log.d(TAG, "getWbsQuestionByID: " + id);
         String DB_Table = Table_QUESTION_LIST;
         try {
             Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
@@ -1088,15 +1088,15 @@ public class Database {
                 }
             }
         } catch (Exception e) {
-            Log.e(TAG, "Failed Get WinBuildQuestion by ID: " + e.toString());
+            Log.e(TAG, "Failed Get WbsQuestion by ID: " + e.toString());
             return null;
         }
         return null;
 
     }
 
-    public WbsQuestion getWinBuildSendQuestionBySerID(int id) {
-        Log.d(TAG, "Get WinBuildQuestion by Server ID: ");
+    public WbsQuestion getWbsQuestionBySerID(int id) {
+        Log.d(TAG, "getWbsQuestionBySerID: " + id);
         String DB_Table = Table_QUESTION_LIST;
         try {
             Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
@@ -1107,20 +1107,20 @@ public class Database {
                     int ser_id = Integer.valueOf(c.getString(c.getColumnIndex(QuestionListColumn.SERID.toString())));
                     int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(QuestionListColumn.ID.toString())));
                     if (ser_id == id) {
-                        WbsQuestion wbsQuestion = getWinBuildSendQuestionByID(cur_id);
+                        WbsQuestion wbsQuestion = getWbsQuestionByID(cur_id);
                         return wbsQuestion;
                     }
                 }
             }
         } catch (Exception e) {
-            Log.e(TAG, "Failed Get WinBuildQuestion by Server ID: " + e.toString());
+            Log.e(TAG, "Failed Get WbsQuestion by Server ID: " + e.toString());
             return null;
         }
         return null;
     }
 
-    public ArrayList<WbsQuestion> getWinBuildSendQuestionsByCategory(int categoryID) {
-        Log.d(TAG, "Get All WinBuildQuestion by Category id: " + categoryID);
+    public ArrayList<WbsQuestion> getWbsQuestionsByCategory(int categoryID) {
+        Log.d(TAG, "getWbsQuestionsByCategory: " + categoryID);
         String DB_Table = Table_QUESTION_LIST;
         ArrayList<WbsQuestion> found = new ArrayList<WbsQuestion>();
         try {
@@ -1131,27 +1131,27 @@ public class Database {
                 int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(QuestionListColumn.ID.toString())));
                 int cat_id = Integer.valueOf(c.getString(c.getColumnIndex(QuestionListColumn.CATEGORY.toString())));
                 if (cat_id == categoryID) {
-                    WbsQuestion wbsQuestion = getWinBuildSendQuestionByID(cur_id);
+                    WbsQuestion wbsQuestion = getWbsQuestionByID(cur_id);
                     if (wbsQuestion != null) {
                         found.add(wbsQuestion);
-                        Log.i(TAG, "Get All WinBuildQuestion: " + wbsQuestion.getID());
+                        Log.i(TAG, "Found WbsQuestion: " + wbsQuestion.getID());
                     }
 
                 }
             }
         } catch (Exception e) {
-            Log.e(TAG, "Failed Get getWinBuildSendQuestionsByCategory: " + e.toString());
+            Log.e(TAG, "Failed Get getWbsQuestionsByCategory: " + e.toString());
             return null;
         }
         return found;
     }
 
-    public ArrayList<WbsQuestion> getWinBuildSendQuestionsByCategorySerID(int SerID) {
-        Log.d(TAG, "Get All WinBuildQuestion by Category Parent ID: " + SerID);
+    public ArrayList<WbsQuestion> getWbsQuestionsByCategorySerID(int SerID) {
+        Log.d(TAG, "getWbsQuestionsByCategorySerID: " + SerID);
         ArrayList<WbsQuestion> found = new ArrayList<WbsQuestion>();
         if (SerID > 0) {
-            found = getWinBuildSendQuestionsByCategory(SerID);
-            Log.i(TAG, "Get All WinBuildSendQuestions: " + SerID);
+            found = getWbsQuestionsByCategory(SerID);
+            Log.i(TAG, "Found WbsQuestions with SerID: " + SerID);
             return found;
         }
         return found;
@@ -1187,7 +1187,7 @@ public class Database {
                 }
             }
         } catch (Exception e) {
-            Log.e(TAG, "Failed Get WinBuildQuestion by ID: " + e.toString());
+            Log.e(TAG, "Failed Get Answer by ID: " + e.toString());
             return null;
         }
         return null;

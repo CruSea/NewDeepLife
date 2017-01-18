@@ -52,7 +52,7 @@
     <string name="form_text_country">Страна</string>
     <string name="form_text_phone">Телефон</string>
     <string name="form_text_phone_number">Номер телефона</string>
-    <string name="text_win_build_send">Win | построить | послать</string>
+    <string name="text_wbs">Win | построить | послать</string>
     <string name="action_send_sms">Отправить смс</string>
     <string name="action_call_now">Позвони сейчас</string>
     <string name="text_notes">Примечания</string>

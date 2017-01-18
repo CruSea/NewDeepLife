@@ -22,7 +22,7 @@ import deeplife.gcme.com.deeplife.Models.User;
 import deeplife.gcme.com.deeplife.News.News;
 import deeplife.gcme.com.deeplife.Testimony.Testimony;
 import deeplife.gcme.com.deeplife.Testimony.TestimonyFragment;
-import deeplife.gcme.com.deeplife.WinBuildSend.WbsQuestion;
+import deeplife.gcme.com.deeplife.Wbs.WbsQuestion;
 
 /**
  * Created by bengeos on 12/16/16.
@@ -333,7 +333,7 @@ public class SyncDatabase {
     public static void Add_Questions(JSONArray json_questions) {
         try {
             if (json_questions.length() > 0) {
-                Log.d(TAG, "Adding New WinBuildSend Questions -> \n" + json_questions.toString());
+                Log.d(TAG, "Adding New WBS Questions -> \n" + json_questions.toString());
                 for (int i = 0; i < json_questions.length(); i++) {
                     JSONObject obj = json_questions.getJSONObject(i);
                     ContentValues cv = new ContentValues();
@@ -345,21 +345,21 @@ public class SyncDatabase {
                     cv.put(Database.QuestionListColumn.TYPE.toString(), obj.getString(ApiResponseKey.TYPE.toString()));
                     cv.put(Database.QuestionListColumn.COUNTRY.toString(), obj.getString(ApiResponseKey.COUNTRY_LC.toString()));
                     cv.put(Database.QuestionListColumn.CREATED.toString(), obj.getString(ApiResponseKey.CREATED.toString()));
-                    WbsQuestion wbsQuestion = DeepLife.myDATABASE.getWinBuildSendQuestionBySerID(Integer.valueOf(obj.getString(ApiResponseKey.ID.toString())));
+                    WbsQuestion wbsQuestion = DeepLife.myDATABASE.getWbsQuestionBySerID(Integer.valueOf(obj.getString(ApiResponseKey.ID.toString())));
                     if (wbsQuestion == null) {
                         long x = DeepLife.myDATABASE.insert(Database.Table_QUESTION_LIST, cv);
                         if (x > 0) {
-                            Log.d(TAG, "Successfully Added: WinBuildSend Questions Added -> \n" + cv.toString());
+                            Log.d(TAG, "Successfully Added: WBS Questions Added -> \n" + cv.toString());
                         } else {
-                            Log.e(TAG, "Error During Adding: WinBuildSend Questions -> \n" + cv.toString());
+                            Log.e(TAG, "Error During Adding: WBS Questions -> \n" + cv.toString());
                         }
                     } else {
                         long x = DeepLife.myDATABASE.update(Database.Table_QUESTION_LIST, cv, wbsQuestion.getID());
-                        Log.d(TAG, "Updated: WinBuildSend Questions Updated -> \n" + cv.toString());
+                        Log.d(TAG, "Updated: WBS Questions Updated -> \n" + cv.toString());
                         if (x > 0) {
-                            Log.d(TAG, "Successfully Updated: WinBuildSend Questions Updated -> \n" + cv.toString());
+                            Log.d(TAG, "Successfully Updated: WBS Questions Updated -> \n" + cv.toString());
                         } else {
-                            Log.e(TAG, "Error During Updating: WinBuildSend Questions -> \n" + cv.toString());
+                            Log.e(TAG, "Error During Updating: WBS Questions -> \n" + cv.toString());
                         }
                     }
                 }

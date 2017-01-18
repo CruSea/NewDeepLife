@@ -1,4 +1,4 @@
-package deeplife.gcme.com.deeplife.WinBuildSend;
+package deeplife.gcme.com.deeplife.Wbs;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -28,7 +28,7 @@ import deeplife.gcme.com.deeplife.SyncService.SyncService;
  * Created by bengeos on 12/19/16.
  */
 
-public class WinBuildSendItemsAdapter extends RecyclerView.Adapter<WinBuildSendItemsAdapter.DataObjectHolder> {
+public class WbsItemsAdapter extends RecyclerView.Adapter<WbsItemsAdapter.DataObjectHolder> {
     public static List<WbsQuestion> wbsQuestions;
     public static Context myContext;
     public static String DisciplePhone;
@@ -36,7 +36,7 @@ public class WinBuildSendItemsAdapter extends RecyclerView.Adapter<WinBuildSendI
     public static Disciple.STAGE BuildStage;
     private int count;
 
-    public WinBuildSendItemsAdapter(List<WbsQuestion> wbsQuestions, Context context, String disciplePhone, Disciple.STAGE buildStage) {
+    public WbsItemsAdapter(List<WbsQuestion> wbsQuestions, Context context, String disciplePhone, Disciple.STAGE buildStage) {
         this.wbsQuestions = wbsQuestions;
         this.count = wbsQuestions.size();
         mySyncDatabase = new SyncDatabase();
@@ -47,8 +47,8 @@ public class WinBuildSendItemsAdapter extends RecyclerView.Adapter<WinBuildSendI
 
     @Override
     public DataObjectHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.win_build_fragment_item1, parent, false);
-        WinBuildSendItemsAdapter.DataObjectHolder dataObjectHolder = new WinBuildSendItemsAdapter.DataObjectHolder(view);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.wbs_fragment_item1, parent, false);
+        WbsItemsAdapter.DataObjectHolder dataObjectHolder = new WbsItemsAdapter.DataObjectHolder(view);
         return dataObjectHolder;
     }
 
@@ -114,19 +114,19 @@ public class WinBuildSendItemsAdapter extends RecyclerView.Adapter<WinBuildSendI
             ReadNote2 = (TextView) itemView.findViewById(R.id.txt_readnote2);
             ReadNote2.setOnClickListener(this);
 
-            btnToggle = (ToggleButton) itemView.findViewById(R.id.tgl_winbuildsend_state);
+            btnToggle = (ToggleButton) itemView.findViewById(R.id.tgl_wbs_state);
             btnToggle.setOnClickListener(this);
 
-            Question1 = (TextView) itemView.findViewById(R.id.txt_winbuildsend_question1);
-            Question2 = (TextView) itemView.findViewById(R.id.txt_winbuildsend_question2);
-            Question3 = (TextView) itemView.findViewById(R.id.txt_winbuildsend_question3);
+            Question1 = (TextView) itemView.findViewById(R.id.txt_wbs_question1);
+            Question2 = (TextView) itemView.findViewById(R.id.txt_wbs_question2);
+            Question3 = (TextView) itemView.findViewById(R.id.txt_wbs_question3);
 
-            btnInc = (Button) itemView.findViewById(R.id.btn_winbuildsend_inc);
+            btnInc = (Button) itemView.findViewById(R.id.btn_wbs_inc);
             btnInc.setOnClickListener(this);
-            btnDec = (Button) itemView.findViewById(R.id.btn_winbuildsend_dec);
+            btnDec = (Button) itemView.findViewById(R.id.btn_wbs_dec);
             btnDec.setOnClickListener(this);
 
-            QuestionValue = (TextView) itemView.findViewById(R.id.txt_winbuildsend_value);
+            QuestionValue = (TextView) itemView.findViewById(R.id.txt_wbs_value);
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);
         }
@@ -138,7 +138,7 @@ public class WinBuildSendItemsAdapter extends RecyclerView.Adapter<WinBuildSendI
             answer.setQuestionID(wbsQuestions.get(getAdapterPosition()).getSerID());
             answer.setSerID(0);
             answer.setBuildStage(BuildStage);
-            if (v.getId() == R.id.btn_winbuildsend_inc) {
+            if (v.getId() == R.id.btn_wbs_inc) {
                 int value = Integer.valueOf(QuestionValue.getText().toString());
                 value = value + 1;
                 QuestionValue.setText("" + value);
@@ -152,7 +152,7 @@ public class WinBuildSendItemsAdapter extends RecyclerView.Adapter<WinBuildSendI
                     logs.setValue("" + x);
                     mySyncDatabase.AddLog(logs);
                 }
-            } else if (v.getId() == R.id.btn_winbuildsend_dec) {
+            } else if (v.getId() == R.id.btn_wbs_dec) {
                 int value = Integer.valueOf(QuestionValue.getText().toString());
                 if (value > 0) {
                     value = value - 1;
@@ -169,7 +169,7 @@ public class WinBuildSendItemsAdapter extends RecyclerView.Adapter<WinBuildSendI
                     }
                 }
 
-            } else if (v.getId() == R.id.tgl_winbuildsend_state) {
+            } else if (v.getId() == R.id.tgl_wbs_state) {
                 if (btnToggle.isChecked()) {
                     Toast.makeText(myContext, "Checked", Toast.LENGTH_LONG).show();
                     answer.setAnswer("YES");
@@ -201,7 +201,7 @@ public class WinBuildSendItemsAdapter extends RecyclerView.Adapter<WinBuildSendI
                 Toast.makeText(myContext, "Showing Dialog for Description", Toast.LENGTH_LONG).show();
             }
 
-            WinBuildSendActivity.checkStage();
+            WbsActivity.checkStage();
 
         }
 

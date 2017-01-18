@@ -1,4 +1,4 @@
-package deeplife.gcme.com.deeplife.WinBuildSend;
+package deeplife.gcme.com.deeplife.Wbs;
 
 import android.content.Context;
 import android.graphics.BitmapFactory;
@@ -33,7 +33,7 @@ import deeplife.gcme.com.deeplife.R;
  * Created by bengeos on 12/19/16.
  */
 
-public class WinBuildSendActivity extends AppCompatActivity {
+public class WbsActivity extends AppCompatActivity {
     private static RecyclerView myRecyclerView;
     private static RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -52,8 +52,8 @@ public class WinBuildSendActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.win_build_fragment_page);
-        toolbar = (Toolbar) findViewById(R.id.add_winbuild_toolbar);
+        setContentView(R.layout.wbs_fragment_page);
+        toolbar = (Toolbar) findViewById(R.id.add_wbs_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(R.string.toolbar_title_disciple_wbs);
@@ -67,11 +67,11 @@ public class WinBuildSendActivity extends AppCompatActivity {
         myDisciple = DeepLife.myDATABASE.getDiscipleByPhone(DisciplePhone);
         categories = new ArrayList<Category>();
 
-        DiscipleImage = (ImageView) findViewById(R.id.img_winbuildsend_image);
-        DiscipleName = (TextView) findViewById(R.id.txt_winbuildsend_fullname);
-        Btn_Win = (Button) findViewById(R.id.btn_winbuildsend_win);
-        Btn_Build = (Button) findViewById(R.id.btn_winbuildsend_build);
-        Btn_Send = (Button) findViewById(R.id.btn_winbuildsend_send);
+        DiscipleImage = (ImageView) findViewById(R.id.img_wbs_image);
+        DiscipleName = (TextView) findViewById(R.id.txt_wbs_fullname);
+        Btn_Win = (Button) findViewById(R.id.btn_wbs_win);
+        Btn_Build = (Button) findViewById(R.id.btn_wbs_build);
+        Btn_Send = (Button) findViewById(R.id.btn_wbs_send);
 
         L_Win = (LinearLayout) findViewById(R.id.lyt_win);
         L_Build = (LinearLayout) findViewById(R.id.lyt_build);
@@ -112,7 +112,7 @@ public class WinBuildSendActivity extends AppCompatActivity {
     }
 
     public void UpdateQuestionList(Disciple.STAGE stage) {
-        ArrayList<WbsQuestion> SendQuestions = DeepLife.myDATABASE.getWinBuildSendQuestionsByCategorySerID(stage.toServerId());
+        ArrayList<WbsQuestion> SendQuestions = DeepLife.myDATABASE.getWbsQuestionsByCategorySerID(stage.toServerId());
         if (SendQuestions != null) {
             List<Category> items = DeepLife.myDATABASE.getCategoriesByParentID(stage.toServerId());
             if (items.size() > 0) {
@@ -120,7 +120,7 @@ public class WinBuildSendActivity extends AppCompatActivity {
                     WbsQuestion question = new WbsQuestion();
                     question.setQuestion(category.getName());
                     question.setType(WbsQuestion.Type.FOLDER);
-                    ArrayList<WbsQuestion> FoundQuestion = DeepLife.myDATABASE.getWinBuildSendQuestionsByCategorySerID(category.getSerID());
+                    ArrayList<WbsQuestion> FoundQuestion = DeepLife.myDATABASE.getWbsQuestionsByCategorySerID(category.getSerID());
                     if (FoundQuestion.size() > 0) {
                         SendQuestions.add(question);
                     }
@@ -152,7 +152,7 @@ public class WinBuildSendActivity extends AppCompatActivity {
     }
 
     public static void UpdateGUIAdapter(List<WbsQuestion> datas) {
-        mAdapter = new WinBuildSendItemsAdapter(datas, myContext, DisciplePhone, buildStage);
+        mAdapter = new WbsItemsAdapter(datas, myContext, DisciplePhone, buildStage);
         myRecyclerView.setAdapter(mAdapter);
         try {
             DisciplesFragment.UpdateList();
@@ -163,65 +163,65 @@ public class WinBuildSendActivity extends AppCompatActivity {
 
     public static void checkStage() {
         Toast.makeText(myContext, "Checking for Stage change", Toast.LENGTH_LONG).show();
-        int WinBuilSend = 1;
-        ArrayList<WbsQuestion> Questions = DeepLife.myDATABASE.getWinBuildSendQuestionsByCategorySerID(1);
+        int wbs = 1;
+        ArrayList<WbsQuestion> Questions = DeepLife.myDATABASE.getWbsQuestionsByCategorySerID(1);
         for (WbsQuestion WinQuestioons : Questions) {
             if (WinQuestioons.getMandatory() != 0) {
                 Answer answer = DeepLife.myDATABASE.getAnswerByQuestionIDandDisciplePhone(WinQuestioons.getSerID(), DisciplePhone);
                 if (answer != null) {
                     if (answer.getAnswer().equals("NO") || answer.getAnswer().equals("0")) {
-                        WinBuilSend = 0;
+                        wbs = 0;
                         break;
                     }
                 } else {
-                    WinBuilSend = 0;
+                    wbs = 0;
                     break;
                 }
             }
         }
-        if (WinBuilSend == 0) {
+        if (wbs == 0) {
             buildStage = Disciple.STAGE.WIN;
         } else {
             buildStage = Disciple.STAGE.BUILD;
-            WinBuilSend = 1;
-            Questions = DeepLife.myDATABASE.getWinBuildSendQuestionsByCategorySerID(2);
+            wbs = 1;
+            Questions = DeepLife.myDATABASE.getWbsQuestionsByCategorySerID(2);
             for (WbsQuestion WinQuestioons : Questions) {
                 if (WinQuestioons.getMandatory() != 0) {
                     Answer answer = DeepLife.myDATABASE.getAnswerByQuestionIDandDisciplePhone(WinQuestioons.getSerID(), DisciplePhone);
                     if (answer != null) {
                         if (answer.getAnswer().equals("NO") || answer.getAnswer().equals("0")) {
-                            WinBuilSend = 0;
+                            wbs = 0;
                             break;
                         }
                     } else {
-                        WinBuilSend = 0;
+                        wbs = 0;
                         break;
                     }
                 }
             }
-            //if(WinBuilSend == 0 && Stage > 1){  // briggsm: took out check for Steve > 1, cuz it looks useless to me.
-            if (WinBuilSend == 0) {
+            //if(wbs == 0 && Stage > 1){  // briggsm: took out check for Steve > 1, cuz it looks useless to me.
+            if (wbs == 0) {
                 buildStage = Disciple.STAGE.BUILD;
             } else {
                 buildStage = Disciple.STAGE.SEND;
-                WinBuilSend = 1;
-                Questions = DeepLife.myDATABASE.getWinBuildSendQuestionsByCategorySerID(3);
+                wbs = 1;
+                Questions = DeepLife.myDATABASE.getWbsQuestionsByCategorySerID(3);
                 for (WbsQuestion WinQuestioons : Questions) {
                     if (WinQuestioons.getMandatory() != 0) {
                         Answer answer = DeepLife.myDATABASE.getAnswerByQuestionIDandDisciplePhone(WinQuestioons.getSerID(), DisciplePhone);
                         if (answer != null) {
                             if (answer.getAnswer().equals("NO") || answer.getAnswer().equals("0")) {
-                                WinBuilSend = 0;
+                                wbs = 0;
                                 break;
                             }
                         } else {
-                            WinBuilSend = 0;
+                            wbs = 0;
                             break;
                         }
                     }
                 }
-                //if(WinBuilSend == 0 && Stage > 2){ // briggsm: took out check for Steve > 1, cuz it looks useless to me.
-                if (WinBuilSend == 0) {
+                //if(wbs == 0 && Stage > 2){ // briggsm: took out check for Steve > 1, cuz it looks useless to me.
+                if (wbs == 0) {
                     buildStage = Disciple.STAGE.SEND;
                 } else {
                     buildStage = Disciple.STAGE.SEND;
