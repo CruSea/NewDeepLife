@@ -22,8 +22,6 @@ import deeplife.gcme.com.deeplife.R;
 import deeplife.gcme.com.deeplife.SyncService.SyncDatabase;
 import deeplife.gcme.com.deeplife.SyncService.SyncService;
 
-import static deeplife.gcme.com.deeplife.Wbs.WbsItemsAdapter.wbsQuestions;
-
 /**
  * Created by briggsm on 1/19/17.
  */
@@ -50,18 +48,26 @@ public class WbsQuestionChildViewHolder extends ChildViewHolder implements View.
         frameLayoutFolder = (FrameLayout) itemView.findViewById(R.id.wbs_frame_folder);
 
         ReadNoteYesNo = (TextView) itemView.findViewById(R.id.txt_wbs_yesno_readnote);
+        ReadNoteYesNo.setOnClickListener(this);
         ReadNoteNumeric = (TextView) itemView.findViewById(R.id.txt_wbs_numeric_readnote);
+        ReadNoteNumeric.setOnClickListener(this);
 
         btnToggleYesNo = (ToggleButton) itemView.findViewById(R.id.tgl_wbs_yesno_state);
+        btnToggleYesNo.setOnClickListener(this);
 
         QuestionYesNo = (TextView) itemView.findViewById(R.id.txt_wbs_yesno_question);
         QuestionNumeric = (TextView) itemView.findViewById(R.id.txt_wbs_numeric_question);
         FolderName = (TextView) itemView.findViewById(R.id.txt_wbs_folder_name);
 
         btnInc = (Button) itemView.findViewById(R.id.btn_wbs_numeric_inc);
+        btnInc.setOnClickListener(this);
         btnDec = (Button) itemView.findViewById(R.id.btn_wbs_numeric_dec);
+        btnDec.setOnClickListener(this);
 
         QuestionNumericValue = (TextView) itemView.findViewById(R.id.txt_wbs_numeric_value);
+
+        itemView.setOnClickListener(this);
+        itemView.setOnLongClickListener(this); // ??? briggsm: Why?
 
         mContext = context;
         mySyncDatabase = new SyncDatabase();
@@ -101,6 +107,7 @@ public class WbsQuestionChildViewHolder extends ChildViewHolder implements View.
         answer.setQuestionID(mWbsQuestion.getSerID());
         answer.setSerID(0);
         //answer.setBuildStage(buildStage); // briggsm: Why do we need "stage" for an answer??? If "really" needed, can't we just determine it from the "Question's ServerID" field in the Answer???
+        answer.setBuildStage(Disciple.STAGE.WIN); // briggsm: !!!!!!!!!!!!!!!!!! Just doing this for now, so it's not null (until we take it out of DB all together). !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         if (v.getId() == R.id.btn_wbs_numeric_inc) {
             int value = Integer.valueOf(QuestionNumericValue.getText().toString());
             value = value + 1;
@@ -160,8 +167,9 @@ public class WbsQuestionChildViewHolder extends ChildViewHolder implements View.
 
             }
         } else if (v.getId() == R.id.txt_wbs_yesno_readnote || v.getId() == R.id.txt_wbs_numeric_readnote) {
-            showDialog(wbsQuestions.get(getAdapterPosition()).getDescription());
-            Toast.makeText(mContext, "Showing Dialog for Description", Toast.LENGTH_LONG).show();
+            //showDialog(wbsQuestions.get(getAdapterPosition()).getDescription());
+            showDialog(mWbsQuestion.getDescription());
+            //Toast.makeText(mContext, "Showing Dialog for Description", Toast.LENGTH_SHORT).show();
         }
 
         WbsActivity.checkStage();

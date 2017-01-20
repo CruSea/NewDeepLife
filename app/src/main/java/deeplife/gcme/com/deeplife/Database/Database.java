@@ -1407,6 +1407,7 @@ public class Database {
 
         } catch (Exception e) {
             Log.e(TAG, "Failed UPDATE updateAnswer: " + e.toString());
+            e.printStackTrace();
             return 0;
         }
     }
@@ -1540,7 +1541,7 @@ public class Database {
                 for (int i = 0; i < c.getCount(); i++) {
                     c.moveToPosition(i);
                     String Log_Task = c.getString(c.getColumnIndex(LogsColumn.TASK.toString()));
-                    Log.d(TAG, "Comparing-> \n" + Logs.TASK.SEND_LOG + " | " + Log_Task);
+                    Log.d(TAG, "Comparing: " + Logs.TASK.SEND_LOG + " | " + Log_Task);
                     if (Logs.TASK.SEND_LOG.equalsName(Log_Task)) {
                         Log.d(TAG, "SendLogs Count:-> " + c.getCount());  // briggsm: think this is wrong. 'c' might have 10 rows, but only 2 of them SendLogs. This would return 10. Right?
                         Logs newLogs = new Logs();
@@ -1596,7 +1597,7 @@ public class Database {
                     String Log_Task = c.getString(c.getColumnIndex(LogsColumn.TASK.toString()));
                     String Log_Value = c.getString(c.getColumnIndex(LogsColumn.VALUE.toString()));
                     int Log_ID = Integer.valueOf(c.getString(c.getColumnIndex(LogsColumn.ID.toString())));
-                    Log.d(TAG, "Comparing-> \n" + Logs.TASK.SEND_DISCIPLES + " | " + Log_Task);
+                    Log.d(TAG, "Comparing: " + Logs.TASK.SEND_DISCIPLES + " | " + Log_Task);
                     if (Logs.TASK.SEND_DISCIPLES.equalsName(Log_Task)) {
                         Log.d(TAG, "SendDisciples Count:-> " + c.getCount());
                         Disciple sendDisciple = getDiscipleByPhone(Log_Value);
@@ -1628,7 +1629,7 @@ public class Database {
                     int Log_ID = Integer.valueOf(c.getString(c.getColumnIndex(LogsColumn.ID.toString())));
                     String Log_Task = c.getString(c.getColumnIndex(LogsColumn.TASK.toString()));
                     String Task_Value = c.getString(c.getColumnIndex(LogsColumn.VALUE.toString()));
-                    Log.d(TAG, "Comparing-> \n" + Logs.TASK.UPDATE_DISCIPLE + " | " + Log_Task);
+                    Log.d(TAG, "Comparing: " + Logs.TASK.UPDATE_DISCIPLE + " | " + Log_Task);
                     if (Logs.TASK.UPDATE_DISCIPLE.equalsName(Log_Task)) {
                         Log.i(TAG, "UpdateDisciples Count:-> " + c.getCount());
                         Disciple updateDisciple = getDiscipleByPhone(Task_Value);
@@ -1659,7 +1660,7 @@ public class Database {
                     String Log_Task = c.getString(c.getColumnIndex(LogsColumn.TASK.toString()));
                     int Task_Value = Integer.valueOf(c.getString(c.getColumnIndex(LogsColumn.VALUE.toString())));
 
-                    Log.d(TAG, "Comparing-> \n" + Logs.TASK.SEND_TESTIMONY + " | " + Log_Task);
+                    Log.d(TAG, "Comparing: " + Logs.TASK.SEND_TESTIMONY + " | " + Log_Task);
                     if (Logs.TASK.SEND_TESTIMONY.equals(Log_Task)) {
                         Log.d(TAG, "SendTestimony Count:-> " + c.getCount());
                         Testimony newTestimony = getTestimonyByID(Task_Value);
@@ -1690,8 +1691,8 @@ public class Database {
                     String Log_Task = c.getString(c.getColumnIndex(LogsColumn.TASK.toString()));
                     int Task_Value = Integer.valueOf(c.getString(c.getColumnIndex(LogsColumn.VALUE.toString())));
                     int Log_ID = Integer.valueOf(c.getString(c.getColumnIndex(LogsColumn.ID.toString())));
-                    Log.d(TAG, "Comparing-> \n" + Logs.TASK.SEND_TESTIMONY + " | " + Log_Task);
-                    if (Logs.TASK.SEND_TESTIMONY.equalsName(Log_Task)) {
+                    Log.d(TAG, "Comparing: " + Logs.TASK.SEND_ANSWERS + " | " + Log_Task);
+                    if (Logs.TASK.SEND_ANSWERS.equalsName(Log_Task)) {
                         Log.d(TAG, "SendAnswer Count:-> " + c.getCount());
                         Answer sendAnswer = getAnswerByID(Task_Value);
                         if (sendAnswer != null) {
@@ -1722,7 +1723,7 @@ public class Database {
                     String str = c.getString(c.getColumnIndex(LogsColumn.TASK.toString()));
                     String id = c.getString(c.getColumnIndex(LogsColumn.VALUE.toString()));
                     String ID = c.getString(c.getColumnIndex(LogsColumn.TYPE.toString()));
-                    Log.d(TAG, "SendSchedule Comparing-> \n" + Logs.TASK.SEND_SCHEDULE + " | " + str);
+                    Log.d(TAG, "SendSchedule Comparing: " + Logs.TASK.SEND_SCHEDULE + " | " + str);
                     if (Logs.TASK.SEND_SCHEDULE.equalsName(str)) {
 //                        Log.d(TAG, "SendSchedule Count:-> " + c.getCount());
 //                        Schedule newSchedule = getScheduleWithId(id);
@@ -1753,7 +1754,7 @@ public class Database {
                     String ID = c.getString(c.getColumnIndex(LogsColumn.ID.toString()));
                     String str = c.getString(c.getColumnIndex(LogsColumn.TASK.toString()));
                     String id = c.getString(c.getColumnIndex(LogsColumn.VALUE.toString()));
-                    Log.d(TAG, "Comparing-> \n" + Logs.TASK.UPDATE_SCHEDULES + " | " + str);
+                    Log.d(TAG, "Comparing: " + Logs.TASK.UPDATE_SCHEDULES + " | " + str);
                     if (Logs.TASK.UPDATE_SCHEDULES.equalsName(str)) {
 //                        Log.d(TAG, "Update Schedule Count:-> " + c.getCount());
 //                        Schedule newschedule = getScheduleWithId(id);
@@ -1783,7 +1784,7 @@ public class Database {
                     String str = c.getString(c.getColumnIndex(LogsColumn.TASK.toString()));
                     String id = c.getString(c.getColumnIndex(LogsColumn.VALUE.toString()));
                     String ID = c.getString(c.getColumnIndex(LogsColumn.ID.toString()));
-                    Log.d(TAG, "Comparing-> \n" + Logs.TASK.SEND_REPORT + " | " + str);
+                    Log.d(TAG, "Comparing: " + Logs.TASK.SEND_REPORT + " | " + str);
                     if (Logs.TASK.SEND_REPORT.equalsName(str)) {
                         Log.d(TAG, "SendDisciples Count:-> " + c.getCount());
 //                        ReportItem newReport = get_Report_by_id(id);
