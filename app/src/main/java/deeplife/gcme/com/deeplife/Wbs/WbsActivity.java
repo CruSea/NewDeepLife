@@ -112,25 +112,34 @@ public class WbsActivity extends AppCompatActivity {
     }
 
     public void UpdateQuestionList(Disciple.STAGE stage) {
-        ArrayList<WbsQuestion> SendQuestions = DeepLife.myDATABASE.getWbsQuestionsByCategorySerID(stage.toServerId());
-        if (SendQuestions != null) {
-            List<Category> items = DeepLife.myDATABASE.getCategoriesByParentID(stage.toServerId());
-            if (items.size() > 0) {
-                for (Category category : items) {
+
+        ArrayList<WbsQuestion> wbsQuestions = DeepLife.myDATABASE.getWbsParentQuestionsAndFoldersByStage(stage);
+
+
+
+
+//        ArrayList<WbsQuestion> wbsQuestions = DeepLife.myDATABASE.getWbsQuestionsByCategorySerID(stage.toServerId());
+        if (wbsQuestions != null) {
+            /*
+            List<Category> categories = DeepLife.myDATABASE.getCategoriesByParentID(stage.toServerId());
+            if (categories.size() > 0) {
+                for (Category category : categories) {
                     WbsQuestion question = new WbsQuestion();
                     question.setQuestion(category.getName());
                     question.setType(WbsQuestion.Type.FOLDER);
                     ArrayList<WbsQuestion> FoundQuestion = DeepLife.myDATABASE.getWbsQuestionsByCategorySerID(category.getSerID());
                     if (FoundQuestion.size() > 0) {
-                        SendQuestions.add(question);
+                        wbsQuestions.add(question);
                     }
                 }
             }
-            if (buildStage == Disciple.STAGE.WIN) {
+            */
+            //if (buildStage == Disciple.STAGE.WIN) {
+            if (stage == Disciple.STAGE.WIN) {
                 L_Win.setBackgroundColor(Color.rgb(254, 191, 10));
                 L_Build.setBackgroundColor(Color.rgb(00, 188, 216));
                 L_Send.setBackgroundColor(Color.rgb(00, 188, 216));
-            } else if (buildStage == Disciple.STAGE.BUILD) {
+            } else if (stage == Disciple.STAGE.BUILD) {
                 L_Win.setBackgroundColor(Color.rgb(00, 188, 216));
                 L_Build.setBackgroundColor(Color.rgb(254, 191, 10));
                 L_Send.setBackgroundColor(Color.rgb(00, 188, 216));
@@ -141,7 +150,7 @@ public class WbsActivity extends AppCompatActivity {
                 L_Send.setBackgroundColor(Color.rgb(254, 191, 10));
             }
 
-            UpdateGUIAdapter(SendQuestions);
+            UpdateGUIAdapter(wbsQuestions);
             Disciple disciple = DeepLife.myDATABASE.getDiscipleByPhone(DisciplePhone);
             if (disciple != null) {
                 disciple.setStage(buildStage);
@@ -151,18 +160,20 @@ public class WbsActivity extends AppCompatActivity {
         }
     }
 
-    public static void UpdateGUIAdapter(List<WbsQuestion> datas) {
-        mAdapter = new WbsItemsAdapter(datas, myContext, DisciplePhone, buildStage);
+    //public static void UpdateGUIAdapter(List<WbsQuestion> wbsQuestions) {
+    public void UpdateGUIAdapter(List<WbsQuestion> wbsQuestions) {
+        //mAdapter = new WbsItemsAdapter(wbsQuestions, myContext, DisciplePhone, buildStage);
+        mAdapter = new WbsQuestionAdapter(this, wbsQuestions, myDisciple);
         myRecyclerView.setAdapter(mAdapter);
         try {
-            DisciplesFragment.UpdateList();
+            DisciplesFragment.UpdateList(); // briggsm: Why do we need to update the list of disciples here???
         } catch (Exception e) {
 
         }
     }
 
     public static void checkStage() {
-        Toast.makeText(myContext, "Checking for Stage change", Toast.LENGTH_LONG).show();
+        Toast.makeText(myContext, "Checking for Stage change", Toast.LENGTH_SHORT).show();
         int wbs = 1;
         ArrayList<WbsQuestion> Questions = DeepLife.myDATABASE.getWbsQuestionsByCategorySerID(1);
         for (WbsQuestion WinQuestioons : Questions) {

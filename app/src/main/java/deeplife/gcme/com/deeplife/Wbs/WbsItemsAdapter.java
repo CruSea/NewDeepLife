@@ -28,7 +28,7 @@ import deeplife.gcme.com.deeplife.SyncService.SyncService;
  * Created by bengeos on 12/19/16.
  */
 
-public class WbsItemsAdapter extends RecyclerView.Adapter<WbsItemsAdapter.DataObjectHolder> {
+public class WbsItemsAdapter extends RecyclerView.Adapter<WbsItemsAdapter.WbsQuestionViewHolder> {
     public static List<WbsQuestion> wbsQuestions;
     public static Context myContext;
     public static String DisciplePhone;
@@ -46,14 +46,14 @@ public class WbsItemsAdapter extends RecyclerView.Adapter<WbsItemsAdapter.DataOb
     }
 
     @Override
-    public DataObjectHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public WbsQuestionViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.wbs_fragment_item1, parent, false);
-        WbsItemsAdapter.DataObjectHolder dataObjectHolder = new WbsItemsAdapter.DataObjectHolder(view);
-        return dataObjectHolder;
+        WbsQuestionViewHolder wbsQuestionViewHolder = new WbsQuestionViewHolder(view);
+        return wbsQuestionViewHolder;
     }
 
     @Override
-    public void onBindViewHolder(DataObjectHolder holder, int position) {
+    public void onBindViewHolder(WbsQuestionViewHolder holder, int position) {
         Answer answer = DeepLife.myDATABASE.getAnswerByQuestionIDandDisciplePhone(wbsQuestions.get(position).getSerID(), DisciplePhone);
         if (wbsQuestions.get(position).getType() == WbsQuestion.Type.YESNO) {
             holder.frameLayoutYesNo.setVisibility(View.VISIBLE);
@@ -95,7 +95,7 @@ public class WbsItemsAdapter extends RecyclerView.Adapter<WbsItemsAdapter.DataOb
         return wbsQuestions.size();
     }
 
-    public static class DataObjectHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
+    public static class WbsQuestionViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         TextView QuestionYesNo, QuestionNumeric, FolderName, Email, Phone;
         Button btnInc, btnDec;
         ToggleButton btnToggleYesNo;
@@ -103,7 +103,7 @@ public class WbsItemsAdapter extends RecyclerView.Adapter<WbsItemsAdapter.DataOb
         TextView QuestionNumericValue, ReadNoteYesNo, ReadNoteNumeric;
         FrameLayout frameLayoutYesNo, frameLayoutNumeric, frameLayoutFolder;
 
-        public DataObjectHolder(View itemView) {
+        public WbsQuestionViewHolder(View itemView) {
             super(itemView);
             frameLayoutYesNo = (FrameLayout) itemView.findViewById(R.id.wbs_frame_yesno_question);
             frameLayoutNumeric = (FrameLayout) itemView.findViewById(R.id.wbs_frame_numeric_question);
