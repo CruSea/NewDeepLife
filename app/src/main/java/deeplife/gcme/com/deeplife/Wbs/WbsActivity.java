@@ -10,12 +10,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -34,6 +34,8 @@ import deeplife.gcme.com.deeplife.R;
  */
 
 public class WbsActivity extends AppCompatActivity {
+    private static final String TAG = "WbsActivity";
+
     private static RecyclerView myRecyclerView;
     private static RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -78,7 +80,8 @@ public class WbsActivity extends AppCompatActivity {
         L_Send = (LinearLayout) findViewById(R.id.lyt_send);
 
         int sum = DeepLife.myDATABASE.count(Database.Table_QUESTION_LIST);
-        Toast.makeText(this, "There are: " + sum, Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, "There are: " + sum, Toast.LENGTH_LONG).show();
+        Log.i(TAG, "onCreate: There are: '" + sum + "' questions in DB.");
         checkStage();
         UpdateQuestionList(buildStage);
 
@@ -112,29 +115,8 @@ public class WbsActivity extends AppCompatActivity {
     }
 
     public void UpdateQuestionList(Disciple.STAGE stage) {
-
         ArrayList<WbsQuestion> wbsQuestions = DeepLife.myDATABASE.getWbsParentQuestionsAndFoldersByStage(stage);
-
-
-
-
-//        ArrayList<WbsQuestion> wbsQuestions = DeepLife.myDATABASE.getWbsQuestionsByCategorySerID(stage.toServerId());
         if (wbsQuestions != null) {
-            /*
-            List<Category> categories = DeepLife.myDATABASE.getCategoriesByParentID(stage.toServerId());
-            if (categories.size() > 0) {
-                for (Category category : categories) {
-                    WbsQuestion question = new WbsQuestion();
-                    question.setQuestion(category.getName());
-                    question.setType(WbsQuestion.Type.FOLDER);
-                    ArrayList<WbsQuestion> FoundQuestion = DeepLife.myDATABASE.getWbsQuestionsByCategorySerID(category.getSerID());
-                    if (FoundQuestion.size() > 0) {
-                        wbsQuestions.add(question);
-                    }
-                }
-            }
-            */
-            //if (buildStage == Disciple.STAGE.WIN) {
             if (stage == Disciple.STAGE.WIN) {
                 L_Win.setBackgroundColor(Color.rgb(254, 191, 10));
                 L_Build.setBackgroundColor(Color.rgb(00, 188, 216));
@@ -160,9 +142,7 @@ public class WbsActivity extends AppCompatActivity {
         }
     }
 
-    //public static void UpdateGUIAdapter(List<WbsQuestion> wbsQuestions) {
     public void UpdateGUIAdapter(List<WbsQuestion> wbsQuestions) {
-        //mAdapter = new WbsItemsAdapter(wbsQuestions, myContext, DisciplePhone, buildStage);
         mAdapter = new WbsQuestionAdapter(this, wbsQuestions, myDisciple);
         myRecyclerView.setAdapter(mAdapter);
         try {
@@ -173,12 +153,12 @@ public class WbsActivity extends AppCompatActivity {
     }
 
     public static void checkStage() {
-        Toast.makeText(myContext, "Checking for Stage change", Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "checkStage: Checking for Stage change");
         int wbs = 1;
-        ArrayList<WbsQuestion> Questions = DeepLife.myDATABASE.getWbsQuestionsByCategorySerID(1);
-        for (WbsQuestion WinQuestioons : Questions) {
-            if (WinQuestioons.getMandatory() != 0) {
-                Answer answer = DeepLife.myDATABASE.getAnswerByQuestionIDandDisciplePhone(WinQuestioons.getSerID(), DisciplePhone);
+        ArrayList<WbsQuestion> wbsQuestions = DeepLife.myDATABASE.getWbsParentQuestionsAndFoldersByStage(Disciple.STAGE.WIN);
+        for (WbsQuestion wbsQuestion : wbsQuestions) {
+            if (wbsQuestion.getMandatory() != 0) {
+                Answer answer = DeepLife.myDATABASE.getAnswerByQuestionIDandDisciplePhone(wbsQuestion.getSerID(), DisciplePhone);
                 if (answer != null) {
                     if (answer.getAnswer().equals("NO") || answer.getAnswer().equals("0")) {
                         wbs = 0;
@@ -195,10 +175,10 @@ public class WbsActivity extends AppCompatActivity {
         } else {
             buildStage = Disciple.STAGE.BUILD;
             wbs = 1;
-            Questions = DeepLife.myDATABASE.getWbsQuestionsByCategorySerID(2);
-            for (WbsQuestion WinQuestioons : Questions) {
-                if (WinQuestioons.getMandatory() != 0) {
-                    Answer answer = DeepLife.myDATABASE.getAnswerByQuestionIDandDisciplePhone(WinQuestioons.getSerID(), DisciplePhone);
+            wbsQuestions = DeepLife.myDATABASE.getWbsParentQuestionsAndFoldersByStage(Disciple.STAGE.BUILD);
+            for (WbsQuestion wbsQuestion : wbsQuestions) {
+                if (wbsQuestion.getMandatory() != 0) {
+                    Answer answer = DeepLife.myDATABASE.getAnswerByQuestionIDandDisciplePhone(wbsQuestion.getSerID(), DisciplePhone);
                     if (answer != null) {
                         if (answer.getAnswer().equals("NO") || answer.getAnswer().equals("0")) {
                             wbs = 0;
@@ -216,10 +196,10 @@ public class WbsActivity extends AppCompatActivity {
             } else {
                 buildStage = Disciple.STAGE.SEND;
                 wbs = 1;
-                Questions = DeepLife.myDATABASE.getWbsQuestionsByCategorySerID(3);
-                for (WbsQuestion WinQuestioons : Questions) {
-                    if (WinQuestioons.getMandatory() != 0) {
-                        Answer answer = DeepLife.myDATABASE.getAnswerByQuestionIDandDisciplePhone(WinQuestioons.getSerID(), DisciplePhone);
+                wbsQuestions = DeepLife.myDATABASE.getWbsParentQuestionsAndFoldersByStage(Disciple.STAGE.SEND);
+                for (WbsQuestion wbsQuestion : wbsQuestions) {
+                    if (wbsQuestion.getMandatory() != 0) {
+                        Answer answer = DeepLife.myDATABASE.getAnswerByQuestionIDandDisciplePhone(wbsQuestion.getSerID(), DisciplePhone);
                         if (answer != null) {
                             if (answer.getAnswer().equals("NO") || answer.getAnswer().equals("0")) {
                                 wbs = 0;

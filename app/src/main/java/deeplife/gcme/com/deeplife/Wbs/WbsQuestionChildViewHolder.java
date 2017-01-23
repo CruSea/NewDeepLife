@@ -4,12 +4,12 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.bignerdranch.expandablerecyclerview.ChildViewHolder;
@@ -27,6 +27,7 @@ import deeplife.gcme.com.deeplife.SyncService.SyncService;
  */
 
 public class WbsQuestionChildViewHolder extends ChildViewHolder implements View.OnClickListener, View.OnLongClickListener {
+    private static final String TAG = "WbsQuestionChildViewHol";
 
     TextView QuestionYesNo, QuestionNumeric, FolderName, Email, Phone;
     Button btnInc, btnDec;
@@ -101,12 +102,9 @@ public class WbsQuestionChildViewHolder extends ChildViewHolder implements View.
     @Override
     public void onClick(View v) {
         Answer answer = new Answer();
-        //answer.setDisciplePhone(disciplePhone);
         answer.setDisciplePhone(mDisciple.getPhone());
-        //answer.setQuestionID(wbsQuestions.get(getAdapterPosition()).getSerID());
         answer.setQuestionID(mWbsQuestion.getSerID());
         answer.setSerID(0);
-        //answer.setBuildStage(buildStage); // briggsm: Why do we need "stage" for an answer??? If "really" needed, can't we just determine it from the "Question's ServerID" field in the Answer???
         answer.setBuildStage(Disciple.STAGE.WIN); // briggsm: !!!!!!!!!!!!!!!!!! Just doing this for now, so it's not null (until we take it out of DB all together). !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         if (v.getId() == R.id.btn_wbs_numeric_inc) {
             int value = Integer.valueOf(QuestionNumericValue.getText().toString());
@@ -141,7 +139,7 @@ public class WbsQuestionChildViewHolder extends ChildViewHolder implements View.
 
         } else if (v.getId() == R.id.tgl_wbs_yesno_state) {
             if (btnToggleYesNo.isChecked()) {
-                Toast.makeText(mContext, "Checked", Toast.LENGTH_LONG).show();
+                Log.d(TAG, "onClick: Checked");
                 answer.setAnswer("YES");
                 long x = DeepLife.myDATABASE.add_updateAnswer(answer);
                 if (x > 0) {
@@ -153,7 +151,7 @@ public class WbsQuestionChildViewHolder extends ChildViewHolder implements View.
                     mySyncDatabase.AddLog(logs);
                 }
             } else {
-                Toast.makeText(mContext, "Not Checked", Toast.LENGTH_LONG).show();
+                Log.d(TAG, "onClick: Un-checked");
                 answer.setAnswer("NO");
                 long x = DeepLife.myDATABASE.add_updateAnswer(answer);
                 if (x > 0) {
@@ -167,9 +165,7 @@ public class WbsQuestionChildViewHolder extends ChildViewHolder implements View.
 
             }
         } else if (v.getId() == R.id.txt_wbs_yesno_readnote || v.getId() == R.id.txt_wbs_numeric_readnote) {
-            //showDialog(wbsQuestions.get(getAdapterPosition()).getDescription());
             showDialog(mWbsQuestion.getDescription());
-            //Toast.makeText(mContext, "Showing Dialog for Description", Toast.LENGTH_SHORT).show();
         }
 
         WbsActivity.checkStage();

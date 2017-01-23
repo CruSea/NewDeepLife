@@ -27,16 +27,13 @@ public class WbsQuestionAdapter extends ExpandableRecyclerAdapter<WbsQuestion, W
     private LayoutInflater mInflater;
     private List<WbsQuestion> mWbsParentQuestions;
     private Disciple mDisciple;
-    //private Disciple.STAGE mStage;
 
-    //public WbsQuestionAdapter(Context context, @NonNull List<WbsQuestion> wbsParentQuestions, Disciple disciple, Disciple.STAGE stage) {
     public WbsQuestionAdapter(Context context, @NonNull List<WbsQuestion> wbsParentQuestions, Disciple disciple) {
         super(wbsParentQuestions);
         mContext = context;
         mWbsParentQuestions = wbsParentQuestions;
         mInflater = LayoutInflater.from(context);
         mDisciple = disciple;
-        //mStage = stage;
     }
 
     @UiThread
@@ -44,9 +41,7 @@ public class WbsQuestionAdapter extends ExpandableRecyclerAdapter<WbsQuestion, W
     @Override
     public WbsQuestionParentViewHolder onCreateParentViewHolder(@NonNull ViewGroup parentViewGroup, int viewType) {
         View wbsQuestionParent;
-
         wbsQuestionParent = mInflater.inflate(R.layout.wbs_fragment_item1, parentViewGroup, false);
-
         return new WbsQuestionParentViewHolder(mContext, wbsQuestionParent, mDisciple);
     }
 
@@ -58,10 +53,7 @@ public class WbsQuestionAdapter extends ExpandableRecyclerAdapter<WbsQuestion, W
 
         wbsQuestionChild = mInflater.inflate(R.layout.wbs_fragment_item1, childViewGroup, false);
         wbsQuestionChild.setPadding(20,0,0,0);  // This is in pixels.
-        //wbsQuestionChild.setBackgroundColor(Color.LTGRAY);
-
         CardView cardView = (CardView) wbsQuestionChild.findViewById(R.id.card_view);
-        //cardView.setBackgroundColor();
         cardView.setCardBackgroundColor(Color.LTGRAY);
 
         return new WbsQuestionChildViewHolder(mContext, wbsQuestionChild, mDisciple);
