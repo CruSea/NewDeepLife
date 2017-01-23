@@ -816,7 +816,7 @@ public class Database {
 
 
     public Disciple getDiscipleBySerID(int id) {
-        Log.d(TAG, "Get Disciple by Server ID: ");
+        Log.d(TAG, "Get Disciple by Server ID: " + id);
         String DB_Table = Table_DISCIPLES;
         try {
             Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
@@ -958,7 +958,7 @@ public class Database {
     }
 
     public Category getCategoryBySerID(int id) {
-        Log.d(TAG, "Get Category by Server ID: ");
+        Log.d(TAG, "Get Category by Server ID: " + id);
         String DB_Table = Table_CATEGORIES;
         try {
             Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
@@ -982,7 +982,7 @@ public class Database {
     }
 
     public Category getCategoryByParentID(int id) {
-        Log.d(TAG, "Get Category by Server ID: ");
+        Log.d(TAG, "Get Category by Parent ID: " + id);
         String DB_Table = Table_CATEGORIES;
         try {
             Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
@@ -1006,7 +1006,7 @@ public class Database {
     }
 
     public List<Category> getCategoriesByParentID(int id) {
-        Log.d(TAG, "Get Category by Server ID: ");
+        Log.d(TAG, "Get Categories by Parent ID: " + id);
         String DB_Table = Table_CATEGORIES;
         List<Category> found = new ArrayList<Category>();
         try {
@@ -1228,7 +1228,7 @@ public class Database {
 
 
     public Answer getAnswerByID(int id) {
-        Log.d(TAG, "Get Answer by ID: ");
+        Log.d(TAG, "Get Answer by ID: " + id);
         String DB_Table = Table_QUESTION_ANSWER;
         try {
             Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
@@ -1257,8 +1257,8 @@ public class Database {
     }
 
     public Answer getAnswerBySerID(int id) {
-        // briggsm:  This function seems to be implemented wrong - it's not even looking at "SerID".
-        Log.d(TAG, "Get getAnswerBySerID by ServerID: ");
+        // briggsm:  This function seems to be implemented wrong - it's not even looking at "SerID". I'm fixing it.
+        Log.d(TAG, "Get getAnswerBySerID by ServerID: " + id);
         String DB_Table = Table_QUESTION_ANSWER;
         try {
             Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
@@ -1266,9 +1266,9 @@ public class Database {
                 c.moveToFirst();
                 for (int i = 0; i < c.getCount(); i++) {
                     c.moveToPosition(i);
-                    int qst_id = Integer.valueOf(c.getString(c.getColumnIndex(QuestionAnswerColumn.QUESTION_ID.toString())));
+                    int ser_id = Integer.valueOf(c.getString(c.getColumnIndex(QuestionAnswerColumn.SERID.toString())));
                     int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(QuestionAnswerColumn.ID.toString())));
-                    if (qst_id == id) {
+                    if (ser_id == id) {
                         Answer answer = getAnswerByID(cur_id);
                         return answer;
                     }
@@ -1282,7 +1282,7 @@ public class Database {
     }
 
     public Answer getAnswerByQuestionID(int id) {
-        Log.d(TAG, "Get getAnswerByQuestionID by QuestionID: ");
+        Log.d(TAG, "Get getAnswerByQuestionID by QuestionID: " + id);
         String DB_Table = Table_QUESTION_ANSWER;
         try {
             Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
@@ -1426,7 +1426,7 @@ public class Database {
     }
 
     public Country getCountryBySerID(int id) {
-        Log.d(TAG, "Get getCountryBySerID by ServerID: ");
+        Log.d(TAG, "Get getCountryBySerID by ServerID: " + id);
         String DB_Table = Table_COUNTRY;
         try {
             Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
@@ -1813,7 +1813,7 @@ public class Database {
     /////////////////////////////////
 
     public LearningTool getLearningToolByID(int id) {
-        Log.d(TAG, "Get getLearningToolByID: ");
+        Log.d(TAG, "Get getLearningToolByID: " + id);
         String DB_Table = Table_LEARNING;
         try {
             Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
@@ -1843,7 +1843,7 @@ public class Database {
     }
 
     public LearningTool getLearningToolsBySerID(int id) {
-        Log.d(TAG, "Get getLearningToolsBySerID by ServerID: ");
+        Log.d(TAG, "Get getLearningToolsBySerID by ServerID: " + id);
         String DB_Table = Table_LEARNING;
         try {
             Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);

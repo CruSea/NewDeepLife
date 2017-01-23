@@ -26,7 +26,7 @@ import deeplife.gcme.com.deeplife.R;
 
 public class TestimonyFragment extends Fragment {
     private static final String TAG = "TestimonyFragment";
-    
+
     public static RecyclerView myRecyclerView;
     public static RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
