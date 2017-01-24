@@ -18,7 +18,7 @@ public class GetstartedFragment2 extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.step_two_message,null);
+        View view = inflater.inflate(R.layout.step_two_message, null);
         return view;
     }
 }

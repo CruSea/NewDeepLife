@@ -4,8 +4,8 @@ package deeplife.gcme.com.deeplife.Models;
  * Created by Roger on 3/27/16.
  */
 public class User {
-    private int ID,SerID;
-    private String User_Name,User_Pass,Full_Name,User_Email,User_Phone,User_Country,User_Picture,User_Gender,User_Favorite_Scripture;
+    private int ID, SerID;
+    private String User_Name, User_Pass, Full_Name, User_Email, User_Phone, User_Country, User_Picture, User_Gender, User_Favorite_Scripture;
 
     public int getID() {
         return ID;

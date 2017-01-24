@@ -11,6 +11,7 @@ import android.view.MotionEvent;
 
 public class ViewPagerAdapter extends ViewPager {
     private boolean isSwipeable;
+
     public ViewPagerAdapter(Context context) {
         super(context);
         this.isSwipeable = true;

@@ -15,21 +15,24 @@
         card_view:cardCornerRadius="0dp"
         card_view:cardElevation="10dp"
         card_view:contentPadding="10dp">
+
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <LinearLayout
                 android:layout_width="100dp"
                 android:layout_height="2dp"
                 android:layout_marginTop="10dp"
-                android:background="@color/bg_logins">
-            </LinearLayout>
+                android:background="@color/bg_logins"></LinearLayout>
+
             <LinearLayout
                 android:layout_width="2dp"
                 android:layout_height="70dp"
                 android:layout_marginLeft="10dp"
-                android:background="@color/bg_logins">
-            </LinearLayout>
+                android:layout_marginStart="10dp"
+                android:background="@color/bg_logins"></LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -37,11 +40,13 @@
                 android:weightSum="6"
                 android:padding="10sp"
                 android:orientation="horizontal">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:layout_weight="2">
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -51,12 +56,14 @@
                         android:id="@+id/txt_question"
                         tools:text="Number of People that you tell about jesus christ" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:gravity="center_horizontal|center_vertical"
                     android:layout_weight="4">
+
                     <Switch
                         android:layout_width="match_parent"
                         android:thumb="@drawable/switch_tump1"

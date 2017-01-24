@@ -44,10 +44,10 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.DataOb
         holder.Title.setText(Newses.get(position).getTitle());
         holder.Content.setText(Newses.get(position).getContent());
         holder.PubDate.setText(Newses.get(position).getPubDate());
-        String filename = "news"+Newses.get(position).getSerID()+".png";
-        File myFile = myFileManager.getFileAt("News",filename);
-        if(myFile.isFile()){
-           holder.NewsImage.setImageBitmap(BitmapFactory.decodeFile(myFile.getAbsolutePath()));
+        String filename = "news" + Newses.get(position).getSerID() + ".png";
+        File myFile = myFileManager.getFileAt("News", filename);
+        if (myFile.isFile()) {
+            holder.NewsImage.setImageBitmap(BitmapFactory.decodeFile(myFile.getAbsolutePath()));
         }
     }
 
@@ -57,8 +57,9 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.DataOb
     }
 
     public static class DataObjectHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
-        TextView Title,Content,PubDate;
+        TextView Title, Content, PubDate;
         ImageView NewsImage;
+
         public DataObjectHolder(View itemView) {
             super(itemView);
             Title = (TextView) itemView.findViewById(R.id.txt_newsfeed_title);

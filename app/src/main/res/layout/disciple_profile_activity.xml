@@ -2,13 +2,13 @@
 
 
 <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:id="@+id/drawer_layout"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:fitsSystemWindows="true"
-tools:openDrawer="start">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:openDrawer="start">
 
     <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -69,21 +69,26 @@ tools:openDrawer="start">
                             android:background="@drawable/cover_page"
                             android:scaleType="centerCrop" />
                     </FrameLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:orientation="horizontal"
                         android:gravity="center_horizontal"
                         android:layout_height="wrap_content">
+
                         <ImageView
                             android:layout_width="80dp"
                             android:layout_height="80dp"
                             android:layout_marginRight="50dp"
-                            android:background="@drawable/phone_message_icon"/>
+                            android:layout_marginEnd="50dp"
+                            android:background="@drawable/phone_message_icon" />
+
                         <ImageView
                             android:layout_width="80dp"
                             android:layout_height="80dp"
                             android:layout_marginLeft="50dp"
-                            android:background="@drawable/phone_call_icon"/>
+                            android:layout_marginStart="50dp"
+                            android:background="@drawable/phone_call_icon" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -91,6 +96,7 @@ tools:openDrawer="start">
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:paddingLeft="10dp"
+                    android:paddingStart="10dp"
                     android:orientation="vertical">
 
                     <LinearLayout
@@ -104,6 +110,7 @@ tools:openDrawer="start">
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="12dp"
+                            android:layout_marginStart="12dp"
                             android:id="@+id/disciple_btn_edit_profile_cover" />
 
 
@@ -115,11 +122,13 @@ tools:openDrawer="start">
                         app:cardElevation="2dp"
                         android:layout_marginBottom="5dp"
                         app:cardUseCompatPadding="true">
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
                             android:orientation="horizontal">
+
                             <TextView
                                 android:layout_width="150dp"
                                 android:layout_height="wrap_content"
@@ -127,7 +136,9 @@ tools:openDrawer="start">
                                 android:textStyle="bold"
                                 android:textSize="20sp"
                                 android:layout_marginLeft="10dp"
-                                android:text="@string/form_text_full_name"/>
+                                android:layout_marginStart="10dp"
+                                android:text="@string/form_text_full_name" />
+
                             <EditText
                                 android:id="@+id/txt_disciple_profile_fullname"
                                 android:layout_width="match_parent"
@@ -141,17 +152,20 @@ tools:openDrawer="start">
                                 android:textColorHint="@color/input_login" />
                         </LinearLayout>
                     </android.support.v7.widget.CardView>
+
                     <android.support.v7.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:cardElevation="2dp"
                         android:layout_marginBottom="5dp"
                         app:cardUseCompatPadding="true">
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
                             android:orientation="horizontal">
+
                             <TextView
                                 android:layout_width="150dp"
                                 android:layout_height="wrap_content"
@@ -159,7 +173,9 @@ tools:openDrawer="start">
                                 android:textStyle="bold"
                                 android:textSize="20sp"
                                 android:layout_marginLeft="10dp"
-                                android:text="@string/form_text_gender"/>
+                                android:layout_marginStart="10dp"
+                                android:text="@string/form_text_gender" />
+
                             <EditText
                                 android:id="@+id/txt_disciple_profile_gender"
                                 android:layout_width="match_parent"
@@ -173,17 +189,20 @@ tools:openDrawer="start">
                                 android:textColorHint="@color/input_login" />
                         </LinearLayout>
                     </android.support.v7.widget.CardView>
+
                     <android.support.v7.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:cardElevation="2dp"
                         android:layout_marginBottom="5dp"
                         app:cardUseCompatPadding="true">
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
                             android:orientation="horizontal">
+
                             <TextView
                                 android:layout_width="150dp"
                                 android:layout_height="wrap_content"
@@ -191,7 +210,9 @@ tools:openDrawer="start">
                                 android:textStyle="bold"
                                 android:textSize="20sp"
                                 android:layout_marginLeft="10dp"
-                                android:text="@string/form_text_email"/>
+                                android:layout_marginStart="10dp"
+                                android:text="@string/form_text_email" />
+
                             <EditText
                                 android:id="@+id/txt_disciple_profile_email"
                                 android:layout_width="match_parent"
@@ -205,17 +226,20 @@ tools:openDrawer="start">
                                 android:textColorHint="@color/input_login" />
                         </LinearLayout>
                     </android.support.v7.widget.CardView>
+
                     <android.support.v7.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:cardElevation="2dp"
                         android:layout_marginBottom="5dp"
                         app:cardUseCompatPadding="true">
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
                             android:orientation="horizontal">
+
                             <TextView
                                 android:layout_width="150dp"
                                 android:layout_height="wrap_content"
@@ -223,7 +247,9 @@ tools:openDrawer="start">
                                 android:textStyle="bold"
                                 android:textSize="20sp"
                                 android:layout_marginLeft="10dp"
-                                android:text="@string/form_text_country"/>
+                                android:layout_marginStart="10dp"
+                                android:text="@string/form_text_country" />
+
                             <EditText
                                 android:id="@+id/txt_disciple_profile_country"
                                 android:layout_width="match_parent"
@@ -237,17 +263,20 @@ tools:openDrawer="start">
                                 android:textColorHint="@color/input_login" />
                         </LinearLayout>
                     </android.support.v7.widget.CardView>
+
                     <android.support.v7.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:cardElevation="2dp"
                         android:layout_marginBottom="5dp"
                         app:cardUseCompatPadding="true">
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
                             android:orientation="horizontal">
+
                             <TextView
                                 android:layout_width="150dp"
                                 android:layout_height="wrap_content"
@@ -255,7 +284,9 @@ tools:openDrawer="start">
                                 android:textStyle="bold"
                                 android:textSize="20sp"
                                 android:layout_marginLeft="10dp"
-                                android:text="@string/form_text_phone"/>
+                                android:layout_marginStart="10dp"
+                                android:text="@string/form_text_phone" />
+
                             <EditText
                                 android:id="@+id/txt_disciple_profile_phone"
                                 android:layout_width="match_parent"
@@ -274,8 +305,6 @@ tools:openDrawer="start">
             </LinearLayout>
         </android.support.v4.widget.NestedScrollView>
     </android.support.design.widget.CoordinatorLayout>
-
-
 
 
 </android.support.v4.widget.DrawerLayout>

@@ -21,8 +21,9 @@ import deeplife.gcme.com.deeplife.R;
 
 public class HomeFragment extends Fragment {
     private List<Disciple> myDisciples;
-    private TextView DiscipleTree,Win,Build,Send;
-    private int DisCount,WinCount,BuildCount,SendCount;
+    private TextView DiscipleTree, Win, Build, Send;
+    private int DisCount, WinCount, BuildCount, SendCount;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,7 +33,7 @@ public class HomeFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.home_fragment_page,container,false);
+        View view = inflater.inflate(R.layout.home_fragment_page, container, false);
         DiscipleTree = (TextView) view.findViewById(R.id.txt_home_disciple);
         Win = (TextView) view.findViewById(R.id.txt_home_win);
         Build = (TextView) view.findViewById(R.id.txt_home_build);
@@ -43,13 +44,13 @@ public class HomeFragment extends Fragment {
         DisCount = 0;
 
         DiscipleTreeCount discipleTreeCount = DeepLife.myDATABASE.getDiscipleTreeCount();
-        if(discipleTreeCount != null){
+        if (discipleTreeCount != null) {
             DisCount = discipleTreeCount.getCount();
         }
         myDisciples = DeepLife.myDATABASE.getAllDisciples();
-        if(myDisciples != null){
+        if (myDisciples != null) {
 
-            for(Disciple dis : myDisciples){
+            for (Disciple dis : myDisciples) {
                 if (dis.getStage() == Disciple.STAGE.WIN) {
                     WinCount += 1;
                 } else if (dis.getStage() == Disciple.STAGE.BUILD) {
@@ -59,10 +60,10 @@ public class HomeFragment extends Fragment {
                 }
             }
         }
-        Win.setText(""+WinCount);
-        Build.setText(""+BuildCount);
-        Send.setText(""+SendCount);
-        DiscipleTree.setText(""+DisCount);
+        Win.setText("" + WinCount);
+        Build.setText("" + BuildCount);
+        Send.setText("" + SendCount);
+        DiscipleTree.setText("" + DisCount);
         return view;
     }
 }

@@ -37,13 +37,13 @@ public class NewsFragment extends Fragment {
         super.onCreate(savedInstanceState);
         myFileManager = new FileManager(getContext());
         List<News> myNews = DeepLife.myDATABASE.getAllNews();
-        Log.i(TAG,"There are "+myNews.size()+" News");
-        for(News news:myNews){
-            String filename = "news"+news.getSerID()+".png";
-            if(!myFileManager.getFileAt("News",filename).isFile()){
-                if(DeepLife.ImageDownloadCount < 5){
-                    FileDownloader d1 = new FileDownloader(getContext(),DeepLife.API_URL+news.getImageURL(),"News",filename);
-                    Log.i(TAG,"Downloading Image "+DeepLife.DEEP_URL+news.getImageURL());
+        Log.i(TAG, "There are " + myNews.size() + " News");
+        for (News news : myNews) {
+            String filename = "news" + news.getSerID() + ".png";
+            if (!myFileManager.getFileAt("News", filename).isFile()) {
+                if (DeepLife.ImageDownloadCount < 5) {
+                    FileDownloader d1 = new FileDownloader(getContext(), DeepLife.API_URL + news.getImageURL(), "News", filename);
+                    Log.i(TAG, "Downloading Image " + DeepLife.DEEP_URL + news.getImageURL());
                     d1.execute();
                 }
             }
@@ -53,13 +53,13 @@ public class NewsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.news_fragment_page,container,false);
+        View view = inflater.inflate(R.layout.news_fragment_page, container, false);
         myRecyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
         mLayoutManager = new LinearLayoutManager(getActivity());
         myRecyclerView.setLayoutManager(mLayoutManager);
         myContext = getActivity();
         ArrayList<News> items = DeepLife.myDATABASE.getAllNews();
-        mAdapter = new NewsListAdapter(items,getContext());
+        mAdapter = new NewsListAdapter(items, getContext());
         myRecyclerView.setAdapter(mAdapter);
         return view;
     }

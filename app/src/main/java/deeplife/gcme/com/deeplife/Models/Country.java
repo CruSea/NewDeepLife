@@ -4,11 +4,12 @@ package deeplife.gcme.com.deeplife.Models;
  * Created by BENGEOS on 4/5/16.
  */
 public class Country {
-    private int ID,SerID,Code;
-    private String ISO3,Name;
+    private int ID, SerID, Code;
+    private String ISO3, Name;
 
     public Country() {
     }
+
     public Country(String name) {
         Name = name;
     }

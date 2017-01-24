@@ -5,7 +5,7 @@ package deeplife.gcme.com.deeplife.Models;
  */
 
 public class ImageSync {
-    private String id,FilePath,Image,Param;
+    private String id, FilePath, Image, Param;
 
     public String getId() {
         return id;

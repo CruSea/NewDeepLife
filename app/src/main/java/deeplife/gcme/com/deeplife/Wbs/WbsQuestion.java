@@ -1,10 +1,15 @@
-package deeplife.gcme.com.deeplife.WinBuildSend;
+package deeplife.gcme.com.deeplife.Wbs;
+
+import com.bignerdranch.expandablerecyclerview.model.Parent;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by bengeos on 12/20/16.
  */
 
-public class WbsQuestion {
+public class WbsQuestion implements Parent<WbsQuestion> {
 
     public enum Type {
         YESNO,
@@ -15,6 +20,17 @@ public class WbsQuestion {
     private int ID, SerID, Category, mCountry, Mandatory;
     private String Question, Description, Created;
     private Type mType;
+
+    private List<WbsQuestion> mChildren;  // Only applicable if this instance is a FOLDER.
+
+    // Constructors
+    public WbsQuestion() {
+        mChildren = new ArrayList<WbsQuestion>();
+    }
+
+    public WbsQuestion(List<WbsQuestion> children) {
+        mChildren = children;
+    }
 
     public int getID() {
         return ID;
@@ -86,5 +102,28 @@ public class WbsQuestion {
 
     public void setCreated(String created) {
         Created = created;
+    }
+
+
+    public void setChildren(List<WbsQuestion> children) {
+        if (getType() == Type.FOLDER) {
+            mChildren = children;
+        }
+    }
+
+    public void addChild(WbsQuestion child) {
+        if (getType() == Type.FOLDER) {
+            mChildren.add(child);
+        }
+    }
+
+    @Override
+    public List<WbsQuestion> getChildList() {
+        return mChildren;
+    }
+
+    @Override
+    public boolean isInitiallyExpanded() {
+        return false;
     }
 }

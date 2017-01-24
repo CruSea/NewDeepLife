@@ -7,13 +7,13 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -25,10 +25,13 @@ import deeplife.gcme.com.deeplife.R;
  */
 
 public class TestimonyFragment extends Fragment {
+    private static final String TAG = "TestimonyFragment";
+
     public static RecyclerView myRecyclerView;
     public static RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private static Context myContext;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +42,7 @@ public class TestimonyFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.testimony_fragment,container,false);
+        View view = inflater.inflate(R.layout.testimony_fragment, container, false);
         myRecyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
         mLayoutManager = new LinearLayoutManager(getActivity());
         myRecyclerView.setLayoutManager(mLayoutManager);
@@ -51,22 +54,22 @@ public class TestimonyFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.testimony_menu,menu);
+        inflater.inflate(R.menu.testimony_menu, menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == R.id.testimony_add){
-            Intent intent = new Intent(getContext(),TestimonyAddActivity.class);
+        if (item.getItemId() == R.id.testimony_add) {
+            Intent intent = new Intent(getContext(), TestimonyAddActivity.class);
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }
 
-    public static void UpdateList(){
+    public static void UpdateList() {
         ArrayList<Testimony> items = DeepLife.myDATABASE.getAllTestimonies();
-        Toast.makeText(myContext,"There are "+items.size()+" Testimonies",Toast.LENGTH_LONG).show();
-        mAdapter = new TestimonyListAdapter(myContext,items);
+        Log.d(TAG, "UpdateList: There are '" + items.size() + "' Testimonies");
+        mAdapter = new TestimonyListAdapter(myContext, items);
         myRecyclerView.setAdapter(mAdapter);
     }
 }

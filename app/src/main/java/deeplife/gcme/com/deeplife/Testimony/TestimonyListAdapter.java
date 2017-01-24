@@ -29,7 +29,7 @@ public class TestimonyListAdapter extends RecyclerView.Adapter<TestimonyListAdap
     private static SyncDatabase mySyncDatabase;
     public static AlertDialog.Builder builder;
 
-    public TestimonyListAdapter(Context context,List<Testimony> testimonies) {
+    public TestimonyListAdapter(Context context, List<Testimony> testimonies) {
         Testimonies = testimonies;
         myContext = context;
         mySyncDatabase = new SyncDatabase();
@@ -55,8 +55,9 @@ public class TestimonyListAdapter extends RecyclerView.Adapter<TestimonyListAdap
     }
 
     public static class DataObjectHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
-        TextView Person,Content,PubDate;
+        TextView Person, Content, PubDate;
         ImageView TestimonyImage;
+
         public DataObjectHolder(View itemView) {
             super(itemView);
             Content = (TextView) itemView.findViewById(R.id.txt_testimony_content);
@@ -73,7 +74,7 @@ public class TestimonyListAdapter extends RecyclerView.Adapter<TestimonyListAdap
 
         @Override
         public boolean onLongClick(View v) {
-            Toast.makeText(myContext,"Long Clicked"+Testimonies.get(getAdapterPosition()).getID(),Toast.LENGTH_LONG).show();
+            Toast.makeText(myContext, "Long Clicked" + Testimonies.get(getAdapterPosition()).getID(), Toast.LENGTH_LONG).show();
             DeleteTestimonyDialog(Testimonies.get(getAdapterPosition()).getID());
             return true;
         }
@@ -85,7 +86,7 @@ public class TestimonyListAdapter extends RecyclerView.Adapter<TestimonyListAdap
             public void onClick(DialogInterface dialog, int which) {
                 switch (which) {
                     case DialogInterface.BUTTON_POSITIVE:
-                        DeepLife.myDATABASE.Delete_By_ID(Database.Table_TESTIMONY,testimony_id);
+                        DeepLife.myDATABASE.Delete_By_ID(Database.Table_TESTIMONY, testimony_id);
                         TestimonyFragment.UpdateList();
                         break;
                     case DialogInterface.BUTTON_NEGATIVE:

@@ -20,12 +20,12 @@ public class Splash extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash);
-        Thread splash = new Thread(){
+        Thread splash = new Thread() {
             @Override
             public void run() {
                 try {
                     sleep(3000);
-                } catch(InterruptedException e){
+                } catch (InterruptedException e) {
                 } finally {
                     getNextActivity();
                 }
@@ -34,16 +34,17 @@ public class Splash extends AppCompatActivity {
         };
         splash.start();
     }
+
     public synchronized void getNextActivity() {
 
         int Count = DeepLife.myDATABASE.count(Database.Table_USER);
         User bb = DeepLife.myDATABASE.getMainUser();
-        if(Count == 1){
+        if (Count == 1) {
             Intent intent = new Intent(this, MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
             finish();
-        }else{
+        } else {
             Intent intent = new Intent(this, Login.class);
             startActivity(intent);
             finish();

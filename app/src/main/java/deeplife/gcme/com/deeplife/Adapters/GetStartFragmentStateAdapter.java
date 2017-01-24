@@ -16,6 +16,7 @@ import java.util.List;
 public class GetStartFragmentStateAdapter extends FragmentStatePagerAdapter {
     private List<Fragment> myFragmentList;
     private Context myContext;
+
     public GetStartFragmentStateAdapter(Context context, FragmentManager fm) {
         super(fm);
         myContext = context;
@@ -24,7 +25,7 @@ public class GetStartFragmentStateAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        Toast.makeText(myContext,"Requested Fragment: "+position,Toast.LENGTH_LONG).show();
+        Toast.makeText(myContext, "Requested Fragment: " + position, Toast.LENGTH_LONG).show();
         return myFragmentList.get(position);
     }
 
@@ -32,7 +33,8 @@ public class GetStartFragmentStateAdapter extends FragmentStatePagerAdapter {
     public int getCount() {
         return myFragmentList.size();
     }
-    public void AddFragment(Fragment fragment){
+
+    public void AddFragment(Fragment fragment) {
         myFragmentList.add(fragment);
     }
 }

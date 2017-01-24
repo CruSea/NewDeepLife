@@ -17,7 +17,7 @@ import deeplife.gcme.com.deeplife.R;
  */
 
 public class Getstarted extends FragmentActivity {
-    public  ViewPagerAdapter viewPagerAdapter;
+    public ViewPagerAdapter viewPagerAdapter;
     public GetStartViewPagerAdapter viewPagerAdapter1;
     private ViewPager myViewPager;
 
@@ -27,7 +27,7 @@ public class Getstarted extends FragmentActivity {
         setContentView(R.layout.getstarted_page);
         viewPagerAdapter = (ViewPagerAdapter) findViewById(R.id.help_viewpage);
         viewPagerAdapter.setSwipeable(true);
-        GetStartFragmentStateAdapter stateAdapter = new GetStartFragmentStateAdapter(this,getSupportFragmentManager());
+        GetStartFragmentStateAdapter stateAdapter = new GetStartFragmentStateAdapter(this, getSupportFragmentManager());
         stateAdapter.AddFragment(new GetstartedFragment1());
         stateAdapter.AddFragment(new GetstartedFragment2());
         viewPagerAdapter.setAdapter(stateAdapter);

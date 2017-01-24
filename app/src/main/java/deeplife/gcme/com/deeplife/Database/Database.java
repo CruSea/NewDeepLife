@@ -23,7 +23,7 @@ import deeplife.gcme.com.deeplife.Models.Schedule;
 import deeplife.gcme.com.deeplife.Models.User;
 import deeplife.gcme.com.deeplife.News.News;
 import deeplife.gcme.com.deeplife.Testimony.Testimony;
-import deeplife.gcme.com.deeplife.WinBuildSend.WbsQuestion;
+import deeplife.gcme.com.deeplife.Wbs.WbsQuestion;
 
 import static deeplife.gcme.com.deeplife.DeepLife.getStrArrFromEnum;
 
@@ -93,9 +93,19 @@ public class Database {
         CREATED("Created");
 
         private final String name;
-        DisciplesColumn(String s) { this.name = s; }
-        public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
-        @Override public String toString() { return this.name; }
+
+        DisciplesColumn(String s) {
+            this.name = s;
+        }
+
+        public boolean equalsName(String otherName) {
+            return (otherName == null) ? false : name.equals(otherName);
+        }
+
+        @Override
+        public String toString() {
+            return this.name;
+        }
     }
 
     public enum SchedulesColumn {
@@ -107,9 +117,19 @@ public class Database {
         DESCRIPTION("Description");
 
         private final String name;
-        SchedulesColumn(String s) { this.name = s; }
-        public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
-        @Override public String toString() { return this.name; }
+
+        SchedulesColumn(String s) {
+            this.name = s;
+        }
+
+        public boolean equalsName(String otherName) {
+            return (otherName == null) ? false : name.equals(otherName);
+        }
+
+        @Override
+        public String toString() {
+            return this.name;
+        }
     }
 
     public enum ReportFormColumn {
@@ -119,9 +139,19 @@ public class Database {
         QUESTIONS("Questions");
 
         private final String name;
-        ReportFormColumn(String s) { this.name = s; }
-        public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
-        @Override public String toString() { return this.name; }
+
+        ReportFormColumn(String s) {
+            this.name = s;
+        }
+
+        public boolean equalsName(String otherName) {
+            return (otherName == null) ? false : name.equals(otherName);
+        }
+
+        @Override
+        public String toString() {
+            return this.name;
+        }
     }
 
     public enum NewsfeedColumn {
@@ -135,9 +165,19 @@ public class Database {
         PUBDATE("PubDate");
 
         private final String name;
-        NewsfeedColumn(String s) { this.name = s; }
-        public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
-        @Override public String toString() { return this.name; }
+
+        NewsfeedColumn(String s) {
+            this.name = s;
+        }
+
+        public boolean equalsName(String otherName) {
+            return (otherName == null) ? false : name.equals(otherName);
+        }
+
+        @Override
+        public String toString() {
+            return this.name;
+        }
     }
 
     public enum ReportColumn {
@@ -147,9 +187,19 @@ public class Database {
         DATE("Date");
 
         private final String name;
-        ReportColumn(String s) { this.name = s; }
-        public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
-        @Override public String toString() { return this.name; }
+
+        ReportColumn(String s) {
+            this.name = s;
+        }
+
+        public boolean equalsName(String otherName) {
+            return (otherName == null) ? false : name.equals(otherName);
+        }
+
+        @Override
+        public String toString() {
+            return this.name;
+        }
     }
 
     public enum CountryColumn {
@@ -160,9 +210,19 @@ public class Database {
         CODE("code");
 
         private final String name;
-        CountryColumn(String s) { this.name = s; }
-        public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
-        @Override public String toString() { return this.name; }
+
+        CountryColumn(String s) {
+            this.name = s;
+        }
+
+        public boolean equalsName(String otherName) {
+            return (otherName == null) ? false : name.equals(otherName);
+        }
+
+        @Override
+        public String toString() {
+            return this.name;
+        }
     }
 
     public enum LogsColumn {
@@ -172,9 +232,19 @@ public class Database {
         VALUE("Value");
 
         private final String name;
-        LogsColumn(String s) { this.name = s; }
-        public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
-        @Override public String toString() { return this.name; }
+
+        LogsColumn(String s) {
+            this.name = s;
+        }
+
+        public boolean equalsName(String otherName) {
+            return (otherName == null) ? false : name.equals(otherName);
+        }
+
+        @Override
+        public String toString() {
+            return this.name;
+        }
     }
 
     public enum UserColumn {
@@ -189,9 +259,19 @@ public class Database {
         FAVORITE_SCRIPTURE("Favorite_Scripture");
 
         private final String name;
-        UserColumn(String s) { this.name = s; }
-        public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
-        @Override public String toString() { return this.name; }
+
+        UserColumn(String s) {
+            this.name = s;
+        }
+
+        public boolean equalsName(String otherName) {
+            return (otherName == null) ? false : name.equals(otherName);
+        }
+
+        @Override
+        public String toString() {
+            return this.name;
+        }
     }
 
     public enum QuestionListColumn {
@@ -206,9 +286,19 @@ public class Database {
         CREATED("Created");
 
         private final String name;
-        QuestionListColumn(String s) { this.name = s; }
-        public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
-        @Override public String toString() { return this.name; }
+
+        QuestionListColumn(String s) {
+            this.name = s;
+        }
+
+        public boolean equalsName(String otherName) {
+            return (otherName == null) ? false : name.equals(otherName);
+        }
+
+        @Override
+        public String toString() {
+            return this.name;
+        }
     }
 
     public enum QuestionAnswerColumn {
@@ -220,9 +310,19 @@ public class Database {
         BUILDSTAGE("BuildStage");
 
         private final String name;
-        QuestionAnswerColumn(String s) { this.name = s; }
-        public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
-        @Override public String toString() { return this.name; }
+
+        QuestionAnswerColumn(String s) {
+            this.name = s;
+        }
+
+        public boolean equalsName(String otherName) {
+            return (otherName == null) ? false : name.equals(otherName);
+        }
+
+        @Override
+        public String toString() {
+            return this.name;
+        }
     }
 
     public enum TestimonyColumn {
@@ -235,9 +335,19 @@ public class Database {
         USERNAME("UserName");
 
         private final String name;
-        TestimonyColumn(String s) { this.name = s; }
-        public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
-        @Override public String toString() { return this.name; }
+
+        TestimonyColumn(String s) {
+            this.name = s;
+        }
+
+        public boolean equalsName(String otherName) {
+            return (otherName == null) ? false : name.equals(otherName);
+        }
+
+        @Override
+        public String toString() {
+            return this.name;
+        }
     }
 
     public enum ImageSyncColumn {
@@ -246,9 +356,19 @@ public class Database {
         PARAM("Param");
 
         private final String name;
-        ImageSyncColumn(String s) { this.name = s; }
-        public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
-        @Override public String toString() { return this.name; }
+
+        ImageSyncColumn(String s) {
+            this.name = s;
+        }
+
+        public boolean equalsName(String otherName) {
+            return (otherName == null) ? false : name.equals(otherName);
+        }
+
+        @Override
+        public String toString() {
+            return this.name;
+        }
     }
 
     public enum CategoryColumn {
@@ -260,9 +380,19 @@ public class Database {
         CREATED("Created");
 
         private final String name;
-        CategoryColumn(String s) { this.name = s; }
-        public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
-        @Override public String toString() { return this.name; }
+
+        CategoryColumn(String s) {
+            this.name = s;
+        }
+
+        public boolean equalsName(String otherName) {
+            return (otherName == null) ? false : name.equals(otherName);
+        }
+
+        @Override
+        public String toString() {
+            return this.name;
+        }
     }
 
     public enum LearningColumn {
@@ -276,9 +406,19 @@ public class Database {
         CREATED("Created");
 
         private final String name;
-        LearningColumn(String s) { this.name = s; }
-        public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
-        @Override public String toString() { return this.name; }
+
+        LearningColumn(String s) {
+            this.name = s;
+        }
+
+        public boolean equalsName(String otherName) {
+            return (otherName == null) ? false : name.equals(otherName);
+        }
+
+        @Override
+        public String toString() {
+            return this.name;
+        }
     }
 
     public enum DiscipleTreeColumn {
@@ -288,9 +428,19 @@ public class Database {
         COUNT("Count");
 
         private final String name;
-        DiscipleTreeColumn(String s) { this.name = s; }
-        public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
-        @Override public String toString() { return this.name; }
+
+        DiscipleTreeColumn(String s) {
+            this.name = s;
+        }
+
+        public boolean equalsName(String otherName) {
+            return (otherName == null) ? false : name.equals(otherName);
+        }
+
+        @Override
+        public String toString() {
+            return this.name;
+        }
     }
 
     private SQLiteDatabase myDatabase;
@@ -321,7 +471,7 @@ public class Database {
 
     public long insert(String DB_Table, ContentValues cv) {
         long state = myDatabase.insert(DB_Table, null, cv);
-        Log.i(TAG, "Inserting->: " + cv.toString());
+        Log.d(TAG, "Inserting->: " + cv.toString());
         return state;
     }
 
@@ -337,11 +487,11 @@ public class Database {
     }
 
     public long update(String DB_Table, ContentValues cv, int id) {
-        //Log.i(TAG, "Updating Table: " + DB_Table);
+        Log.d(TAG, "Updating Table: " + DB_Table);
         String[] args = {"" + id};
         long state = myDatabase.update(DB_Table, cv, "id = ?", args);
-        //Log.i(TAG, "Updating Data: " + cv.toString());
-        //Log.i(TAG, "Updating Completed: " + state + "\n");
+        Log.d(TAG, "Updating Data: " + cv.toString());
+        Log.d(TAG, "Updating Completed: " + state + "\n");
         return state;
     }
 
@@ -460,7 +610,7 @@ public class Database {
     public News getNewsByID(int id) {
         String DB_Table = Table_NEWSFEED;
         News found = new News();
-        Log.i(TAG, "Get News By ID: " + id);
+        Log.d(TAG, "Get News By ID: " + id);
         try {
             Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
             if (c.getCount() > 0) {
@@ -483,7 +633,7 @@ public class Database {
                 }
             }
         } catch (Exception e) {
-            Log.i(TAG, "Failed Get News By ID: " + e.toString());
+            Log.e(TAG, "Failed Get News By ID: " + e.toString());
             return null;
         }
         return null;
@@ -491,7 +641,7 @@ public class Database {
     }
 
     public News getNewsBySerID(int id) {
-        Log.i(TAG, "Get News By Server ID: " + id);
+        Log.d(TAG, "Get News By Server ID: " + id);
         String DB_Table = Table_NEWSFEED;
         News found = new News();
         try {
@@ -516,7 +666,7 @@ public class Database {
     }
 
     public ArrayList<News> getAllNews() {
-        Log.i(TAG, "Get All News: ");
+        Log.d(TAG, "Get All News: ");
         String DB_Table = Table_NEWSFEED;
         ArrayList<News> found = new ArrayList<News>();
         try {
@@ -543,7 +693,7 @@ public class Database {
     /////////////////////////////////
     /////////////////////////////////
     public Testimony getTestimonyByID(int id) {
-        Log.i(TAG, "Get Testimony By ID: " + id);
+        Log.d(TAG, "Get Testimony By ID: " + id);
         String DB_Table = Table_TESTIMONY;
         News found = new News();
         try {
@@ -567,7 +717,7 @@ public class Database {
                 }
             }
         } catch (Exception e) {
-            Log.i(TAG, "Failed Get Testimony By ID: " + e.toString());
+            Log.e(TAG, "Failed Get Testimony By ID: " + e.toString());
             return null;
         }
         return null;
@@ -575,7 +725,7 @@ public class Database {
     }
 
     public Testimony getTestimonyBySerID(int id) {
-        Log.i(TAG, "Get Testimony By Server ID: " + id);
+        Log.d(TAG, "Get Testimony By Server ID: " + id);
         String DB_Table = Table_TESTIMONY;
         Testimony found = new Testimony();
         try {
@@ -593,14 +743,14 @@ public class Database {
                 }
             }
         } catch (Exception e) {
-            Log.i(TAG, "Failed Get Testimony By Server ID: " + e.toString());
+            Log.e(TAG, "Failed Get Testimony By Server ID: " + e.toString());
             return null;
         }
         return null;
     }
 
     public ArrayList<Testimony> getAllTestimonies() {
-        Log.i(TAG, "Get All Testimonies: ");
+        Log.d(TAG, "Get All Testimonies: ");
         String DB_Table = Table_TESTIMONY;
         ArrayList<Testimony> found = new ArrayList<Testimony>();
         try {
@@ -627,7 +777,7 @@ public class Database {
     ////////////////////////////////
     ////////////////////////////////
     public Disciple getDiscipleByID(int id) {
-        Log.i(TAG, "getDiscipleByID: " + id);
+        Log.d(TAG, "getDiscipleByID: " + id);
         String DB_Table = Table_DISCIPLES;
         try {
             Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
@@ -666,7 +816,7 @@ public class Database {
 
 
     public Disciple getDiscipleBySerID(int id) {
-        Log.i(TAG, "Get Disciple by Server ID: ");
+        Log.d(TAG, "Get Disciple by Server ID: " + id);
         String DB_Table = Table_DISCIPLES;
         try {
             Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
@@ -690,7 +840,7 @@ public class Database {
     }
 
     public Disciple getDiscipleByPhone(String phone) {
-        Log.i(TAG, "Get Disciple by Phone: " + phone);
+        Log.d(TAG, "Get Disciple by Phone: " + phone);
         String DB_Table = Table_DISCIPLES;
         try {
             Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
@@ -714,7 +864,7 @@ public class Database {
     }
 
     public ArrayList<Disciple> getAllDisciples() {
-        Log.i(TAG, "Get All Disciples: ");
+        Log.d(TAG, "Get All Disciples: ");
         String DB_Table = Table_DISCIPLES;
         ArrayList<Disciple> found = new ArrayList<Disciple>();
         try {
@@ -736,7 +886,7 @@ public class Database {
     }
 
     public long updateDisciple(Disciple disciple) {
-        Log.i(TAG, "UPDATE updateDisciple: ");
+        Log.d(TAG, "UPDATE updateDisciple: ");
         String DB_Table = Table_DISCIPLES;
         try {
             ContentValues cv = new ContentValues();
@@ -766,17 +916,18 @@ public class Database {
 
             }
         } catch (Exception e) {
-            Log.i(TAG, "Failed UPDATE updateDisciple: " + e.toString());
+            Log.e(TAG, "Failed UPDATE updateDisciple: " + e.toString());
             return 0;
         }
     }
+
     ////////////////////////////////
     ////////////////////////////////
     ///////  CATEGORY    ///////////
     ////////////////////////////////
     ////////////////////////////////
     public Category getCategoryByID(int id) {
-        //Log.i(TAG, "Get Category by ID: " + id);
+        Log.d(TAG, "Get Category by ID: " + id);
         String DB_Table = Table_CATEGORIES;
         try {
             Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
@@ -785,7 +936,7 @@ public class Database {
                 for (int i = 0; i < c.getCount(); i++) {
                     c.moveToPosition(i);
                     int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(CategoryColumn.ID.toString())));
-                    //Log.i(TAG, "--> Get Category by SerID: " + c.getColumnIndex(CategoryColumn.SERID.toString()) + ", " + c.getColumnIndex(CategoryColumn.NAME.toString()));
+                    Log.v(TAG, "--> Get Category by SerID: " + c.getColumnIndex(CategoryColumn.SERID.toString()) + ", " + c.getColumnIndex(CategoryColumn.NAME.toString()));
                     if (cur_id == id) {
                         Category category = new Category();
                         category.setID(Integer.valueOf(c.getString(c.getColumnIndex(CategoryColumn.ID.toString()))));
@@ -793,12 +944,13 @@ public class Database {
                         category.setName(c.getString(c.getColumnIndex(CategoryColumn.NAME.toString())));
                         category.setParent(Integer.valueOf(c.getString(c.getColumnIndex(CategoryColumn.PARENT.toString()))));
                         category.setStatus(Integer.valueOf(c.getString(c.getColumnIndex(CategoryColumn.STATUS.toString()))));
+                        category.setCreated(c.getString(c.getColumnIndex(CategoryColumn.CREATED.toString())));
                         return category;
                     }
                 }
             }
         } catch (Exception e) {
-            Log.i(TAG, "Failed Get Category by ID: " + e.toString());
+            Log.e(TAG, "Failed Get Category by ID: " + e.toString());
             return null;
         }
         return null;
@@ -806,7 +958,7 @@ public class Database {
     }
 
     public Category getCategoryBySerID(int id) {
-        Log.i(TAG, "Get Category by Server ID: ");
+        Log.d(TAG, "Get Category by Server ID: " + id);
         String DB_Table = Table_CATEGORIES;
         try {
             Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
@@ -823,14 +975,14 @@ public class Database {
                 }
             }
         } catch (Exception e) {
-            Log.i(TAG, "Failed Get Category by Server ID: " + e.toString());
+            Log.e(TAG, "Failed Get Category by Server ID: " + e.toString());
             return null;
         }
         return null;
     }
 
     public Category getCategoryByParentID(int id) {
-        Log.i(TAG, "Get Category by Server ID: ");
+        Log.d(TAG, "Get Category by Parent ID: " + id);
         String DB_Table = Table_CATEGORIES;
         try {
             Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
@@ -847,14 +999,14 @@ public class Database {
                 }
             }
         } catch (Exception e) {
-            Log.i(TAG, "Failed Get Category by Server ID: " + e.toString());
+            Log.e(TAG, "Failed Get Category by Server ID: " + e.toString());
             return null;
         }
         return null;
     }
 
     public List<Category> getCategoriesByParentID(int id) {
-        Log.i(TAG, "Get Category by Server ID: ");
+        Log.d(TAG, "Get Categories by Parent ID: " + id);
         String DB_Table = Table_CATEGORIES;
         List<Category> found = new ArrayList<Category>();
         try {
@@ -874,14 +1026,14 @@ public class Database {
                 }
             }
         } catch (Exception e) {
-            Log.i(TAG, "Failed Get Category by Server ID: " + e.toString());
+            Log.e(TAG, "Failed Get Category by Server ID: " + e.toString());
             return found;
         }
         return found;
     }
 
     public ArrayList<Category> getParentCategory() {
-        Log.i(TAG, "Get All Parent Category: ");
+        Log.d(TAG, "Get All Parent Category: ");
         String DB_Table = Table_CATEGORIES;
         ArrayList<Category> found = new ArrayList<Category>();
         try {
@@ -897,7 +1049,7 @@ public class Database {
                 }
             }
         } catch (Exception e) {
-            Log.i(TAG, "Failed Get All Parent Category: " + e.toString());
+            Log.e(TAG, "Failed Get All Parent Category: " + e.toString());
             return null;
         }
         return found;
@@ -911,8 +1063,8 @@ public class Database {
     ////////////////////////////////
 
 
-    public WbsQuestion getWinBuildSendQuestionByID(int id) {
-        Log.i(TAG, "Get WinBuildQuestion by ID: ");
+    public WbsQuestion getWbsQuestionByID(int id) {
+        Log.d(TAG, "getWbsQuestionByID: " + id);
         String DB_Table = Table_QUESTION_LIST;
         try {
             Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
@@ -937,15 +1089,15 @@ public class Database {
                 }
             }
         } catch (Exception e) {
-            Log.i(TAG, "Failed Get WinBuildQuestion by ID: " + e.toString());
+            Log.e(TAG, "Failed Get WbsQuestion by ID: " + e.toString());
             return null;
         }
         return null;
 
     }
 
-    public WbsQuestion getWinBuildSendQuestionBySerID(int id) {
-        Log.i(TAG, "Get WinBuildQuestion by Server ID: ");
+    public WbsQuestion getWbsQuestionBySerID(int id) {
+        Log.d(TAG, "getWbsQuestionBySerID: " + id);
         String DB_Table = Table_QUESTION_LIST;
         try {
             Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
@@ -956,20 +1108,82 @@ public class Database {
                     int ser_id = Integer.valueOf(c.getString(c.getColumnIndex(QuestionListColumn.SERID.toString())));
                     int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(QuestionListColumn.ID.toString())));
                     if (ser_id == id) {
-                        WbsQuestion wbsQuestion = getWinBuildSendQuestionByID(cur_id);
+                        WbsQuestion wbsQuestion = getWbsQuestionByID(cur_id);
                         return wbsQuestion;
                     }
                 }
             }
         } catch (Exception e) {
-            Log.i(TAG, "Failed Get WinBuildQuestion by Server ID: " + e.toString());
+            Log.e(TAG, "Failed Get WbsQuestion by Server ID: " + e.toString());
             return null;
         }
         return null;
     }
 
-    public ArrayList<WbsQuestion> getWinBuildSendQuestionsByCategory(int categoryID) {
-        Log.i(TAG, "Get All WinBuildQuestion by Category id: " + categoryID);
+    public ArrayList<WbsQuestion> getWbsParentQuestionsAndFoldersByStage(Disciple.STAGE stage) {
+        Log.i(TAG, "getWbsParentQuestionsAndFoldersByStage: " + stage.toServerId());
+        String DB_Table = Table_QUESTION_LIST;
+        ArrayList<WbsQuestion> foundParentQuestions = new ArrayList<WbsQuestion>();
+        try {
+            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);  // Get ALL Questions
+            c.moveToFirst();
+            for (int i = 0; i < c.getCount(); i++) {
+                c.moveToPosition(i);
+                int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(QuestionListColumn.ID.toString())));
+                int cat_id = Integer.valueOf(c.getString(c.getColumnIndex(QuestionListColumn.CATEGORY.toString())));
+                if (cat_id == Disciple.STAGE.WIN.toServerId() || cat_id == Disciple.STAGE.BUILD.toServerId() || cat_id == Disciple.STAGE.SEND.toServerId()) {
+                    // This Questions belongs at PARENT-level of Win, Build, or Send section.
+                    if (cat_id == stage.toServerId()) {
+                        WbsQuestion wbsQuestion = getWbsQuestionByID(cur_id);
+                        if (wbsQuestion != null) {
+                            foundParentQuestions.add(wbsQuestion);
+                            Log.i(TAG, "Found WbsQuestion: " + wbsQuestion.getID());
+                        }
+
+                    }
+                } else {
+                    // This Question belongs in a FOLDER, so let's see if the Folder's "parent" is equal to the categoryID.
+                    Cursor d = myDatabase.query(Table_CATEGORIES, getColumns(Table_CATEGORIES), CategoryColumn.ID.toString() + " = '" + cat_id + "' AND " + CategoryColumn.PARENT.toString() + " = '" + stage.toServerId() + "'" , null, null, null, null);
+                    if (d.getCount() > 0) {
+                        // Then this question belongs to a folder which belongs to this categoryID
+
+                        // Get folder (or make new 1 if doesn't exist yet)
+                        WbsQuestion wbsFolder = null;
+                        for (WbsQuestion parentQuestion : foundParentQuestions) {
+                            if (parentQuestion.getType() == WbsQuestion.Type.FOLDER) {
+                                if (parentQuestion.getCategory() == cat_id) {
+                                    wbsFolder = parentQuestion;
+                                    break;  // out of for loop
+                                }
+                            }
+                        }
+
+                        if (wbsFolder == null) {
+                            Category wbsCategory = getCategoryByID(cat_id);
+
+                            // Convert category to WbsQuestion
+                            wbsFolder = new WbsQuestion();
+                            wbsFolder.setType(WbsQuestion.Type.FOLDER);
+                            wbsFolder.setCategory(wbsCategory.getID());
+                            wbsFolder.setQuestion(wbsCategory.getName());
+
+                            // Add to Parent list
+                            foundParentQuestions.add(wbsFolder);
+                        }
+
+                        wbsFolder.addChild(getWbsQuestionByID(cur_id));
+                    }
+                }
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Failed Get getWbsParentQuestionsAndFoldersByStage: " + e.toString());
+            return null;
+        }
+        return foundParentQuestions;
+    }
+
+    public ArrayList<WbsQuestion> getWbsQuestionsByCategory(int categoryID) {
+        Log.d(TAG, "getWbsQuestionsByCategory: " + categoryID);
         String DB_Table = Table_QUESTION_LIST;
         ArrayList<WbsQuestion> found = new ArrayList<WbsQuestion>();
         try {
@@ -980,27 +1194,27 @@ public class Database {
                 int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(QuestionListColumn.ID.toString())));
                 int cat_id = Integer.valueOf(c.getString(c.getColumnIndex(QuestionListColumn.CATEGORY.toString())));
                 if (cat_id == categoryID) {
-                    WbsQuestion wbsQuestion = getWinBuildSendQuestionByID(cur_id);
+                    WbsQuestion wbsQuestion = getWbsQuestionByID(cur_id);
                     if (wbsQuestion != null) {
                         found.add(wbsQuestion);
-                        Log.i(TAG, "Get All WinBuildQuestion: " + wbsQuestion.getID());
+                        Log.i(TAG, "Found WbsQuestion: " + wbsQuestion.getID());
                     }
 
                 }
             }
         } catch (Exception e) {
-            Log.i(TAG, "Failed Get getWinBuildSendQuestionsByCategory: " + e.toString());
+            Log.e(TAG, "Failed Get getWbsQuestionsByCategory: " + e.toString());
             return null;
         }
         return found;
     }
 
-    public ArrayList<WbsQuestion> getWinBuildSendQuestionsByCategorySerID(int SerID) {
-        Log.i(TAG, "Get All WinBuildQuestion by Category Parent ID: " + SerID);
+    public ArrayList<WbsQuestion> getWbsQuestionsByCategorySerID(int SerID) {
+        Log.d(TAG, "getWbsQuestionsByCategorySerID: " + SerID);
         ArrayList<WbsQuestion> found = new ArrayList<WbsQuestion>();
         if (SerID > 0) {
-            found = getWinBuildSendQuestionsByCategory(SerID);
-            Log.i(TAG, "Get All WinBuildSendQuestions: " + SerID);
+            found = getWbsQuestionsByCategory(SerID);
+            Log.i(TAG, "Found WbsQuestions with SerID: " + SerID);
             return found;
         }
         return found;
@@ -1014,7 +1228,7 @@ public class Database {
 
 
     public Answer getAnswerByID(int id) {
-        Log.i(TAG, "Get Answer by ID: ");
+        Log.d(TAG, "Get Answer by ID: " + id);
         String DB_Table = Table_QUESTION_ANSWER;
         try {
             Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
@@ -1036,15 +1250,15 @@ public class Database {
                 }
             }
         } catch (Exception e) {
-            Log.i(TAG, "Failed Get WinBuildQuestion by ID: " + e.toString());
+            Log.e(TAG, "Failed Get Answer by ID: " + e.toString());
             return null;
         }
         return null;
     }
 
     public Answer getAnswerBySerID(int id) {
-        // briggsm:  This function seems to be implemented wrong - it's not even looking at "SerID".
-        Log.i(TAG, "Get getAnswerBySerID by ServerID: ");
+        // briggsm:  This function seems to be implemented wrong - it's not even looking at "SerID". I'm fixing it.
+        Log.d(TAG, "Get getAnswerBySerID by ServerID: " + id);
         String DB_Table = Table_QUESTION_ANSWER;
         try {
             Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
@@ -1052,23 +1266,23 @@ public class Database {
                 c.moveToFirst();
                 for (int i = 0; i < c.getCount(); i++) {
                     c.moveToPosition(i);
-                    int qst_id = Integer.valueOf(c.getString(c.getColumnIndex(QuestionAnswerColumn.QUESTION_ID.toString())));
+                    int ser_id = Integer.valueOf(c.getString(c.getColumnIndex(QuestionAnswerColumn.SERID.toString())));
                     int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(QuestionAnswerColumn.ID.toString())));
-                    if (qst_id == id) {
+                    if (ser_id == id) {
                         Answer answer = getAnswerByID(cur_id);
                         return answer;
                     }
                 }
             }
         } catch (Exception e) {
-            Log.i(TAG, "Failed Get getAnswerByQuestionID by QuestionID: " + e.toString());
+            Log.e(TAG, "Failed Get getAnswerByQuestionID by QuestionID: " + e.toString());
             return null;
         }
         return null;
     }
 
     public Answer getAnswerByQuestionID(int id) {
-        Log.i(TAG, "Get getAnswerByQuestionID by QuestionID: ");
+        Log.d(TAG, "Get getAnswerByQuestionID by QuestionID: " + id);
         String DB_Table = Table_QUESTION_ANSWER;
         try {
             Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
@@ -1085,14 +1299,14 @@ public class Database {
                 }
             }
         } catch (Exception e) {
-            Log.i(TAG, "Failed Get getAnswerByQuestionID by QuestionID: " + e.toString());
+            Log.e(TAG, "Failed Get getAnswerByQuestionID by QuestionID: " + e.toString());
             return null;
         }
         return null;
     }
 
     public Answer getAnswerByQuestionIDandDisciplePhone(int questionID, String disciplePhone) {
-        Log.i(TAG, "Get getAnswerByQuestionIDandDisciplePhone by QuestionPhone and DisciplePhone: ");
+        Log.d(TAG, "Get getAnswerByQuestionIDandDisciplePhone by QuestionPhone and DisciplePhone: ");
         String DB_Table = Table_QUESTION_ANSWER;
         try {
             Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
@@ -1110,14 +1324,14 @@ public class Database {
                 }
             }
         } catch (Exception e) {
-            Log.i(TAG, "Failed Get getAnswerByQuestionIDandDisciplePhone by QuestionPhone and DisciplePhone: " + e.toString());
+            Log.e(TAG, "Failed Get getAnswerByQuestionIDandDisciplePhone by QuestionPhone and DisciplePhone: " + e.toString());
             return null;
         }
         return null;
     }
 
     public long updateAnswer(Answer answer) {
-        Log.i(TAG, "UPDATE updateAnswer: ");
+        Log.d(TAG, "UPDATE updateAnswer: ");
         String DB_Table = Table_QUESTION_ANSWER;
         try {
             ContentValues cv = new ContentValues();
@@ -1134,13 +1348,14 @@ public class Database {
             return x;
 
         } catch (Exception e) {
-            Log.i(TAG, "Failed UPDATE updateAnswer: " + e.toString());
+            Log.e(TAG, "Failed UPDATE updateAnswer: " + e.toString());
+            e.printStackTrace();
             return 0;
         }
     }
 
     public long add_updateAnswer(Answer answer) {
-        Log.i(TAG, "add_updateAnswer: ");
+        Log.d(TAG, "add_updateAnswer: ");
         Answer oldAnswer1 = getAnswerByQuestionIDandDisciplePhone(answer.getQuestionID(), answer.getDisciplePhone());
         if (oldAnswer1 == null) {
             long res = addAnswer(answer);
@@ -1152,7 +1367,7 @@ public class Database {
     }
 
     public long addAnswer(Answer answer) {
-        Log.i(TAG, "Add addAnswer: ");
+        Log.d(TAG, "Add addAnswer: ");
         String DB_Table = Table_QUESTION_ANSWER;
         try {
             ContentValues cv = new ContentValues();
@@ -1169,7 +1384,7 @@ public class Database {
             }
             return 0;
         } catch (Exception e) {
-            Log.i(TAG, "Failed Add addAnswer: " + e.toString());
+            Log.e(TAG, "Failed Add addAnswer: " + e.toString());
             return 0;
         }
     }
@@ -1183,7 +1398,7 @@ public class Database {
     public Country getCountryByID(int id) {
         String DB_Table = Table_COUNTRY;
         News found = new News();
-        //Log.i(TAG, "Get Country By ID: " + id);
+        Log.d(TAG, "Get Country By ID: " + id);
         try {
             Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
             if (c.getCount() > 0) {
@@ -1203,7 +1418,7 @@ public class Database {
                 }
             }
         } catch (Exception e) {
-            Log.i(TAG, "Failed Get Country By ID: " + e.toString());
+            Log.e(TAG, "Failed Get Country By ID: " + e.toString());
             return null;
         }
         return null;
@@ -1211,7 +1426,7 @@ public class Database {
     }
 
     public Country getCountryBySerID(int id) {
-        Log.i(TAG, "Get getCountryBySerID by ServerID: ");
+        Log.d(TAG, "Get getCountryBySerID by ServerID: " + id);
         String DB_Table = Table_COUNTRY;
         try {
             Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
@@ -1228,14 +1443,14 @@ public class Database {
                 }
             }
         } catch (Exception e) {
-            Log.i(TAG, "Failed Get getCountryBySerID by ServerID: " + e.toString());
+            Log.e(TAG, "Failed Get getCountryBySerID by ServerID: " + e.toString());
             return null;
         }
         return null;
     }
 
     public ArrayList<Country> getAllCountries() {
-        Log.i(TAG, "Get All getAllCountries: ");
+        Log.d(TAG, "Get All getAllCountries: ");
         String DB_Table = Table_COUNTRY;
         ArrayList<Country> found = new ArrayList<Country>();
         try {
@@ -1247,7 +1462,7 @@ public class Database {
                 Country country = getCountryByID(cur_id);
                 if (country != null) {
                     found.add(country);
-                    //Log.i(TAG, "Get All Countries: " + country.getID());
+                    Log.d(TAG, "Get All Countries: " + country.getID());
                 }
             }
         } catch (Exception e) {
@@ -1257,7 +1472,7 @@ public class Database {
     }
 
     public ArrayList<Logs> getSendLogs() {
-        //Log.i(TAG, "SendLogs:\n");
+        Log.d(TAG, "SendLogs:\n");
         String DB_Table = Table_LOGS;
         ArrayList<Logs> Found = new ArrayList<>();
 
@@ -1268,9 +1483,9 @@ public class Database {
                 for (int i = 0; i < c.getCount(); i++) {
                     c.moveToPosition(i);
                     String Log_Task = c.getString(c.getColumnIndex(LogsColumn.TASK.toString()));
-                    Log.i(TAG, "Comparing-> \n" + Logs.TASK.SEND_LOG + " | " + Log_Task);
+                    Log.d(TAG, "Comparing: " + Logs.TASK.SEND_LOG + " | " + Log_Task);
                     if (Logs.TASK.SEND_LOG.equalsName(Log_Task)) {
-                        Log.i(TAG, "SendLogs Count:-> " + c.getCount());  // briggsm: think this is wrong. 'c' might have 10 rows, but only 2 of them SendLogs. This would return 10. Right?
+                        Log.d(TAG, "SendLogs Count:-> " + c.getCount());  // briggsm: think this is wrong. 'c' might have 10 rows, but only 2 of them SendLogs. This would return 10. Right?
                         Logs newLogs = new Logs();
                         newLogs.setID(Integer.valueOf(c.getString(c.getColumnIndex(LogsColumn.ID.toString()))));
                         newLogs.setType(Logs.TYPE.fromString(c.getString(c.getColumnIndex(LogsColumn.TYPE.toString()))));
@@ -1284,7 +1499,7 @@ public class Database {
                 return Found;
             }
         } catch (Exception e) {
-            Log.i(TAG, "Faild getSendLogs:\n" + e.toString());
+            Log.e(TAG, "Faild getSendLogs:\n" + e.toString());
             return null;
         }
         return Found;
@@ -1312,7 +1527,7 @@ public class Database {
     }
 
     public ArrayList<Disciple> getSendDisciples() {
-        //Log.i(TAG, "getSendDisciples:\n");
+        Log.d(TAG, "getSendDisciples:\n");
         String DB_Table = Table_LOGS;
         ArrayList<Disciple> Found = new ArrayList<Disciple>();
         try {
@@ -1324,9 +1539,9 @@ public class Database {
                     String Log_Task = c.getString(c.getColumnIndex(LogsColumn.TASK.toString()));
                     String Log_Value = c.getString(c.getColumnIndex(LogsColumn.VALUE.toString()));
                     int Log_ID = Integer.valueOf(c.getString(c.getColumnIndex(LogsColumn.ID.toString())));
-                    Log.i(TAG, "Comparing-> \n" + Logs.TASK.SEND_DISCIPLES + " | " + Log_Task);
+                    Log.d(TAG, "Comparing: " + Logs.TASK.SEND_DISCIPLES + " | " + Log_Task);
                     if (Logs.TASK.SEND_DISCIPLES.equalsName(Log_Task)) {
-                        Log.i(TAG, "SendDisciples Count:-> " + c.getCount());
+                        Log.d(TAG, "SendDisciples Count:-> " + c.getCount());
                         Disciple sendDisciple = getDiscipleByPhone(Log_Value);
                         if (sendDisciple != null) {
                             sendDisciple.setID(Log_ID);
@@ -1338,13 +1553,13 @@ public class Database {
                 return Found;
             }
         } catch (Exception e) {
-            Log.i(TAG, "Failed getSendDisciples:\n" + e.toString());
+            Log.e(TAG, "Failed getSendDisciples:\n" + e.toString());
         }
         return Found;
     }
 
     public ArrayList<Disciple> getUpdateDisciples() {
-        //Log.i(TAG, "getUpdateDisciples:\n");
+        Log.d(TAG, "getUpdateDisciples:\n");
         String DB_Table = Table_LOGS;
         ArrayList<Disciple> Found = new ArrayList<Disciple>();
         try {
@@ -1356,7 +1571,7 @@ public class Database {
                     int Log_ID = Integer.valueOf(c.getString(c.getColumnIndex(LogsColumn.ID.toString())));
                     String Log_Task = c.getString(c.getColumnIndex(LogsColumn.TASK.toString()));
                     String Task_Value = c.getString(c.getColumnIndex(LogsColumn.VALUE.toString()));
-                    Log.i(TAG, "Comparing-> \n" + Logs.TASK.UPDATE_DISCIPLE + " | " + Log_Task);
+                    Log.d(TAG, "Comparing: " + Logs.TASK.UPDATE_DISCIPLE + " | " + Log_Task);
                     if (Logs.TASK.UPDATE_DISCIPLE.equalsName(Log_Task)) {
                         Log.i(TAG, "UpdateDisciples Count:-> " + c.getCount());
                         Disciple updateDisciple = getDiscipleByPhone(Task_Value);
@@ -1368,13 +1583,13 @@ public class Database {
                 }
             }
         } catch (Exception e) {
-            Log.i(TAG, "Failed getUpdateDisciples:\n" + e.toString());
+            Log.e(TAG, "Failed getUpdateDisciples:\n" + e.toString());
         }
         return Found;
     }
 
     public ArrayList<Testimony> getSendTestimony() {
-        //Log.i(TAG, "getSendTestimony:\n");
+        Log.d(TAG, "getSendTestimony:\n");
         String DB_Table = Table_LOGS;
         ArrayList<Testimony> Found = new ArrayList<Testimony>();
         try {
@@ -1387,9 +1602,9 @@ public class Database {
                     String Log_Task = c.getString(c.getColumnIndex(LogsColumn.TASK.toString()));
                     int Task_Value = Integer.valueOf(c.getString(c.getColumnIndex(LogsColumn.VALUE.toString())));
 
-                    Log.i(TAG, "Comparing-> \n" + Logs.TASK.SEND_TESTIMONY + " | " + Log_Task);
+                    Log.d(TAG, "Comparing: " + Logs.TASK.SEND_TESTIMONY + " | " + Log_Task);
                     if (Logs.TASK.SEND_TESTIMONY.equals(Log_Task)) {
-                        Log.i(TAG, "SendTestimony Count:-> " + c.getCount());
+                        Log.d(TAG, "SendTestimony Count:-> " + c.getCount());
                         Testimony newTestimony = getTestimonyByID(Task_Value);
                         if (newTestimony != null) {
                             newTestimony.setID(Log_ID);
@@ -1400,13 +1615,13 @@ public class Database {
                 }
             }
         } catch (Exception e) {
-            Log.i(TAG, "Failed getSendTestimony:\n" + e.toString());
+            Log.e(TAG, "Failed getSendTestimony:\n" + e.toString());
         }
         return Found;
     }
 
     public ArrayList<Answer> getSendAnswers() {
-        //Log.i(TAG, "getSendAnswers:\n");
+        Log.d(TAG, "getSendAnswers:\n");
         String DB_Table = Table_LOGS;
         ArrayList<Answer> Found = new ArrayList<Answer>();
         try {
@@ -1418,9 +1633,9 @@ public class Database {
                     String Log_Task = c.getString(c.getColumnIndex(LogsColumn.TASK.toString()));
                     int Task_Value = Integer.valueOf(c.getString(c.getColumnIndex(LogsColumn.VALUE.toString())));
                     int Log_ID = Integer.valueOf(c.getString(c.getColumnIndex(LogsColumn.ID.toString())));
-                    Log.i(TAG, "Comparing-> \n" + Logs.TASK.SEND_TESTIMONY + " | " + Log_Task);
-                    if (Logs.TASK.SEND_TESTIMONY.equalsName(Log_Task)) {
-                        Log.i(TAG, "SendAnswer Count:-> " + c.getCount());
+                    Log.d(TAG, "Comparing: " + Logs.TASK.SEND_ANSWERS + " | " + Log_Task);
+                    if (Logs.TASK.SEND_ANSWERS.equalsName(Log_Task)) {
+                        Log.d(TAG, "SendAnswer Count:-> " + c.getCount());
                         Answer sendAnswer = getAnswerByID(Task_Value);
                         if (sendAnswer != null) {
                             sendAnswer.setID(Log_ID);
@@ -1431,14 +1646,14 @@ public class Database {
                 }
             }
         } catch (Exception e) {
-            Log.i(TAG, "Failed getSendAnswers:\n" + e.toString());
+            Log.e(TAG, "Failed getSendAnswers:\n" + e.toString());
         }
         return Found;
     }
 
 
     public ArrayList<Schedule> getSendSchedules() {
-        //Log.i(TAG, "SendSchedules:\n");
+        Log.d(TAG, "SendSchedules:\n");
         String DB_Table = Table_LOGS;
         ArrayList<Schedule> Found = new ArrayList<Schedule>();
         try {
@@ -1450,9 +1665,9 @@ public class Database {
                     String str = c.getString(c.getColumnIndex(LogsColumn.TASK.toString()));
                     String id = c.getString(c.getColumnIndex(LogsColumn.VALUE.toString()));
                     String ID = c.getString(c.getColumnIndex(LogsColumn.TYPE.toString()));
-                    Log.i(TAG, "SendSchedule Comparing-> \n" + Logs.TASK.SEND_SCHEDULE + " | " + str);
+                    Log.d(TAG, "SendSchedule Comparing: " + Logs.TASK.SEND_SCHEDULE + " | " + str);
                     if (Logs.TASK.SEND_SCHEDULE.equalsName(str)) {
-//                        Log.i(TAG, "SendSchedule Count:-> " + c.getCount());
+//                        Log.d(TAG, "SendSchedule Count:-> " + c.getCount());
 //                        Schedule newSchedule = getScheduleWithId(id);
 //                        if(newSchedule !=null){
 //                            newSchedule.setID(ID);
@@ -1469,7 +1684,7 @@ public class Database {
     }
 
     public ArrayList<Schedule> getUpdateSchedules() {
-        //Log.i(TAG, "UpdateDisciples:\n");
+        Log.d(TAG, "UpdateDisciples:\n");
         String DB_Table = Table_LOGS;
         ArrayList<Schedule> Found = new ArrayList<Schedule>();
         try {
@@ -1481,9 +1696,9 @@ public class Database {
                     String ID = c.getString(c.getColumnIndex(LogsColumn.ID.toString()));
                     String str = c.getString(c.getColumnIndex(LogsColumn.TASK.toString()));
                     String id = c.getString(c.getColumnIndex(LogsColumn.VALUE.toString()));
-                    Log.i(TAG, "Comparing-> \n" + Logs.TASK.UPDATE_SCHEDULES + " | " + str);
+                    Log.d(TAG, "Comparing: " + Logs.TASK.UPDATE_SCHEDULES + " | " + str);
                     if (Logs.TASK.UPDATE_SCHEDULES.equalsName(str)) {
-//                        Log.i(TAG, "Update Schedule Count:-> " + c.getCount());
+//                        Log.d(TAG, "Update Schedule Count:-> " + c.getCount());
 //                        Schedule newschedule = getScheduleWithId(id);
 //                        if(newschedule !=null){
 //                            newschedule.setID(ID);
@@ -1499,7 +1714,7 @@ public class Database {
     }
 
     public ArrayList<ReportItem> getSendReports() {
-        //Log.i(TAG, "SendReports:\n");
+        Log.d(TAG, "SendReports:\n");
         String DB_Table = Table_LOGS;
         ArrayList<ReportItem> Found = new ArrayList<ReportItem>();
         try {
@@ -1511,9 +1726,9 @@ public class Database {
                     String str = c.getString(c.getColumnIndex(LogsColumn.TASK.toString()));
                     String id = c.getString(c.getColumnIndex(LogsColumn.VALUE.toString()));
                     String ID = c.getString(c.getColumnIndex(LogsColumn.ID.toString()));
-                    Log.i(TAG, "Comparing-> \n" + Logs.TASK.SEND_REPORT + " | " + str);
+                    Log.d(TAG, "Comparing: " + Logs.TASK.SEND_REPORT + " | " + str);
                     if (Logs.TASK.SEND_REPORT.equalsName(str)) {
-                        Log.i(TAG, "SendDisciples Count:-> " + c.getCount());
+                        Log.d(TAG, "SendDisciples Count:-> " + c.getCount());
 //                        ReportItem newReport = get_Report_by_id(id);
 //                        if(newReport !=null){
 //                            newReport.setId(ID);
@@ -1537,7 +1752,7 @@ public class Database {
     /////////////////////////////////
 
     public User getMainUser() {
-        //Log.i(TAG, "Get getMainUser: ");
+        Log.d(TAG, "Get getMainUser: ");
         String DB_Table = Table_USER;
         try {
             Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
@@ -1559,7 +1774,7 @@ public class Database {
                 }
             }
         } catch (Exception e) {
-            Log.i(TAG, "Failed Get MainUser By ID: " + e.toString());
+            Log.e(TAG, "Failed Get MainUser By ID: " + e.toString());
             return null;
         }
         return null;
@@ -1567,7 +1782,7 @@ public class Database {
     }
 
     public long updateMainUser(User mainUser) {
-        Log.i(TAG, "UPDATE updateDisciple: ");
+        Log.d(TAG, "UPDATE updateDisciple: ");
         String DB_Table = Table_USER;
         try {
             ContentValues cv = new ContentValues();
@@ -1585,7 +1800,7 @@ public class Database {
             long x = insert(DB_Table, cv);
             return x;
         } catch (Exception e) {
-            Log.i(TAG, "Failed UPDATE updateMainUser: " + e.toString());
+            Log.e(TAG, "Failed UPDATE updateMainUser: " + e.toString());
             return 0;
         }
     }
@@ -1598,7 +1813,7 @@ public class Database {
     /////////////////////////////////
 
     public LearningTool getLearningToolByID(int id) {
-        Log.i(TAG, "Get getLearningToolByID: ");
+        Log.d(TAG, "Get getLearningToolByID: " + id);
         String DB_Table = Table_LEARNING;
         try {
             Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
@@ -1620,7 +1835,7 @@ public class Database {
                 }
             }
         } catch (Exception e) {
-            Log.i(TAG, "Failed Get getLearningToolByID By ID: " + e.toString());
+            Log.e(TAG, "Failed Get getLearningToolByID By ID: " + e.toString());
             return null;
         }
         return null;
@@ -1628,7 +1843,7 @@ public class Database {
     }
 
     public LearningTool getLearningToolsBySerID(int id) {
-        Log.i(TAG, "Get getLearningToolsBySerID by ServerID: ");
+        Log.d(TAG, "Get getLearningToolsBySerID by ServerID: " + id);
         String DB_Table = Table_LEARNING;
         try {
             Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
@@ -1646,14 +1861,14 @@ public class Database {
                 }
             }
         } catch (Exception e) {
-            Log.i(TAG, "Failed Get getCountryBySerID by ServerID: " + e.toString());
+            Log.e(TAG, "Failed Get getCountryBySerID by ServerID: " + e.toString());
             return null;
         }
         return null;
     }
 
     public ArrayList<LearningTool> getAllLearningTools() {
-        Log.i(TAG, "Get All getAllLearningTools: ");
+        Log.d(TAG, "Get All getAllLearningTools: ");
         String DB_Table = Table_COUNTRY;
         ArrayList<LearningTool> found = new ArrayList<LearningTool>();
         try {
@@ -1676,7 +1891,7 @@ public class Database {
 
 
     public DiscipleTreeCount getDiscipleTreeCount() {
-        Log.i(TAG, "Get getDiscipleTreeCount: ");
+        Log.d(TAG, "Get getDiscipleTreeCount: ");
         String DB_Table = Table_DISCIPLE_TREE;
         try {
             Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
@@ -1693,7 +1908,7 @@ public class Database {
                 }
             }
         } catch (Exception e) {
-            Log.i(TAG, "Failed Get getDiscipleTreeCount: " + e.toString());
+            Log.e(TAG, "Failed Get getDiscipleTreeCount: " + e.toString());
             return null;
         }
         return null;

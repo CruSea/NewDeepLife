@@ -52,7 +52,7 @@
     <string name="form_text_country">Country</string>
     <string name="form_text_phone">Phone</string>
     <string name="form_text_phone_number">Phone Number</string>
-    <string name="text_win_build_send">Win | Build | Send</string>
+    <string name="text_wbs">Win | Build | Send</string>
     <string name="action_send_sms">Send SMS</string>
     <string name="action_call_now">Call Now</string>
     <string name="text_notes">Notes</string>

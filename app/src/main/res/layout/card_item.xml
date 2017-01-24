@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -12,6 +13,8 @@
         android:layout_gravity="center"
         android:layout_marginLeft="3dp"
         android:layout_marginRight="3dp"
+        android:layout_marginEnd="3dp"
+        android:layout_marginStart="3dp"
         android:background="#494848"
         android:padding="40dp"
         card_view:cardCornerRadius="5dp"
@@ -29,18 +32,22 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingLeft="40dp"
+                android:paddingStart="40dp"
                 android:paddingRight="40dp"
+                android:paddingEnd="40dp"
                 android:paddingTop="10dp">
 
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_height="40dp"
-                    android:background="@drawable/icon_disciple_tree_white" />
+                    android:background="@drawable/icon_disciple_tree_white"
+                    tools:ignore="contentDescription" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
+                    android:layout_marginStart="20dp"
                     android:text="@string/ui_disciple_tree"
                     android:textColor="#ffffff"
                     android:textSize="20sp"
@@ -52,24 +59,27 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:gravity="center_vertical"
+                android:orientation="horizontal"
                 android:paddingLeft="60dp"
+                android:paddingStart="60dp"
                 android:paddingTop="10dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="40sp"
                     android:textColor="#ffffff"
-                    android:text="41" />
+                    android:textSize="40sp"
+                    tools:text="41" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:textSize="20sp"
+                    android:layout_marginStart="20dp"
+                    android:text="@string/ui_total_disciples"
                     android:textColor="#ffffff"
-                    android:text="@string/ui_total_disciples" />
+                    android:textSize="20sp" />
             </LinearLayout>
         </LinearLayout>
 

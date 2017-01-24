@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         myToolbar = (Toolbar) findViewById(R.id.toolbar);
 
         setSupportActionBar(myToolbar);
-        Log.i(TAG,"Main Activity Started");
+        Log.i(TAG, "Main Activity Started");
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, myToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -68,11 +68,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         myViewPager = (ViewPager) findViewById(R.id.viewpager);
         ViewPageAdapter viewPageAdapter = new ViewPageAdapter(getSupportFragmentManager());
-        viewPageAdapter.addFragment(new HomeFragment(),getString(R.string.home_fragment_title));
-        viewPageAdapter.addFragment(new DisciplesFragment(),getString(R.string.disciples_fragment_title));
-        viewPageAdapter.addFragment(new TestimonyFragment(),getString(R.string.testimony_fragment_title));
-        viewPageAdapter.addFragment(new NewsFragment(),getString(R.string.news_fragment_title));
-        viewPageAdapter.addFragment(new LearningFragment(),getString(R.string.learning_fragment_title));
+        viewPageAdapter.addFragment(new HomeFragment(), getString(R.string.home_fragment_title));
+        viewPageAdapter.addFragment(new DisciplesFragment(), getString(R.string.disciples_fragment_title));
+        viewPageAdapter.addFragment(new TestimonyFragment(), getString(R.string.testimony_fragment_title));
+        viewPageAdapter.addFragment(new NewsFragment(), getString(R.string.news_fragment_title));
+        viewPageAdapter.addFragment(new LearningFragment(), getString(R.string.learning_fragment_title));
         myViewPager.setAdapter(viewPageAdapter);
 
         myTabLayout = (TabLayout) findViewById(R.id.tabs);
@@ -97,11 +97,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
-    public void checkPermissions(){
+    public void checkPermissions() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_BOOT_COMPLETED) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECEIVE_BOOT_COMPLETED}, RECEIVE_BOOT_COMPLETED);
-        }else {
-            
+        } else {
+
         }
     }
 
@@ -124,15 +124,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
-            myViewPager.setCurrentItem(0,true);
+            myViewPager.setCurrentItem(0, true);
         } else if (id == R.id.nav_testimony) {
-            myViewPager.setCurrentItem(2,true);
+            myViewPager.setCurrentItem(2, true);
         } else if (id == R.id.nav_news) {
-            myViewPager.setCurrentItem(3,true);
+            myViewPager.setCurrentItem(3, true);
         } else if (id == R.id.nav_disciples) {
-            myViewPager.setCurrentItem(1,true);
+            myViewPager.setCurrentItem(1, true);
         } else if (id == R.id.nav_learning) {
-            myViewPager.setCurrentItem(4,true);
+            myViewPager.setCurrentItem(4, true);
         } else if (id == R.id.nav_send) {
 
         } else if (id == R.id.nav_logout) {
@@ -144,7 +144,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Intent intent = new Intent(this, Login.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
-        }else if (id == R.id.nav_profile) {
+        } else if (id == R.id.nav_profile) {
             startActivity(new Intent(this, ProfileShowActivity.class));
         }
 

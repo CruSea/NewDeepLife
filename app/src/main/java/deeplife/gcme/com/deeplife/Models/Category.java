@@ -5,8 +5,8 @@ package deeplife.gcme.com.deeplife.Models;
  */
 
 public class Category {
-    private int ID,SerID,Parent,Status;
-    private String Name,Created;
+    private int ID, SerID, Parent, Status;
+    private String Name, Created;
 
     public int getID() {
         return ID;

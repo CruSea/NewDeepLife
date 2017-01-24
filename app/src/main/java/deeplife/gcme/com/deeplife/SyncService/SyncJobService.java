@@ -12,12 +12,14 @@ import com.evernote.android.job.JobRequest;
 
 public class SyncJobService extends Job {
     public static final String TAG = "job_demo_tag";
+
     @NonNull
     @Override
     protected Result onRunJob(Params params) {
-        Log.i(TAG,"Sync Servie Started");
+        Log.i(TAG, "Sync Servie Started");
         return Result.SUCCESS;
     }
+
     public static void scheduleJob() {
         new JobRequest.Builder(SyncJobService.TAG)
                 .setPeriodic(2000)

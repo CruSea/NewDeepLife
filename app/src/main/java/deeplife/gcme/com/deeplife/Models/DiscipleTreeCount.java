@@ -5,7 +5,7 @@ package deeplife.gcme.com.deeplife.Models;
  */
 
 public class DiscipleTreeCount {
-    private int ID,SerID,UserID,Count;
+    private int ID, SerID, UserID, Count;
 
     public int getID() {
         return ID;

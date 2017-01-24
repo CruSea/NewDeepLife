@@ -34,7 +34,6 @@
     </group>
 
 
-
     <item android:title="@string/menusub_my_account">
         <menu>
             <item

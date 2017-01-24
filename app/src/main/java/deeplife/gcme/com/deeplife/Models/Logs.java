@@ -23,10 +23,30 @@ public class Logs {
 
 
         private final String name;
-        private TYPE(String s) { this.name = s; }
-        public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
-        @Override public String toString() { return this.name; }
-        public static TYPE fromString(String s) { if (s != null) { for (TYPE t : TYPE.values()) { if (s.equalsIgnoreCase(t.toString())) { return t; } } } throw new IllegalArgumentException("No constant in <Type> Enum found with text: " + s); }
+
+        private TYPE(String s) {
+            this.name = s;
+        }
+
+        public boolean equalsName(String otherName) {
+            return (otherName == null) ? false : name.equals(otherName);
+        }
+
+        @Override
+        public String toString() {
+            return this.name;
+        }
+
+        public static TYPE fromString(String s) {
+            if (s != null) {
+                for (TYPE t : TYPE.values()) {
+                    if (s.equalsIgnoreCase(t.toString())) {
+                        return t;
+                    }
+                }
+            }
+            throw new IllegalArgumentException("No constant in <Type> Enum found with text: " + s);
+        }
     }
 
     // === Task ===
@@ -47,10 +67,30 @@ public class Logs {
 
 
         private final String name;
-        private TASK(String s) { this.name = s; }
-        public boolean equalsName(String otherName) { return (otherName == null) ? false : name.equals(otherName); }
-        @Override public String toString() { return this.name; }
-        public static TASK fromString(String s) { if (s != null) { for (TASK t : TASK.values()) { if (s.equalsIgnoreCase(t.toString())) { return t; } } } throw new IllegalArgumentException("No constant in <Task> Enum found with text: " + s); }
+
+        private TASK(String s) {
+            this.name = s;
+        }
+
+        public boolean equalsName(String otherName) {
+            return (otherName == null) ? false : name.equals(otherName);
+        }
+
+        @Override
+        public String toString() {
+            return this.name;
+        }
+
+        public static TASK fromString(String s) {
+            if (s != null) {
+                for (TASK t : TASK.values()) {
+                    if (s.equalsIgnoreCase(t.toString())) {
+                        return t;
+                    }
+                }
+            }
+            throw new IllegalArgumentException("No constant in <Task> Enum found with text: " + s);
+        }
     }
 
     private int ID;

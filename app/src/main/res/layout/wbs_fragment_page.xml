@@ -6,17 +6,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff"
-    android:fitsSystemWindows="true"
-    >
+    android:fitsSystemWindows="true">
+
     <android.support.design.widget.AppBarLayout
         android:id="@+id/add_disciple_actionbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        >
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/add_winbuild_toolbar"
+            android:id="@+id/add_wbs_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:layout_marginTop="10dp"
@@ -24,10 +23,12 @@
             app:layout_collapseMode="parallax" />
 
     </android.support.design.widget.AppBarLayout>
+
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:orientation="vertical"
@@ -41,94 +42,106 @@
                 android:layout_height="wrap_content"
                 card_view:cardCornerRadius="0dp"
                 card_view:cardElevation="0dp">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:orientation="vertical"
                     android:gravity="center_horizontal"
                     android:layout_height="wrap_content">
+
                     <FrameLayout
                         android:layout_width="120dp"
                         android:layout_height="120dp">
+
                         <ImageView
-                            android:id="@+id/img_winbuildsend_image"
+                            android:id="@+id/img_wbs_image"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="@drawable/bengeos"/>
+                            android:background="@drawable/bengeos" />
+
                         <ImageView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:scaleType="centerCrop"
-                            android:background="@drawable/cover_page"/>
+                            android:background="@drawable/cover_page" />
                     </FrameLayout>
+
                     <TextView
-                        android:id="@+id/txt_winbuildsend_fullname"
+                        android:id="@+id/txt_wbs_fullname"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         tools:text="Biniam Kassahun"
                         android:gravity="center_horizontal"
-                        android:textStyle="bold"
-                        />
+                        android:textStyle="bold" />
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
                         android:background="@color/bg_login"
                         android:layout_marginRight="10dp"
+                        android:layout_marginEnd="10dp"
                         android:weightSum="3">
+
                         <Button
-                            android:id="@+id/btn_winbuildsend_win"
+                            android:id="@+id/btn_wbs_win"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             style="@style/AppTheme.Button1"
                             android:layout_weight="1"
-                            android:text="@string/text_win"/>
+                            android:text="@string/text_win" />
+
                         <Button
-                            android:id="@+id/btn_winbuildsend_build"
+                            android:id="@+id/btn_wbs_build"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             style="@style/AppTheme.Button1"
                             android:layout_weight="1"
-                            android:text="@string/text_build"/>
+                            android:text="@string/text_build" />
+
                         <Button
-                            android:id="@+id/btn_winbuildsend_send"
+                            android:id="@+id/btn_wbs_send"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             style="@style/AppTheme.Button1"
                             android:layout_weight="1"
-                            android:text="@string/text_send"/>
+                            android:text="@string/text_send" />
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
                         android:orientation="horizontal"
                         android:layout_marginRight="10dp"
-                        android:weightSum="3"
-                        >
+                        android:layout_marginEnd="10dp"
+                        android:weightSum="3">
+
                         <LinearLayout
                             android:id="@+id/lyt_win"
                             android:layout_width="match_parent"
                             android:layout_weight="1"
                             android:orientation="horizontal"
                             android:background="@color/colorAccent"
-                            android:layout_height="8dp">
-                        </LinearLayout>
+                            android:layout_height="8dp"></LinearLayout>
+
                         <LinearLayout
                             android:id="@+id/lyt_build"
                             android:layout_width="match_parent"
                             android:layout_weight="1"
                             android:orientation="horizontal"
                             android:background="@color/bg_login"
-                            android:layout_height="8dp">
-                        </LinearLayout>
+                            android:layout_height="8dp"></LinearLayout>
+
                         <LinearLayout
                             android:id="@+id/lyt_send"
                             android:layout_width="match_parent"
                             android:layout_weight="1"
                             android:orientation="horizontal"
                             android:background="@color/bg_login"
-                            android:layout_height="8dp">
-                        </LinearLayout>
+                            android:layout_height="8dp"></LinearLayout>
 
                     </LinearLayout>
                 </LinearLayout>
@@ -138,6 +151,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/my_recycler_view"
                     android:layout_width="match_parent"
@@ -145,8 +159,10 @@
                     android:padding="5dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
                     android:layout_marginRight="5dp"
-                    android:scrollbars="vertical"/>
+                    android:layout_marginEnd="5dp"
+                    android:scrollbars="vertical" />
             </LinearLayout>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
