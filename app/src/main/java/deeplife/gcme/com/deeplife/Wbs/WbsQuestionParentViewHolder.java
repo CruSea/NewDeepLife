@@ -114,12 +114,7 @@ public class WbsQuestionParentViewHolder extends ParentViewHolder implements Vie
         answer.setQuestionID(mWbsQuestion.getSerID());
         answer.setSerID(0);
         answer.setBuildStage(Disciple.STAGE.WIN); // briggsm: !!!!!!!!!!!!!!!!!! Just doing this for now, so it's not null (until we take it out of DB all together). !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        int value = 0;
-        try{
-           value = Integer.valueOf(QuestionNumericValue.getText().toString());
-       }catch (Exception e){
-
-       }
+        int value = Integer.valueOf(QuestionNumericValue.getText().toString());
         if (v.getId() == R.id.btn_wbs_numeric_inc) {
             value = value + 1;
             QuestionNumericValue.setText("" + value);

@@ -111,8 +111,8 @@ public class WbsQuestionChildViewHolder extends ChildViewHolder implements View.
         answer.setQuestionID(mWbsQuestion.getSerID());
         answer.setSerID(0);
         answer.setBuildStage(Disciple.STAGE.WIN); // briggsm: !!!!!!!!!!!!!!!!!! Just doing this for now, so it's not null (until we take it out of DB all together). !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        int value = Integer.valueOf(QuestionNumericValue.getText().toString());
         if (v.getId() == R.id.btn_wbs_numeric_inc) {
-            int value = Integer.valueOf(QuestionNumericValue.getText().toString());
             value = value + 1;
             QuestionNumericValue.setText("" + value);
             answer.setAnswer("" + value);
@@ -126,7 +126,6 @@ public class WbsQuestionChildViewHolder extends ChildViewHolder implements View.
                 mySyncDatabase.AddLog(logs);
             }
         } else if (v.getId() == R.id.btn_wbs_numeric_dec) {
-            int value = Integer.valueOf(QuestionNumericValue.getText().toString());
             if (value > 0) {
                 value = value - 1;
                 QuestionNumericValue.setText("" + value);
