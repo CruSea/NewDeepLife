@@ -489,10 +489,10 @@ public class Database {
     public long update(String DB_Table, ContentValues cv, int id) {
         Log.d(TAG, "Updating Table: " + DB_Table);
         String[] args = {"" + id};
-        long state = myDatabase.update(DB_Table, cv, "id = ?", args);
+        long numRowsAffected = myDatabase.update(DB_Table, cv, "id = ?", args);
         Log.d(TAG, "Updating Data: " + cv.toString());
-        Log.d(TAG, "Updating Completed: " + state + "\n");
-        return state;
+        Log.d(TAG, "Updating Completed: " + numRowsAffected + " rows affected");
+        return numRowsAffected;
     }
 
     public int count(String DB_Table) {
@@ -905,14 +905,14 @@ public class Database {
             cv.put(DisciplesColumn.CREATED.toString(), disciple.getCreated());
             if (disciple.getID() > 0) {
 //                long x = DeepLife.myDATABASE.update(DB_Table, cv, disciple.getID()); // briggsm: pretty sure we don't need "DeepLife.myDATABASE." here.
-                long x = update(DB_Table, cv, disciple.getID());
-                return x;
+                long numRowsAffected = update(DB_Table, cv, disciple.getID());
+                return numRowsAffected;  // briggsm: ??? Return # rows affectd by update() fn???
             } else {
 //                int id = DeepLife.myDATABASE.getDiscipleByPhone(disciple.getPhone()).getID(); // briggsm: pretty sure we don't need "DeepLife.myDATABASE." here.
 //                long x = DeepLife.myDATABASE.update(DB_Table, cv, id);
                 int id = getDiscipleByPhone(disciple.getPhone()).getID();
-                long x = update(DB_Table, cv, id);
-                return x;
+                long numRowsAffected = update(DB_Table, cv, id);
+                return numRowsAffected;  // briggsm: ??? Return # rows affectd by update() fn???
 
             }
         } catch (Exception e) {
@@ -1282,7 +1282,7 @@ public class Database {
     }
 
     public Answer getAnswerByQuestionID(int id) {
-        Log.d(TAG, "Get getAnswerByQuestionID by QuestionID: " + id);
+        Log.d(TAG, "getAnswerByQuestionID: " + id);
         String DB_Table = Table_QUESTION_ANSWER;
         try {
             Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
@@ -1331,6 +1331,7 @@ public class Database {
     }
 
     public long updateAnswer(Answer answer) {
+        // Returns ID of the row updated.
         Log.d(TAG, "UPDATE updateAnswer: ");
         String DB_Table = Table_QUESTION_ANSWER;
         try {
@@ -1343,9 +1344,10 @@ public class Database {
 //            int id = DeepLife.myDATABASE.getAnswerByQuestionIDandDisciplePhone(answer.getQuestionID(), answer.getDisciplePhone()).getID(); // briggsm: pretty sure we don't need "DeepLife.myDATABASE." here.
 //            long x = DeepLife.myDATABASE.update(DB_Table, cv, id);
             int id = getAnswerByQuestionIDandDisciplePhone(answer.getQuestionID(), answer.getDisciplePhone()).getID();
-            long x = update(DB_Table, cv, id);
+            long numRowsAffected = update(DB_Table, cv, id);
 
-            return x;
+            //return numRowsAffected;
+            return id;
 
         } catch (Exception e) {
             Log.e(TAG, "Failed UPDATE updateAnswer: " + e.toString());
@@ -1367,6 +1369,7 @@ public class Database {
     }
 
     public long addAnswer(Answer answer) {
+        // Returns ID of the row inserted.
         Log.d(TAG, "Add addAnswer: ");
         String DB_Table = Table_QUESTION_ANSWER;
         try {
@@ -1621,7 +1624,7 @@ public class Database {
     }
 
     public ArrayList<Answer> getSendAnswers() {
-        Log.d(TAG, "getSendAnswers:\n");
+        Log.d(TAG, "getSendAnswers()");
         String DB_Table = Table_LOGS;
         ArrayList<Answer> Found = new ArrayList<Answer>();
         try {
@@ -1630,16 +1633,16 @@ public class Database {
                 c.moveToFirst();
                 for (int i = 0; i < c.getCount(); i++) {
                     c.moveToPosition(i);
-                    String Log_Task = c.getString(c.getColumnIndex(LogsColumn.TASK.toString()));
-                    int Task_Value = Integer.valueOf(c.getString(c.getColumnIndex(LogsColumn.VALUE.toString())));
-                    int Log_ID = Integer.valueOf(c.getString(c.getColumnIndex(LogsColumn.ID.toString())));
-                    Log.d(TAG, "Comparing: " + Logs.TASK.SEND_ANSWERS + " | " + Log_Task);
-                    if (Logs.TASK.SEND_ANSWERS.equalsName(Log_Task)) {
+                    String logTask = c.getString(c.getColumnIndex(LogsColumn.TASK.toString()));
+                    int logValue = Integer.valueOf(c.getString(c.getColumnIndex(LogsColumn.VALUE.toString())));
+                    int logId = Integer.valueOf(c.getString(c.getColumnIndex(LogsColumn.ID.toString())));
+                    Log.d(TAG, "Comparing: " + Logs.TASK.SEND_ANSWERS + " | " + logTask);
+                    if (Logs.TASK.SEND_ANSWERS.equalsName(logTask)) {
                         Log.d(TAG, "SendAnswer Count:-> " + c.getCount());
-                        Answer sendAnswer = getAnswerByID(Task_Value);
+                        Answer sendAnswer = getAnswerByID(logValue);
                         if (sendAnswer != null) {
-                            sendAnswer.setID(Log_ID);
-                            Log.i(TAG, "Found for SendAnswer Send:-> \n" + sendAnswer.toString());
+                            sendAnswer.setID(logId);
+                            Log.i(TAG, "Found for getSendAnswers(). ID: " + sendAnswer.getID() + ", QuestionID: " + sendAnswer.getQuestionID() + ", Answer: " + sendAnswer.getAnswer());
                             Found.add(sendAnswer);
                         }
                     }
@@ -1782,7 +1785,7 @@ public class Database {
     }
 
     public long updateMainUser(User mainUser) {
-        Log.d(TAG, "UPDATE updateDisciple: ");
+        Log.d(TAG, "UPDATE updateMainUser: ");
         String DB_Table = Table_USER;
         try {
             ContentValues cv = new ContentValues();

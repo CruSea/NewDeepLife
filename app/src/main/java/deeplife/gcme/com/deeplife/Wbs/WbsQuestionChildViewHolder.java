@@ -76,18 +76,23 @@ public class WbsQuestionChildViewHolder extends ChildViewHolder implements View.
     }
 
     public void bind(@NonNull WbsQuestion wbsQuestion) {
+        Answer answer;
         switch (wbsQuestion.getType()) {
             case YESNO:
                 frameLayoutYesNo.setVisibility(View.VISIBLE);
                 frameLayoutNumeric.setVisibility(View.GONE);
                 frameLayoutFolder.setVisibility(View.GONE);
                 QuestionYesNo.setText(wbsQuestion.getQuestion());
+                answer = DeepLife.myDATABASE.getAnswerByQuestionID(wbsQuestion.getSerID());
+                btnToggleYesNo.setChecked(answer == null ? false : answer.getAnswer().equalsIgnoreCase("yes"));
                 break;
             case NUMBER:
                 frameLayoutYesNo.setVisibility(View.GONE);
                 frameLayoutNumeric.setVisibility(View.VISIBLE);
                 frameLayoutFolder.setVisibility(View.GONE);
                 QuestionNumeric.setText(wbsQuestion.getQuestion());
+                answer = DeepLife.myDATABASE.getAnswerByQuestionID(wbsQuestion.getSerID());
+                QuestionNumericValue.setText(answer == null ? "0" : answer.getAnswer());
                 break;
             default:  // Folder
                 frameLayoutYesNo.setVisibility(View.GONE);
@@ -111,13 +116,13 @@ public class WbsQuestionChildViewHolder extends ChildViewHolder implements View.
             value = value + 1;
             QuestionNumericValue.setText("" + value);
             answer.setAnswer("" + value);
-            long x = DeepLife.myDATABASE.add_updateAnswer(answer);
-            if (x > 0) {
+            long modifiedRowId = DeepLife.myDATABASE.add_updateAnswer(answer);
+            if (modifiedRowId > 0) {
                 Logs logs = new Logs();
                 logs.setTask(Logs.TASK.SEND_ANSWERS);
                 logs.setType(Logs.TYPE.ADD_NEW_ANSWERS);
                 logs.setService(SyncService.API_SERVICE.ADDNEW_ANSWERS);
-                logs.setValue("" + x);
+                logs.setValue("" + modifiedRowId);
                 mySyncDatabase.AddLog(logs);
             }
         } else if (v.getId() == R.id.btn_wbs_numeric_dec) {
@@ -126,13 +131,13 @@ public class WbsQuestionChildViewHolder extends ChildViewHolder implements View.
                 value = value - 1;
                 QuestionNumericValue.setText("" + value);
                 answer.setAnswer("" + value);
-                long x = DeepLife.myDATABASE.add_updateAnswer(answer);
-                if (x > 0) {
+                long modifiedRowId = DeepLife.myDATABASE.add_updateAnswer(answer);
+                if (modifiedRowId > 0) {
                     Logs logs = new Logs();
                     logs.setTask(Logs.TASK.SEND_ANSWERS);
                     logs.setType(Logs.TYPE.ADD_NEW_ANSWERS);
                     logs.setService(SyncService.API_SERVICE.ADDNEW_ANSWERS);
-                    logs.setValue("" + x);
+                    logs.setValue("" + modifiedRowId);
                     mySyncDatabase.AddLog(logs);
                 }
             }
@@ -141,25 +146,25 @@ public class WbsQuestionChildViewHolder extends ChildViewHolder implements View.
             if (btnToggleYesNo.isChecked()) {
                 Log.d(TAG, "onClick: Checked");
                 answer.setAnswer("YES");
-                long x = DeepLife.myDATABASE.add_updateAnswer(answer);
-                if (x > 0) {
+                long modifiedRowId = DeepLife.myDATABASE.add_updateAnswer(answer);
+                if (modifiedRowId > 0) {
                     Logs logs = new Logs();
                     logs.setTask(Logs.TASK.SEND_ANSWERS);
                     logs.setType(Logs.TYPE.ADD_NEW_ANSWERS);
                     logs.setService(SyncService.API_SERVICE.ADDNEW_ANSWERS);
-                    logs.setValue("" + x);
+                    logs.setValue("" + modifiedRowId);
                     mySyncDatabase.AddLog(logs);
                 }
             } else {
                 Log.d(TAG, "onClick: Un-checked");
                 answer.setAnswer("NO");
-                long x = DeepLife.myDATABASE.add_updateAnswer(answer);
-                if (x > 0) {
+                long modifiedRowId = DeepLife.myDATABASE.add_updateAnswer(answer);
+                if (modifiedRowId > 0) {
                     Logs logs = new Logs();
                     logs.setTask(Logs.TASK.SEND_ANSWERS);
                     logs.setType(Logs.TYPE.ADD_NEW_ANSWERS);
                     logs.setService(SyncService.API_SERVICE.ADDNEW_ANSWERS);
-                    logs.setValue("" + x);
+                    logs.setValue("" + modifiedRowId);
                     mySyncDatabase.AddLog(logs);
                 }
 
