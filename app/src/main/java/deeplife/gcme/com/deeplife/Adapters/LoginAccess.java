@@ -123,6 +123,7 @@ public class LoginAccess {
         Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.COUNTRY.toString(), ""));
         Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.SERVICE.toString(), SyncService.API_SERVICE.META_DATA.toString()));
         Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.PARAM.toString(), "[]"));
+        Log.i(TAG, "Request Sent to Server (Meta Data): " + Send_Param.toString());
         try {
             myFuel.post(DeepLife.API_URL, Send_Param).responseString(new Handler<String>() {
                 @Override
@@ -146,7 +147,7 @@ public class LoginAccess {
 
                 @Override
                 public void failure(@NotNull Request request, @NotNull Response response, @NotNull FuelError fuelError) {
-                    Log.i(TAG, "Server Response Error-> \n" + fuelError);
+                    Log.i(TAG, "Server Response Error Meta data-> \n" + fuelError);
                     Login.showDialog(DeepLife.getContext().getString(R.string.dlg_msg_meta_download_failed));
                 }
             });
