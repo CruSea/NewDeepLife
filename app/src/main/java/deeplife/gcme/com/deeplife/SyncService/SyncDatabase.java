@@ -418,8 +418,9 @@ public class SyncDatabase {
                     cv.put(Database.QuestionAnswerColumn.QUESTION_ID.toString(), obj.getString(ApiResponseKey.QUESTION_ID.toString()));
                     cv.put(Database.QuestionAnswerColumn.ANSWER.toString(), obj.getString(ApiResponseKey.ANSWER.toString()));
                     cv.put(Database.QuestionAnswerColumn.BUILDSTAGE.toString(), obj.getString(ApiResponseKey.STAGE.toString()));
-                    ;
-                    Answer answer = DeepLife.myDATABASE.getAnswerBySerID(Integer.valueOf(obj.getString(ApiResponseKey.ID.toString())));
+
+                    //Answer answer = DeepLife.myDATABASE.getAnswerBySerID(Integer.valueOf(obj.getString(ApiResponseKey.ID.toString())));
+                    Answer answer = DeepLife.myDATABASE.getAnswerByQuestionID(Integer.valueOf(obj.getString(ApiResponseKey.QUESTION_ID.toString())));
                     if (answer == null) {
                         long x = DeepLife.myDATABASE.insert(Database.Table_QUESTION_ANSWER, cv);
                         if (x > 0) {

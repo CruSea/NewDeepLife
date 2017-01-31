@@ -40,23 +40,23 @@ public class WbsQuestionAdapter extends ExpandableRecyclerAdapter<WbsQuestion, W
     @NonNull
     @Override
     public WbsQuestionParentViewHolder onCreateParentViewHolder(@NonNull ViewGroup parentViewGroup, int viewType) {
-        View wbsQuestionParent;
-        wbsQuestionParent = mInflater.inflate(R.layout.wbs_fragment_item1, parentViewGroup, false);
-        return new WbsQuestionParentViewHolder(mContext, wbsQuestionParent, mDisciple);
+        View wbsQuestionParentView;
+        wbsQuestionParentView = mInflater.inflate(R.layout.wbs_fragment_item1, parentViewGroup, false);
+        return new WbsQuestionParentViewHolder(mContext, wbsQuestionParentView, mDisciple);
     }
 
     @UiThread
     @NonNull
     @Override
     public WbsQuestionChildViewHolder onCreateChildViewHolder(@NonNull ViewGroup childViewGroup, int viewType) {
-        View wbsQuestionChild;
+        View wbsQuestionChildView;
 
-        wbsQuestionChild = mInflater.inflate(R.layout.wbs_fragment_item1, childViewGroup, false);
-        wbsQuestionChild.setPadding(20,0,0,0);  // This is in pixels.
-        CardView cardView = (CardView) wbsQuestionChild.findViewById(R.id.card_view);
+        wbsQuestionChildView = mInflater.inflate(R.layout.wbs_fragment_item1, childViewGroup, false);
+        wbsQuestionChildView.setPadding(20,0,0,0);  // This is in pixels.
+        CardView cardView = (CardView) wbsQuestionChildView.findViewById(R.id.card_view);
         cardView.setCardBackgroundColor(Color.LTGRAY);
 
-        return new WbsQuestionChildViewHolder(mContext, wbsQuestionChild, mDisciple);
+        return new WbsQuestionChildViewHolder(mContext, wbsQuestionChildView, mDisciple);
     }
 
     @UiThread

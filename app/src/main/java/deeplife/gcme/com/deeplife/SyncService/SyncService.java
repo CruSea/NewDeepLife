@@ -211,14 +211,14 @@ public class SyncService extends JobService {
         // Parameter Populator
         Logs myLogs = new Logs();
         if (DeepLife.myDATABASE.getSendLogs().size() > 0) {
-            Log.i(TAG, "GET LOG TO SEND -> \n");
+            Log.i(TAG, "GET LOG TO SEND...");
             ArrayList<Logs> foundData = DeepLife.myDATABASE.getSendLogs();
             for (int i = 0; i < foundData.size(); i++) {
                 myLogs.getParam().add(foundData.get(i));
             }
             myLogs.setService(API_SERVICE.SEND_LOG);
         } else if (DeepLife.myDATABASE.getSendDisciples().size() > 0) {
-            Log.i(TAG, "GET DISCIPLES TO SEND -> \n");
+            Log.i(TAG, "GET DISCIPLES TO SEND...");
             ArrayList<Disciple> foundData = DeepLife.myDATABASE.getSendDisciples();
             for (int i = 0; i < foundData.size(); i++) {
                 myLogs.getParam().add(foundData.get(i));
@@ -226,7 +226,7 @@ public class SyncService extends JobService {
             //myLogs.setService(API_SERVICE.SEND_DISCIPLES);  // briggsm: Are we sure? Biniam had AddNew_Disciples here. Is that right? I'm changing to Send_Disciples.
             myLogs.setService(API_SERVICE.ADDNEW_DISCIPLES);
         } else if (DeepLife.myDATABASE.getTopImageSync() != null) {
-            Log.i(TAG, "GET Images TO SEND -> \n");
+            Log.i(TAG, "GET Images TO SEND...");
             ImageSync tosync = DeepLife.myDATABASE.getTopImageSync();
             ImageSync img = new ImageSync();
             img.setImage(encodeImage(tosync.getFilePath()));
@@ -236,7 +236,7 @@ public class SyncService extends JobService {
             //myLogs.setService(tosync.getParam());
             myLogs.setService(API_SERVICE.valueOf(tosync.getParam())); // briggsm: not 100% sure this will work... TODO: debug.
         } else if (DeepLife.myDATABASE.getUpdateDisciples().size() > 0) {
-            Log.i(TAG, "GET DISCIPLES TO UPDATE -> \n");
+            Log.i(TAG, "GET DISCIPLES TO UPDATE...");
 
             ArrayList<Disciple> foundData = DeepLife.myDATABASE.getUpdateDisciples();
             for (int i = 0; i < foundData.size(); i++) {
@@ -244,7 +244,7 @@ public class SyncService extends JobService {
             }
             myLogs.setService(API_SERVICE.UPDATE_DISCIPLES);
         } else if (DeepLife.myDATABASE.getSendAnswers().size() > 0) {
-            Log.i(TAG, "GET Answers TO Send -> \n");
+            Log.i(TAG, "GET Answers TO Send...");
             ArrayList<Answer> foundData = DeepLife.myDATABASE.getSendAnswers();
             for (int i = 0; i < foundData.size(); i++) {
                 myLogs.getParam().add(foundData.get(i));
@@ -253,7 +253,7 @@ public class SyncService extends JobService {
             //myLogs.setService(API_SERVICE.SEND_ANSWERS);
             myLogs.setService(API_SERVICE.ADDNEW_ANSWERS);
         } else if (DeepLife.myDATABASE.getSendSchedules().size() > 0) {
-            Log.i(TAG, "GET Schedules TO Send -> \n");
+            Log.i(TAG, "GET Schedules TO Send...");
             ArrayList<Schedule> foundData = DeepLife.myDATABASE.getSendSchedules();
             for (int i = 0; i < foundData.size(); i++) {
                 myLogs.getParam().add(foundData.get(i));
@@ -261,21 +261,21 @@ public class SyncService extends JobService {
             //myLogs.setService(API_SERVICE.SEND_SCHEDULE);
             myLogs.setService(API_SERVICE.ADDNEW_SCHEDULES);
         } else if (DeepLife.myDATABASE.getUpdateSchedules().size() > 0) {
-            Log.i(TAG, "GET Schedules TO UPDATE -> \n");
+            Log.i(TAG, "GET Schedules TO UPDATE...");
             ArrayList<Schedule> foundData = DeepLife.myDATABASE.getUpdateSchedules();
             for (int i = 0; i < foundData.size(); i++) {
                 myLogs.getParam().add(foundData.get(i));
             }
             myLogs.setService(API_SERVICE.UPDATE_SCHEDULES);
         } else if (DeepLife.myDATABASE.getSendReports().size() > 0) {
-            Log.i(TAG, "GET Reports TO Send -> \n");
+            Log.i(TAG, "GET Reports TO Send...");
             ArrayList<ReportItem> foundData = DeepLife.myDATABASE.getSendReports();
             for (int i = 0; i < foundData.size(); i++) {
                 myLogs.getParam().add(foundData.get(i));
             }
             myLogs.setService(API_SERVICE.SEND_REPORT);
         } else if (DeepLife.myDATABASE.getSendTestimony().size() > 0) {
-            Log.i(TAG, "GET Testimony TO Send -> \n");
+            Log.i(TAG, "GET Testimony TO Send...");
             ArrayList<Testimony> foundData = DeepLife.myDATABASE.getSendTestimony();
             for (int i = 0; i < foundData.size(); i++) {
                 myLogs.getParam().add(foundData.get(i));
