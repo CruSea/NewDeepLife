@@ -115,6 +115,10 @@
                 android:value=".MainActivity" />
         </activity>
         <activity android:name="com.soundcloud.android.crop.CropImageActivity" />
+        <activity android:name=".WelComeIntro.WelcomeActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
 
         <service
             android:name=".SyncService.SyncService"

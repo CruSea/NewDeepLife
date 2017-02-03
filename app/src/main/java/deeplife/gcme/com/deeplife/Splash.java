@@ -9,6 +9,7 @@ import android.view.Window;
 
 import deeplife.gcme.com.deeplife.Database.Database;
 import deeplife.gcme.com.deeplife.Models.User;
+import deeplife.gcme.com.deeplife.WelComeIntro.WelcomeActivity;
 
 /**
  * Created by bengeos on 12/18/16.
@@ -45,7 +46,7 @@ public class Splash extends AppCompatActivity {
             startActivity(intent);
             finish();
         } else {
-            Intent intent = new Intent(this, Login.class);
+            Intent intent = new Intent(this, WelcomeActivity.class);
             startActivity(intent);
             finish();
         }
