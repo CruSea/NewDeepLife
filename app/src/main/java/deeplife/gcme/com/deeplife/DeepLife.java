@@ -55,7 +55,7 @@ public class DeepLife extends Application {
         JobInfo.Builder jobInfo;
         jobInfo = new JobInfo.Builder(JOB_ID++, new ComponentName(this, SyncService.class))
                 .setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED)
-                .setPeriodic(10000)
+                .setPeriodic(30000)
                 .setRequiresDeviceIdle(false)
                 .setRequiresCharging(false);
         myJobScheduler.cancelAll();
