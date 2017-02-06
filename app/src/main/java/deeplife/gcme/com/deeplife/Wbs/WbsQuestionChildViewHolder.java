@@ -114,6 +114,7 @@ public class WbsQuestionChildViewHolder extends ChildViewHolder implements View.
         if (v.getId() == R.id.btn_wbs_numeric_inc) {
             int value = Integer.valueOf(QuestionNumericValue.getText().toString());
             value = value + 1;
+            Log.i(TAG, "INC clicked. Changing value from '" + (value - 1) + "' to '" + value + "'");
             QuestionNumericValue.setText("" + value);
             answer.setAnswer("" + value);
             long modifiedRowId = DeepLife.myDATABASE.add_updateAnswer(answer);
@@ -129,6 +130,7 @@ public class WbsQuestionChildViewHolder extends ChildViewHolder implements View.
             int value = Integer.valueOf(QuestionNumericValue.getText().toString());
             if (value > 0) {
                 value = value - 1;
+                Log.i(TAG, "DEC clicked. Changing value from '" + (value + 1) + "' to '" + value + "'");
                 QuestionNumericValue.setText("" + value);
                 answer.setAnswer("" + value);
                 long modifiedRowId = DeepLife.myDATABASE.add_updateAnswer(answer);
@@ -144,7 +146,7 @@ public class WbsQuestionChildViewHolder extends ChildViewHolder implements View.
 
         } else if (v.getId() == R.id.tgl_wbs_yesno_state) {
             if (btnToggleYesNo.isChecked()) {
-                Log.d(TAG, "onClick: Checked");
+                Log.i(TAG, "YES/NO tapped: YES");
                 answer.setAnswer("YES");
                 long modifiedRowId = DeepLife.myDATABASE.add_updateAnswer(answer);
                 if (modifiedRowId > 0) {
@@ -156,7 +158,7 @@ public class WbsQuestionChildViewHolder extends ChildViewHolder implements View.
                     mySyncDatabase.AddLog(logs);
                 }
             } else {
-                Log.d(TAG, "onClick: Un-checked");
+                Log.i(TAG, "YES/NO tapped: NO");
                 answer.setAnswer("NO");
                 long modifiedRowId = DeepLife.myDATABASE.add_updateAnswer(answer);
                 if (modifiedRowId > 0) {
