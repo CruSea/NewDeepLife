@@ -173,7 +173,7 @@ public class WbsQuestionChildViewHolder extends ChildViewHolder implements View.
             showDialog(mWbsQuestion.getDescription());
         }
 
-        WbsActivity.checkStage();
+        WbsActivity.updateCurrentStageButton();
 
     }
 

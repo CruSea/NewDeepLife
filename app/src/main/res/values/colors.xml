@@ -28,10 +28,10 @@
     <color name="dot_dark_screen4">#a854d4</color>
 
     <!-- dots active colors -->
-    <color name="dot_light_screen1">#f98da5</color>
-    <color name="dot_light_screen2">#8cf9eb</color>
-    <color name="dot_light_screen3">#93c6fd</color>
-    <color name="dot_light_screen4">#e4b5fc</color>
+    <color name="dot_light_screen1">#febf10</color>
+    <color name="dot_light_screen2">#febf10</color>
+    <color name="dot_light_screen3">#febf10</color>
+    <color name="dot_light_screen4">#febf10</color>
 
 
     <array name="array_dot_active">

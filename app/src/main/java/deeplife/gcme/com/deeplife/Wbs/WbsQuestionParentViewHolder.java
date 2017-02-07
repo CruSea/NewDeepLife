@@ -179,7 +179,8 @@ public class WbsQuestionParentViewHolder extends ParentViewHolder implements Vie
             super.onClick(v);
         }
 
-        WbsActivity.checkStage();
+//        WbsActivity.checkStage();
+        WbsActivity.updateCurrentStageButton();
 
     }
 
