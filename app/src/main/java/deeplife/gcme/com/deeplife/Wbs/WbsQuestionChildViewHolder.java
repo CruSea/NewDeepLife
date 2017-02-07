@@ -83,7 +83,8 @@ public class WbsQuestionChildViewHolder extends ChildViewHolder implements View.
                 frameLayoutNumeric.setVisibility(View.GONE);
                 frameLayoutFolder.setVisibility(View.GONE);
                 QuestionYesNo.setText(wbsQuestion.getQuestion());
-                answer = DeepLife.myDATABASE.getAnswerByQuestionID(wbsQuestion.getSerID());
+                //answer = DeepLife.myDATABASE.getAnswerByQuestionID(wbsQuestion.getSerID());
+                answer = DeepLife.myDATABASE.getAnswerByQuestionIDandDisciplePhone(wbsQuestion.getSerID(), mDisciple.getPhone());
                 btnToggleYesNo.setChecked(answer == null ? false : answer.getAnswer().equalsIgnoreCase("yes"));
                 break;
             case NUMBER:
@@ -91,7 +92,8 @@ public class WbsQuestionChildViewHolder extends ChildViewHolder implements View.
                 frameLayoutNumeric.setVisibility(View.VISIBLE);
                 frameLayoutFolder.setVisibility(View.GONE);
                 QuestionNumeric.setText(wbsQuestion.getQuestion());
-                answer = DeepLife.myDATABASE.getAnswerByQuestionID(wbsQuestion.getSerID());
+                //answer = DeepLife.myDATABASE.getAnswerByQuestionID(wbsQuestion.getSerID());
+                answer = DeepLife.myDATABASE.getAnswerByQuestionIDandDisciplePhone(wbsQuestion.getSerID(), mDisciple.getPhone());
                 QuestionNumericValue.setText(answer == null ? "0" : answer.getAnswer());
                 break;
             default:  // Folder

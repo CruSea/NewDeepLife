@@ -25,7 +25,7 @@
     <string name="msg_authenticating_account">Проверка подлинности учетной записи ...</string>
     <string name="thank_you">Спасибо!</string>
     <string name="dlg_msg_invalid_user_acct">Недопустимая учетная запись пользователя! Используйте действительную учетную запись, пожалуйста,</string>
-    <string name="dlg_msg_something_wrong_error">Что-то пошло не так! Пожалуйста, попробуйте еще раз!\nОшибка: $1%s</string>
+    <string name="dlg_msg_something_wrong_error">Что-то пошло не так! Пожалуйста, попробуйте еще раз!\nОшибка: %1$s</string>
     <string name="dlg_msg_authentication_failed">Аутентификация не удалась! Пожалуйста, попробуйте еще раз.</string>
     <string name="dlg_msg_downloading_files">Загрузка файлов ...</string>
     <string name="dlg_msg_authenticating_user">Проверка подлинности пользователя ...</string>
@@ -37,7 +37,7 @@
     <string name="dlg_msg_disciple_add_success">Disciple успешно добавлен!</string>
     <string name="dlg_msg_disciple_add_failure">К сожалению! Ученик не может быть добавлен!</string>
     <string name="dlg_msg_disciple_add_failure_check">К сожалению! Ученик не может быть добавлен! Пожалуйста, убедитесь, что вы ввели правильную информацию.</string>
-    <string name="dlg_msg_are_you_sure_delete_x">Вы уверены, что хотите удалить это $1%s?!</string>
+    <string name="dlg_msg_are_you_sure_delete_x">Вы уверены, что хотите удалить это %1$s?!</string>
     <string name="dlg_btn_no_dont_delete">Нет, не удалять!</string>
     <string name="dlg_btn_yes">Да</string>
     <string name="toolbar_title_disciple_wbs">Win билд Отправить Disciple</string>

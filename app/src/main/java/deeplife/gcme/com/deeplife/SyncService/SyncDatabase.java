@@ -412,15 +412,17 @@ public class SyncDatabase {
                 Log.d(TAG, "Adding New Answers  -> \n" + json_answers.toString());
                 for (int i = 0; i < json_answers.length(); i++) {
                     JSONObject obj = json_answers.getJSONObject(i);
+                    String disciplePhone = obj.getString(ApiResponseKey.DISCIPLE_PHONE.toString());
                     ContentValues cv = new ContentValues();
                     cv.put(Database.QuestionAnswerColumn.SERID.toString(), obj.getString(ApiResponseKey.ID.toString()));
-                    cv.put(Database.QuestionAnswerColumn.DISCIPLEPHONE.toString(), obj.getString(ApiResponseKey.DISCIPLE_PHONE.toString()));
+                    cv.put(Database.QuestionAnswerColumn.DISCIPLEPHONE.toString(), disciplePhone);
                     cv.put(Database.QuestionAnswerColumn.QUESTION_ID.toString(), obj.getString(ApiResponseKey.QUESTION_ID.toString()));
                     cv.put(Database.QuestionAnswerColumn.ANSWER.toString(), obj.getString(ApiResponseKey.ANSWER.toString()));
                     cv.put(Database.QuestionAnswerColumn.BUILDSTAGE.toString(), obj.getString(ApiResponseKey.STAGE.toString()));
 
                     //Answer answer = DeepLife.myDATABASE.getAnswerBySerID(Integer.valueOf(obj.getString(ApiResponseKey.ID.toString())));
-                    Answer answer = DeepLife.myDATABASE.getAnswerByQuestionID(Integer.valueOf(obj.getString(ApiResponseKey.QUESTION_ID.toString())));
+                    //Answer answer = DeepLife.myDATABASE.getAnswerByQuestionID(Integer.valueOf(obj.getString(ApiResponseKey.QUESTION_ID.toString())));
+                    Answer answer = DeepLife.myDATABASE.getAnswerByQuestionIDandDisciplePhone(Integer.valueOf(obj.getString(ApiResponseKey.QUESTION_ID.toString())), disciplePhone);
                     if (answer == null) {
                         long x = DeepLife.myDATABASE.insert(Database.Table_QUESTION_ANSWER, cv);
                         if (x > 0) {

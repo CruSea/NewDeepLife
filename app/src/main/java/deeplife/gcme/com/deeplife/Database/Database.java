@@ -1283,6 +1283,8 @@ public class Database {
         return null;
     }
 
+    // briggsm: Does below function even make sense? Given just QuestionID, there will be several different answers (1 for each disciple who answered it already)
+    /*
     public Answer getAnswerByQuestionID(int id) {
         Log.d(TAG, "getAnswerByQuestionID: " + id);
         String DB_Table = Table_QUESTION_ANSWER;
@@ -1306,6 +1308,7 @@ public class Database {
         }
         return null;
     }
+    */
 
     public Answer getAnswerByQuestionIDandDisciplePhone(int questionID, String disciplePhone) {
         Log.d(TAG, "Get getAnswerByQuestionIDandDisciplePhone by QuestionPhone and DisciplePhone: ");
