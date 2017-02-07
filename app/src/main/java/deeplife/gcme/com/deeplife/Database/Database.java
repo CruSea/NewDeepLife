@@ -255,6 +255,7 @@ public class Database {
         PHONE("Phone"),
         PASSWORD("Password"),
         COUNTRY("Country"),
+        GENDER("Gender"),
         PICTURE("Picture"),
         FAVORITE_SCRIPTURE("Favorite_Scripture");
 
@@ -592,6 +593,7 @@ public class Database {
                 dis.setUser_Phone(c.getString(c.getColumnIndex(UserColumn.PHONE.toString())));
                 dis.setUser_Pass(c.getString(c.getColumnIndex(UserColumn.PASSWORD.toString())));
                 dis.setUser_Country(c.getString(c.getColumnIndex(UserColumn.COUNTRY.toString())));
+                dis.setUser_Gender(c.getString(c.getColumnIndex(UserColumn.GENDER.toString())));
                 dis.setUser_Picture(c.getString(c.getColumnIndex(UserColumn.PICTURE.toString())));
                 dis.setUser_Favorite_Scripture(c.getString(c.getColumnIndex(UserColumn.FAVORITE_SCRIPTURE.toString())));
                 return dis;
@@ -1780,6 +1782,7 @@ public class Database {
                     user.setUser_Phone(c.getString(c.getColumnIndex(UserColumn.PHONE.toString())));
                     user.setUser_Pass(c.getString(c.getColumnIndex(UserColumn.PASSWORD.toString())));
                     user.setUser_Country(c.getString(c.getColumnIndex(UserColumn.COUNTRY.toString())));
+                    user.setUser_Gender(c.getString(c.getColumnIndex(UserColumn.GENDER.toString())));
                     user.setUser_Picture(c.getString(c.getColumnIndex(UserColumn.PICTURE.toString())));
                     user.setUser_Favorite_Scripture(c.getString(c.getColumnIndex(UserColumn.FAVORITE_SCRIPTURE.toString())));
                     return user;
@@ -1804,6 +1807,7 @@ public class Database {
             cv.put(UserColumn.PHONE.toString(), mainUser.getUser_Phone());
             cv.put(UserColumn.PASSWORD.toString(), mainUser.getUser_Pass());
             cv.put(UserColumn.COUNTRY.toString(), mainUser.getUser_Country());
+            cv.put(UserColumn.GENDER.toString(), mainUser.getUser_Gender());
             cv.put(UserColumn.PICTURE.toString(), mainUser.getUser_Picture());
             cv.put(UserColumn.FAVORITE_SCRIPTURE.toString(), mainUser.getUser_Favorite_Scripture());
 //            DeepLife.myDATABASE.Delete_All(DB_Table); // briggsm: pretty sure we don't need "DeepLife.myDATABASE." here.

@@ -57,7 +57,7 @@ public class DiscipleProfileActivity extends AppCompatActivity {
     private static final String TAG = "DiscipleProfileActivity";
     private Toolbar myToolbar;
     private TabLayout myTabLayout;
-    private EditText FullName, Email, Countr, Phone, Note;
+    private EditText FullName, Email, Country, Gender, Phone, Note;
     private ImageButton DiscipleImageBtn;
     private ImageView DiscipleImage;
     private String DisciplePhone;
@@ -94,8 +94,10 @@ public class DiscipleProfileActivity extends AppCompatActivity {
             Email.setText(myDisciple.getEmail());
             Phone.setText("+" + myDisciple.getPhone());
             Country country = DeepLife.myDATABASE.getCountryByID(Integer.valueOf(myDisciple.getCountry()));
-            Countr.setText(country.getName());
-            Countr.setEnabled(false);
+            Country.setText(country.getName());
+            Country.setEnabled(false);
+            Gender.setText(myDisciple.getGender().toString());
+            Gender.setEnabled(false);
             if (myDisciple.getImagePath() != null) {
                 File file = new File(myDisciple.getImagePath());
                 if (file.isFile()) {
@@ -113,7 +115,8 @@ public class DiscipleProfileActivity extends AppCompatActivity {
         Phone = (EditText) findViewById(R.id.txt_disciple_profile_phone);
         Phone.setEnabled(false);
         Note = (EditText) findViewById(R.id.txt_disciple_profile_note);
-        Countr = (EditText) findViewById(R.id.txt_disciple_profile_country);
+        Country = (EditText) findViewById(R.id.txt_disciple_profile_country);
+        Gender = (EditText) findViewById(R.id.txt_disciple_profile_gender);
         DiscipleImage = (ImageView) findViewById(R.id.img_discipleprofile_image);
         DiscipleImageBtn = (ImageButton) findViewById(R.id.btn_discipleprofile_image);
         DisComplete = (Button) findViewById(R.id.btn_disciple_profile_complete);
