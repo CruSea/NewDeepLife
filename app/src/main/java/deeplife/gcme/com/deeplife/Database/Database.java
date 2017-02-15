@@ -764,7 +764,7 @@ public class Database {
                 Testimony newTestimony = getTestimonyByID(cur_id);
                 if (newTestimony != null) {
                     found.add(newTestimony);
-                    Log.i(TAG, "Get All Testimonies Populating: " + newTestimony.getID());
+                    Log.d(TAG, "Get All Testimonies Populating: " + newTestimony.getID());
                 }
             }
         } catch (Exception e) {
