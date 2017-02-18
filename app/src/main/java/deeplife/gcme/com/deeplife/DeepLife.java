@@ -46,7 +46,7 @@ public class DeepLife extends Application {
         myDATABASE = new Database(this);
 //        JobManager.create(this).addJobCreator(new SyncJob());
         myJobScheduler = JobScheduler.getInstance(this);
-        JobConstr();
+//        JobConstr();
     }
 
     public void JobConstr() {

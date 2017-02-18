@@ -47,15 +47,6 @@ public class Login extends AppCompatActivity {
         myContext = this;
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle(R.string.app_name);
-        myCountries = DeepLife.myDATABASE.getAllCountries();
-        if (myCountries != null && myCountries.size() > 0) {
-
-        } else {
-            progressDialog.setMessage(getString(R.string.dlg_msg_downloading_files));
-            progressDialog.show();
-            loginAccess = new LoginAccess(new User());
-            loginAccess.GetMetaData();
-        }
 
         TextCode = (EditText) findViewById(R.id.txt_login_code);
         UserName = (EditText) findViewById(R.id.txt_login_username);
@@ -92,7 +83,7 @@ public class Login extends AppCompatActivity {
                 try {
                     if (myCountries == null || myCountries.size() == 0) {
                         myCountries = DeepLife.myDATABASE.getAllCountries();
-                        UpdateView();
+//                        UpdateView();
                     } else {
                         User user = new User();
                         if (UserName.getText().toString().contains("@")) {
@@ -124,7 +115,15 @@ public class Login extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        UpdateView();
+        myCountries = DeepLife.myDATABASE.getAllCountries();
+        if (myCountries == null || myCountries.size()==0) {
+            progressDialog.setMessage(getString(R.string.dlg_msg_downloading_files));
+//            progressDialog.show();
+            loginAccess = new LoginAccess(new User());
+            loginAccess.GetMetaData();
+        }else {
+            UpdateView();
+        }
     }
 
     public static void UpdateView() {
@@ -165,7 +164,7 @@ public class Login extends AppCompatActivity {
                 public void onClick(DialogInterface dialog, int which) {
                     switch (which) {
                         case DialogInterface.BUTTON_POSITIVE:
-                            UpdateView();
+//                            UpdateView();
                             break;
                     }
                 }
