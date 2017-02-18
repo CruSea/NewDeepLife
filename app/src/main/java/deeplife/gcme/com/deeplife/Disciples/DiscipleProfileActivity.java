@@ -43,7 +43,6 @@ import deeplife.gcme.com.deeplife.Database.Database;
 import deeplife.gcme.com.deeplife.DeepLife;
 import deeplife.gcme.com.deeplife.FileManager.FileManager;
 import deeplife.gcme.com.deeplife.Models.Country;
-import deeplife.gcme.com.deeplife.Models.Logs;
 import deeplife.gcme.com.deeplife.Processing.ImageProcessing;
 import deeplife.gcme.com.deeplife.R;
 import deeplife.gcme.com.deeplife.SyncService.SyncDatabase;
@@ -71,6 +70,8 @@ public class DiscipleProfileActivity extends AppCompatActivity {
     private Context myContext;
     private TextView DisplayName;
 
+    Country userCountry;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,9 +83,15 @@ public class DiscipleProfileActivity extends AppCompatActivity {
         myFileManager = new FileManager(this);
         mySyncDatabase = new SyncDatabase();
         Init();
-        EditMode(false);
+        //EditMode(false);
         FillForm();
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        populateTextViews();
     }
 
     private void FillForm() {
@@ -168,9 +175,22 @@ public class DiscipleProfileActivity extends AppCompatActivity {
         }
     }
 
+    /*
     private void EditMode(boolean state) {
         FullName.setEnabled(state);
         Note.setEnabled(state);
+    }
+    */
+
+    private void populateTextViews() {
+        myDisciple = DeepLife.myDATABASE.getDiscipleByPhone(DisciplePhone);
+
+        FullName.setText(myDisciple.getFullName());
+        Email.setText(myDisciple.getEmail());
+        userCountry = DeepLife.myDATABASE.getCountryByID(Integer.valueOf(myDisciple.getCountry()));
+        Country.setText(userCountry.getName());
+        Phone.setText("+" + myDisciple.getPhone());
+        Gender.setText(myDisciple.getGender().toString());
     }
 
     @Override
@@ -181,9 +201,10 @@ public class DiscipleProfileActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        /*
         if (item.getItemId() == R.id.disciple_edit) {
             EditMode(true);
-        } else if (item.getItemId() == R.id.disciple_edit) {
+        } else if (item.getItemId() == R.id.disciple_edit) {  // briggsm: this else if is exactly the same as the "if" ...
             myDisciple.setDisplayName(FullName.getText().toString());
             DeepLife.myDATABASE.updateDisciple(myDisciple);
             Logs logs = new Logs();
@@ -193,6 +214,20 @@ public class DiscipleProfileActivity extends AppCompatActivity {
             mySyncDatabase.AddLog(logs);
             EditMode(false);
         }
+        */
+
+        if (item.getItemId() == R.id.disciple_edit) {
+            Intent intent = new Intent(this, DiscipleEditActivity.class);
+            Bundle b = new Bundle();
+            b.putString("FullName", FullName.getText().toString());
+            b.putString("Email", Email.getText().toString());
+            b.putString("CountrySerID", String.valueOf(userCountry.getSerID()));
+            b.putString("Phone", Phone.getText().toString());
+            b.putString("Gender", Gender.getText().toString());
+            intent.putExtras(b);
+            startActivity(intent);
+        }
+
         return super.onOptionsItemSelected(item);
     }
 

@@ -1588,8 +1588,8 @@ public class Database {
                     int Log_ID = Integer.valueOf(c.getString(c.getColumnIndex(LogsColumn.ID.toString())));
                     String Log_Task = c.getString(c.getColumnIndex(LogsColumn.TASK.toString()));
                     String Task_Value = c.getString(c.getColumnIndex(LogsColumn.VALUE.toString()));
-                    Log.d(TAG, "Comparing: " + Logs.TASK.UPDATE_DISCIPLE + " | " + Log_Task);
-                    if (Logs.TASK.UPDATE_DISCIPLE.equalsName(Log_Task)) {
+                    Log.d(TAG, "Comparing: " + Logs.TASK.UPDATE_DISCIPLES + " | " + Log_Task);
+                    if (Logs.TASK.UPDATE_DISCIPLES.equalsName(Log_Task)) {
                         Log.i(TAG, "UpdateDisciples Count:-> " + c.getCount());
                         Disciple updateDisciple = getDiscipleByPhone(Task_Value);
                         if (updateDisciple != null) {

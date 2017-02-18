@@ -56,14 +56,13 @@ public class Logs {
         SEND_LOG("Send_Log"),
         SEND_DISCIPLES("Send_Disciples"),
         REMOVE_DISCIPLE("Remove_Disciple"),
-        UPDATE_DISCIPLE("Update_Disciple"),
+        UPDATE_DISCIPLES("Update_Disciples"),
         UPDATE_USER_PROFILE("Update_User_Profile"),
         SEND_SCHEDULE("Send_Schedule"),
         SEND_REPORT("Send_Report"),
         SEND_TESTIMONY("Send_Testimony"),
         UPDATE_SCHEDULES("Update_Schedules"),
         ADD_NEW_DISCIPLES("AddNew_Disciples"),
-        UPDATE_DISCIPLES("Update_Disciples"),
         SEND_ANSWERS("Send_Answers"),
         ADD_NEW_ANSWERS("AddNew_Answers");
 

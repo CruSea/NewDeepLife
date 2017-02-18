@@ -1,4 +1,4 @@
-package deeplife.gcme.com.deeplife.Profile;
+package deeplife.gcme.com.deeplife.Disciples;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -18,18 +18,17 @@ import deeplife.gcme.com.deeplife.Adapters.CountryListAdapter;
 import deeplife.gcme.com.deeplife.DeepLife;
 import deeplife.gcme.com.deeplife.Models.Country;
 import deeplife.gcme.com.deeplife.Models.Logs;
-import deeplife.gcme.com.deeplife.Models.User;
 import deeplife.gcme.com.deeplife.R;
 import deeplife.gcme.com.deeplife.SyncService.SyncDatabase;
 
 import static deeplife.gcme.com.deeplife.DeepLife.myDATABASE;
 
 /**
- * Created by briggsm on 12/21/16.
+ * Created by briggsm on 2/18/17.
  */
 
-public class ProfileEditActivity extends AppCompatActivity {
-    private static final String TAG = "ProfileEditActivity";
+public class DiscipleEditActivity extends AppCompatActivity {
+    private static final String TAG = "DiscipleEditActivity";
 
     Button saveBtn;
     Button cancelBtn;
@@ -45,7 +44,7 @@ public class ProfileEditActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.profile_edit_activity2);
+        setContentView(R.layout.disciple_profile_edit);
 
         saveBtn = (Button) findViewById(R.id.profileEditSaveBtn);
         cancelBtn = (Button) findViewById(R.id.profileEditCancelBtn);
@@ -97,7 +96,7 @@ public class ProfileEditActivity extends AppCompatActivity {
                 // briggsm: Is it best to do these kinds of checks here, or on the back end?
                 // Validate locally (name not null)
                 if (newFullName.length() == 0) {
-                    new AlertDialog.Builder(ProfileEditActivity.this)
+                    new AlertDialog.Builder(DiscipleEditActivity.this)
                             .setTitle("Invalid Field")
                             .setMessage("'Full Name' must be specified")
                             .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
@@ -162,28 +161,29 @@ public class ProfileEditActivity extends AppCompatActivity {
 
                 // Save to DB
                 Log.i(TAG, "onClick saveBtn: Saving to DB.");
-                User currMainUser = DeepLife.myDATABASE.getMainUser();
+                //User currMainUser = DeepLife.myDATABASE.getMainUser();
+                Disciple currDisciple = DeepLife.myDATABASE.getDiscipleByPhone(extrasPhoneNumber.substring(1)); // .substring(1) to take off the "+" sign.
 
                 // Update the fields
-                currMainUser.setFullName(newFullName);
-                currMainUser.setEmail(newEmail);
-                currMainUser.setPhone(newPhoneNumber.substring(1)); // to take off the "+" sign.
-                currMainUser.setGender(genderSpinner.getSelectedItemPosition() == 1 ? "Female" : "Male");
-                currMainUser.setCountry("" + ((Country)countrySpinner.getSelectedItem()).getSerID() );
+                currDisciple.setFullName(newFullName);
+                currDisciple.setEmail(newEmail);
+                currDisciple.setPhone(newPhoneNumber.substring(1)); // to take off the "+" sign.
+                currDisciple.setGender(genderSpinner.getSelectedItemPosition() == 1 ? Disciple.GENDER.FEMALE : Disciple.GENDER.MALE);
+                currDisciple.setCountry("" + ((Country)countrySpinner.getSelectedItem()).getSerID() );
 
                 // Update the DB itself (here in Android).
-                long modifiedRowId = DeepLife.myDATABASE.updateMainUser(currMainUser);
+                long modifiedRowId = DeepLife.myDATABASE.updateDisciple(currDisciple);
 
                 // Create a Log Entry - so the Back End DB can be updated as well.
                 if (modifiedRowId > 0) {
                     Logs logs = new Logs();
-                    logs.setType(Logs.TYPE.USER);  // briggsm: looks like we don't even need to specify log TYPE.
-                    logs.setTask(Logs.TASK.UPDATE_USER_PROFILE);  // briggsm: Biniam says Send_Disciples.  Why not AddNew_Disciples? What's difference?
-                    logs.setValue("" + modifiedRowId);  // briggsm: looks like task VALUE never used/needed either, cuz there will only ever be 1 mainUser. (just set it so other checks don't crash...)
+                    logs.setType(Logs.TYPE.DISCIPLE);
+                    logs.setTask(Logs.TASK.UPDATE_DISCIPLES);
+                    logs.setValue("" + modifiedRowId);
                     new SyncDatabase().AddLog(logs);
                 } else {
                     // Main User not updated for some reason.
-                    Log.e(TAG, "onClick: saveBtn: Main User not updated for some reason.");
+                    Log.e(TAG, "onClick: saveBtn: Disciple not updated for some reason.");
                 }
 
                 // If we get here, all the validity tests must have passed, and data saved to DB. So "press" the back button.
