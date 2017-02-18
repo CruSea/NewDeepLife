@@ -82,9 +82,7 @@ public class WbsActivity extends AppCompatActivity {
         int sum = DeepLife.myDATABASE.count(Database.Table_QUESTION_LIST);
         //Toast.makeText(this, "There are: " + sum, Toast.LENGTH_LONG).show();
         Log.i(TAG, "onCreate: There are: '" + sum + "' questions in DB.");
-        checkStage();
-        UpdateQuestionList(buildStage);
-
+        loadCurrentStage();
         Btn_Win.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -114,162 +112,233 @@ public class WbsActivity extends AppCompatActivity {
 
     }
 
-    public void UpdateQuestionList(Disciple.STAGE stage) {
+    public static void UpdateQuestionList(Disciple.STAGE stage) {
         ArrayList<WbsQuestion> wbsQuestions = DeepLife.myDATABASE.getWbsParentQuestionsAndFoldersByStage(stage);
         if (wbsQuestions != null) {
-            if (stage == Disciple.STAGE.WIN) {
-                L_Win.setBackgroundColor(Color.rgb(254, 191, 10));
-                L_Build.setBackgroundColor(Color.rgb(00, 188, 216));
-                L_Send.setBackgroundColor(Color.rgb(00, 188, 216));
-            } else if (stage == Disciple.STAGE.BUILD) {
-                L_Win.setBackgroundColor(Color.rgb(00, 188, 216));
-                L_Build.setBackgroundColor(Color.rgb(254, 191, 10));
-                L_Send.setBackgroundColor(Color.rgb(00, 188, 216));
-            } else {
-                // SEND
-                L_Win.setBackgroundColor(Color.rgb(00, 188, 216));
-                L_Build.setBackgroundColor(Color.rgb(00, 188, 216));
-                L_Send.setBackgroundColor(Color.rgb(254, 191, 10));
-            }
-
+            updateStagePointerBar(stage);
             UpdateGUIAdapter(wbsQuestions);
             Disciple disciple = DeepLife.myDATABASE.getDiscipleByPhone(DisciplePhone);
             if (disciple != null) {
-                disciple.setStage(buildStage);
+                disciple.setStage(stage);
                 DeepLife.myDATABASE.updateDisciple(disciple);
-
             }
         }
     }
+    public static void updateStagePointerBar(Disciple.STAGE stage){
+        if (stage == Disciple.STAGE.WIN) {
+            // Win Stage
+            L_Win.setBackgroundColor(Color.rgb(254, 191, 10));
+            L_Build.setBackgroundColor(Color.rgb(00, 188, 216));
+            L_Send.setBackgroundColor(Color.rgb(00, 188, 216));
 
-    public void UpdateGUIAdapter(List<WbsQuestion> wbsQuestions) {
-        mAdapter = new WbsQuestionAdapter(this, wbsQuestions, myDisciple);
-        myRecyclerView.setAdapter(mAdapter);
-        try {
-            DisciplesFragment.UpdateList(); // briggsm: Why do we need to update the list of disciples here???
-        } catch (Exception e) {
+        } else if (stage == Disciple.STAGE.BUILD) {
+            // Build Stage
+            L_Win.setBackgroundColor(Color.rgb(00, 188, 216));
+            L_Build.setBackgroundColor(Color.rgb(254, 191, 10));
+            L_Send.setBackgroundColor(Color.rgb(00, 188, 216));
 
+        } else {
+            // Send Stage
+            L_Win.setBackgroundColor(Color.rgb(00, 188, 216));
+            L_Build.setBackgroundColor(Color.rgb(00, 188, 216));
+            L_Send.setBackgroundColor(Color.rgb(254, 191, 10));
         }
     }
+    public static void updateStageButton(Disciple.STAGE stage){
+        Btn_Build.setEnabled(false);
+        Btn_Build.setTypeface(Btn_Build.getTypeface(), Typeface.ITALIC);
+        Btn_Build.setText(R.string.text_build);
 
-    public static void checkStage() {
-        Log.d(TAG, "checkStage: Checking for Stage change");
-        int wbs = 1;
+        Btn_Send.setEnabled(false);
+        Btn_Send.setTypeface(Btn_Send.getTypeface(), Typeface.ITALIC);
+        Btn_Send.setText(R.string.text_send);
+        if (stage == Disciple.STAGE.WIN) {
+            Btn_Win.setEnabled(true);
+            Btn_Win.setTypeface(Btn_Win.getTypeface(), Typeface.BOLD);
+            Btn_Win.setText("->" + DeepLife.getContext().getString(R.string.text_win) + "<-");
+
+        } else if (stage == Disciple.STAGE.BUILD) {
+            Btn_Win.setEnabled(true);
+            Btn_Win.setTypeface(Btn_Win.getTypeface(), Typeface.BOLD);
+            Btn_Win.setText("->" + DeepLife.getContext().getString(R.string.text_win) + "<-");
+
+            Btn_Build.setEnabled(true);
+            Btn_Build.setTypeface(Btn_Build.getTypeface(), Typeface.BOLD);
+        } else {
+            Btn_Win.setEnabled(true);
+            Btn_Win.setTypeface(Btn_Win.getTypeface(), Typeface.BOLD);
+            Btn_Win.setText(R.string.text_win);
+
+            Btn_Build.setEnabled(true);
+            Btn_Build.setTypeface(Btn_Build.getTypeface(), Typeface.BOLD);
+            Btn_Build.setText(R.string.text_build);
+
+            Btn_Send.setEnabled(true);
+            Btn_Send.setTypeface(Btn_Send.getTypeface(), Typeface.BOLD);
+            Btn_Send.setText("->" + DeepLife.getContext().getString(R.string.text_send) + "<-");
+        }
+
+    }
+    public static void updateCurrentStageButton(){
+        updateStageButton(getStage());
+    }
+    public static void updateCurrentStagePointer(){
+        updateStagePointerBar(getStage());
+    }
+    public static void UpdateGUIAdapter(List<WbsQuestion> wbsQuestions) {
+        mAdapter = new WbsQuestionAdapter(myContext, wbsQuestions, myDisciple);
+        myRecyclerView.setAdapter(mAdapter);
+    }
+    public static void loadCurrentStage(){
+        UpdateQuestionList(getStage());
+    }
+    public static Disciple.STAGE getStage(){
+        Log.d(TAG, "checkStage: Checking for Stage");
+        int stage = 3;
         ArrayList<WbsQuestion> wbsQuestions = DeepLife.myDATABASE.getWbsParentQuestionsAndFoldersByStage(Disciple.STAGE.WIN);
         for (WbsQuestion wbsQuestion : wbsQuestions) {
             if (wbsQuestion.getMandatory() != 0) {
                 Answer answer = DeepLife.myDATABASE.getAnswerByQuestionIDandDisciplePhone(wbsQuestion.getSerID(), DisciplePhone);
                 if (answer != null) {
                     if (answer.getAnswer().equals("NO") || answer.getAnswer().equals("0")) {
-                        wbs = 0;
-                        break;
+                        return Disciple.STAGE.WIN;
                     }
-                } else {
-                    wbs = 0;
-                    break;
                 }
             }
         }
-        if (wbs == 0) {
-            buildStage = Disciple.STAGE.WIN;
-        } else {
-            buildStage = Disciple.STAGE.BUILD;
-            wbs = 1;
+        if(stage > 1){
             wbsQuestions = DeepLife.myDATABASE.getWbsParentQuestionsAndFoldersByStage(Disciple.STAGE.BUILD);
             for (WbsQuestion wbsQuestion : wbsQuestions) {
                 if (wbsQuestion.getMandatory() != 0) {
                     Answer answer = DeepLife.myDATABASE.getAnswerByQuestionIDandDisciplePhone(wbsQuestion.getSerID(), DisciplePhone);
                     if (answer != null) {
                         if (answer.getAnswer().equals("NO") || answer.getAnswer().equals("0")) {
-                            wbs = 0;
-                            break;
-                        }
-                    } else {
-                        wbs = 0;
-                        break;
-                    }
-                }
-            }
-            //if(wbs == 0 && Stage > 1){  // briggsm: took out check for Steve > 1, cuz it looks useless to me.
-            if (wbs == 0) {
-                buildStage = Disciple.STAGE.BUILD;
-            } else {
-                buildStage = Disciple.STAGE.SEND;
-                wbs = 1;
-                wbsQuestions = DeepLife.myDATABASE.getWbsParentQuestionsAndFoldersByStage(Disciple.STAGE.SEND);
-                for (WbsQuestion wbsQuestion : wbsQuestions) {
-                    if (wbsQuestion.getMandatory() != 0) {
-                        Answer answer = DeepLife.myDATABASE.getAnswerByQuestionIDandDisciplePhone(wbsQuestion.getSerID(), DisciplePhone);
-                        if (answer != null) {
-                            if (answer.getAnswer().equals("NO") || answer.getAnswer().equals("0")) {
-                                wbs = 0;
-                                break;
-                            }
-                        } else {
-                            wbs = 0;
-                            break;
+                            return Disciple.STAGE.WIN;
                         }
                     }
                 }
-                //if(wbs == 0 && Stage > 2){ // briggsm: took out check for Steve > 1, cuz it looks useless to me.
-                if (wbs == 0) {
-                    buildStage = Disciple.STAGE.SEND;
-                } else {
-                    buildStage = Disciple.STAGE.SEND;
-                }
             }
         }
-
-        if (buildStage == Disciple.STAGE.WIN) {
-            Btn_Win.setEnabled(true);
-            Btn_Win.setTypeface(Btn_Win.getTypeface(), Typeface.BOLD);
-            Btn_Win.setText("->" + DeepLife.getContext().getString(R.string.text_win) + "<-");
-
-
-            Btn_Build.setEnabled(false);
-            Btn_Build.setTypeface(Btn_Build.getTypeface(), Typeface.ITALIC);
-            Btn_Build.setText(R.string.text_build);
-
-
-            Btn_Send.setEnabled(false);
-            Btn_Send.setTypeface(Btn_Send.getTypeface(), Typeface.ITALIC);
-            Btn_Send.setText(R.string.text_send);
-
-            myDisciple.setStage(Disciple.STAGE.WIN);
-        } else if (buildStage == Disciple.STAGE.BUILD) {
-            Btn_Win.setEnabled(true);
-            Btn_Win.setTypeface(Btn_Win.getTypeface(), Typeface.ITALIC);
-            Btn_Win.setText(R.string.text_win);
-            Btn_Win.setTextColor(Color.GRAY);
-            Btn_Win.setActivated(false);
-
-            Btn_Build.setEnabled(true);
-            Btn_Build.setTypeface(Btn_Build.getTypeface(), Typeface.BOLD);
-            Btn_Build.setText("->" + DeepLife.getContext().getString(R.string.text_build) + "<-");
-
-            Btn_Send.setEnabled(false);
-            Btn_Send.setTypeface(Btn_Send.getTypeface(), Typeface.ITALIC);
-            Btn_Send.setText(DeepLife.getContext().getString(R.string.text_send));
-
-            myDisciple.setStage(Disciple.STAGE.BUILD);
-        } else {
-            // SEND
-            Btn_Win.setEnabled(true);
-            Btn_Win.setTypeface(Btn_Win.getTypeface(), Typeface.ITALIC);
-            Btn_Win.setTextColor(Color.GRAY);
-            Btn_Win.setText(DeepLife.getContext().getString(R.string.text_win));
-
-            Btn_Build.setEnabled(true);
-            Btn_Build.setTypeface(Btn_Build.getTypeface(), Typeface.ITALIC);
-            Btn_Build.setTextColor(Color.GRAY);
-            Btn_Build.setText(DeepLife.getContext().getString(R.string.text_build));
-
-            Btn_Send.setEnabled(true);
-            Btn_Send.setTypeface(Btn_Send.getTypeface(), Typeface.BOLD);
-            Btn_Send.setText("->" + DeepLife.getContext().getString(R.string.text_send) + "<-");
-
-            myDisciple.setStage(Disciple.STAGE.SEND);
-        }
-        DeepLife.myDATABASE.updateDisciple(myDisciple);
+        return Disciple.STAGE.SEND;
     }
+//    public static void checkStage() {
+//        Log.d(TAG, "checkStage: Checking for Stage change");
+//        int wbs = 1;
+//        ArrayList<WbsQuestion> wbsQuestions = DeepLife.myDATABASE.getWbsParentQuestionsAndFoldersByStage(Disciple.STAGE.WIN);
+//        for (WbsQuestion wbsQuestion : wbsQuestions) {
+//            if (wbsQuestion.getMandatory() != 0) {
+//                Answer answer = DeepLife.myDATABASE.getAnswerByQuestionIDandDisciplePhone(wbsQuestion.getSerID(), DisciplePhone);
+//                if (answer != null) {
+//                    if (answer.getAnswer().equals("NO") || answer.getAnswer().equals("0")) {
+//                        wbs = 0;
+//                        break;
+//                    }
+//                } else {
+//                    wbs = 0;
+//                    break;
+//                }
+//            }
+//        }
+//        if (wbs == 0) {
+//            buildStage = Disciple.STAGE.WIN;
+//        } else {
+//            buildStage = Disciple.STAGE.BUILD;
+//            wbs = 1;
+//            wbsQuestions = DeepLife.myDATABASE.getWbsParentQuestionsAndFoldersByStage(Disciple.STAGE.BUILD);
+//            for (WbsQuestion wbsQuestion : wbsQuestions) {
+//                if (wbsQuestion.getMandatory() != 0) {
+//                    Answer answer = DeepLife.myDATABASE.getAnswerByQuestionIDandDisciplePhone(wbsQuestion.getSerID(), DisciplePhone);
+//                    if (answer != null) {
+//                        if (answer.getAnswer().equals("NO") || answer.getAnswer().equals("0")) {
+//                            wbs = 0;
+//                            break;
+//                        }
+//                    } else {
+//                        wbs = 0;
+//                        break;
+//                    }
+//                }
+//            }
+//            //if(wbs == 0 && Stage > 1){  // briggsm: took out check for Steve > 1, cuz it looks useless to me.
+//            if (wbs == 0) {
+//                buildStage = Disciple.STAGE.BUILD;
+//            } else {
+//                buildStage = Disciple.STAGE.SEND;
+//                wbs = 1;
+//                wbsQuestions = DeepLife.myDATABASE.getWbsParentQuestionsAndFoldersByStage(Disciple.STAGE.SEND);
+//                for (WbsQuestion wbsQuestion : wbsQuestions) {
+//                    if (wbsQuestion.getMandatory() != 0) {
+//                        Answer answer = DeepLife.myDATABASE.getAnswerByQuestionIDandDisciplePhone(wbsQuestion.getSerID(), DisciplePhone);
+//                        if (answer != null) {
+//                            if (answer.getAnswer().equals("NO") || answer.getAnswer().equals("0")) {
+//                                wbs = 0;
+//                                break;
+//                            }
+//                        } else {
+//                            wbs = 0;
+//                            break;
+//                        }
+//                    }
+//                }
+//                //if(wbs == 0 && Stage > 2){ // briggsm: took out check for Steve > 1, cuz it looks useless to me.
+//                if (wbs == 0) {
+//                    buildStage = Disciple.STAGE.SEND;
+//                } else {
+//                    buildStage = Disciple.STAGE.SEND;
+//                }
+//            }
+//        }
+//
+//        if (buildStage == Disciple.STAGE.WIN) {
+//            Btn_Win.setEnabled(true);
+//            Btn_Win.setTypeface(Btn_Win.getTypeface(), Typeface.BOLD);
+//            Btn_Win.setText("->" + DeepLife.getContext().getString(R.string.text_win) + "<-");
+//
+//
+//            Btn_Build.setEnabled(false);
+//            Btn_Build.setTypeface(Btn_Build.getTypeface(), Typeface.ITALIC);
+//            Btn_Build.setText(R.string.text_build);
+//
+//
+//            Btn_Send.setEnabled(false);
+//            Btn_Send.setTypeface(Btn_Send.getTypeface(), Typeface.ITALIC);
+//            Btn_Send.setText(R.string.text_send);
+//
+//            myDisciple.setStage(Disciple.STAGE.WIN);
+//        } else if (buildStage == Disciple.STAGE.BUILD) {
+//            Btn_Win.setEnabled(true);
+//            Btn_Win.setTypeface(Btn_Win.getTypeface(), Typeface.ITALIC);
+//            Btn_Win.setText(R.string.text_win);
+//            Btn_Win.setTextColor(Color.GRAY);
+//            Btn_Win.setActivated(false);
+//
+//            Btn_Build.setEnabled(true);
+//            Btn_Build.setTypeface(Btn_Build.getTypeface(), Typeface.BOLD);
+//            Btn_Build.setText("->" + DeepLife.getContext().getString(R.string.text_build) + "<-");
+//
+//            Btn_Send.setEnabled(false);
+//            Btn_Send.setTypeface(Btn_Send.getTypeface(), Typeface.ITALIC);
+//            Btn_Send.setText(DeepLife.getContext().getString(R.string.text_send));
+//
+//            myDisciple.setStage(Disciple.STAGE.BUILD);
+//        } else {
+//            // SEND
+//            Btn_Win.setEnabled(true);
+//            Btn_Win.setTypeface(Btn_Win.getTypeface(), Typeface.ITALIC);
+//            Btn_Win.setTextColor(Color.GRAY);
+//            Btn_Win.setText(DeepLife.getContext().getString(R.string.text_win));
+//
+//            Btn_Build.setEnabled(true);
+//            Btn_Build.setTypeface(Btn_Build.getTypeface(), Typeface.ITALIC);
+//            Btn_Build.setTextColor(Color.GRAY);
+//            Btn_Build.setText(DeepLife.getContext().getString(R.string.text_build));
+//
+//            Btn_Send.setEnabled(true);
+//            Btn_Send.setTypeface(Btn_Send.getTypeface(), Typeface.BOLD);
+//            Btn_Send.setText("->" + DeepLife.getContext().getString(R.string.text_send) + "<-");
+//
+//            myDisciple.setStage(Disciple.STAGE.SEND);
+//        }
+//        DeepLife.myDATABASE.updateDisciple(myDisciple);
+//    }
 }

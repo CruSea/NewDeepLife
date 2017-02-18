@@ -50,12 +50,10 @@ public class WbsQuestionAdapter extends ExpandableRecyclerAdapter<WbsQuestion, W
     @Override
     public WbsQuestionChildViewHolder onCreateChildViewHolder(@NonNull ViewGroup childViewGroup, int viewType) {
         View wbsQuestionChildView;
-
         wbsQuestionChildView = mInflater.inflate(R.layout.wbs_fragment_item1, childViewGroup, false);
         wbsQuestionChildView.setPadding(20,0,0,0);  // This is in pixels.
         CardView cardView = (CardView) wbsQuestionChildView.findViewById(R.id.card_view);
         cardView.setCardBackgroundColor(Color.LTGRAY);
-
         return new WbsQuestionChildViewHolder(mContext, wbsQuestionChildView, mDisciple);
     }
 
