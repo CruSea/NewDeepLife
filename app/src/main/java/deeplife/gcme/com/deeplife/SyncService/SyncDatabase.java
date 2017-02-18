@@ -418,7 +418,6 @@ public class SyncDatabase {
                     cv.put(Database.QuestionAnswerColumn.QUESTION_ID.toString(), obj.getString(ApiResponseKey.QUESTION_ID.toString()));
                     cv.put(Database.QuestionAnswerColumn.ANSWER.toString(), obj.getString(ApiResponseKey.ANSWER.toString()));
                     cv.put(Database.QuestionAnswerColumn.BUILDSTAGE.toString(), obj.getString(ApiResponseKey.STAGE.toString()));
-
                     //Answer answer = DeepLife.myDATABASE.getAnswerBySerID(Integer.valueOf(obj.getString(ApiResponseKey.ID.toString())));
                     Answer answer = DeepLife.myDATABASE.getAnswerByQuestionID(Integer.valueOf(obj.getString(ApiResponseKey.QUESTION_ID.toString())));
                     if (answer == null) {
@@ -429,13 +428,18 @@ public class SyncDatabase {
                             Log.e(TAG, "Error During Adding: Answers -> \n" + cv.toString());
                         }
                     } else {
-                        long x = DeepLife.myDATABASE.update(Database.Table_QUESTION_ANSWER, cv, answer.getID());
-                        Log.d(TAG, "Updated: Answers -> \n" + cv.toString());
-                        if (x > 0) {
-                            Log.d(TAG, "Successfully Updated: Answers Updated -> \n" + cv.toString());
-                        } else {
-                            Log.e(TAG, "Error During Updating: Answers -> \n" + cv.toString());
+                        if(DeepLife.myDATABASE.getSendAnswers().size()<1){
+                            long x = DeepLife.myDATABASE.update(Database.Table_QUESTION_ANSWER, cv, answer.getID());
+                            Log.d(TAG, "Updated: Answers -> \n" + cv.toString());
+                            if (x > 0) {
+                                Log.d(TAG, "Successfully Updated: Answers Updated -> \n" + cv.toString());
+                            } else {
+                                Log.e(TAG, "Error During Updating: Answers -> \n" + cv.toString());
+                            }
+                        }else {
+                            Log.e(TAG, "Discard updates from server till the local sent -> \n");
                         }
+
                     }
                 }
             }
