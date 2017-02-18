@@ -471,9 +471,9 @@ public class Database {
     }
 
     public long insert(String DB_Table, ContentValues cv) {
-        long row = myDatabase.insert(DB_Table, null, cv);
+        long rowId = myDatabase.insert(DB_Table, null, cv);
         Log.d(TAG, "Inserting->: " + cv.toString());
-        return row;
+        return rowId;
     }
 
     public long Delete_All(String DB_Table) {
@@ -588,14 +588,14 @@ public class Database {
                 User dis = new User();
                 dis.setID(Integer.valueOf(c.getString(c.getColumnIndex(UserColumn.ID.toString()))));
                 dis.setSerID(Integer.valueOf(c.getString(c.getColumnIndex(UserColumn.SERID.toString()))));
-                dis.setUser_Name(c.getString(c.getColumnIndex(UserColumn.FULL_NAME.toString())));
-                dis.setUser_Email(c.getString(c.getColumnIndex(UserColumn.EMAIL.toString())));
-                dis.setUser_Phone(c.getString(c.getColumnIndex(UserColumn.PHONE.toString())));
-                dis.setUser_Pass(c.getString(c.getColumnIndex(UserColumn.PASSWORD.toString())));
-                dis.setUser_Country(c.getString(c.getColumnIndex(UserColumn.COUNTRY.toString())));
-                dis.setUser_Gender(c.getString(c.getColumnIndex(UserColumn.GENDER.toString())));
-                dis.setUser_Picture(c.getString(c.getColumnIndex(UserColumn.PICTURE.toString())));
-                dis.setUser_Favorite_Scripture(c.getString(c.getColumnIndex(UserColumn.FAVORITE_SCRIPTURE.toString())));
+                dis.setName(c.getString(c.getColumnIndex(UserColumn.FULL_NAME.toString())));
+                dis.setEmail(c.getString(c.getColumnIndex(UserColumn.EMAIL.toString())));
+                dis.setPhone(c.getString(c.getColumnIndex(UserColumn.PHONE.toString())));
+                dis.setPass(c.getString(c.getColumnIndex(UserColumn.PASSWORD.toString())));
+                dis.setCountry(c.getString(c.getColumnIndex(UserColumn.COUNTRY.toString())));
+                dis.setGender(c.getString(c.getColumnIndex(UserColumn.GENDER.toString())));
+                dis.setPicture(c.getString(c.getColumnIndex(UserColumn.PICTURE.toString())));
+                dis.setFavorite_Scripture(c.getString(c.getColumnIndex(UserColumn.FAVORITE_SCRIPTURE.toString())));
                 return dis;
             }
         } catch (Exception e) {
@@ -1605,6 +1605,37 @@ public class Database {
         return Found;
     }
 
+    public ArrayList<User> getUpdateUserProfile() {
+        Log.d(TAG, "getUpdateUserProfile:\n");
+        String DB_Table = Table_LOGS;
+        ArrayList<User> Found = new ArrayList<>();
+        try {
+            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
+            if (c != null && c.getCount() > 0) {
+                c.moveToFirst();
+                for (int i = 0; i < c.getCount(); i++) {
+                    c.moveToPosition(i);
+                    int Log_ID = Integer.valueOf(c.getString(c.getColumnIndex(LogsColumn.ID.toString())));
+                    String Log_Task = c.getString(c.getColumnIndex(LogsColumn.TASK.toString()));
+                    String Task_Value = c.getString(c.getColumnIndex(LogsColumn.VALUE.toString()));
+                    Log.d(TAG, "Comparing: " + Logs.TASK.UPDATE_USER_PROFILE + " | " + Log_Task);
+                    if (Logs.TASK.UPDATE_USER_PROFILE.equalsName(Log_Task)) {
+                        Log.i(TAG, "UpdateUserProfile Count:-> " + c.getCount());
+                        //Disciple updateDisciple = getDiscipleByPhone(Task_Value);
+                        User updateUser = getMainUser();
+                        if (updateUser != null) {
+                            updateUser.setID(Log_ID);
+                            Found.add(updateUser);
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Failed getUpdateDisciples:\n" + e.toString());
+        }
+        return Found;
+    }
+
     public ArrayList<Testimony> getSendTestimony() {
         Log.d(TAG, "getSendTestimony:\n");
         String DB_Table = Table_LOGS;
@@ -1620,7 +1651,7 @@ public class Database {
                     int Task_Value = Integer.valueOf(c.getString(c.getColumnIndex(LogsColumn.VALUE.toString())));
 
                     Log.d(TAG, "Comparing: " + Logs.TASK.SEND_TESTIMONY + " | " + Log_Task);
-                    if (Logs.TASK.SEND_TESTIMONY.equals(Log_Task)) {
+                    if (Logs.TASK.SEND_TESTIMONY.equalsName(Log_Task)) {
                         Log.d(TAG, "SendTestimony Count:-> " + c.getCount());
                         Testimony newTestimony = getTestimonyByID(Task_Value);
                         if (newTestimony != null) {
@@ -1633,12 +1664,13 @@ public class Database {
             }
         } catch (Exception e) {
             Log.e(TAG, "Failed getSendTestimony:\n" + e.toString());
+            e.printStackTrace();
         }
         return Found;
     }
 
     public ArrayList<Answer> getSendAnswers() {
-        Log.d(TAG, "getSendAnswers()");
+        Log.d(TAG, "getSendAnswers:");
         String DB_Table = Table_LOGS;
         ArrayList<Answer> Found = new ArrayList<Answer>();
         try {
@@ -1664,6 +1696,7 @@ public class Database {
             }
         } catch (Exception e) {
             Log.e(TAG, "Failed getSendAnswers:\n" + e.toString());
+            e.printStackTrace();
         }
         return Found;
     }
@@ -1780,14 +1813,14 @@ public class Database {
                     User user = new User();
                     user.setID(Integer.valueOf(c.getString(c.getColumnIndex(UserColumn.ID.toString()))));
                     user.setSerID(Integer.valueOf(c.getString(c.getColumnIndex(UserColumn.SERID.toString()))));
-                    user.setFull_Name(c.getString(c.getColumnIndex(UserColumn.FULL_NAME.toString())));
-                    user.setUser_Email(c.getString(c.getColumnIndex(UserColumn.EMAIL.toString())));
-                    user.setUser_Phone(c.getString(c.getColumnIndex(UserColumn.PHONE.toString())));
-                    user.setUser_Pass(c.getString(c.getColumnIndex(UserColumn.PASSWORD.toString())));
-                    user.setUser_Country(c.getString(c.getColumnIndex(UserColumn.COUNTRY.toString())));
-                    user.setUser_Gender(c.getString(c.getColumnIndex(UserColumn.GENDER.toString())));
-                    user.setUser_Picture(c.getString(c.getColumnIndex(UserColumn.PICTURE.toString())));
-                    user.setUser_Favorite_Scripture(c.getString(c.getColumnIndex(UserColumn.FAVORITE_SCRIPTURE.toString())));
+                    user.setFullName(c.getString(c.getColumnIndex(UserColumn.FULL_NAME.toString())));
+                    user.setEmail(c.getString(c.getColumnIndex(UserColumn.EMAIL.toString())));
+                    user.setPhone(c.getString(c.getColumnIndex(UserColumn.PHONE.toString())));
+                    user.setPass(c.getString(c.getColumnIndex(UserColumn.PASSWORD.toString())));
+                    user.setCountry(c.getString(c.getColumnIndex(UserColumn.COUNTRY.toString())));
+                    user.setGender(c.getString(c.getColumnIndex(UserColumn.GENDER.toString())));
+                    user.setPicture(c.getString(c.getColumnIndex(UserColumn.PICTURE.toString())));
+                    user.setFavorite_Scripture(c.getString(c.getColumnIndex(UserColumn.FAVORITE_SCRIPTURE.toString())));
                     return user;
                 }
             }
@@ -1805,19 +1838,19 @@ public class Database {
         try {
             ContentValues cv = new ContentValues();
             cv.put(UserColumn.SERID.toString(), mainUser.getSerID());
-            cv.put(UserColumn.FULL_NAME.toString(), mainUser.getFull_Name());
-            cv.put(UserColumn.EMAIL.toString(), mainUser.getUser_Email());
-            cv.put(UserColumn.PHONE.toString(), mainUser.getUser_Phone());
-            cv.put(UserColumn.PASSWORD.toString(), mainUser.getUser_Pass());
-            cv.put(UserColumn.COUNTRY.toString(), mainUser.getUser_Country());
-            cv.put(UserColumn.GENDER.toString(), mainUser.getUser_Gender());
-            cv.put(UserColumn.PICTURE.toString(), mainUser.getUser_Picture());
-            cv.put(UserColumn.FAVORITE_SCRIPTURE.toString(), mainUser.getUser_Favorite_Scripture());
+            cv.put(UserColumn.FULL_NAME.toString(), mainUser.getFullName());
+            cv.put(UserColumn.EMAIL.toString(), mainUser.getEmail());
+            cv.put(UserColumn.PHONE.toString(), mainUser.getPhone());
+            cv.put(UserColumn.PASSWORD.toString(), mainUser.getPass());
+            cv.put(UserColumn.COUNTRY.toString(), mainUser.getCountry());
+            cv.put(UserColumn.GENDER.toString(), mainUser.getGender());
+            cv.put(UserColumn.PICTURE.toString(), mainUser.getPicture());
+            cv.put(UserColumn.FAVORITE_SCRIPTURE.toString(), mainUser.getFavorite_Scripture());
 //            DeepLife.myDATABASE.Delete_All(DB_Table); // briggsm: pretty sure we don't need "DeepLife.myDATABASE." here.
 //            long x = DeepLife.myDATABASE.insert(DB_Table, cv);
             Delete_All(DB_Table);
-            long x = insert(DB_Table, cv);
-            return x;
+            long rowId = insert(DB_Table, cv);
+            return rowId;
         } catch (Exception e) {
             Log.e(TAG, "Failed UPDATE updateMainUser: " + e.toString());
             return 0;

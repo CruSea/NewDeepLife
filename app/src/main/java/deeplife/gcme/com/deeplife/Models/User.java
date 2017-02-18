@@ -5,7 +5,7 @@ package deeplife.gcme.com.deeplife.Models;
  */
 public class User {
     private int ID, SerID;
-    private String User_Name, User_Pass, Full_Name, User_Email, User_Phone, User_Country, User_Picture, User_Gender, User_Favorite_Scripture;
+    private String Name, Pass, FullName, Email, Phone, Country, Picture, Gender, Favorite_Scripture;
 
     public int getID() {
         return ID;
@@ -23,75 +23,75 @@ public class User {
         SerID = serID;
     }
 
-    public String getUser_Name() {
-        return User_Name;
+    public String getName() {
+        return Name;
     }
 
-    public void setUser_Name(String user_Name) {
-        User_Name = user_Name;
+    public void setName(String name) {
+        Name = name;
     }
 
-    public String getFull_Name() {
-        return Full_Name;
+    public String getFullName() {
+        return FullName;
     }
 
-    public void setFull_Name(String full_Name) {
-        Full_Name = full_Name;
+    public void setFullName(String fullName) {
+        FullName = fullName;
     }
 
-    public String getUser_Pass() {
-        return User_Pass;
+    public String getPass() {
+        return Pass;
     }
 
-    public void setUser_Pass(String user_Pass) {
-        User_Pass = user_Pass;
+    public void setPass(String pass) {
+        Pass = pass;
     }
 
-    public String getUser_Email() {
-        return User_Email;
+    public String getEmail() {
+        return Email;
     }
 
-    public void setUser_Email(String user_Email) {
-        User_Email = user_Email;
+    public void setEmail(String email) {
+        Email = email;
     }
 
-    public String getUser_Phone() {
-        return User_Phone;
+    public String getPhone() {
+        return Phone;
     }
 
-    public void setUser_Phone(String user_Phone) {
-        User_Phone = user_Phone;
+    public void setPhone(String phone) {
+        Phone = phone;
     }
 
-    public String getUser_Country() {
-        return User_Country;
+    public String getCountry() {
+        return Country;
     }
 
-    public void setUser_Country(String user_Country) {
-        User_Country = user_Country;
+    public void setCountry(String country) {
+        Country = country;
     }
 
-    public String getUser_Picture() {
-        return User_Picture;
+    public String getPicture() {
+        return Picture;
     }
 
-    public void setUser_Picture(String user_Picture) {
-        User_Picture = user_Picture;
+    public void setPicture(String picture) {
+        Picture = picture;
     }
 
-    public String getUser_Gender() {
-        return User_Gender;
+    public String getGender() {
+        return Gender;
     }
 
-    public void setUser_Gender(String user_Gender) {
-        User_Gender = user_Gender;
+    public void setGender(String gender) {
+        Gender = gender;
     }
 
-    public String getUser_Favorite_Scripture() {
-        return User_Favorite_Scripture;
+    public String getFavorite_Scripture() {
+        return Favorite_Scripture;
     }
 
-    public void setUser_Favorite_Scripture(String user_Favorite_Scripture) {
-        User_Favorite_Scripture = user_Favorite_Scripture;
+    public void setFavorite_Scripture(String favorite_Scripture) {
+        Favorite_Scripture = favorite_Scripture;
     }
 }

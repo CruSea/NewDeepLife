@@ -30,8 +30,13 @@ public class ProfileShowActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_profile);
-        myUser = DeepLife.myDATABASE.getMainUser();
         Init();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        populateTextViews();
     }
 
     public void Init() {
@@ -44,26 +49,19 @@ public class ProfileShowActivity extends AppCompatActivity {
         Phone = (EditText) findViewById(R.id.txt_disciple_profile_phone);
         Gender = (EditText) findViewById(R.id.txt_disciple_profile_gender);
 
-//        DisplayName.setText(myUser.getFull_Name());
+//        DisplayName.setText(myUser.getFullName());
 //        DisplayName.setEnabled(false);
+    }
 
-        FullName.setText(myUser.getFull_Name());
-        FullName.setEnabled(false);
+    private void populateTextViews() {
+        myUser = DeepLife.myDATABASE.getMainUser();
 
-        Email.setText(myUser.getUser_Email());
-        Email.setEnabled(false);
-
-        userCountry = DeepLife.myDATABASE.getCountryByID(Integer.valueOf(myUser.getUser_Country()));
+        FullName.setText(myUser.getFullName());
+        Email.setText(myUser.getEmail());
+        userCountry = DeepLife.myDATABASE.getCountryByID(Integer.valueOf(myUser.getCountry()));
         Country.setText(userCountry.getName());
-        Country.setEnabled(false);
-
-        Phone.setText("+" + myUser.getUser_Phone());
-        Phone.setEnabled(false);
-
-        Gender.setText(myUser.getUser_Gender());
-        Gender.setEnabled(false);
-
-        //editBtn.setOnClickListener(this);
+        Phone.setText("+" + myUser.getPhone());
+        Gender.setText(myUser.getGender());
     }
 
     @Override
@@ -79,7 +77,6 @@ public class ProfileShowActivity extends AppCompatActivity {
             Bundle b = new Bundle();
             b.putString("FullName", FullName.getText().toString());
             b.putString("Email", Email.getText().toString());
-            //b.putString("Country", Country.getText().toString());
             b.putString("CountrySerID", String.valueOf(userCountry.getSerID()));
             b.putString("Phone", Phone.getText().toString());
             b.putString("Gender", Gender.getText().toString());
@@ -88,21 +85,5 @@ public class ProfileShowActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-    /*
-    @Override
-    public void onClick(View v) {
-        if (v.getId() == R.id.editBtn) {
-            Intent intent = new Intent(this, ProfileEditActivity.class);
-            Bundle b = new Bundle();
-            b.putString("FullName", FullName.getText().toString());
-            b.putString("Email", Email.getText().toString());
-            b.putString("Country", Country.getText().toString());
-            b.putString("Phone", Phone.getText().toString());
-            b.putString("Gender", Gender.getText().toString());
-            intent.putExtras(b);
-            startActivity(intent);
-        }
-    }
-    */
 }
 

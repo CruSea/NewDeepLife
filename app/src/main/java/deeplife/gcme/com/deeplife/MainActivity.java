@@ -90,8 +90,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         checkPermissions();
 //        myUser = DeepLife.myDATABASE.getMainUser();
-//        if(myUser != null && myUser.getFull_Name() != null){
-//            UserName.setText(myUser.getFull_Name());
+//        if(myUser != null && myUser.getFullName() != null){
+//            UserName.setText(myUser.getFullName());
 //        }
 
     }

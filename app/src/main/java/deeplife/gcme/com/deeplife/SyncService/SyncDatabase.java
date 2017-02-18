@@ -236,6 +236,7 @@ public class SyncDatabase {
             }
         } catch (Exception e) {
             Log.e(TAG, "Add_Testimony: Exception: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 

@@ -57,13 +57,13 @@ public class LoginAccess {
     private static final String TAG = "LoginAccess";
 
     public boolean LogInAuthnticate() {
-        if (myUser.getUser_Email() != null) {
-            Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.USER_NAME.toString(), myUser.getUser_Email()));
+        if (myUser.getEmail() != null) {
+            Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.USER_NAME.toString(), myUser.getEmail()));
         } else {
-            Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.USER_NAME.toString(), myUser.getUser_Phone()));
+            Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.USER_NAME.toString(), myUser.getPhone()));
         }
-        Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.USER_PASS.toString(), myUser.getUser_Pass()));
-        Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.COUNTRY.toString(), myUser.getUser_Country()));
+        Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.USER_PASS.toString(), myUser.getPass()));
+        Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.COUNTRY.toString(), myUser.getCountry()));
         Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.SERVICE.toString(), SyncService.API_SERVICE.LOG_IN.toString()));
         Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.PARAM.toString(), "[]"));
 
@@ -80,7 +80,7 @@ public class LoginAccess {
                             mySyncDatabase.ProcessResponse(s);
                             User user = DeepLife.myDATABASE.getMainUser();
                             if (user != null) {
-                                user.setUser_Pass(myUser.getUser_Pass());
+                                user.setPass(myUser.getPass());
                                 long state = DeepLife.myDATABASE.updateMainUser(user);
                                 User myUser1 = DeepLife.myDATABASE.getMainUser();
                                 if (state > 0) {
@@ -158,9 +158,9 @@ public class LoginAccess {
     }
 
     public boolean SignupAuthnticate(final User user) {
-        Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.USER_NAME.toString(), user.getUser_Email()));
-        Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.USER_PASS.toString(), user.getUser_Pass()));
-        Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.COUNTRY.toString(), user.getUser_Country()));
+        Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.USER_NAME.toString(), user.getEmail()));
+        Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.USER_PASS.toString(), user.getPass()));
+        Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.COUNTRY.toString(), user.getCountry()));
         Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.SERVICE.toString(), SyncService.API_SERVICE.SIGN_UP.toString()));
         Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.PARAM.toString(), myParser.toJson(user)));
         myFuel.post(DeepLife.API_URL, Send_Param).responseString(new Handler<String>() {
@@ -175,9 +175,9 @@ public class LoginAccess {
                         mySyncDatabase.ProcessResponse(s);
                         DeepLife.myDATABASE.Delete_All(deeplife.gcme.com.deeplife.Database.Database.Table_USER);
                         ContentValues cv = new ContentValues();
-                        cv.put(Database.UserColumn.EMAIL.toString(), user.getUser_Email());
-                        cv.put(Database.UserColumn.PHONE.toString(), user.getUser_Phone());
-                        cv.put(Database.UserColumn.PASSWORD.toString(), user.getUser_Pass());
+                        cv.put(Database.UserColumn.EMAIL.toString(), user.getEmail());
+                        cv.put(Database.UserColumn.PHONE.toString(), user.getPhone());
+                        cv.put(Database.UserColumn.PASSWORD.toString(), user.getPass());
                         long state = DeepLife.myDATABASE.insert(Database.Table_USER, cv);
                         if (state > 0) {
                             Login.GetNextActivity();

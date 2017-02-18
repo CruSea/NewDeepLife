@@ -96,12 +96,12 @@ public class Login extends AppCompatActivity {
                     } else {
                         User user = new User();
                         if (UserName.getText().toString().contains("@")) {
-                            user.setUser_Email(UserName.getText().toString());
+                            user.setEmail(UserName.getText().toString());
                         } else {
-                            user.setUser_Phone("" + myCountries.get(mySpinner.getSelectedItemPosition()).getCode() + "" + UserName.getText().toString());
+                            user.setPhone("" + myCountries.get(mySpinner.getSelectedItemPosition()).getCode() + "" + UserName.getText().toString());
                         }
-                        user.setUser_Pass(UserPass.getText().toString());
-                        user.setUser_Country("" + myCountries.get(mySpinner.getSelectedItemPosition()).getSerID());
+                        user.setPass(UserPass.getText().toString());
+                        user.setCountry("" + myCountries.get(mySpinner.getSelectedItemPosition()).getSerID());
                         loginAccess = new LoginAccess(user);
 
                         progressDialog.setMessage(getString(R.string.dlg_msg_authenticating_user));

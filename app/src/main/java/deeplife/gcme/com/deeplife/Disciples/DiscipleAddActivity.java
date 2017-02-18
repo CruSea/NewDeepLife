@@ -104,7 +104,7 @@ public class DiscipleAddActivity extends AppCompatActivity {
         myCountries = DeepLife.myDATABASE.getAllCountries();
         if (myCountries != null) {
             myCountry.setAdapter(new CountryListAdapter(this, R.layout.login_countries_item, myCountries));
-            int xx = Integer.valueOf(myUser.getUser_Country());
+            int xx = Integer.valueOf(myUser.getCountry());
             Country country = DeepLife.myDATABASE.getCountryByID(xx);
         }
         myCountry.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -116,7 +116,7 @@ public class DiscipleAddActivity extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                int xx = Integer.valueOf(myUser.getUser_Country());
+                int xx = Integer.valueOf(myUser.getCountry());
                 int pos = DeepLife.myDATABASE.getCountryBySerID(xx).getID();
                 parent.setSelection(pos);
             }

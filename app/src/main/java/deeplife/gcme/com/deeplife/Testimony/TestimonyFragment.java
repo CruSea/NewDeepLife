@@ -67,9 +67,11 @@ public class TestimonyFragment extends Fragment {
     }
 
     public static void UpdateList() {
-        ArrayList<Testimony> items = DeepLife.myDATABASE.getAllTestimonies();
-        Log.d(TAG, "UpdateList: There are '" + items.size() + "' Testimonies");
-        mAdapter = new TestimonyListAdapter(myContext, items);
-        myRecyclerView.setAdapter(mAdapter);
+        if (myRecyclerView != null) {
+            ArrayList<Testimony> items = DeepLife.myDATABASE.getAllTestimonies();
+            Log.d(TAG, "UpdateList: There are '" + items.size() + "' Testimonies");
+            mAdapter = new TestimonyListAdapter(myContext, items);
+            myRecyclerView.setAdapter(mAdapter);
+        }
     }
 }
