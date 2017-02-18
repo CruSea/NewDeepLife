@@ -255,6 +255,7 @@ public class Database {
         PHONE("Phone"),
         PASSWORD("Password"),
         COUNTRY("Country"),
+        GENDER("Gender"),
         PICTURE("Picture"),
         FAVORITE_SCRIPTURE("Favorite_Scripture");
 
@@ -470,9 +471,9 @@ public class Database {
     }
 
     public long insert(String DB_Table, ContentValues cv) {
-        long state = myDatabase.insert(DB_Table, null, cv);
+        long row = myDatabase.insert(DB_Table, null, cv);
         Log.d(TAG, "Inserting->: " + cv.toString());
-        return state;
+        return row;
     }
 
     public long Delete_All(String DB_Table) {
@@ -592,6 +593,7 @@ public class Database {
                 dis.setUser_Phone(c.getString(c.getColumnIndex(UserColumn.PHONE.toString())));
                 dis.setUser_Pass(c.getString(c.getColumnIndex(UserColumn.PASSWORD.toString())));
                 dis.setUser_Country(c.getString(c.getColumnIndex(UserColumn.COUNTRY.toString())));
+                dis.setUser_Gender(c.getString(c.getColumnIndex(UserColumn.GENDER.toString())));
                 dis.setUser_Picture(c.getString(c.getColumnIndex(UserColumn.PICTURE.toString())));
                 dis.setUser_Favorite_Scripture(c.getString(c.getColumnIndex(UserColumn.FAVORITE_SCRIPTURE.toString())));
                 return dis;
@@ -1258,7 +1260,7 @@ public class Database {
 
     public Answer getAnswerBySerID(int id) {
         // briggsm:  This function seems to be implemented wrong - it's not even looking at "SerID". I'm fixing it.
-        Log.d(TAG, "Get getAnswerBySerID by ServerID: " + id);
+        Log.d(TAG, "getAnswerBySerID: SerID: " + id);
         String DB_Table = Table_QUESTION_ANSWER;
         try {
             Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
@@ -1275,12 +1277,14 @@ public class Database {
                 }
             }
         } catch (Exception e) {
-            Log.e(TAG, "Failed Get getAnswerByQuestionID by QuestionID: " + e.toString());
+            Log.e(TAG, "Failed Get getAnswerByQuestionID by QuestionID. Error:  " + e.toString());
             return null;
         }
         return null;
     }
 
+    // briggsm: Does below function even make sense? Given just QuestionID, there will be several different answers (1 for each disciple who answered it already)
+    /*
     public Answer getAnswerByQuestionID(int id) {
         Log.d(TAG, "getAnswerByQuestionID: " + id);
         String DB_Table = Table_QUESTION_ANSWER;
@@ -1304,6 +1308,7 @@ public class Database {
         }
         return null;
     }
+    */
 
     public Answer getAnswerByQuestionIDandDisciplePhone(int questionID, String disciplePhone) {
         Log.d(TAG, "Get getAnswerByQuestionIDandDisciplePhone by QuestionPhone and DisciplePhone: ");
@@ -1332,7 +1337,8 @@ public class Database {
 
     public long updateAnswer(Answer answer) {
         // Returns ID of the row updated.
-        Log.d(TAG, "UPDATE updateAnswer: ");
+        //Log.d(TAG, "UPDATE updateAnswer: ");
+        Log.i(TAG, "updateAnswer: ID:" + answer.getID() + ", SerID: " + answer.getSerID());
         String DB_Table = Table_QUESTION_ANSWER;
         try {
             ContentValues cv = new ContentValues();
@@ -1344,7 +1350,9 @@ public class Database {
 //            int id = DeepLife.myDATABASE.getAnswerByQuestionIDandDisciplePhone(answer.getQuestionID(), answer.getDisciplePhone()).getID(); // briggsm: pretty sure we don't need "DeepLife.myDATABASE." here.
 //            long x = DeepLife.myDATABASE.update(DB_Table, cv, id);
             int id = getAnswerByQuestionIDandDisciplePhone(answer.getQuestionID(), answer.getDisciplePhone()).getID();
+            Log.i(TAG, "updateAnswer: ID of Answer in DB to get Updated: " + id);
             long numRowsAffected = update(DB_Table, cv, id);
+            Log.i(TAG, "updateAnswer: numRowsAffected: " + numRowsAffected);
 
             //return numRowsAffected;
             return id;
@@ -1357,12 +1365,14 @@ public class Database {
     }
 
     public long add_updateAnswer(Answer answer) {
-        Log.d(TAG, "add_updateAnswer: ");
+        //Log.d(TAG, "add_updateAnswer: ");
+        Log.i(TAG, "add_updateAnswer - ID: " + answer.getID() + ", QuestionID: " + answer.getQuestionID() + ", DisciplePhone: " + answer.getDisciplePhone() + ", SerID: " + answer.getSerID());
         Answer oldAnswer1 = getAnswerByQuestionIDandDisciplePhone(answer.getQuestionID(), answer.getDisciplePhone());
         if (oldAnswer1 == null) {
             long res = addAnswer(answer);
             return res;
         } else {
+            answer.setSerID(oldAnswer1.getSerID());
             long res = updateAnswer(answer);
             return res;
         }
@@ -1370,7 +1380,8 @@ public class Database {
 
     public long addAnswer(Answer answer) {
         // Returns ID of the row inserted.
-        Log.d(TAG, "Add addAnswer: ");
+        //Log.d(TAG, "addAnswer: ");
+        Log.i(TAG, "addAnswer: ID: " + answer.getID());
         String DB_Table = Table_QUESTION_ANSWER;
         try {
             ContentValues cv = new ContentValues();
@@ -1381,9 +1392,12 @@ public class Database {
             cv.put(QuestionAnswerColumn.BUILDSTAGE.toString(), answer.getBuildStage().toString());
             Answer oldAnswer1 = getAnswerBySerID(answer.getSerID());
             if (oldAnswer1 == null) {
-//                long x = DeepLife.myDATABASE.insert(DB_Table, cv);  // briggsm: pretty sure we don't need "DeepLife.myDATABASE." here.
-                long x = insert(DB_Table, cv);
-                return x;
+//                long row = DeepLife.myDATABASE.insert(DB_Table, cv);  // briggsm: pretty sure we don't need "DeepLife.myDATABASE." here.
+                long row = insert(DB_Table, cv);
+                Log.i(TAG, "addAnswer: Answer INSERTed at row: " + row);
+                return row;
+            } else {
+                Log.e(TAG, "addAnswer: ERROR, found a previous answer while trying to add new answer!");
             }
             return 0;
         } catch (Exception e) {
@@ -1642,7 +1656,7 @@ public class Database {
                         Answer sendAnswer = getAnswerByID(logValue);
                         if (sendAnswer != null) {
                             sendAnswer.setID(logId);
-                            Log.i(TAG, "Found for getSendAnswers(). ID: " + sendAnswer.getID() + ", QuestionID: " + sendAnswer.getQuestionID() + ", Answer: " + sendAnswer.getAnswer());
+                            Log.i(TAG, "Found for getSendAnswers(). ID: " + sendAnswer.getID() + ", QuestionID: " + sendAnswer.getQuestionID() + ", Answer: " + sendAnswer.getAnswer() + ", SerID: " + sendAnswer.getSerID());
                             Found.add(sendAnswer);
                         }
                     }
@@ -1771,6 +1785,7 @@ public class Database {
                     user.setUser_Phone(c.getString(c.getColumnIndex(UserColumn.PHONE.toString())));
                     user.setUser_Pass(c.getString(c.getColumnIndex(UserColumn.PASSWORD.toString())));
                     user.setUser_Country(c.getString(c.getColumnIndex(UserColumn.COUNTRY.toString())));
+                    user.setUser_Gender(c.getString(c.getColumnIndex(UserColumn.GENDER.toString())));
                     user.setUser_Picture(c.getString(c.getColumnIndex(UserColumn.PICTURE.toString())));
                     user.setUser_Favorite_Scripture(c.getString(c.getColumnIndex(UserColumn.FAVORITE_SCRIPTURE.toString())));
                     return user;
@@ -1795,6 +1810,7 @@ public class Database {
             cv.put(UserColumn.PHONE.toString(), mainUser.getUser_Phone());
             cv.put(UserColumn.PASSWORD.toString(), mainUser.getUser_Pass());
             cv.put(UserColumn.COUNTRY.toString(), mainUser.getUser_Country());
+            cv.put(UserColumn.GENDER.toString(), mainUser.getUser_Gender());
             cv.put(UserColumn.PICTURE.toString(), mainUser.getUser_Picture());
             cv.put(UserColumn.FAVORITE_SCRIPTURE.toString(), mainUser.getUser_Favorite_Scripture());
 //            DeepLife.myDATABASE.Delete_All(DB_Table); // briggsm: pretty sure we don't need "DeepLife.myDATABASE." here.
@@ -1823,18 +1839,21 @@ public class Database {
             if (c.getCount() > 0) {
                 c.moveToFirst();
                 for (int i = 0; i < c.getCount(); i++) {
-                    // briggsm: think we're missing a check for id!
+                    // briggsm: think we're missing a check for id!, so I'll add it here.
                     c.moveToPosition(i);
-                    LearningTool learningTool = new LearningTool();
-                    learningTool.setID(Integer.valueOf(c.getString(c.getColumnIndex(LearningColumn.ID.toString()))));
-                    learningTool.setSerID(Integer.valueOf(c.getString(c.getColumnIndex(LearningColumn.SERID.toString()))));
-                    learningTool.setTitle(c.getString(c.getColumnIndex(LearningColumn.TITLE.toString())));
-                    learningTool.setContent(c.getString(c.getColumnIndex(LearningColumn.DESCRIPTION.toString())));
-                    learningTool.setVideoURL(c.getString(c.getColumnIndex(LearningColumn.VIDEOURL.toString())));
-                    learningTool.setCountry(Integer.valueOf(c.getString(c.getColumnIndex(LearningColumn.COUNTRY.toString()))));
-                    learningTool.setDefaultLearn(c.getString(c.getColumnIndex(LearningColumn.ISDEFAULT.toString())));
-                    learningTool.setCreated(c.getString(c.getColumnIndex(LearningColumn.CREATED.toString())));
-                    return learningTool;
+                    int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(LearningColumn.ID.toString())));
+                    if (cur_id == id) {
+                        LearningTool learningTool = new LearningTool();
+                        learningTool.setID(Integer.valueOf(c.getString(c.getColumnIndex(LearningColumn.ID.toString()))));
+                        learningTool.setSerID(Integer.valueOf(c.getString(c.getColumnIndex(LearningColumn.SERID.toString()))));
+                        learningTool.setTitle(c.getString(c.getColumnIndex(LearningColumn.TITLE.toString())));
+                        learningTool.setContent(c.getString(c.getColumnIndex(LearningColumn.DESCRIPTION.toString())));
+                        learningTool.setVideoURL(c.getString(c.getColumnIndex(LearningColumn.VIDEOURL.toString())));
+                        learningTool.setCountry(Integer.valueOf(c.getString(c.getColumnIndex(LearningColumn.COUNTRY.toString()))));
+                        learningTool.setDefaultLearn(c.getString(c.getColumnIndex(LearningColumn.ISDEFAULT.toString())));
+                        learningTool.setCreated(c.getString(c.getColumnIndex(LearningColumn.CREATED.toString())));
+                        return learningTool;
+                    }
                 }
             }
         } catch (Exception e) {
@@ -1872,14 +1891,14 @@ public class Database {
 
     public ArrayList<LearningTool> getAllLearningTools() {
         Log.d(TAG, "Get All getAllLearningTools: ");
-        String DB_Table = Table_COUNTRY;
+        String DB_Table = Table_LEARNING;
         ArrayList<LearningTool> found = new ArrayList<LearningTool>();
         try {
             Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
             c.moveToFirst();
             for (int i = 0; i < c.getCount(); i++) {
                 c.moveToPosition(i);
-                int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(CountryColumn.ID.toString())));
+                int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(LearningColumn.ID.toString())));
                 LearningTool learningTool = getLearningToolByID(cur_id);
                 if (learningTool != null) {
                     found.add(learningTool);

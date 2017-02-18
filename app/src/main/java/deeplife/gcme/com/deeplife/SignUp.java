@@ -217,6 +217,7 @@ public class SignUp extends AppCompatActivity {
                         cv.put(Database.UserColumn.PHONE.toString(), NewUser.getUser_Phone());
                         cv.put(Database.UserColumn.PASSWORD.toString(), NewUser.getUser_Pass());
                         cv.put(Database.UserColumn.COUNTRY.toString(), NewUser.getUser_Country());
+                        cv.put(Database.UserColumn.GENDER.toString(), NewUser.getUser_Gender());
                         cv.put(Database.UserColumn.PICTURE.toString(), "");
                         cv.put(Database.UserColumn.FAVORITE_SCRIPTURE.toString(), "");
 

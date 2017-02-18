@@ -412,14 +412,16 @@ public class SyncDatabase {
                 Log.d(TAG, "Adding New Answers  -> \n" + json_answers.toString());
                 for (int i = 0; i < json_answers.length(); i++) {
                     JSONObject obj = json_answers.getJSONObject(i);
+                    String disciplePhone = obj.getString(ApiResponseKey.DISCIPLE_PHONE.toString());
                     ContentValues cv = new ContentValues();
                     cv.put(Database.QuestionAnswerColumn.SERID.toString(), obj.getString(ApiResponseKey.ID.toString()));
-                    cv.put(Database.QuestionAnswerColumn.DISCIPLEPHONE.toString(), obj.getString(ApiResponseKey.DISCIPLE_PHONE.toString()));
+                    cv.put(Database.QuestionAnswerColumn.DISCIPLEPHONE.toString(), disciplePhone);
                     cv.put(Database.QuestionAnswerColumn.QUESTION_ID.toString(), obj.getString(ApiResponseKey.QUESTION_ID.toString()));
                     cv.put(Database.QuestionAnswerColumn.ANSWER.toString(), obj.getString(ApiResponseKey.ANSWER.toString()));
                     cv.put(Database.QuestionAnswerColumn.BUILDSTAGE.toString(), obj.getString(ApiResponseKey.STAGE.toString()));
                     //Answer answer = DeepLife.myDATABASE.getAnswerBySerID(Integer.valueOf(obj.getString(ApiResponseKey.ID.toString())));
-                    Answer answer = DeepLife.myDATABASE.getAnswerByQuestionID(Integer.valueOf(obj.getString(ApiResponseKey.QUESTION_ID.toString())));
+                    //Answer answer = DeepLife.myDATABASE.getAnswerByQuestionID(Integer.valueOf(obj.getString(ApiResponseKey.QUESTION_ID.toString())));
+                    Answer answer = DeepLife.myDATABASE.getAnswerByQuestionIDandDisciplePhone(Integer.valueOf(obj.getString(ApiResponseKey.QUESTION_ID.toString())), disciplePhone);
                     if (answer == null) {
                         long x = DeepLife.myDATABASE.insert(Database.Table_QUESTION_ANSWER, cv);
                         if (x > 0) {
@@ -460,6 +462,7 @@ public class SyncDatabase {
                 cv.put(Database.UserColumn.PHONE.toString(), obj.getString(ApiResponseKey.PHONE_NO.toString()));
                 cv.put(Database.UserColumn.PASSWORD.toString(), ApiResponseKey.PASS.toString());
                 cv.put(Database.UserColumn.COUNTRY.toString(), obj.getString(ApiResponseKey.COUNTRY_LC.toString()));
+                cv.put(Database.UserColumn.GENDER.toString(), obj.getString(ApiResponseKey.GENDER.toString()));
                 cv.put(Database.UserColumn.PICTURE.toString(), obj.getString(ApiResponseKey.PICTURE.toString()));
                 cv.put(Database.UserColumn.FAVORITE_SCRIPTURE.toString(), "");
                 DeepLife.myDATABASE.Delete_All(Database.Table_USER);
@@ -525,6 +528,7 @@ public class SyncDatabase {
                     cv.put(Database.UserColumn.EMAIL.toString(), obj.getString(ApiResponseKey.EMAIL.toString()));
                     cv.put(Database.UserColumn.PHONE.toString(), obj.getString(ApiResponseKey.PHONE_NO.toString()));
                     cv.put(Database.UserColumn.COUNTRY.toString(), obj.getString(ApiResponseKey.COUNTRY_LC.toString()));
+                    cv.put(Database.UserColumn.GENDER.toString(), obj.getString(ApiResponseKey.GENDER.toString()));
                     cv.put(Database.UserColumn.PICTURE.toString(), obj.getString(ApiResponseKey.PICTURE.toString()));
                     cv.put(Database.UserColumn.FAVORITE_SCRIPTURE.toString(), "");
                     long x = DeepLife.myDATABASE.update(Database.Table_USER, cv, user.getID());
@@ -545,6 +549,7 @@ public class SyncDatabase {
                     cv.put(Database.UserColumn.PHONE.toString(), obj.getString(ApiResponseKey.PHONE_NO.toString()));
                     cv.put(Database.UserColumn.PASSWORD.toString(), ApiResponseKey.PASS.toString());
                     cv.put(Database.UserColumn.COUNTRY.toString(), obj.getString(ApiResponseKey.COUNTRY_LC.toString()));
+                    cv.put(Database.UserColumn.GENDER.toString(), obj.getString(ApiResponseKey.GENDER.toString()));
                     cv.put(Database.UserColumn.PICTURE.toString(), obj.getString(ApiResponseKey.PICTURE.toString()));
                     cv.put(Database.UserColumn.FAVORITE_SCRIPTURE.toString(), "");
                     long x = DeepLife.myDATABASE.insert(Database.Table_USER, cv);

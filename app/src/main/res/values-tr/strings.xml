@@ -25,7 +25,7 @@
     <string name="msg_authenticating_account">Hesap doğrulanıyor ...</string>
     <string name="thank_you">Teşekkür ederim!</string>
     <string name="dlg_msg_invalid_user_acct">Geçersiz kullanıcı hesabı! geçerli bir hesap lütfen kullanın</string>
-    <string name="dlg_msg_something_wrong_error">Bir şeyler yanlış gitti! Lütfen tekrar deneyin!\nHata: $1%s</string>
+    <string name="dlg_msg_something_wrong_error">Bir şeyler yanlış gitti! Lütfen tekrar deneyin!\nHata: %1$s</string>
     <string name="dlg_msg_authentication_failed">Kimlik doğrulama başarısız oldu! Lütfen tekrar deneyin.</string>
     <string name="dlg_msg_downloading_files">Dosyalar İndiriliyor ...</string>
     <string name="dlg_msg_authenticating_user">kullanıcı kimlik doğrulaması ...</string>
@@ -37,7 +37,7 @@
     <string name="dlg_msg_disciple_add_success">Mürit Başarıyla Eklendi!</string>
     <string name="dlg_msg_disciple_add_failure">Oops! Disciple ilave olamazdı!</string>
     <string name="dlg_msg_disciple_add_failure_check">Oops! Disciple ilave olamazdı! Eğer doğru bilgileri girdiğinizden emin olun.</string>
-    <string name="dlg_msg_are_you_sure_delete_x">Eğer bu $1%s silmek istediğinizden emin misiniz?!</string>
+    <string name="dlg_msg_are_you_sure_delete_x">Eğer bu %1$s silmek istediğinizden emin misiniz?!</string>
     <string name="dlg_btn_no_dont_delete">Hayır, silmeyin!</string>
     <string name="dlg_btn_yes">Evet</string>
     <string name="toolbar_title_disciple_wbs">Win Disciple gönder, Build</string>

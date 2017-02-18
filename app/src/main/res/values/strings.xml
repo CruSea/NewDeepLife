@@ -25,7 +25,7 @@
     <string name="msg_authenticating_account">Authenticating the Account ...</string>
     <string name="thank_you">Thank You!</string>
     <string name="dlg_msg_invalid_user_acct">Invalid user account! Use a valid account please</string>
-    <string name="dlg_msg_something_wrong_error">Something went wrong! Please try again!\nError: $1%s</string>
+    <string name="dlg_msg_something_wrong_error">Something went wrong! Please try again!\nError: %1$s</string>
     <string name="dlg_msg_authentication_failed">Authentication has failed! Please try again.</string>
     <string name="dlg_msg_downloading_files">Downloading Files ...</string>
     <string name="dlg_msg_authenticating_user">Authenticating the user ...</string>
@@ -37,7 +37,7 @@
     <string name="dlg_msg_disciple_add_success">Disciple Successfully Added!</string>
     <string name="dlg_msg_disciple_add_failure">Oops! Disciple could not be added!</string>
     <string name="dlg_msg_disciple_add_failure_check">Oops! Disciple could not be added! Please make sure you have entered the correct information.</string>
-    <string name="dlg_msg_are_you_sure_delete_x">Are you sure you want to delete this $1%s?!</string>
+    <string name="dlg_msg_are_you_sure_delete_x">Are you sure you want to delete this %1$s?!</string>
     <string name="dlg_btn_no_dont_delete">No, don\'t delete!</string>
     <string name="dlg_btn_yes">Yes</string>
     <string name="toolbar_title_disciple_wbs">Win Build Send Disciple</string>

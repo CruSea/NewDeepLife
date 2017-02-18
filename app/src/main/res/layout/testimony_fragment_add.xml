@@ -57,7 +57,8 @@
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/action_add_testimony" />
+                android:text="@string/action_add_testimony"
+                android:id="@+id/btn_add_testimony"/>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 </android.support.design.widget.CoordinatorLayout>

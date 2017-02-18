@@ -36,7 +36,7 @@ public class LearningToolsListAdapter extends RecyclerView.Adapter<LearningTools
     @Override
     public void onBindViewHolder(DataObjectHolder holder, int position) {
         holder.Title.setText(LearningTools.get(position).getTitle());
-        holder.Content.setText(LearningTools.get(position).getTitle());
+        holder.Content.setText(LearningTools.get(position).getContent());
     }
 
     @Override

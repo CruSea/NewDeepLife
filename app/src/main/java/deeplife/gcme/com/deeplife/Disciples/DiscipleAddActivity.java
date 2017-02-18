@@ -110,8 +110,8 @@ public class DiscipleAddActivity extends AppCompatActivity {
         myCountry.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                CountryPos = 0;
                 PhoneCode.setText("+" + myCountries.get(position).getCode());
+                CountryPos = position;
             }
 
             @Override
