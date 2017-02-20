@@ -83,8 +83,7 @@ public class LoginAccess {
                                 user.setUser_Pass(myUser.getUser_Pass());
                                 long state = DeepLife.myDATABASE.updateMainUser(user);
                                 User myUser1 = DeepLife.myDATABASE.getMainUser();
-                                if (state > 0) {
-                                    Log.w(TAG, "LogInAuthenticate onSuccess(): state <= 0");
+                                if (myUser1 != null && state >0) {
                                     Login.GetNextActivity();
                                 } else {
                                     Login.DialogState(0);
