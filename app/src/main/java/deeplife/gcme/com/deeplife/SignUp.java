@@ -163,12 +163,12 @@ public class SignUp extends AppCompatActivity {
         }
 
         NewUser = new User();
-        NewUser.setUser_Name(UserFull.getText().toString());
-        NewUser.setUser_Pass(UserPass1.getText().toString());
-        NewUser.setUser_Country("" + myCountries.get(CountryPos).getSerID());
-        NewUser.setUser_Phone("" + myCountries.get(CountryPos).getCode() + UserPhone.getText().toString());
-        NewUser.setUser_Email(UserEmail.getText().toString());
-        NewUser.setUser_Gender(UserGender.getSelectedItem().toString());
+        NewUser.setName(UserFull.getText().toString());
+        NewUser.setPass(UserPass1.getText().toString());
+        NewUser.setCountry("" + myCountries.get(CountryPos).getSerID());
+        NewUser.setPhone("" + myCountries.get(CountryPos).getCode() + UserPhone.getText().toString());
+        NewUser.setEmail(UserEmail.getText().toString());
+        NewUser.setGender(UserGender.getSelectedItem().toString());
 
 
         final ProgressDialog myDialog = new ProgressDialog(this);
@@ -179,9 +179,9 @@ public class SignUp extends AppCompatActivity {
         user.add(NewUser);
         List<Pair<String, String>> Send_Param;
         Send_Param = new ArrayList<Pair<String, String>>();
-        Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.USER_NAME.toString(), NewUser.getUser_Phone()));
-        Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.USER_PASS.toString(), NewUser.getUser_Pass()));
-        Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.COUNTRY.toString(), NewUser.getUser_Country()));
+        Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.USER_NAME.toString(), NewUser.getPhone()));
+        Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.USER_PASS.toString(), NewUser.getPass()));
+        Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.COUNTRY.toString(), NewUser.getCountry()));
         Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.SERVICE.toString(), SyncService.API_SERVICE.SIGN_UP.toString()));
         Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.PARAM.toString(), myParser.toJson(user)));
         Fuel.post(DeepLife.API_URL, Send_Param).responseString(new Handler<String>() {
@@ -204,20 +204,20 @@ public class SignUp extends AppCompatActivity {
                         ContentValues cv = new ContentValues();
                         /*
                         // briggsm: Below indexes seems wrong
-                        cv.put(Database.USER_FIELDS[0],NewUser.getUser_Name());
-                        cv.put(Database.USER_FIELDS[1],NewUser.getUser_Email());
-                        cv.put(Database.USER_FIELDS[2],NewUser.getUser_Phone());
-                        cv.put(Database.USER_FIELDS[3],NewUser.getUser_Pass());
-                        cv.put(Database.USER_FIELDS[4], NewUser.getUser_Country());
+                        cv.put(Database.USER_FIELDS[0],NewUser.getName());
+                        cv.put(Database.USER_FIELDS[1],NewUser.getEmail());
+                        cv.put(Database.USER_FIELDS[2],NewUser.getPhone());
+                        cv.put(Database.USER_FIELDS[3],NewUser.getPass());
+                        cv.put(Database.USER_FIELDS[4], NewUser.getCountry());
                         cv.put(Database.USER_FIELDS[5],"");
                         cv.put(Database.USER_FIELDS[6],"");
                         */
-                        cv.put(Database.UserColumn.FULL_NAME.toString(), NewUser.getUser_Name());
-                        cv.put(Database.UserColumn.EMAIL.toString(), NewUser.getUser_Email());
-                        cv.put(Database.UserColumn.PHONE.toString(), NewUser.getUser_Phone());
-                        cv.put(Database.UserColumn.PASSWORD.toString(), NewUser.getUser_Pass());
-                        cv.put(Database.UserColumn.COUNTRY.toString(), NewUser.getUser_Country());
-                        cv.put(Database.UserColumn.GENDER.toString(), NewUser.getUser_Gender());
+                        cv.put(Database.UserColumn.FULL_NAME.toString(), NewUser.getName());
+                        cv.put(Database.UserColumn.EMAIL.toString(), NewUser.getEmail());
+                        cv.put(Database.UserColumn.PHONE.toString(), NewUser.getPhone());
+                        cv.put(Database.UserColumn.PASSWORD.toString(), NewUser.getPass());
+                        cv.put(Database.UserColumn.COUNTRY.toString(), NewUser.getCountry());
+                        cv.put(Database.UserColumn.GENDER.toString(), NewUser.getGender());
                         cv.put(Database.UserColumn.PICTURE.toString(), "");
                         cv.put(Database.UserColumn.FAVORITE_SCRIPTURE.toString(), "");
 

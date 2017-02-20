@@ -107,7 +107,8 @@ public class SyncService extends JobService {
         GETALL_CATEGORY("GetAll_Category"),
         GETALL_LEARNINGTOOLS("GetAll_LearningTools"),
         GETNEW_LEARNINGTOOLS("GetNew_LearningTools"),
-        DISCIPLETREE("DiscipleTree");
+        DISCIPLETREE("DiscipleTree"),
+        UPDATE_PROFILE("Update_Profile");
 
 
         private final String name;
@@ -152,13 +153,13 @@ public class SyncService extends JobService {
             Send_Param = new ArrayList<Pair<String, String>>();
             getService();
             if (user != null) {
-                if (user.getUser_Email() != null) {
-                    Send_Param.add(new kotlin.Pair<String, String>(API_REQUEST.USER_NAME.toString(), user.getUser_Email()));
+                if (user.getEmail() != null) {
+                    Send_Param.add(new kotlin.Pair<String, String>(API_REQUEST.USER_NAME.toString(), user.getEmail()));
                 } else {
-                    Send_Param.add(new kotlin.Pair<String, String>(API_REQUEST.USER_NAME.toString(), user.getUser_Phone()));
+                    Send_Param.add(new kotlin.Pair<String, String>(API_REQUEST.USER_NAME.toString(), user.getPhone()));
                 }
-                Send_Param.add(new kotlin.Pair<String, String>(API_REQUEST.USER_PASS.toString(), user.getUser_Pass()));
-                Send_Param.add(new kotlin.Pair<String, String>(API_REQUEST.COUNTRY.toString(), user.getUser_Country()));
+                Send_Param.add(new kotlin.Pair<String, String>(API_REQUEST.USER_PASS.toString(), user.getPass()));
+                Send_Param.add(new kotlin.Pair<String, String>(API_REQUEST.COUNTRY.toString(), user.getCountry()));
                 Send_Param.add(new kotlin.Pair<String, String>(API_REQUEST.SERVICE.toString(), myLogs.getService().toString()));
                 Send_Param.add(new kotlin.Pair<String, String>(API_REQUEST.PARAM.toString(), myParser.toJson(myLogs.getParam())));
             } else {
@@ -281,6 +282,14 @@ public class SyncService extends JobService {
                 myLogs.getParam().add(foundData.get(i));
             }
             myLogs.setService(API_SERVICE.SEND_TESTIMONY);
+        } else if (DeepLife.myDATABASE.getUpdateUserProfile().size() > 0) {
+            Log.i(TAG, "GET USER PROFILE TO UPDATE...");
+
+            ArrayList<User> foundData = DeepLife.myDATABASE.getUpdateUserProfile();
+            for (int i = 0; i < foundData.size(); i++) {
+                myLogs.getParam().add(foundData.get(i));
+            }
+            myLogs.setService(API_SERVICE.UPDATE_PROFILE);
         }
         return myLogs;
     }

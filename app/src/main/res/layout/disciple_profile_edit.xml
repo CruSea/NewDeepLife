@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="125dp"
+        android:layout_height="125dp"
+        app:srcCompat="@drawable/bengeos"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:id="@+id/profilePicImageView"/>
+
+    <Button
+        android:text="@string/action_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/profileEditSaveBtn"
+        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/colorPrimary"
+        android:textColor="@color/white"/>
+
+    <Button
+        android:text="@string/action_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/profileEditSaveBtn"
+        android:layout_toLeftOf="@+id/profileEditSaveBtn"
+        android:layout_toStartOf="@+id/profileEditSaveBtn"
+        android:id="@+id/profileEditCancelBtn"
+        android:layout_marginRight="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@color/colorPrimary"
+        android:textColor="@color/white"/>
+
+    <TextView
+        android:text="@string/form_text_personal_information"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/profilePicImageView"
+        android:layout_alignLeft="@+id/profilePicImageView"
+        android:layout_alignStart="@+id/profilePicImageView"
+        android:layout_marginTop="16dp"
+        android:id="@+id/textView20"
+        android:textSize="20sp"
+        android:textColor="@color/black"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/textView20"
+        android:layout_alignLeft="@+id/textView20"
+        android:layout_alignStart="@+id/textView20"
+        android:layout_marginTop="16dp"
+        android:layout_alignRight="@+id/profileEditSaveBtn"
+        android:layout_alignEnd="@+id/profileEditSaveBtn"
+        android:layout_marginBottom="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:text="@string/form_text_full_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView22"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:text="Name"
+                android:ems="10"
+                android:id="@+id/profileEditFullNameText"
+                tools:text="Biniam Kassahun"/>
+
+            <TextView
+                android:text="@string/form_text_gender"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView23"/>
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/profileEditGenderSpinner"
+                android:entries="@array/gender"/>
+
+            <TextView
+                android:text="@string/form_text_country"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView24"/>
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/profileEditCountrySpinner"/>
+
+            <TextView
+                android:text="@string/form_text_phone_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView25"/>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/profileEditPhoneCodeText"
+                    android:layout_weight="0"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    tools:text="+123"/>
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:ems="10"
+                    android:id="@+id/profileEditPhoneNumberText"
+                    android:layout_weight="1"
+                    tools:text="4445551111"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginStart="16dp"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:text="@string/form_text_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView27"
+                android:layout_weight="0"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:id="@+id/profileEditEmailText"
+                tools:text="george.beng@gmail.com"
+                android:enabled="false"/>
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>
