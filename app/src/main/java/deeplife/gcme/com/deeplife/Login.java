@@ -83,13 +83,13 @@ public class Login extends AppCompatActivity {
                 try {
                     if (myCountries == null || myCountries.size() == 0) {
                         myCountries = DeepLife.myDATABASE.getAllCountries();
-//                        UpdateView();
+                        UpdateView();
                     } else {
                         User user = new User();
                         if (UserName.getText().toString().contains("@")) {
                             user.setUser_Email(UserName.getText().toString());
                         } else {
-                            user.setUser_Phone("" + myCountries.get(mySpinner.getSelectedItemPosition()).getCode() + "" + UserName.getText().toString());
+                            user.setUser_Phone(UserName.getText().toString());
                         }
                         user.setUser_Pass(UserPass.getText().toString());
                         user.setUser_Country("" + myCountries.get(mySpinner.getSelectedItemPosition()).getSerID());
