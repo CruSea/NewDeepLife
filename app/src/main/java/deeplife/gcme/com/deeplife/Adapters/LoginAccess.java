@@ -84,15 +84,16 @@ public class LoginAccess {
                                 long state = DeepLife.myDATABASE.updateMainUser(user);
                                 User myUser1 = DeepLife.myDATABASE.getMainUser();
                                 if (state > 0) {
+                                    Log.w(TAG, "LogInAuthenticate onSuccess(): state <= 0");
                                     Login.GetNextActivity();
                                 } else {
                                     Login.DialogState(0);
-                                    Log.w(TAG, "LogInAuthenticate onSuccess(): state <= 0");
+                                    Log.w(TAG, "LogInAuthenticate onSuccess(): unable to update Main User");
                                     Login.showDialog(DeepLife.getContext().getString(R.string.dlg_msg_login_failure));
                                 }
                             } else {
                                 Login.DialogState(0);
-                                Log.w(TAG, "LogInAuthenticate onSuccess(): user == null");
+                                Log.w(TAG, "LogInAuthenticate onSuccess(): failed to get main user");
                                 Login.showDialog(DeepLife.getContext().getString(R.string.dlg_msg_login_failure));
                             }
                         } else {
