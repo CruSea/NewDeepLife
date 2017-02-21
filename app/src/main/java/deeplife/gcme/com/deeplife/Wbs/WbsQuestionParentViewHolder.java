@@ -205,7 +205,11 @@ public class WbsQuestionParentViewHolder extends ParentViewHolder implements Vie
         }
 
 //        WbsActivity.checkStage();
-        WbsActivity.updateCurrentStageButton();
+        try {
+            WbsActivity.updateCurrentStageButton();
+        }catch (Exception e){
+
+        }
 
     }
 
