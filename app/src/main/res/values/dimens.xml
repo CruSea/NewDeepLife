@@ -14,4 +14,5 @@
     <dimen name="learning_card_title_padding_right">20dp</dimen>
     <dimen name="learning_card_title_padding_top">10dp</dimen>
     <dimen name="album_title">15dp</dimen>
+    <dimen name="learning_card_title_margin">5dp</dimen>
 </resources>

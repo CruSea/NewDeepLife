@@ -28,6 +28,8 @@ public class DeepLife extends Application {
     public static final String API_URL = DEEP_URL + "/deep_api";
     public static final String PROFILE_PIC_URL = DEEP_URL + "/img/profile/";
 
+    public static final String YOUTUBE_DEVELOPER_API_KEY = "AIzaSyCLqE27gunMe4epeAZU4U2nFqjUOPurwUM";
+
 
     public static int ImageDownloadCount = 0;
     private static final int REQUEST_PHONE_CALL = 11;
