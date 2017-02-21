@@ -116,6 +116,7 @@ public class WbsActivity extends AppCompatActivity {
         ArrayList<WbsQuestion> wbsQuestions = DeepLife.myDATABASE.getWbsParentQuestionsAndFoldersByStage(stage);
         if (wbsQuestions != null) {
             updateStagePointerBar(stage);
+            updateStageButton(getStage());
             UpdateGUIAdapter(wbsQuestions);
             Disciple disciple = DeepLife.myDATABASE.getDiscipleByPhone(DisciplePhone);
             if (disciple != null) {
@@ -203,6 +204,8 @@ public class WbsActivity extends AppCompatActivity {
                     if (answer.getAnswer().equals("NO") || answer.getAnswer().equals("0")) {
                         return Disciple.STAGE.WIN;
                     }
+                }else {
+                    return Disciple.STAGE.WIN;
                 }
             }
         }
@@ -213,8 +216,10 @@ public class WbsActivity extends AppCompatActivity {
                     Answer answer = DeepLife.myDATABASE.getAnswerByQuestionIDandDisciplePhone(wbsQuestion.getSerID(), DisciplePhone);
                     if (answer != null) {
                         if (answer.getAnswer().equals("NO") || answer.getAnswer().equals("0")) {
-                            return Disciple.STAGE.WIN;
+                            return Disciple.STAGE.BUILD;
                         }
+                    }else {
+                        return Disciple.STAGE.BUILD;
                     }
                 }
             }
