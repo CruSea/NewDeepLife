@@ -1391,7 +1391,7 @@ public class Database {
             cv.put(QuestionAnswerColumn.QUESTION_ID.toString(), answer.getQuestionID());
             cv.put(QuestionAnswerColumn.ANSWER.toString(), answer.getAnswer());
             cv.put(QuestionAnswerColumn.BUILDSTAGE.toString(), answer.getBuildStage().toString());
-            Answer oldAnswer1 = getAnswerBySerID(answer.getSerID());
+            Answer oldAnswer1 = getAnswerByQuestionIDandDisciplePhone(answer.getQuestionID(),answer.getDisciplePhone());
             if (oldAnswer1 == null) {
 //                long row = DeepLife.myDATABASE.insert(DB_Table, cv);  // briggsm: pretty sure we don't need "DeepLife.myDATABASE." here.
                 long row = insert(DB_Table, cv);
