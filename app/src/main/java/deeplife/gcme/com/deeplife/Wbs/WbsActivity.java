@@ -24,7 +24,6 @@ import java.util.List;
 import deeplife.gcme.com.deeplife.Database.Database;
 import deeplife.gcme.com.deeplife.DeepLife;
 import deeplife.gcme.com.deeplife.Disciples.Disciple;
-import deeplife.gcme.com.deeplife.Disciples.DisciplesFragment;
 import deeplife.gcme.com.deeplife.Models.Answer;
 import deeplife.gcme.com.deeplife.Models.Category;
 import deeplife.gcme.com.deeplife.R;
@@ -116,7 +115,7 @@ public class WbsActivity extends AppCompatActivity {
         ArrayList<WbsQuestion> wbsQuestions = DeepLife.myDATABASE.getWbsParentQuestionsAndFoldersByStage(stage);
         if (wbsQuestions != null) {
             updateStagePointerBar(stage);
-            updateStageButton(getStage());
+            updateStageButton(getQuestionStage());
             UpdateGUIAdapter(wbsQuestions);
             Disciple disciple = DeepLife.myDATABASE.getDiscipleByPhone(DisciplePhone);
             if (disciple != null) {
@@ -161,10 +160,11 @@ public class WbsActivity extends AppCompatActivity {
         } else if (stage == Disciple.STAGE.BUILD) {
             Btn_Win.setEnabled(true);
             Btn_Win.setTypeface(Btn_Win.getTypeface(), Typeface.BOLD);
-            Btn_Win.setText("->" + DeepLife.getContext().getString(R.string.text_win) + "<-");
+
 
             Btn_Build.setEnabled(true);
             Btn_Build.setTypeface(Btn_Build.getTypeface(), Typeface.BOLD);
+            Btn_Build.setText("->" + DeepLife.getContext().getString(R.string.text_win) + "<-");
         } else {
             Btn_Win.setEnabled(true);
             Btn_Win.setTypeface(Btn_Win.getTypeface(), Typeface.BOLD);
@@ -181,19 +181,19 @@ public class WbsActivity extends AppCompatActivity {
 
     }
     public static void updateCurrentStageButton(){
-        updateStageButton(getStage());
+        updateStageButton(getDiscipleStage());
     }
     public static void updateCurrentStagePointer(){
-        updateStagePointerBar(getStage());
+        updateStagePointerBar(getQuestionStage());
     }
     public static void UpdateGUIAdapter(List<WbsQuestion> wbsQuestions) {
         mAdapter = new WbsQuestionAdapter(myContext, wbsQuestions, myDisciple);
         myRecyclerView.setAdapter(mAdapter);
     }
     public static void loadCurrentStage(){
-        UpdateQuestionList(getStage());
+        UpdateQuestionList(getQuestionStage());
     }
-    public static Disciple.STAGE getStage(){
+    public static Disciple.STAGE getQuestionStage(){
         Log.d(TAG, "checkStage: Checking for Stage");
         int stage = 3;
         ArrayList<WbsQuestion> wbsQuestions = DeepLife.myDATABASE.getWbsParentQuestionsAndFoldersByStage(Disciple.STAGE.WIN);
@@ -225,6 +225,64 @@ public class WbsActivity extends AppCompatActivity {
             }
         }
         return Disciple.STAGE.SEND;
+    }
+    public static Disciple.STAGE getDiscipleStage(){
+        Log.d(TAG, "checkStage: Checking for Stage");
+        Disciple.STAGE curStage = Disciple.STAGE.SEND;
+        ArrayList<WbsQuestion> wbsQuestions = DeepLife.myDATABASE.getWbsParentQuestionsAndFoldersByStage(Disciple.STAGE.WIN);
+        for (WbsQuestion wbsQuestion : wbsQuestions) {
+            if (wbsQuestion.getMandatory() != 0) {
+                Answer answer = DeepLife.myDATABASE.getAnswerByQuestionIDandDisciplePhone(wbsQuestion.getSerID(), DisciplePhone);
+                if (answer != null) {
+                    if (answer.getAnswer().equals("NO") || answer.getAnswer().equals("0")) {
+                        curStage = Disciple.STAGE.WIN;
+                        break;
+                    }
+                }else {
+                    curStage = Disciple.STAGE.WIN;
+                    break;
+                }
+            }
+        }
+        if(curStage != Disciple.STAGE.WIN){
+            wbsQuestions = DeepLife.myDATABASE.getWbsParentQuestionsAndFoldersByStage(Disciple.STAGE.BUILD);
+            for (WbsQuestion wbsQuestion : wbsQuestions) {
+                if (wbsQuestion.getMandatory() != 0) {
+                    Answer answer = DeepLife.myDATABASE.getAnswerByQuestionIDandDisciplePhone(wbsQuestion.getSerID(), DisciplePhone);
+                    if (answer != null) {
+                        if (answer.getAnswer().equals("NO") || answer.getAnswer().equals("0")) {
+                            curStage = Disciple.STAGE.BUILD;
+                            break;
+                        }
+                    }else {
+                        curStage = Disciple.STAGE.BUILD;
+                        break;
+                    }
+                }
+            }
+        }else {
+            return curStage;
+        }
+        if(curStage != Disciple.STAGE.BUILD){
+            wbsQuestions = DeepLife.myDATABASE.getWbsParentQuestionsAndFoldersByStage(Disciple.STAGE.SEND);
+            for (WbsQuestion wbsQuestion : wbsQuestions) {
+                if (wbsQuestion.getMandatory() != 0) {
+                    Answer answer = DeepLife.myDATABASE.getAnswerByQuestionIDandDisciplePhone(wbsQuestion.getSerID(), DisciplePhone);
+                    if (answer != null) {
+                        if (answer.getAnswer().equals("NO") || answer.getAnswer().equals("0")) {
+                            curStage = Disciple.STAGE.SEND;
+                            break;
+                        }
+                    }else {
+                        curStage = Disciple.STAGE.BUILD;
+                        break;
+                    }
+                }
+            }
+        }else {
+            return curStage;
+        }
+        return curStage;
     }
 //    public static void checkStage() {
 //        Log.d(TAG, "checkStage: Checking for Stage change");

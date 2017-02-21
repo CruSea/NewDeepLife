@@ -106,7 +106,12 @@ public class DiscipleListAdapter extends RecyclerView.Adapter<DiscipleListAdapte
 
     @Override
     public int getItemCount() {
-        return Disciples.size();
+        try{
+            return Disciples.size();
+        }catch (Exception e){
+            return 0;
+        }
+
     }
 
     public static class DataObjectHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
