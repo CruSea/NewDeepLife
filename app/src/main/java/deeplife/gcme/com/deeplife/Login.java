@@ -89,7 +89,7 @@ public class Login extends AppCompatActivity {
                         if (UserName.getText().toString().contains("@")) {
                             user.setEmail(UserName.getText().toString());
                         } else {
-                            user.setUser_Phone(UserName.getText().toString());
+                            user.setPhone(UserName.getText().toString());
                         }
                         user.setPass(UserPass.getText().toString());
                         user.setCountry("" + myCountries.get(mySpinner.getSelectedItemPosition()).getSerID());

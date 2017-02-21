@@ -30,6 +30,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/thumbnail"
+                android:textStyle="bold"
+                android:layout_margin="@dimen/learning_card_title_margin"
                 android:paddingLeft="@dimen/learning_card_title_padding"
                 android:paddingRight="@dimen/learning_card_title_padding_right"
                 android:paddingTop="@dimen/learning_card_title_padding_top"

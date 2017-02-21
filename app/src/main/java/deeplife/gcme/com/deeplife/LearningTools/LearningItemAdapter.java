@@ -1,6 +1,8 @@
 package deeplife.gcme.com.deeplife.LearningTools;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,6 +15,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Collections;
 import java.util.List;
 
@@ -44,7 +48,7 @@ public class LearningItemAdapter extends RecyclerView.Adapter<LearningItemAdapte
     public void onBindViewHolder(DataObjectHolder holder, int position) {
         holder.Title.setText(myItems.get(position).getTitle());
         Glide.with(myContext)
-                .load(myItems.get(position).getVideoURL())
+                .load(getImageURL(myItems.get(position).getVideoURL()))
                 .into(holder.AlbumImage);
     }
 
@@ -71,11 +75,11 @@ public class LearningItemAdapter extends RecyclerView.Adapter<LearningItemAdapte
         @Override
         public void onClick(View v) {
             if(v.getId() == R.id.thumbnail){
-//                Intent intent = new Intent(myContext, YouTubeActivity.class);
-//                Bundle b = new Bundle();
-//                b.putString("VideoURL",String.valueOf(myItems.get(getAdapterPosition()).getVideoURL()));
-//                intent.putExtras(b);
-//                myContext.startActivity(intent);
+                Intent intent = new Intent(myContext, LearningToolsDetail.class);
+                Bundle b = new Bundle();
+                b.putString("VideoURL",String.valueOf(myItems.get(getAdapterPosition()).getVideoURL()));
+                intent.putExtras(b);
+                myContext.startActivity(intent);
             }
         }
 
@@ -84,6 +88,25 @@ public class LearningItemAdapter extends RecyclerView.Adapter<LearningItemAdapte
 
             return true;
         }
+    }
+    public String getImageURL(String url){
+        String query = null;
+        try {
+            query = new URL(url).getQuery();
+            String[] param = query.split("&");
+            String id = null;
+            for (String row : param) {
+                String[] param1 = row.split("=");
+                if (param1[0].equals("v")) {
+                    id = param1[1];
+                }
+            }
+            String img_url="http://img.youtube.com/vi/"+id+"/0.jpg";
+            return img_url;
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 
 }
