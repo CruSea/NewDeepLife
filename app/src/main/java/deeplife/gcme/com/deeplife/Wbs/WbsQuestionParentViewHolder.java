@@ -34,7 +34,7 @@ public class WbsQuestionParentViewHolder extends ParentViewHolder implements Vie
     Button btnInc, btnDec;
     ToggleButton btnToggleYesNo;
     ImageView NewsImage;
-    TextView QuestionNumericValue, ReadNoteYesNo, ReadNoteNumeric;
+    TextView QuestionNumericValue, ReadNoteYesNo, ReadNoteNumeric,IsMandatoryNumeric,IsMandatoryYesNo;
     FrameLayout frameLayoutYesNo, frameLayoutNumeric, frameLayoutFolder;
 
     Context mContext;
@@ -62,6 +62,9 @@ public class WbsQuestionParentViewHolder extends ParentViewHolder implements Vie
         QuestionNumeric = (TextView) itemView.findViewById(R.id.txt_wbs_numeric_question);
         FolderName = (TextView) itemView.findViewById(R.id.txt_wbs_folder_name);
 
+        IsMandatoryNumeric = (TextView) itemView.findViewById(R.id.txt_wbs_numeric_mandatory);
+        IsMandatoryYesNo = (TextView) itemView.findViewById(R.id.txt_wbs_yesno_mandatory);
+
         btnInc = (Button) itemView.findViewById(R.id.btn_wbs_numeric_inc);
         btnInc.setOnClickListener(this);
         btnDec = (Button) itemView.findViewById(R.id.btn_wbs_numeric_dec);
@@ -82,6 +85,10 @@ public class WbsQuestionParentViewHolder extends ParentViewHolder implements Vie
         Answer answer;
         switch (wbsQuestion.getType()) {
             case YESNO:
+                if(wbsQuestion.getMandatory() == 0){
+                    IsMandatoryYesNo.setVisibility(View.INVISIBLE);
+                    IsMandatoryNumeric.setVisibility(View.INVISIBLE);
+                }
                 frameLayoutYesNo.setVisibility(View.VISIBLE);
                 frameLayoutNumeric.setVisibility(View.GONE);
                 frameLayoutFolder.setVisibility(View.GONE);
@@ -91,6 +98,10 @@ public class WbsQuestionParentViewHolder extends ParentViewHolder implements Vie
                 btnToggleYesNo.setChecked(answer == null ? false : answer.getAnswer().equalsIgnoreCase("yes"));
                 break;
             case NUMBER:
+                if(wbsQuestion.getMandatory() == 0){
+                    IsMandatoryYesNo.setVisibility(View.INVISIBLE);
+                    IsMandatoryNumeric.setVisibility(View.INVISIBLE);
+                }
                 frameLayoutYesNo.setVisibility(View.GONE);
                 frameLayoutNumeric.setVisibility(View.VISIBLE);
                 frameLayoutFolder.setVisibility(View.GONE);
