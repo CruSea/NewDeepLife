@@ -117,7 +117,12 @@ public class WbsQuestionParentViewHolder extends ParentViewHolder implements Vie
         answer.setSerID(0);
         answer.setBuildStage(Disciple.STAGE.WIN); // briggsm: !!!!!!!!!!!!!!!!!! Just doing this for now, so it's not null (until we take it out of DB all together). !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         if (v.getId() == R.id.btn_wbs_numeric_inc) {
-            int value = Integer.valueOf(QuestionNumericValue.getText().toString());
+            int value = 0;
+            try{
+                value = Integer.valueOf(QuestionNumericValue.getText().toString());
+            }catch (Exception e){
+
+            }
             value = value + 1;
             Log.i(TAG, "INC clicked. Changing value from '" + (value - 1) + "' to '" + value + "'");
             QuestionNumericValue.setText("" + value);
@@ -132,7 +137,12 @@ public class WbsQuestionParentViewHolder extends ParentViewHolder implements Vie
                 mySyncDatabase.AddLog(logs);
             }
         } else if (v.getId() == R.id.btn_wbs_numeric_dec) {
-            int value = Integer.valueOf(QuestionNumericValue.getText().toString());
+            int value = 0;
+            try{
+                value = Integer.valueOf(QuestionNumericValue.getText().toString());
+            }catch (Exception e){
+
+            }
             if (value > 0) {
                 value = value - 1;
                 Log.i(TAG, "DEC clicked. Changing value from '" + (value + 1) + "' to '" + value + "'");
