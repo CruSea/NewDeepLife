@@ -28,7 +28,7 @@ public class LearningToolsDetail extends YouTubeBaseActivity implements YouTubeP
     private final static String reg = "(?:youtube(?:-nocookie)?\\.com\\/(?:[^\\/\\n\\s]+\\/\\S+\\/|(?:v|e(?:mbed)?)\\/|\\S*?[?&]v=)|youtu\\.be\\/)([a-zA-Z0-9_-]{11})";
 
     @Override
-    protected void onCreate(Bundle bundle) {git
+    protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         setContentView(R.layout.learning_detail_fragment);
         VIDEO_URL = getIntent().getExtras().getString("VideoURL");
