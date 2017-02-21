@@ -1178,8 +1178,9 @@ public class Database {
                 }
             }
         } catch (Exception e) {
+            foundParentQuestions = new ArrayList<WbsQuestion>();
             Log.e(TAG, "Failed Get getWbsParentQuestionsAndFoldersByStage: " + e.toString());
-            return null;
+            return foundParentQuestions;
         }
         return foundParentQuestions;
     }
@@ -1394,12 +1395,13 @@ public class Database {
             if (oldAnswer1 == null) {
 //                long row = DeepLife.myDATABASE.insert(DB_Table, cv);  // briggsm: pretty sure we don't need "DeepLife.myDATABASE." here.
                 long row = insert(DB_Table, cv);
-                Log.i(TAG, "addAnswer: Answer INSERTed at row: " + row);
+                Log.i(TAG, "addAnswer: Answer inserted at row: " + row);
                 return row;
             } else {
-                Log.e(TAG, "addAnswer: ERROR, found a previous answer while trying to add new answer!");
+                long row = update(DB_Table,cv,oldAnswer1.getID());
+                Log.i(TAG, "addAnswer: Answer inserted at row: " + row);
+                return row;
             }
-            return 0;
         } catch (Exception e) {
             Log.e(TAG, "Failed Add addAnswer: " + e.toString());
             return 0;
