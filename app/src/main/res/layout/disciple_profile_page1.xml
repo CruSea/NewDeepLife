@@ -34,7 +34,7 @@
                         android:id="@+id/img_discipleprofile_image"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@drawable/bengeos" />
+                        android:background="@drawable/bengeos"/>
 
                     <ImageButton
                         android:id="@+id/btn_discipleprofile_image"

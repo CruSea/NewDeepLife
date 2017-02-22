@@ -33,7 +33,6 @@
             android:title="@string/menu_learning_tools" />
     </group>
 
-
     <item android:title="@string/menusub_my_account">
         <menu>
             <item

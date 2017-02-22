@@ -52,17 +52,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        myJobScheduler = (JobScheduler) getSystemService(Context.JOB_SCHEDULER_SERVICE);
+//        myJobScheduler = (JobScheduler) getSystemService(Context.JOB_SCHEDULER_SERVICE);
         myToolbar = (Toolbar) findViewById(R.id.toolbar);
 
         setSupportActionBar(myToolbar);
         Log.i(TAG, "Main Activity Started");
-
+//
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, myToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
+//        drawer.setDrawerListener(toggle);
         toggle.syncState();
-
+//
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         myTabLayout.getTabAt(2).setIcon(R.drawable.nav_testimonials_icon_grey);
         myTabLayout.getTabAt(3).setIcon(R.drawable.nav_news_icon_grey);
         myTabLayout.getTabAt(4).setIcon(R.drawable.nav_learning_icon_grey);
-        UserName = (TextView) findViewById(R.id.txt_main_user_name);
+//        UserName = (TextView) findViewById(R.id.txt_main_user_name);
 
         checkPermissions();
 //        myUser = DeepLife.myDATABASE.getMainUser();

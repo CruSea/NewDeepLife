@@ -69,7 +69,6 @@ public class DiscipleProfileActivity extends AppCompatActivity {
     private Button DisCall, DisMessage, DisComplete;
     private Context myContext;
     private TextView DisplayName;
-
     Country userCountry;
 
     @Override
@@ -85,13 +84,14 @@ public class DiscipleProfileActivity extends AppCompatActivity {
         Init();
         //EditMode(false);
         FillForm();
+        populateTextViews();
 
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        populateTextViews();
+
     }
 
     private void FillForm() {

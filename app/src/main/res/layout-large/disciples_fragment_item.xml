@@ -31,14 +31,14 @@
                 android:layout_height="wrap_content">
 
                 <FrameLayout
-                    android:layout_width="60dp"
-                    android:layout_height="60dp">
+                    android:layout_width="120dp"
+                    android:layout_height="120dp">
 
                     <ImageView
                         android:id="@+id/img_disciple_image"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@drawable/bengeos" />
+                        android:background="@drawable/bengeos"/>
 
                     <ImageView
                         android:layout_width="match_parent"
@@ -70,14 +70,15 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textStyle="bold"
-                            android:textSize="20sp"
+                            android:textSize="35sp"
                             android:textColor="@color/colorPrimary"
-                            tools:text="Biniam Kassahu dasd" />
+                            tools:text="Biniam Kassahu" />
 
                         <TextView
                             android:id="@+id/txt_disciple_email"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:textSize="25dp"
                             android:textColor="@color/colorAccent"
                             tools:text="george.beng@gmail.com" />
 
@@ -85,6 +86,7 @@
                             android:id="@+id/txt_disciple_phone"
                             android:layout_width="match_parent"
                             android:textColor="@color/black"
+                            android:textSize="20sp"
                             android:layout_height="wrap_content"
                             tools:text="+251916417951" />
                     </LinearLayout>
@@ -97,7 +99,7 @@
 
                         <Button
                             android:id="@+id/btn_wbs"
-                            android:layout_width="100dp"
+                            android:layout_width="150dp"
                             android:layout_height="wrap_content"
                             android:theme="@style/AppTheme.Button1"
                             style="@style/Widget.AppCompat.Button.Colored"

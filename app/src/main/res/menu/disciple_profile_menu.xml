@@ -5,6 +5,6 @@
         android:id="@+id/disciple_edit"
         android:orderInCategory="100"
         myapp:showAsAction="ifRoom"
-        android:icon="@drawable/edit_new_icon"
+        android:icon="@drawable/icon_build_icon_white"
         android:title="@string/toolbar_title_disciple_edit" />
 </menu>

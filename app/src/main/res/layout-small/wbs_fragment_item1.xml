@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_view"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="3dp"
+        card_view:cardCornerRadius="0dp"
+        card_view:cardElevation="2dp"
+        card_view:contentPadding="2dp">
+
+        <FrameLayout
+            android:id="@+id/wbs_frame_yesno_question"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="1dp"
+                    android:layout_marginStart="1dp"
+                    android:layout_weight="2">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginLeft="15dp"
+                        android:text="This is the Question Place "
+                        android:textSize="9sp"
+                        android:textColor="#000000"
+                        android:id="@+id/txt_wbs_yesno_question" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:text="@string/text_star_mandatory"
+                            android:textSize="9sp"
+                            android:id="@+id/txt_wbs_yesno_mandatory" />
+
+                        <TextView
+                            android:id="@+id/txt_wbs_yesno_readnote"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginStart="20dp"
+                            android:textSize="9sp"
+                            android:textColor="@color/bg_login"
+                            android:text="Read Note" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:layout_weight="4">
+
+                    <ToggleButton
+                        android:id="@+id/tgl_wbs_yesno_state"
+                        android:layout_width="45dp"
+                        android:layout_height="25dp"
+                        android:textOff=""
+                        android:textOn=""
+                        android:background="@drawable/switch_tump1" />
+                </LinearLayout>
+            </LinearLayout>
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:id="@+id/wbs_frame_numeric_question">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:weightSum="6"
+                android:padding="10sp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center_vertical"
+                    android:layout_weight="2">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginLeft="5sp"
+                        android:textSize="10sp"
+                        android:textColor="#000000"
+                        android:id="@+id/txt_wbs_numeric_question"
+                        tools:text="This is the Question Place " />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="6dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/text_star_mandatory"
+                            android:textSize="10sp"
+                            android:id="@+id/txt_wbs_numeric_mandatory" />
+
+                        <TextView
+                            android:id="@+id/txt_wbs_numeric_readnote"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginStart="20dp"
+                            android:textSize="10sp"
+                            android:textColor="@color/bg_login"
+                            android:text="@string/action_read_note" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:layout_weight="4">
+
+                    <Button
+                        android:layout_width="15dp"
+                        android:layout_height="20dp"
+                        android:background="@drawable/btn_decrs"
+                        android:id="@+id/btn_wbs_numeric_dec" />
+
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" />
+
+                        <TextView
+                            android:id="@+id/txt_wbs_numeric_value"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="1dp"
+                            android:layout_marginStart="1dp"
+                            android:layout_marginRight="1dp"
+                            android:layout_marginEnd="1dp"
+                            android:gravity="center_horizontal|center_vertical"
+                            android:textSize="12sp"
+                            android:inputType="number"
+                            android:textColor="#000000"
+                            tools:text="0" />
+                    </FrameLayout>
+
+                    <Button
+                        android:layout_width="15dp"
+                        android:layout_height="20dp"
+                        android:background="@drawable/btn_incrs"
+                        android:id="@+id/btn_wbs_numeric_inc" />
+
+                </LinearLayout>
+            </LinearLayout>
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/wbs_frame_folder">
+
+            <LinearLayout
+                android:layout_width="100dp"
+                android:layout_height="2dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/bg_logins"></LinearLayout>
+
+            <LinearLayout
+                android:layout_width="2dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginStart="10dp"
+                android:background="@color/bg_logins"></LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:weightSum="6"
+                android:padding="10sp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:layout_weight="2">
+
+                    <TextView
+                        android:id="@+id/txt_wbs_folder_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
+                        android:text=""
+                        android:textSize="10sp"
+                        android:textColor="#000000" />
+                </LinearLayout>
+            </LinearLayout>
+        </FrameLayout>
+
+    </android.support.v7.widget.CardView>
+</LinearLayout>
