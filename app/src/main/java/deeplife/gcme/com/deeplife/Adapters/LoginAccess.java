@@ -66,7 +66,6 @@ public class LoginAccess {
         Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.COUNTRY.toString(), myUser.getCountry()));
         Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.SERVICE.toString(), SyncService.API_SERVICE.LOG_IN.toString()));
         Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.PARAM.toString(), "[]"));
-
         try {
             Fuel.post(DeepLife.API_URL, Send_Param).responseString(new Handler<String>() {
                 @Override
@@ -86,17 +85,14 @@ public class LoginAccess {
                                 if (myUser1 != null && state >0) {
                                     Login.GetNextActivity();
                                 } else {
-                                    Login.DialogState(0);
                                     Log.w(TAG, "LogInAuthenticate onSuccess(): unable to update Main User");
                                     Login.showDialog(DeepLife.getContext().getString(R.string.dlg_msg_login_failure));
                                 }
                             } else {
-                                Login.DialogState(0);
                                 Log.w(TAG, "LogInAuthenticate onSuccess(): failed to get main user");
                                 Login.showDialog(DeepLife.getContext().getString(R.string.dlg_msg_login_failure));
                             }
                         } else {
-                            Login.DialogState(0);
                             Log.w(TAG, "LogInAuthenticate onSuccess(): JSONObject 'Response' is null");
                             Login.showDialog(DeepLife.getContext().getString(R.string.dlg_msg_login_failure));
                         }
@@ -118,7 +114,6 @@ public class LoginAccess {
     }
 
     public boolean GetMetaData() {
-        Login.DialogState(1);
         Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.USER_NAME.toString(), ""));
         Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.USER_PASS.toString(), ""));
         Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.COUNTRY.toString(), ""));
@@ -136,7 +131,6 @@ public class LoginAccess {
                         myObject = (JSONObject) new JSONTokener(s).nextValue();
                         if (!myObject.isNull(SyncDatabase.ApiResponseKey.RESPONSE.toString())) {
                             mySyncDatabase.ProcessResponse(s);
-                            Login.DialogState(0);
                             Login.showDialog(DeepLife.getContext().getString(R.string.dlg_msg_login));
                         } else {
                             Login.showDialog(DeepLife.getContext().getString(R.string.dlg_msg_meta_download_failed));
@@ -183,11 +177,9 @@ public class LoginAccess {
                         if (state > 0) {
                             Login.GetNextActivity();
                         } else {
-                            Login.DialogState(0);
                             Login.showDialog(DeepLife.getContext().getString(R.string.dlg_msg_login_failure));
                         }
                     } else {
-                        Login.DialogState(0);
                         Login.showDialog(DeepLife.getContext().getString(R.string.dlg_msg_login_failure));
                     }
                 } catch (JSONException e) {

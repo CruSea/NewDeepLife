@@ -8,35 +8,62 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.kittinunf.fuel.Fuel;
+import com.github.kittinunf.fuel.core.FuelError;
+import com.github.kittinunf.fuel.core.Handler;
+import com.github.kittinunf.fuel.core.Request;
+import com.github.kittinunf.fuel.core.Response;
+
+import org.jetbrains.annotations.NotNull;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONTokener;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import deeplife.gcme.com.deeplife.Adapters.CountryListAdapter;
 import deeplife.gcme.com.deeplife.Adapters.LoginAccess;
 import deeplife.gcme.com.deeplife.Models.Country;
 import deeplife.gcme.com.deeplife.Models.User;
+import deeplife.gcme.com.deeplife.SyncService.SyncDatabase;
+import deeplife.gcme.com.deeplife.SyncService.SyncService;
+import kotlin.Pair;
 
 /**
  * Created by bengeos on 12/18/16.
  */
 
-public class Login extends AppCompatActivity {
+public class Login extends AppCompatActivity implements View.OnClickListener {
+    private static String TAG = "Login";
     public static Button Login, SignUp, Forgotten;
     public static Context myContext;
-    private LoginAccess loginAccess;
+    private SyncDatabase mySyncDatabase;
     public static List<Country> myCountries;
     public static ProgressDialog progressDialog;
     public static Spinner mySpinner;
-    public static EditText TextCode, UserName, UserPass;
-    private static String LoginChoice;
+    public static EditText TextCode, userEmail, userPass, userPhone;
+    private TextView loginEmail,loginPhone;
+    private LinearLayout userPhoneLayout,userEmailLayout;
+    private TextInputLayout inputLayoutEmail, inputLayoutPhone, inputLayoutPhoneCode, inputLayoutPassword;
+    private static boolean isEmailLogin = true;
     private static int CountryChoicePos = 0;
 
     @Override
@@ -45,21 +72,32 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_page);
         myContext = this;
+        mySyncDatabase = new SyncDatabase();
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle(R.string.app_name);
 
+        inputLayoutEmail = (TextInputLayout) findViewById(R.id.login_input_email);
+        inputLayoutPhone = (TextInputLayout) findViewById(R.id.login_input_phone);
+        inputLayoutPhoneCode = (TextInputLayout) findViewById(R.id.login_input_phonecode);
+        inputLayoutPassword = (TextInputLayout) findViewById(R.id.login_input_password);
+        loginPhone = (TextView) findViewById(R.id.txt_login_phone);
+        loginPhone.setOnClickListener(this);
+        loginEmail = (TextView) findViewById(R.id.txt_login_email);
+        loginEmail.setOnClickListener(this);
+        userPhoneLayout = (LinearLayout) findViewById(R.id.lyt_user_phone);
+        userPhoneLayout.setVisibility(View.GONE);
+        userEmailLayout = (LinearLayout) findViewById(R.id.lyt_user_email);
         TextCode = (EditText) findViewById(R.id.txt_login_code);
-        UserName = (EditText) findViewById(R.id.txt_login_username);
-        UserPass = (EditText) findViewById(R.id.txt_login_userpass);
-        SignUp = (Button) findViewById(R.id.btn_link_sign_up);
-        SignUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(deeplife.gcme.com.deeplife.Login.this, deeplife.gcme.com.deeplife.SignUp.class);
-                startActivity(intent);
-            }
-        });
+        userEmail = (EditText) findViewById(R.id.txt_login_useremail);
+        userPhone = (EditText) findViewById(R.id.txt_login_userphone);
+        userPass = (EditText) findViewById(R.id.txt_login_userpass);
 
+        SignUp = (Button) findViewById(R.id.btn_link_sign_up);
+        SignUp.setOnClickListener(this);
+        Login = (Button) findViewById(R.id.btn_login_login);
+        Login.setOnClickListener(this);
+        Forgotten = (Button) findViewById(R.id.btn_link_forgot_password);
+        Forgotten.setOnClickListener(this);
         mySpinner = (Spinner) findViewById(R.id.login_countries_spinner);
         mySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -75,88 +113,14 @@ public class Login extends AppCompatActivity {
                 }
             }
         });
-
-        Login = (Button) findViewById(R.id.btn_login_login);
-        Login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    if (myCountries == null || myCountries.size() == 0) {
-                        myCountries = DeepLife.myDATABASE.getAllCountries();
-                        UpdateView();
-                    } else {
-                        User user = new User();
-                        if (UserName.getText().toString().contains("@")) {
-                            user.setEmail(UserName.getText().toString());
-                        } else {
-                            user.setPhone(UserName.getText().toString());
-                        }
-                        user.setPass(UserPass.getText().toString());
-                        user.setCountry("" + myCountries.get(mySpinner.getSelectedItemPosition()).getSerID());
-                        loginAccess = new LoginAccess(user);
-
-                        progressDialog.setMessage(getString(R.string.dlg_msg_authenticating_user));
-                        progressDialog.show();
-                        loginAccess.LogInAuthnticate();
-                    }
-                } catch (Exception e) {
-
-                }
-
-            }
-        });
-
-        Forgotten = (Button) findViewById(R.id.btn_link_forgot_password);
-        Forgotten.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Uri uri = Uri.parse(DeepLife.FORGOTEN_URL);
-                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                startActivity(intent);
-            }
-        });
         myCountries = DeepLife.myDATABASE.getAllCountries();
-        if (myCountries == null || myCountries.size()==0) {
-            progressDialog.setMessage(getString(R.string.dlg_msg_downloading_files));
-//            progressDialog.show();
-            loginAccess = new LoginAccess(new User());
-            loginAccess.GetMetaData();
-        }else {
-            UpdateView();
-        }
     }
-
-    public static void UpdateView() {
-        myCountries = DeepLife.myDATABASE.getAllCountries();
-        if (myCountries != null) {
-            mySpinner.setAdapter(new CountryListAdapter(myContext, R.layout.login_countries_item, myCountries));
-            if (CountryChoicePos > 0) {
-                mySpinner.setSelection(CountryChoicePos);
-            }
-        }
-    }
-
     public static void GetNextActivity() {
         Toast.makeText(myContext, R.string.toast_msg_login_successful, Toast.LENGTH_LONG).show();
         Intent intent = new Intent(myContext, deeplife.gcme.com.deeplife.MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         myContext.startActivity(intent);
     }
-
-    public static void DialogState(int state) {
-        try {
-            if (state == 0) {
-                progressDialog.cancel();
-                UpdateView();
-            } else {
-                progressDialog.show();
-            }
-        } catch (Exception e) {
-
-        }
-
-    }
-
     public static void showDialog(final String message) {
         try {
             DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
@@ -178,5 +142,260 @@ public class Login extends AppCompatActivity {
         }
 
     }
+    public void getPhoneLoginPage(){
+        if (myCountries != null && myCountries.size() > 0) {
+            isEmailLogin = false;
+            userPhoneLayout.setVisibility(View.VISIBLE);
+            userEmailLayout.setVisibility(View.GONE);
+            mySpinner.setAdapter(new CountryListAdapter(myContext, R.layout.login_countries_item, myCountries));
+            mySpinner.setSelection(CountryChoicePos);
+        }else {
+            myCountries = DeepLife.myDATABASE.getAllCountries();
+            if(myCountries != null && myCountries.size()>0){
+                isEmailLogin = false;
+                userPhoneLayout.setVisibility(View.VISIBLE);
+                userEmailLayout.setVisibility(View.GONE);
+                mySpinner.setAdapter(new CountryListAdapter(myContext, R.layout.login_countries_item, myCountries));
+                mySpinner.setSelection(CountryChoicePos);
+            }else {
+                metaDataRequest();
+            }
+        }
+        userEmail.setText("");
+        userPhone.setText("");
+        userPass.setText("");
+    }
+    @Override
+    public void onClick(View v) {
+        if(v.getId() == SignUp.getId()){
+            Intent intent = new Intent(deeplife.gcme.com.deeplife.Login.this, deeplife.gcme.com.deeplife.SignUp.class);
+            startActivity(intent);
+        }else if(v.getId() == loginEmail.getId()){
+            isEmailLogin = true;
+            userPhoneLayout.setVisibility(View.GONE);
+            userEmailLayout.setVisibility(View.VISIBLE);
+        }else if(v.getId() == loginPhone.getId()){
+            getPhoneLoginPage();
+        }else if(v.getId() == Login.getId()){
+            if(isEmailLogin){
+                submitEmailLoginForm();
+            }else {
+                submitPhoneLoginForm();
+            }
+        }else if(v.getId() == Forgotten.getId()){
+            Uri uri = Uri.parse(DeepLife.FORGOTEN_URL);
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            startActivity(intent);
+        }
+    }
 
+    private class MyTextWatcher implements TextWatcher {
+
+        private View view;
+
+        private MyTextWatcher(View view) {
+            this.view = view;
+        }
+
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        }
+
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        }
+
+        public void afterTextChanged(Editable editable) {
+            switch (view.getId()) {
+                case R.id.txt_login_useremail:
+                    validateUserEmail();
+                    break;
+                case R.id.txt_login_userpass:
+                    validateUserPassword();
+                    break;
+                case R.id.txt_login_userphone:
+                    validateUserPhone();
+                    break;
+            }
+        }
+    }
+
+    private boolean validateUserPhone() {
+        String phone = userPhone.getText().toString().trim();
+        if (phone.isEmpty() || phone.length() < 8) {
+            inputLayoutPhone.setError(getString(R.string.err_msg_phone));
+            requestFocus(userPhone);
+            return false;
+        } else {
+            inputLayoutPhone.setErrorEnabled(false);
+            inputLayoutPhoneCode.setErrorEnabled(false);
+        }
+        return true;
+    }
+
+    private boolean validateUserPassword() {
+        String password = userPass.getText().toString().trim();
+        if (password.isEmpty()) {
+            inputLayoutPassword.setError(getString(R.string.err_msg_password1));
+            requestFocus(userPass);
+            return false;
+        } else {
+            inputLayoutPassword.setErrorEnabled(false);
+        }
+        return true;
+    }
+
+    private boolean validateUserEmail() {
+        String email = userEmail.getText().toString().trim();
+        if (email.isEmpty() || !isValidEmail(email)) {
+            inputLayoutEmail.setError(getString(R.string.err_msg_email));
+            requestFocus(userEmail);
+            return false;
+        } else {
+            inputLayoutEmail.setErrorEnabled(false);
+        }
+        return true;
+    }
+    private static boolean isValidEmail(String email) {
+        return !TextUtils.isEmpty(email) && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
+    }
+    private void requestFocus(View view) {
+        if (view.requestFocus()) {
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        }
+    }
+    private void submitEmailLoginForm() {
+        if (!validateUserEmail()) {
+            return;
+        }
+        if (!validateUserPassword()) {
+            return;
+        }
+        User user = new User();
+        user.setEmail(userEmail.getText().toString());
+        user.setCountry("000");
+        user.setPass(userPass.getText().toString());
+        loginRequest(user);
+
+    }
+    private void submitPhoneLoginForm() {
+        if (!validateUserPhone()) {
+            return;
+        }
+        if (!validateUserPassword()) {
+            return;
+        }
+        User user = new User();
+        String str1 = myCountries.get(mySpinner.getSelectedItemPosition()).getCode()+""+userPhone.getText().toString();
+        String str2 = ""+myCountries.get(mySpinner.getSelectedItemPosition()).getSerID();
+        user.setPhone(str1);
+        user.setCountry(str2);
+        user.setPass(userPass.getText().toString());
+        loginRequest(user);
+
+    }
+    public void metaDataRequest(){
+        List<Pair<String, String>> Send_Param;
+        Send_Param = new ArrayList<Pair<String, String>>();
+        Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.USER_NAME.toString(), ""));
+        Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.USER_PASS.toString(), ""));
+        Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.COUNTRY.toString(), ""));
+        Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.SERVICE.toString(), SyncService.API_SERVICE.META_DATA.toString()));
+        Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.PARAM.toString(), "[]"));
+        Log.i(TAG, "Request Sent to Server (Meta Data): " + Send_Param.toString());
+        progressDialog.setCancelable(false);
+        progressDialog.setTitle(getString(R.string.dlg_msg_downloading_files));
+        progressDialog.show();
+        try {
+            Fuel.post(DeepLife.API_URL, Send_Param).responseString(new Handler<String>() {
+                @Override
+                public void success(@NotNull Request request, @NotNull Response response, String s) {
+                    progressDialog.cancel();
+                    Log.i(TAG, "Server Request (Meta Data): " + request.toString());
+                    Log.i(TAG, "Server Response (Meta Data): " + s);
+                    JSONObject myObject = null;
+                    try {
+                        myObject = (JSONObject) new JSONTokener(s).nextValue();
+                        if (!myObject.isNull(SyncDatabase.ApiResponseKey.RESPONSE.toString())) {
+                            mySyncDatabase.ProcessResponse(s);
+                            getPhoneLoginPage();
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                @Override
+                public void failure(@NotNull Request request, @NotNull Response response, @NotNull FuelError fuelError) {
+                    Log.i(TAG, "Server Response Error Meta data-> \n" + fuelError);
+                    progressDialog.cancel();
+                }
+            });
+        } catch (Exception e) {
+            Log.i(TAG, "Fuel try catch error -> \n" + e.toString());
+            progressDialog.cancel();
+        }
+    }
+    public void loginRequest(final User loginUser){
+        List<Pair<String, String>> Send_Param;
+        Send_Param = new ArrayList<Pair<String, String>>();
+        if (loginUser.getEmail() != null) {
+            Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.USER_NAME.toString(), loginUser.getEmail()));
+        } else {
+            Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.USER_NAME.toString(), loginUser.getPhone()));
+        }
+        Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.USER_PASS.toString(), loginUser.getPass()));
+        Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.COUNTRY.toString(), loginUser.getCountry()));
+        Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.SERVICE.toString(), SyncService.API_SERVICE.LOG_IN.toString()));
+        Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.PARAM.toString(), "[]"));
+
+        progressDialog.setCancelable(false);
+        progressDialog.setTitle(getString(R.string.dlg_msg_authenticating_user));
+        progressDialog.show();
+        try {
+            Fuel.post(DeepLife.API_URL, Send_Param).responseString(new Handler<String>() {
+                @Override
+                public void success(@NotNull Request request, @NotNull Response response, String s) {
+                    progressDialog.cancel();
+                    Log.i(TAG, "Server Request  -> \n" + request.toString());
+                    Log.i(TAG, "Server Response -> \n" + s);
+                    JSONObject myObject = null;
+                    try {
+                        myObject = (JSONObject) new JSONTokener(s).nextValue();
+                        if (!myObject.isNull(SyncDatabase.ApiResponseKey.RESPONSE.toString())) {
+                            mySyncDatabase.ProcessResponse(s);
+                            User user = DeepLife.myDATABASE.getMainUser();
+                            if (user != null) {
+                                user.setPass(loginUser.getPass());
+                                long state = DeepLife.myDATABASE.updateMainUser(user);
+                                User myUser1 = DeepLife.myDATABASE.getMainUser();
+                                if (myUser1 != null && state >0) {
+                                    GetNextActivity();
+                                } else {
+                                    Log.w(TAG, "LogInAuthenticate onSuccess(): unable to update Main User");
+                                    showDialog(DeepLife.getContext().getString(R.string.dlg_msg_login_failure));
+                                }
+                            } else {
+                                Log.w(TAG, "LogInAuthenticate onSuccess(): failed to get main user");
+                                showDialog(DeepLife.getContext().getString(R.string.dlg_msg_login_failure));
+                            }
+                        } else {
+                            Log.w(TAG, "LogInAuthenticate onSuccess(): JSONObject 'Response' is null");
+                            showDialog(DeepLife.getContext().getString(R.string.dlg_msg_login_failure));
+                        }
+                    } catch (JSONException e) {
+                        Log.e(TAG, "LogInAuthenticate onSuccess(): JSONException");
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void failure(@NotNull Request request, @NotNull Response response, @NotNull FuelError fuelError) {
+                    Log.i(TAG, "Server Response Error-> \n" + fuelError);
+                    progressDialog.cancel();
+                }
+            });
+        } catch (Exception e) {
+            Log.i(TAG, "Fuel try catch error -> \n" + e.toString());
+            progressDialog.cancel();
+        }
+    }
 }

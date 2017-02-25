@@ -3,11 +3,14 @@ package deeplife.gcme.com.deeplife;
 import android.app.Application;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.util.Log;
 
 import java.util.List;
 
 import deeplife.gcme.com.deeplife.Database.Database;
+import deeplife.gcme.com.deeplife.SyncService.NewSyncService;
 import deeplife.gcme.com.deeplife.SyncService.SyncService;
 import me.tatarka.support.job.JobInfo;
 import me.tatarka.support.job.JobScheduler;
@@ -18,8 +21,9 @@ import me.tatarka.support.job.JobScheduler;
 
 public class DeepLife extends Application {
 //    public static final String DEEP_URL  = "http://deeplifestaging.briggs-inc.com";  // Mark's temporary staging server
-    public static final String DEEP_URL  = "http://staging.deeplife.cc";  // Bluehost Staging Server
-//    public static final String DEEP_URL  = "http://192.168.0.44/DeepLife_Web/public";  // Biniam's local server
+//    public static final String DEEP_URL  = "http://staging.deeplife.cc";  // Bluehost Staging Server
+//    public static final String DEEP_URL  = "http://www.deeplife.cc/";  // Main Server
+    public static final String DEEP_URL  = "http://192.168.43.156:8888/DeepLife_Web/public";  // Biniam's local server
 //    public static final String DEEP_URL  = "http://deeplife.dev.192.168.2.69.xip.io";  // Mark's local server
 
 
@@ -36,11 +40,13 @@ public class DeepLife extends Application {
 
     private static final String TAG = "DeepLifeApplication";
     public JobScheduler myJobScheduler;
+    public static NewSyncService myNewSyncService;
 
     public static Database myDATABASE;
     private static int JOB_ID = 1000;
 
     private static Context mContext;
+    public static boolean isSyncLoaded = false;
 
     @Override
     public void onCreate() {
@@ -49,8 +55,9 @@ public class DeepLife extends Application {
         mContext = this;
         myDATABASE = new Database(this);
 //        JobManager.create(this).addJobCreator(new SyncJob());
-        myJobScheduler = JobScheduler.getInstance(this);
+//        myJobScheduler = JobScheduler.getInstance(this);
 //        JobConstr();
+
     }
 
     public void JobConstr() {
@@ -82,5 +89,9 @@ public class DeepLife extends Application {
             strArr[i] = enumConstants[i].toString();
         }
         return strArr;
+    }
+    public static boolean isNetworkAvailable(final Context context) {
+        final ConnectivityManager connectivityManager = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));
+        return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
     }
 }

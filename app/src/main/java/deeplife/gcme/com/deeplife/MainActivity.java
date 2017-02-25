@@ -30,6 +30,7 @@ import deeplife.gcme.com.deeplife.LearningTools.LearningFragment;
 import deeplife.gcme.com.deeplife.Models.User;
 import deeplife.gcme.com.deeplife.News.NewsFragment;
 import deeplife.gcme.com.deeplife.Profile.ProfileShowActivity;
+import deeplife.gcme.com.deeplife.SyncService.NewSyncService;
 import deeplife.gcme.com.deeplife.Testimony.TestimonyFragment;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -46,12 +47,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private User myUser;
 
 
-    private static int RECEIVE_BOOT_COMPLETED = 1001;
+    private static int PERMISSIONS_MULTIPLE_REQUEST = 1001;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Intent intent = new Intent(this,NewSyncService.class);
+        startService(intent);
 //        myJobScheduler = (JobScheduler) getSystemService(Context.JOB_SCHEDULER_SERVICE);
         myToolbar = (Toolbar) findViewById(R.id.toolbar);
 
@@ -98,8 +101,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
     public void checkPermissions() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_BOOT_COMPLETED) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECEIVE_BOOT_COMPLETED}, RECEIVE_BOOT_COMPLETED);
+        if ((ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) +
+                ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)+
+                ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE)+
+                ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE)+
+                ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_WIFI_STATE)+
+                ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_NETWORK_STATE)+
+                ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET))!= PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                            Manifest.permission.READ_EXTERNAL_STORAGE,
+                            Manifest.permission.READ_PHONE_STATE,
+                            Manifest.permission.CALL_PHONE,
+                            Manifest.permission.ACCESS_WIFI_STATE,
+                            Manifest.permission.ACCESS_NETWORK_STATE,
+                    }, PERMISSIONS_MULTIPLE_REQUEST);
         } else {
 
         }

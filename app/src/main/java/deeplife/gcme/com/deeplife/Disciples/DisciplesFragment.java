@@ -19,6 +19,7 @@ import java.util.ArrayList;
 
 import deeplife.gcme.com.deeplife.DeepLife;
 import deeplife.gcme.com.deeplife.R;
+import deeplife.gcme.com.deeplife.SyncService.NewSyncService;
 
 /**
  * Created by bengeos on 12/6/16.
@@ -35,6 +36,13 @@ public class DisciplesFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        myContext = getActivity();
+        /// ReSync Database here
+        if(DeepLife.isNetworkAvailable(myContext)){
+            if(DeepLife.isSyncLoaded){
+                NewSyncService.StartSync();
+            }
+        }
     }
 
     @Nullable
@@ -44,10 +52,14 @@ public class DisciplesFragment extends Fragment {
         myRecyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
         mLayoutManager = new LinearLayoutManager(getActivity());
         myRecyclerView.setLayoutManager(mLayoutManager);
-        myContext = getActivity();
         ArrayList<Disciple> items = DeepLife.myDATABASE.getAllDisciples();
         mAdapter = new DiscipleListAdapter(items, getContext());
         myRecyclerView.setAdapter(mAdapter);
+        if(DeepLife.isNetworkAvailable(myContext)){
+            if(DeepLife.isSyncLoaded){
+                NewSyncService.StartSync();
+            }
+        }
         return view;
     }
 

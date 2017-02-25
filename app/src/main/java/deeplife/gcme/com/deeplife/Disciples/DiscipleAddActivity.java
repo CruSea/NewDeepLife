@@ -47,6 +47,7 @@ import deeplife.gcme.com.deeplife.Models.Logs;
 import deeplife.gcme.com.deeplife.Models.User;
 import deeplife.gcme.com.deeplife.Processing.ImageProcessing;
 import deeplife.gcme.com.deeplife.R;
+import deeplife.gcme.com.deeplife.SyncService.NewSyncService;
 import deeplife.gcme.com.deeplife.SyncService.SyncDatabase;
 
 /**
@@ -76,7 +77,7 @@ public class DiscipleAddActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.disciples_fragment_add_new);
+        setContentView(R.layout.disciple_fragment_add_new_new);
 
         toolbar = (Toolbar) findViewById(R.id.add_disciple_toolbar);
         setSupportActionBar(toolbar);
@@ -88,6 +89,11 @@ public class DiscipleAddActivity extends AppCompatActivity {
         mySyncDatabase = new SyncDatabase();
         myActivity = this;
         myContext = this;
+        if(DeepLife.isNetworkAvailable(myContext)){
+            if(DeepLife.isSyncLoaded){
+                NewSyncService.StartSync();
+            }
+        }
 
         myUser = DeepLife.myDATABASE.getMainUser();
 

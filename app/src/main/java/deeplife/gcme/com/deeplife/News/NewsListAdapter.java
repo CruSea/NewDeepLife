@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.io.File;
 import java.util.List;
 
@@ -44,11 +46,9 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.DataOb
         holder.Title.setText(Newses.get(position).getTitle());
         holder.Content.setText(Newses.get(position).getContent());
         holder.PubDate.setText(Newses.get(position).getPubDate());
-        String filename = "news" + Newses.get(position).getSerID() + ".png";
-        File myFile = myFileManager.getFileAt("News", filename);
-        if (myFile.isFile()) {
-            holder.NewsImage.setImageBitmap(BitmapFactory.decodeFile(myFile.getAbsolutePath()));
-        }
+        Glide.with(myContext)
+                .load(Newses.get(position).getImageURL())
+                .into(holder.NewsImage);
     }
 
     @Override

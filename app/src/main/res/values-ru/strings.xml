@@ -94,4 +94,7 @@
     <string name="menu_about">Около</string>
     <string name="toolbar_title_disciple_edit">Edit Disciple</string>
     <string name="toolbar_title_testimony_add">Добавить свидетельствование</string>
+    <string name="welcome_next">Next</string>
+    <string name="welcome_skip">Skip</string>
+    <string name="welcome_start">Start</string>
 </resources>

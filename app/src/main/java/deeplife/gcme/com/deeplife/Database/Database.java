@@ -1682,10 +1682,10 @@ public class Database {
                 for (int i = 0; i < c.getCount(); i++) {
                     c.moveToPosition(i);
                     String logTask = c.getString(c.getColumnIndex(LogsColumn.TASK.toString()));
-                    int logValue = Integer.valueOf(c.getString(c.getColumnIndex(LogsColumn.VALUE.toString())));
-                    int logId = Integer.valueOf(c.getString(c.getColumnIndex(LogsColumn.ID.toString())));
                     Log.d(TAG, "Comparing: " + Logs.TASK.SEND_ANSWERS + " | " + logTask);
                     if (Logs.TASK.SEND_ANSWERS.equalsName(logTask)) {
+                        int logId = Integer.valueOf(c.getString(c.getColumnIndex(LogsColumn.ID.toString())));
+                        int logValue = Integer.valueOf(c.getString(c.getColumnIndex(LogsColumn.VALUE.toString())));
                         Log.d(TAG, "SendAnswer Count:-> " + c.getCount());
                         Answer sendAnswer = getAnswerByID(logValue);
                         if (sendAnswer != null) {

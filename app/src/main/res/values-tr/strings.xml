@@ -94,4 +94,7 @@
     <string name="menu_about">Yaklaşık</string>
     <string name="toolbar_title_disciple_edit">Düzenleme Mürit</string>
     <string name="toolbar_title_testimony_add">Yeni Tanıklık ekle</string>
+    <string name="welcome_next">Next</string>
+    <string name="welcome_skip">Skip</string>
+    <string name="welcome_start">Start</string>
 </resources>

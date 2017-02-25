@@ -1,5 +1,6 @@
 package deeplife.gcme.com.deeplife.Disciples;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -19,6 +20,7 @@ import deeplife.gcme.com.deeplife.DeepLife;
 import deeplife.gcme.com.deeplife.Models.Country;
 import deeplife.gcme.com.deeplife.Models.Logs;
 import deeplife.gcme.com.deeplife.R;
+import deeplife.gcme.com.deeplife.SyncService.NewSyncService;
 import deeplife.gcme.com.deeplife.SyncService.SyncDatabase;
 
 import static deeplife.gcme.com.deeplife.DeepLife.myDATABASE;
@@ -29,6 +31,7 @@ import static deeplife.gcme.com.deeplife.DeepLife.myDATABASE;
 
 public class DiscipleEditActivity extends AppCompatActivity {
     private static final String TAG = "DiscipleEditActivity";
+    private static Context myContext;
 
     Button saveBtn;
     Button cancelBtn;
@@ -39,12 +42,14 @@ public class DiscipleEditActivity extends AppCompatActivity {
     EditText phoneNumber;
     EditText email;
 
+
     List<Country> myCountries;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.disciple_profile_edit);
+        myContext = this;
 
         saveBtn = (Button) findViewById(R.id.profileEditSaveBtn);
         cancelBtn = (Button) findViewById(R.id.profileEditCancelBtn);
@@ -179,8 +184,15 @@ public class DiscipleEditActivity extends AppCompatActivity {
                     Logs logs = new Logs();
                     logs.setType(Logs.TYPE.DISCIPLE);
                     logs.setTask(Logs.TASK.UPDATE_DISCIPLES);
-                    logs.setValue("" + modifiedRowId);
+                    logs.setValue("" + newPhoneNumber);
                     new SyncDatabase().AddLog(logs);
+                    /// ReSync Database here
+                    if(DeepLife.isNetworkAvailable(myContext)){
+                        if(DeepLife.isSyncLoaded){
+                            NewSyncService.StartSync();
+                        }
+                    }
+
                 } else {
                     // Main User not updated for some reason.
                     Log.e(TAG, "onClick: saveBtn: Disciple not updated for some reason.");

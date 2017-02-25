@@ -26,7 +26,9 @@ import deeplife.gcme.com.deeplife.DeepLife;
 import deeplife.gcme.com.deeplife.Disciples.Disciple;
 import deeplife.gcme.com.deeplife.Models.Answer;
 import deeplife.gcme.com.deeplife.Models.Category;
+import deeplife.gcme.com.deeplife.Models.Logs;
 import deeplife.gcme.com.deeplife.R;
+import deeplife.gcme.com.deeplife.SyncService.SyncDatabase;
 
 /**
  * Created by bengeos on 12/19/16.
@@ -58,6 +60,10 @@ public class WbsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(R.string.toolbar_title_disciple_wbs);
+
+        wbs_Win_Questions = DeepLife.myDATABASE.getWbsParentQuestionsAndFoldersByStage(Disciple.STAGE.WIN);
+        wbs_Build_Questions = DeepLife.myDATABASE.getWbsParentQuestionsAndFoldersByStage(Disciple.STAGE.BUILD);
+        wbs_Send_Questions = DeepLife.myDATABASE.getWbsParentQuestionsAndFoldersByStage(Disciple.STAGE.SEND);
 
 
         myRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
@@ -112,7 +118,14 @@ public class WbsActivity extends AppCompatActivity {
     }
 
     public static void UpdateQuestionList(Disciple.STAGE stage) {
-        ArrayList<WbsQuestion> wbsQuestions = DeepLife.myDATABASE.getWbsParentQuestionsAndFoldersByStage(stage);
+        ArrayList<WbsQuestion> wbsQuestions = new ArrayList<WbsQuestion>();
+        if(stage == Disciple.STAGE.WIN){
+            wbsQuestions = wbs_Win_Questions;
+        } else if(stage == Disciple.STAGE.BUILD){
+            wbsQuestions = wbs_Build_Questions;
+        }else {
+            wbsQuestions = wbs_Send_Questions;
+        }
         if (wbsQuestions != null) {
             updateStagePointerBar(stage);
             updateStageButton(getQuestionStage());
@@ -120,7 +133,12 @@ public class WbsActivity extends AppCompatActivity {
             Disciple disciple = DeepLife.myDATABASE.getDiscipleByPhone(DisciplePhone);
             if (disciple != null) {
                 disciple.setStage(stage);
-                DeepLife.myDATABASE.updateDisciple(disciple);
+                long id = DeepLife.myDATABASE.updateDisciple(disciple);
+                Logs logs = new Logs();
+                logs.setType(Logs.TYPE.DISCIPLE);
+                logs.setTask(Logs.TASK.UPDATE_DISCIPLES);
+                logs.setValue("" + DisciplePhone);
+                new SyncDatabase().AddLog(logs);
             }
         }
     }
@@ -164,7 +182,7 @@ public class WbsActivity extends AppCompatActivity {
 
             Btn_Build.setEnabled(true);
             Btn_Build.setTypeface(Btn_Build.getTypeface(), Typeface.BOLD);
-            Btn_Build.setText("->" + DeepLife.getContext().getString(R.string.text_win) + "<-");
+            Btn_Build.setText("->" + DeepLife.getContext().getString(R.string.text_build) + "<-");
         } else {
             Btn_Win.setEnabled(true);
             Btn_Win.setTypeface(Btn_Win.getTypeface(), Typeface.BOLD);
@@ -193,11 +211,11 @@ public class WbsActivity extends AppCompatActivity {
     public static void loadCurrentStage(){
         UpdateQuestionList(getQuestionStage());
     }
+    private static ArrayList<WbsQuestion> wbs_Win_Questions,wbs_Build_Questions,wbs_Send_Questions;
     public static Disciple.STAGE getQuestionStage(){
         Log.d(TAG, "checkStage: Checking for Stage");
         int stage = 3;
-        ArrayList<WbsQuestion> wbsQuestions = DeepLife.myDATABASE.getWbsParentQuestionsAndFoldersByStage(Disciple.STAGE.WIN);
-        for (WbsQuestion wbsQuestion : wbsQuestions) {
+        for (WbsQuestion wbsQuestion : wbs_Win_Questions) {
             if (wbsQuestion.getMandatory() != 0) {
                 Answer answer = DeepLife.myDATABASE.getAnswerByQuestionIDandDisciplePhone(wbsQuestion.getSerID(), DisciplePhone);
                 if (answer != null) {
@@ -210,8 +228,7 @@ public class WbsActivity extends AppCompatActivity {
             }
         }
         if(stage > 1){
-            wbsQuestions = DeepLife.myDATABASE.getWbsParentQuestionsAndFoldersByStage(Disciple.STAGE.BUILD);
-            for (WbsQuestion wbsQuestion : wbsQuestions) {
+            for (WbsQuestion wbsQuestion : wbs_Build_Questions) {
                 if (wbsQuestion.getMandatory() != 0) {
                     Answer answer = DeepLife.myDATABASE.getAnswerByQuestionIDandDisciplePhone(wbsQuestion.getSerID(), DisciplePhone);
                     if (answer != null) {
@@ -229,8 +246,7 @@ public class WbsActivity extends AppCompatActivity {
     public static Disciple.STAGE getDiscipleStage(){
         Log.d(TAG, "checkStage: Checking for Stage");
         Disciple.STAGE curStage = Disciple.STAGE.SEND;
-        ArrayList<WbsQuestion> wbsQuestions = DeepLife.myDATABASE.getWbsParentQuestionsAndFoldersByStage(Disciple.STAGE.WIN);
-        for (WbsQuestion wbsQuestion : wbsQuestions) {
+        for (WbsQuestion wbsQuestion : wbs_Win_Questions) {
             if (wbsQuestion.getMandatory() != 0) {
                 Answer answer = DeepLife.myDATABASE.getAnswerByQuestionIDandDisciplePhone(wbsQuestion.getSerID(), DisciplePhone);
                 if (answer != null) {
@@ -245,8 +261,7 @@ public class WbsActivity extends AppCompatActivity {
             }
         }
         if(curStage != Disciple.STAGE.WIN){
-            wbsQuestions = DeepLife.myDATABASE.getWbsParentQuestionsAndFoldersByStage(Disciple.STAGE.BUILD);
-            for (WbsQuestion wbsQuestion : wbsQuestions) {
+            for (WbsQuestion wbsQuestion : wbs_Build_Questions) {
                 if (wbsQuestion.getMandatory() != 0) {
                     Answer answer = DeepLife.myDATABASE.getAnswerByQuestionIDandDisciplePhone(wbsQuestion.getSerID(), DisciplePhone);
                     if (answer != null) {
@@ -264,8 +279,7 @@ public class WbsActivity extends AppCompatActivity {
             return curStage;
         }
         if(curStage != Disciple.STAGE.BUILD){
-            wbsQuestions = DeepLife.myDATABASE.getWbsParentQuestionsAndFoldersByStage(Disciple.STAGE.SEND);
-            for (WbsQuestion wbsQuestion : wbsQuestions) {
+            for (WbsQuestion wbsQuestion : wbs_Send_Questions) {
                 if (wbsQuestion.getMandatory() != 0) {
                     Answer answer = DeepLife.myDATABASE.getAnswerByQuestionIDandDisciplePhone(wbsQuestion.getSerID(), DisciplePhone);
                     if (answer != null) {
@@ -284,124 +298,4 @@ public class WbsActivity extends AppCompatActivity {
         }
         return curStage;
     }
-//    public static void checkStage() {
-//        Log.d(TAG, "checkStage: Checking for Stage change");
-//        int wbs = 1;
-//        ArrayList<WbsQuestion> wbsQuestions = DeepLife.myDATABASE.getWbsParentQuestionsAndFoldersByStage(Disciple.STAGE.WIN);
-//        for (WbsQuestion wbsQuestion : wbsQuestions) {
-//            if (wbsQuestion.getMandatory() != 0) {
-//                Answer answer = DeepLife.myDATABASE.getAnswerByQuestionIDandDisciplePhone(wbsQuestion.getSerID(), DisciplePhone);
-//                if (answer != null) {
-//                    if (answer.getAnswer().equals("NO") || answer.getAnswer().equals("0")) {
-//                        wbs = 0;
-//                        break;
-//                    }
-//                } else {
-//                    wbs = 0;
-//                    break;
-//                }
-//            }
-//        }
-//        if (wbs == 0) {
-//            buildStage = Disciple.STAGE.WIN;
-//        } else {
-//            buildStage = Disciple.STAGE.BUILD;
-//            wbs = 1;
-//            wbsQuestions = DeepLife.myDATABASE.getWbsParentQuestionsAndFoldersByStage(Disciple.STAGE.BUILD);
-//            for (WbsQuestion wbsQuestion : wbsQuestions) {
-//                if (wbsQuestion.getMandatory() != 0) {
-//                    Answer answer = DeepLife.myDATABASE.getAnswerByQuestionIDandDisciplePhone(wbsQuestion.getSerID(), DisciplePhone);
-//                    if (answer != null) {
-//                        if (answer.getAnswer().equals("NO") || answer.getAnswer().equals("0")) {
-//                            wbs = 0;
-//                            break;
-//                        }
-//                    } else {
-//                        wbs = 0;
-//                        break;
-//                    }
-//                }
-//            }
-//            //if(wbs == 0 && Stage > 1){  // briggsm: took out check for Steve > 1, cuz it looks useless to me.
-//            if (wbs == 0) {
-//                buildStage = Disciple.STAGE.BUILD;
-//            } else {
-//                buildStage = Disciple.STAGE.SEND;
-//                wbs = 1;
-//                wbsQuestions = DeepLife.myDATABASE.getWbsParentQuestionsAndFoldersByStage(Disciple.STAGE.SEND);
-//                for (WbsQuestion wbsQuestion : wbsQuestions) {
-//                    if (wbsQuestion.getMandatory() != 0) {
-//                        Answer answer = DeepLife.myDATABASE.getAnswerByQuestionIDandDisciplePhone(wbsQuestion.getSerID(), DisciplePhone);
-//                        if (answer != null) {
-//                            if (answer.getAnswer().equals("NO") || answer.getAnswer().equals("0")) {
-//                                wbs = 0;
-//                                break;
-//                            }
-//                        } else {
-//                            wbs = 0;
-//                            break;
-//                        }
-//                    }
-//                }
-//                //if(wbs == 0 && Stage > 2){ // briggsm: took out check for Steve > 1, cuz it looks useless to me.
-//                if (wbs == 0) {
-//                    buildStage = Disciple.STAGE.SEND;
-//                } else {
-//                    buildStage = Disciple.STAGE.SEND;
-//                }
-//            }
-//        }
-//
-//        if (buildStage == Disciple.STAGE.WIN) {
-//            Btn_Win.setEnabled(true);
-//            Btn_Win.setTypeface(Btn_Win.getTypeface(), Typeface.BOLD);
-//            Btn_Win.setText("->" + DeepLife.getContext().getString(R.string.text_win) + "<-");
-//
-//
-//            Btn_Build.setEnabled(false);
-//            Btn_Build.setTypeface(Btn_Build.getTypeface(), Typeface.ITALIC);
-//            Btn_Build.setText(R.string.text_build);
-//
-//
-//            Btn_Send.setEnabled(false);
-//            Btn_Send.setTypeface(Btn_Send.getTypeface(), Typeface.ITALIC);
-//            Btn_Send.setText(R.string.text_send);
-//
-//            myDisciple.setStage(Disciple.STAGE.WIN);
-//        } else if (buildStage == Disciple.STAGE.BUILD) {
-//            Btn_Win.setEnabled(true);
-//            Btn_Win.setTypeface(Btn_Win.getTypeface(), Typeface.ITALIC);
-//            Btn_Win.setText(R.string.text_win);
-//            Btn_Win.setTextColor(Color.GRAY);
-//            Btn_Win.setActivated(false);
-//
-//            Btn_Build.setEnabled(true);
-//            Btn_Build.setTypeface(Btn_Build.getTypeface(), Typeface.BOLD);
-//            Btn_Build.setText("->" + DeepLife.getContext().getString(R.string.text_build) + "<-");
-//
-//            Btn_Send.setEnabled(false);
-//            Btn_Send.setTypeface(Btn_Send.getTypeface(), Typeface.ITALIC);
-//            Btn_Send.setText(DeepLife.getContext().getString(R.string.text_send));
-//
-//            myDisciple.setStage(Disciple.STAGE.BUILD);
-//        } else {
-//            // SEND
-//            Btn_Win.setEnabled(true);
-//            Btn_Win.setTypeface(Btn_Win.getTypeface(), Typeface.ITALIC);
-//            Btn_Win.setTextColor(Color.GRAY);
-//            Btn_Win.setText(DeepLife.getContext().getString(R.string.text_win));
-//
-//            Btn_Build.setEnabled(true);
-//            Btn_Build.setTypeface(Btn_Build.getTypeface(), Typeface.ITALIC);
-//            Btn_Build.setTextColor(Color.GRAY);
-//            Btn_Build.setText(DeepLife.getContext().getString(R.string.text_build));
-//
-//            Btn_Send.setEnabled(true);
-//            Btn_Send.setTypeface(Btn_Send.getTypeface(), Typeface.BOLD);
-//            Btn_Send.setText("->" + DeepLife.getContext().getString(R.string.text_send) + "<-");
-//
-//            myDisciple.setStage(Disciple.STAGE.SEND);
-//        }
-//        DeepLife.myDATABASE.updateDisciple(myDisciple);
-//    }
 }

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:gravity="center_vertical"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/lyt_1"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:paddingRight="110dp"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:textSize="17sp"
+                android:textColor="#000000"
+                android:id="@+id/txt_wbs_numeric_question"
+                tools:text="This is the Question Place asdhasjd asdhasgdasd asdhasgdas dashd dsasd asddas " />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_star_mandatory"
+                    android:id="@+id/txt_wbs_numeric_mandatory" />
+
+                <TextView
+                    android:id="@+id/txt_wbs_numeric_readnote"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginStart="20dp"
+                    android:textColor="@color/bg_login"
+                    android:text="@string/action_read_note" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_alignRight="@id/lyt_1"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center_horizontal|center_vertical"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_wbs_numeric_dec"
+                android:layout_width="30dp"
+                android:layout_height="50dp"
+                android:background="@drawable/btn_decrs" />
+
+            <TextView
+                android:id="@+id/txt_wbs_numeric_value"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal|center_vertical"
+                android:textColor="#000000"
+                android:textSize="35sp"
+                tools:text="0" />
+
+            <Button
+                android:id="@+id/btn_wbs_numeric_inc"
+                android:layout_width="30dp"
+                android:layout_height="50dp"
+                android:background="@drawable/btn_incrs" />
+
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>

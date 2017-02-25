@@ -1,5 +1,6 @@
 package deeplife.gcme.com.deeplife.Home;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,6 +15,7 @@ import deeplife.gcme.com.deeplife.DeepLife;
 import deeplife.gcme.com.deeplife.Disciples.Disciple;
 import deeplife.gcme.com.deeplife.Models.DiscipleTreeCount;
 import deeplife.gcme.com.deeplife.R;
+import deeplife.gcme.com.deeplife.SyncService.NewSyncService;
 
 /**
  * Created by bengeos on 12/6/16.
@@ -23,6 +25,7 @@ public class HomeFragment extends Fragment {
     private List<Disciple> myDisciples;
     private TextView DiscipleTree, Win, Build, Send;
     private int DisCount, WinCount, BuildCount, SendCount;
+    private Context myContext;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,6 +45,12 @@ public class HomeFragment extends Fragment {
         BuildCount = 0;
         SendCount = 0;
         DisCount = 0;
+        myContext = getContext();
+        if(DeepLife.isNetworkAvailable(myContext)){
+            if(DeepLife.isSyncLoaded){
+                NewSyncService.StartSync();
+            }
+        }
 
         DiscipleTreeCount discipleTreeCount = DeepLife.myDATABASE.getDiscipleTreeCount();
         if (discipleTreeCount != null) {
