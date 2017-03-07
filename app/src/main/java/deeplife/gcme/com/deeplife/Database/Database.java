@@ -684,7 +684,7 @@ public class Database {
                 }
             }
         } catch (Exception e) {
-            return null;
+            return found;
         }
         return found;
     }

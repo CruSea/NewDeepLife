@@ -168,8 +168,13 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         if(v.getId() == SignUp.getId()){
-            Intent intent = new Intent(deeplife.gcme.com.deeplife.Login.this, deeplife.gcme.com.deeplife.SignUp.class);
-            startActivity(intent);
+            if(DeepLife.myDATABASE.getAllCountries().size()>0){
+                Intent intent = new Intent(deeplife.gcme.com.deeplife.Login.this, deeplife.gcme.com.deeplife.SignUp.class);
+                startActivity(intent);
+            }else {
+                metaDataRequest();
+            }
+
         }else if(v.getId() == loginEmail.getId()){
             isEmailLogin = true;
             userPhoneLayout.setVisibility(View.GONE);
@@ -391,11 +396,13 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 public void failure(@NotNull Request request, @NotNull Response response, @NotNull FuelError fuelError) {
                     Log.i(TAG, "Server Response Error-> \n" + fuelError);
                     progressDialog.cancel();
+                    showDialog(DeepLife.getContext().getString(R.string.dlg_msg_login_failure));
                 }
             });
         } catch (Exception e) {
             Log.i(TAG, "Fuel try catch error -> \n" + e.toString());
             progressDialog.cancel();
+            showDialog(DeepLife.getContext().getString(R.string.dlg_msg_login_failure));
         }
     }
 }

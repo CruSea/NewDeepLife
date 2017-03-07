@@ -101,23 +101,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
     public void checkPermissions() {
-        if ((ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) +
-                ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)+
-                ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE)+
-                ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE)+
-                ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_WIFI_STATE)+
-                ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_NETWORK_STATE)+
-                ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET))!= PackageManager.PERMISSION_GRANTED) {
+        if((ContextCompat.checkSelfPermission(this,Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) ||
+                (ContextCompat.checkSelfPermission(this,Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) ||
+                (ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_WIFI_STATE) != PackageManager.PERMISSION_GRANTED) ||
+                (ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_NETWORK_STATE) != PackageManager.PERMISSION_GRANTED) ||
+                (ContextCompat.checkSelfPermission(this,Manifest.permission.INTERNET) != PackageManager.PERMISSION_GRANTED)){
+
             ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    new String[]{
                             Manifest.permission.READ_EXTERNAL_STORAGE,
-                            Manifest.permission.READ_PHONE_STATE,
-                            Manifest.permission.CALL_PHONE,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE,
                             Manifest.permission.ACCESS_WIFI_STATE,
                             Manifest.permission.ACCESS_NETWORK_STATE,
                     }, PERMISSIONS_MULTIPLE_REQUEST);
-        } else {
-
         }
     }
 

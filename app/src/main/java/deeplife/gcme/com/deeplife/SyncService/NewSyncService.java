@@ -168,15 +168,14 @@ public class NewSyncService extends Service {
         mySyncDatabase = new SyncDatabase();
         myContext = this;
         DeepLife.isSyncLoaded = true;
-        Toast.makeText(this,"New Sync Started",Toast.LENGTH_LONG).show();
     }
 
     public static void StartSync(){
         if(!isInprogress){
             SyncJob();
-            Toast.makeText(myContext,"NewSync ReStarted",Toast.LENGTH_LONG).show();
+//            Toast.makeText(myContext,"NewSync ReStarted",Toast.LENGTH_LONG).show();
         }else {
-            Toast.makeText(myContext,"NewSync is in progress",Toast.LENGTH_LONG).show();
+//            Toast.makeText(myContext,"NewSync is in progress",Toast.LENGTH_LONG).show();
         }
     }
 

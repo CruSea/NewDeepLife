@@ -25,7 +25,7 @@
                 android:layout_width="250dp"
                 android:layout_height="130dp"
                 android:paddingBottom="20dp"
-                android:src="@drawable/splashlogo_xhdpi" />
+                android:src="@drawable/deeplifelogo_small3x" />
 
             <LinearLayout
                 android:layout_width="fill_parent"

@@ -35,19 +35,8 @@ public class NewsFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        myFileManager = new FileManager(getContext());
         List<News> myNews = DeepLife.myDATABASE.getAllNews();
         Log.i(TAG, "There are " + myNews.size() + " News");
-        for (News news : myNews) {
-            String filename = "news" + news.getSerID() + ".png";
-            if (!myFileManager.getFileAt("News", filename).isFile()) {
-                if (DeepLife.ImageDownloadCount < 5) {
-                    FileDownloader d1 = new FileDownloader(getContext(), DeepLife.API_URL + news.getImageURL(), "News", filename);
-                    Log.i(TAG, "Downloading Image " + DeepLife.DEEP_URL + news.getImageURL());
-                    d1.execute();
-                }
-            }
-        }
     }
 
     @Nullable

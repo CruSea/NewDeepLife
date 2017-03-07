@@ -5,10 +5,10 @@ android {
     buildToolsVersion "25.0.2"
     defaultConfig {
         applicationId "deeplife.gcme.com.deeplife"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 25
-        versionCode 11
-        versionName "1.2.5"
+        versionCode 13
+        versionName "1.2.7"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

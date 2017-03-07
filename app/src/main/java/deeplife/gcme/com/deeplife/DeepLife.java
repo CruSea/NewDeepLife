@@ -22,8 +22,8 @@ import me.tatarka.support.job.JobScheduler;
 public class DeepLife extends Application {
 //    public static final String DEEP_URL  = "http://deeplifestaging.briggs-inc.com";  // Mark's temporary staging server
 //    public static final String DEEP_URL  = "http://staging.deeplife.cc";  // Bluehost Staging Server
-//    public static final String DEEP_URL  = "http://www.deeplife.cc/";  // Main Server
-    public static final String DEEP_URL  = "http://192.168.43.156:8888/DeepLife_Web/public";  // Biniam's local server
+      public static final String DEEP_URL  = "http://deeplife.cc";  // Main Server
+//    public static final String DEEP_URL  = "http://192.168.43.156:8888/DeepLife_Web/public";  // Biniam's local server
 //    public static final String DEEP_URL  = "http://deeplife.dev.192.168.2.69.xip.io";  // Mark's local server
 
 
@@ -33,8 +33,6 @@ public class DeepLife extends Application {
     public static final String PROFILE_PIC_URL = DEEP_URL + "/img/profile/";
 
     public static final String YOUTUBE_DEVELOPER_API_KEY = "AIzaSyCLqE27gunMe4epeAZU4U2nFqjUOPurwUM";
-
-
     public static int ImageDownloadCount = 0;
     private static final int REQUEST_PHONE_CALL = 11;
 

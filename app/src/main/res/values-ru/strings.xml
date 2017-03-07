@@ -94,7 +94,12 @@
     <string name="menu_about">Около</string>
     <string name="toolbar_title_disciple_edit">Edit Disciple</string>
     <string name="toolbar_title_testimony_add">Добавить свидетельствование</string>
-    <string name="welcome_next">Next</string>
-    <string name="welcome_skip">Skip</string>
-    <string name="welcome_start">Start</string>
+    <string name="welcome_next">следующий</string>
+    <string name="welcome_skip">Пропускать</string>
+    <string name="welcome_start">Начало</string>
+    <string name="welcome_intro2">DeepLife представляет собой систему на основе веб, которая позволяет создавать учеников и привлекать к ответственности в ученических их. \n Чтобы увидеть мультипликативный дерево поколения в вашем служении</string>
+    <string name="welcome_intro3_title">молиться | Встретить | Вызов</string>
+    <string name="welcome_intro3_verse">идите, научите всей нации. \n Mathew 28:19</string>
+    <string name="welcome_intro3">Давайте сделаем его ученик, наше призвание. \n Добавьте новых учеников с их полной информацией</string>
+    <string name="welcome_intro4">Start ученических Теперь</string>
 </resources>

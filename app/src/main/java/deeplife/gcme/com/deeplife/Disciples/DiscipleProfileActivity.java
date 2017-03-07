@@ -153,14 +153,14 @@ public class DiscipleProfileActivity extends AppCompatActivity {
         DisCall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String phone = "+" + myDisciple.getPhone();
-                String number = "tel:" + phone;
-                Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse(number));
-                if (ContextCompat.checkSelfPermission(myContext, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(myActivity, new String[]{Manifest.permission.READ_PHONE_STATE}, 11);
-                } else {
-                    myContext.startActivity(callIntent);
-                }
+//                String phone = "+" + myDisciple.getPhone();
+//                String number = "tel:" + phone;
+//                Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse(number));
+//                if (ContextCompat.checkSelfPermission(myContext, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+//                    ActivityCompat.requestPermissions(myActivity, new String[]{Manifest.permission.READ_PHONE_STATE}, 11);
+//                } else {
+//                    myContext.startActivity(callIntent);
+//                }
 
             }
         });

@@ -97,4 +97,9 @@
     <string name="welcome_next">Next</string>
     <string name="welcome_skip">Skip</string>
     <string name="welcome_start">Start</string>
+    <string name="welcome_intro2">DeepLife is a web based system which enables you to create your disciples and make accountable in discipling them. To see multiplying tree of generation in your ministry</string>
+    <string name="welcome_intro3_title">Pray | Meet | Call</string>
+    <string name="welcome_intro3_verse">go and make disciples of all nation \n mathew 28:19</string>
+    <string name="welcome_intro3">Lets make disciple, its our calling. \nAdd your new disciples with their full information</string>
+    <string name="welcome_intro4">Start Discipling Now</string>
 </resources>
