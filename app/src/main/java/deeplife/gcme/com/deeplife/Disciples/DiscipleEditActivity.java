@@ -61,6 +61,12 @@ public class DiscipleEditActivity extends AppCompatActivity {
         phoneNumber = (EditText) findViewById(R.id.profileEditPhoneNumberText);
         email = (EditText) findViewById(R.id.profileEditEmailText);
 
+        // Disable all that we won't use
+        genderSpinner.setEnabled(false);
+        countrySpinner.setEnabled(false);
+        phoneNumber.setEnabled(false);
+        email.setEnabled(false);
+
         // Retrieve the Intent's Extra's
         final String extrasFullName = getIntent().getExtras().getString("FullName");
         String extrasGender = getIntent().getExtras().getString("Gender");
@@ -171,10 +177,13 @@ public class DiscipleEditActivity extends AppCompatActivity {
 
                 // Update the fields
                 currDisciple.setFullName(newFullName);
+                // Note: Keep the below just incase we decide to let the user edit them in the future:
+                /*
                 currDisciple.setEmail(newEmail);
                 currDisciple.setPhone(newPhoneNumber.substring(1)); // to take off the "+" sign.
                 currDisciple.setGender(genderSpinner.getSelectedItemPosition() == 1 ? Disciple.GENDER.FEMALE : Disciple.GENDER.MALE);
                 currDisciple.setCountry("" + ((Country)countrySpinner.getSelectedItem()).getSerID() );
+                */
 
                 // Update the DB itself (here in Android).
                 long modifiedRowId = DeepLife.myDATABASE.updateDisciple(currDisciple);
