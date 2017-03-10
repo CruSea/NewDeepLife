@@ -199,4 +199,12 @@ public class ProfileEditActivity extends AppCompatActivity {
             }
         });
     }
+
+    /*
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.disciple_profile_menu, menu);
+        return true;
+    }
+    */
 }

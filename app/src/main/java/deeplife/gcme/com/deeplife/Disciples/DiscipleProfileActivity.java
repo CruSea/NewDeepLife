@@ -185,7 +185,8 @@ public class DiscipleProfileActivity extends AppCompatActivity {
         Email.setText(myDisciple.getEmail());
         userCountry = DeepLife.myDATABASE.getCountryByID(Integer.valueOf(myDisciple.getCountry()));
         Country.setText(userCountry.getName());
-        Phone.setText("+" + myDisciple.getPhone());
+        //Phone.setText("+" + myDisciple.getPhone());
+        Phone.setText("" + myDisciple.getPhone());
         Gender.setText(myDisciple.getGender().toString());
     }
 

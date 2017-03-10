@@ -173,7 +173,8 @@ public class DiscipleEditActivity extends AppCompatActivity {
                 // Save to DB
                 Log.i(TAG, "onClick saveBtn: Saving to DB.");
                 //User currMainUser = DeepLife.myDATABASE.getMainUser();
-                Disciple currDisciple = DeepLife.myDATABASE.getDiscipleByPhone(extrasPhoneNumber.substring(1)); // .substring(1) to take off the "+" sign.
+                //Disciple currDisciple = DeepLife.myDATABASE.getDiscipleByPhone(extrasPhoneNumber.substring(1)); // .substring(1) to take off the "+" sign.
+                Disciple currDisciple = DeepLife.myDATABASE.getDiscipleByPhone(extrasPhoneNumber);
 
                 // Update the fields
                 currDisciple.setFullName(newFullName);

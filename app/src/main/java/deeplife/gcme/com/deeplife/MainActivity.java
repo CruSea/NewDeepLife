@@ -2,7 +2,6 @@ package deeplife.gcme.com.deeplife;
 
 import android.Manifest;
 import android.app.job.JobScheduler;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -162,6 +161,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             startActivity(intent);
         } else if (id == R.id.nav_profile) {
             startActivity(new Intent(this, ProfileShowActivity.class));
+            //startActivity(new Intent(this, ProfileEditActivity.class));
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
