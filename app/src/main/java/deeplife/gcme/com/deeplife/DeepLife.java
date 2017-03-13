@@ -3,7 +3,6 @@ package deeplife.gcme.com.deeplife;
 import android.app.Application;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.util.Log;
 
@@ -23,9 +22,9 @@ public class DeepLife extends Application {
 //    public static final String DEEP_URL  = "http://deeplifestaging.briggs-inc.com";  // Mark's temporary staging server
 //    public static final String DEEP_URL  = "http://staging.deeplife.cc";  // Bluehost Staging Server
       public static final String DEEP_URL  = "http://deeplife.cc";  // Main Server
-//    public static final String DEEP_URL  = "http://192.168.43.156:8888/DeepLife_Web/public";  // Biniam's local server
-//    public static final String DEEP_URL  = "http://deeplife.dev.192.168.2.69.xip.io";  // Mark's local server
-
+//    public static final String DEEP_URL  = "http://192.168.43.156:8888/DeepLife_Web/public";  // Biniam's local servergit
+//    public static final String DEEP_URL  = "http://deeplife.dev.192.168.1.2.xip.io";  // Mark's local server
+//    public static final String DEEP_URL  = "http://deeplife.dev.192.168.20.119.xip.io";  // Mark's local server
 
 
     public static final String FORGOTEN_URL = DEEP_URL + "/forgot";

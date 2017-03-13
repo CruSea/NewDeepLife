@@ -102,9 +102,7 @@ public class DiscipleProfileActivity extends AppCompatActivity {
             Phone.setText("+" + myDisciple.getPhone());
             Country country = DeepLife.myDATABASE.getCountryByID(Integer.valueOf(myDisciple.getCountry()));
             Country.setText(country.getName());
-            Country.setEnabled(false);
             Gender.setText(myDisciple.getGender().toString());
-            Gender.setEnabled(false);
             if (myDisciple.getImagePath() != null) {
                 File file = new File(myDisciple.getImagePath());
                 if (file.isFile()) {
@@ -118,9 +116,7 @@ public class DiscipleProfileActivity extends AppCompatActivity {
         FullName = (EditText) findViewById(R.id.txt_disciple_profile_fullname);
         DisplayName = (TextView) findViewById(R.id.txt_disciple_profile_displayname);
         Email = (EditText) findViewById(R.id.txt_disciple_profile_email);
-        Email.setEnabled(false);
         Phone = (EditText) findViewById(R.id.txt_disciple_profile_phone);
-        Phone.setEnabled(false);
         Note = (EditText) findViewById(R.id.txt_disciple_profile_note);
         Country = (EditText) findViewById(R.id.txt_disciple_profile_country);
         Gender = (EditText) findViewById(R.id.txt_disciple_profile_gender);
@@ -189,7 +185,8 @@ public class DiscipleProfileActivity extends AppCompatActivity {
         Email.setText(myDisciple.getEmail());
         userCountry = DeepLife.myDATABASE.getCountryByID(Integer.valueOf(myDisciple.getCountry()));
         Country.setText(userCountry.getName());
-        Phone.setText("+" + myDisciple.getPhone());
+        //Phone.setText("+" + myDisciple.getPhone());
+        Phone.setText("" + myDisciple.getPhone());
         Gender.setText(myDisciple.getGender().toString());
     }
 
