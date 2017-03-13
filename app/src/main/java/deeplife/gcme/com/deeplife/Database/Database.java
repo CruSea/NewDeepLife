@@ -1971,6 +1971,55 @@ public class Database {
         return null;
 
     }
+    public DiscipleTreeCount getDiscipleTreeCountByID(int id) {
+        Log.d(TAG, "Get getDiscipleTreeCount By ID: "+id);
+        String DB_Table = Table_DISCIPLE_TREE;
+        try {
+            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
+            if (c.getCount() > 0) {
+                c.moveToFirst();
+                for (int i = 0; i < c.getCount(); i++) {
+                    c.moveToPosition(i);
+                    int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(DiscipleTreeColumn.ID.toString())));
+                    if(cur_id == id){
+                        DiscipleTreeCount discipleTreeCount = new DiscipleTreeCount();
+                        discipleTreeCount.setID(Integer.valueOf(c.getString(c.getColumnIndex(DiscipleTreeColumn.ID.toString()))));
+                        discipleTreeCount.setSerID(Integer.valueOf(c.getString(c.getColumnIndex(DiscipleTreeColumn.SERID.toString()))));
+                        discipleTreeCount.setUserID(Integer.valueOf(c.getString(c.getColumnIndex(DiscipleTreeColumn.USERID.toString()))));
+                        discipleTreeCount.setCount(Integer.valueOf(c.getString(c.getColumnIndex(DiscipleTreeColumn.COUNT.toString()))));
+                        return discipleTreeCount;
+                    }
+                }
+            }
+            return null;
+        } catch (Exception e) {
+            Log.e(TAG, "Failed Get getDiscipleTreeCount by ID: " + e.toString());
+            return null;
+        }
+    }
+    public DiscipleTreeCount getDiscipleTreeCountBySerID(int id) {
+        Log.d(TAG, "Get getDiscipleTreeCount by ServerID: " + id);
+        String DB_Table = Table_LEARNING;
+        try {
+            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
+            if (c.getCount() > 0) {
+                c.moveToFirst();
+                for (int i = 0; i < c.getCount(); i++) {
+                    c.moveToPosition(i);
+                    int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(LearningColumn.ID.toString())));
+                    int ser_id = Integer.valueOf(c.getString(c.getColumnIndex(LearningColumn.SERID.toString())));
+                    if (ser_id == id) {
+                        DiscipleTreeCount discipleTreeCount = getDiscipleTreeCountByID(cur_id);
+                        return discipleTreeCount;
+                    }
+                }
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Failed Get getDiscipleTreeCountBySerID: " + e.toString());
+            return null;
+        }
+        return null;
+    }
 
 
     private String[] getColumns(String DB_Table) {

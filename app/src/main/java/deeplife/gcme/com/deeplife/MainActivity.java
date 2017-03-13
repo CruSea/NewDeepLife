@@ -153,6 +153,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             DeepLife.myDATABASE.Delete_All(Database.Table_DISCIPLES);
             DeepLife.myDATABASE.Delete_All(Database.Table_NEWSFEED);
             DeepLife.myDATABASE.Delete_All(Database.Table_TESTIMONY);
+            DeepLife.myDATABASE.Delete_All(Database.Table_LEARNING);
             Intent intent = new Intent(this, Login.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);

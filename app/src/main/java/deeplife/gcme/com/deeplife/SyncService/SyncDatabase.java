@@ -64,6 +64,7 @@ public class SyncDatabase {
         PARENT("parent"),
         STATUS("status"),
         DISCIPLE_PHONE("disciple_phone"),
+        DISCIPLE_COUNT("disciple_count"),
         QUESTION_ID("question_id"),
         ANSWER("answer"),
         STAGE("stage"),
@@ -77,7 +78,8 @@ public class SyncDatabase {
         ISO3("iso3"),
         NAME("name"),
         CODE("code"),
-        LOG_ID("Log_ID");
+        LOG_ID("Log_ID"),
+        DISCIPLE_TREE("DiscipleTree");
 
 
         private final String name;

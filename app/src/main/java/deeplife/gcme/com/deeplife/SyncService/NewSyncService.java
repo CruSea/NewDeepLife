@@ -38,6 +38,7 @@ import deeplife.gcme.com.deeplife.LearningTools.LearningTool;
 import deeplife.gcme.com.deeplife.Models.Answer;
 import deeplife.gcme.com.deeplife.Models.Category;
 import deeplife.gcme.com.deeplife.Models.Country;
+import deeplife.gcme.com.deeplife.Models.DiscipleTreeCount;
 import deeplife.gcme.com.deeplife.Models.ImageSync;
 import deeplife.gcme.com.deeplife.Models.Logs;
 import deeplife.gcme.com.deeplife.Models.ReportItem;
@@ -463,6 +464,11 @@ public class NewSyncService extends Service {
                     Log.d(TAG, "Add Learning tools: \n" + json_learning_tools.toString());
                     Add_LearningTools(json_learning_tools);
                 }
+                if (!json_response.isNull(SyncDatabase.ApiResponseKey.DISCIPLE_TREE.toString())) {
+                    JSONObject json_disciple_tree = json_response.getJSONObject(SyncDatabase.ApiResponseKey.DISCIPLE_TREE.toString());
+                    Log.d(TAG, "Add disciple tree : \n" + json_disciple_tree.toString());
+                    Update_DiscipleTree(json_disciple_tree);
+                }
             } else {
                 Log.w(TAG, "ProcessResponse: No 'Response' JSON object!");
             }
@@ -823,6 +829,36 @@ public class NewSyncService extends Service {
             }
         } catch (Exception e) {
             Log.e(TAG, "Add_LearningTools: Exception: " + e.getMessage());
+        }
+    }
+    public static void Update_DiscipleTree(JSONObject json_discipletree) {
+        try {
+            if (json_discipletree.length() > 0) {
+                Log.d(TAG, "Adding Updated_DiscipleTree  -> \n" + json_discipletree.toString());
+                JSONObject obj = json_discipletree;
+                ContentValues cv = new ContentValues();
+                cv.put(Database.DiscipleTreeColumn.SERID.toString(), obj.getString(SyncDatabase.ApiResponseKey.ID.toString()));
+                cv.put(Database.DiscipleTreeColumn.USERID.toString(), obj.getString(SyncDatabase.ApiResponseKey.USER_ID.toString()));
+                cv.put(Database.DiscipleTreeColumn.COUNT.toString(), obj.getString(SyncDatabase.ApiResponseKey.DISCIPLE_COUNT.toString()));
+                DiscipleTreeCount discipleTreeCount = DeepLife.myDATABASE.getDiscipleTreeCountBySerID(Integer.valueOf(obj.getString(SyncDatabase.ApiResponseKey.ID.toString())));
+                if (discipleTreeCount == null) {
+                    long x = DeepLife.myDATABASE.insert(Database.Table_DISCIPLE_TREE, cv);
+                    if (x > 0) {
+                        Log.d(TAG, "Successfully Added: DiscipleTreeCount-> \n" + cv.toString());
+                    } else {
+                        Log.e(TAG, "Error During Adding: DiscipleTreeCount -> \n" + cv.toString());
+                    }
+                } else {
+                    long x = DeepLife.myDATABASE.update(Database.Table_DISCIPLE_TREE, cv, discipleTreeCount.getID());
+                    if (x > 0) {
+                        Log.d(TAG, "Successfully Updated: discipleTreeCount -> \n" + cv.toString());
+                    } else {
+                        Log.e(TAG, "Error During Updated: discipleTreeCount -> \n" + cv.toString());
+                    }
+                }
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Update_DiscipleTree: Exception: " + e.getMessage());
         }
     }
 
