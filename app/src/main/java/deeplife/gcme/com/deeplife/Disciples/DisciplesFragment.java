@@ -71,7 +71,7 @@ public class DisciplesFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.disciple_add) {
-            Toast.makeText(getContext(), "Add New Disciple", Toast.LENGTH_LONG).show();  // briggsm: This toast message is just for debug, right? If not, we need to extract string for translation, but I think this toast message is unnecessary in final app.
+//            Toast.makeText(getContext(), "Add New Disciple", Toast.LENGTH_LONG).show();  // briggsm: This toast message is just for debug, right? If not, we need to extract string for translation, but I think this toast message is unnecessary in final app.
             Intent intent = new Intent(getContext(), DiscipleAddActivity.class);
             startActivity(intent);
         }

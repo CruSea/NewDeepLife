@@ -186,42 +186,44 @@ public class NewSyncService extends Service {
         Log.i(TAG, "The Job scheduler started");
         try {
             user = DeepLife.myDATABASE.getMainUser();
-            Send_Param = new ArrayList<Pair<String, String>>();
-            getService();
-            if (user != null) {
-                if (user.getEmail() != null) {
-                    Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.USER_NAME.toString(), user.getEmail()));
+            if(user != null){
+                Send_Param = new ArrayList<Pair<String, String>>();
+                getService();
+                if (user != null) {
+                    if (user.getEmail() != null) {
+                        Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.USER_NAME.toString(), user.getEmail()));
+                    } else {
+                        Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.USER_NAME.toString(), user.getPhone()));
+                    }
+                    Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.USER_PASS.toString(), user.getPass()));
+                    Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.COUNTRY.toString(), user.getCountry()));
+                    Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.SERVICE.toString(), myLogs.getService().toString()));
+                    Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.PARAM.toString(), myParser.toJson(myLogs.getParam())));
                 } else {
-                    Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.USER_NAME.toString(), user.getPhone()));
+                    Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.USER_NAME.toString(), " "));
+                    Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.USER_PASS.toString(), " "));
+                    Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.COUNTRY.toString(), " "));
+                    Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.SERVICE.toString(), myLogs.getService().toString()));
+                    Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.PARAM.toString(), myParser.toJson(myLogs.getParam())));
                 }
-                Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.USER_PASS.toString(), user.getPass()));
-                Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.COUNTRY.toString(), user.getCountry()));
-                Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.SERVICE.toString(), myLogs.getService().toString()));
-                Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.PARAM.toString(), myParser.toJson(myLogs.getParam())));
-            } else {
-                Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.USER_NAME.toString(), " "));
-                Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.USER_PASS.toString(), " "));
-                Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.COUNTRY.toString(), " "));
-                Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.SERVICE.toString(), myLogs.getService().toString()));
-                Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.PARAM.toString(), myParser.toJson(myLogs.getParam())));
-            }
-            Log.i(TAG, "API Request: " + Send_Param.toString());
-            Fuel.post(DeepLife.API_URL, Send_Param).responseString(new Handler<String>() {
-                @Override
-                public void success(@NotNull Request request, @NotNull Response response, String s) {
-                    Log.d(TAG, "Request: " + request);
-                    Log.i(TAG, "Response: " + s);
-                    ProcessResponse(s);
-                    isInprogress = false;
-                }
+                Log.i(TAG, "API Request: " + Send_Param.toString());
+                Fuel.post(DeepLife.API_URL, Send_Param).responseString(new Handler<String>() {
+                    @Override
+                    public void success(@NotNull Request request, @NotNull Response response, String s) {
+                        Log.d(TAG, "Request: " + request);
+                        Log.i(TAG, "Response: " + s);
+                        ProcessResponse(s);
+                        isInprogress = false;
+                    }
 
-                @Override
-                public void failure(@NotNull Request request, @NotNull Response response, @NotNull FuelError fuelError) {
-                    isInprogress = false;
-                    Log.e(TAG, "Fuel failure: \n" + fuelError.toString());
-                }
-            });
-            Log.i(TAG, "API Request SENT to: " + DeepLife.API_URL);
+                    @Override
+                    public void failure(@NotNull Request request, @NotNull Response response, @NotNull FuelError fuelError) {
+                        isInprogress = false;
+                        Log.e(TAG, "Fuel failure: \n" + fuelError.toString());
+                    }
+                });
+                Log.i(TAG, "API Request SENT to: " + DeepLife.API_URL);
+            }
         } catch (Exception e) {
             Log.e(TAG, "The Job scheduler Failed ...." + e.toString());
             isInprogress = false;
@@ -315,7 +317,6 @@ public class NewSyncService extends Service {
             myLogs.setService(SyncService.API_SERVICE.SEND_TESTIMONY);
         } else if (DeepLife.myDATABASE.getUpdateUserProfile().size() > 0) {
             Log.i(TAG, "GET USER PROFILE TO UPDATE...");
-
             ArrayList<User> foundData = DeepLife.myDATABASE.getUpdateUserProfile();
             for (int i = 0; i < foundData.size(); i++) {
                 myLogs.getParam().add(foundData.get(i));
