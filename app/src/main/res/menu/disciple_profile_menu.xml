@@ -3,8 +3,8 @@
     xmlns:myapp="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/disciple_edit"
+        android:icon="@drawable/edit_new_icon"
         android:orderInCategory="100"
-        myapp:showAsAction="ifRoom"
-        android:icon="@drawable/icon_build_icon_white"
-        android:title="@string/toolbar_title_disciple_edit" />
+        android:title="@string/toolbar_title_disciple_edit"
+        myapp:showAsAction="ifRoom"/>
 </menu>
