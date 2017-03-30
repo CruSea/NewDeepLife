@@ -1414,6 +1414,16 @@ public class Database {
     ///////  Country Table    /////////
     ////////////////////////////////
     ////////////////////////////////
+    public Country hydrateCountryFromCursor (Cursor c) {
+        Country country = new Country();
+        country.setID(Integer.valueOf(c.getString(c.getColumnIndex(CountryColumn.ID.toString()))));
+        country.setSerID(Integer.valueOf(c.getString(c.getColumnIndex(CountryColumn.SERID.toString()))));
+        country.setISO3(c.getString(c.getColumnIndex(CountryColumn.ISO3.toString())));
+        country.setName(c.getString(c.getColumnIndex(CountryColumn.NAME.toString())));
+        country.setCode(Integer.valueOf(c.getString(c.getColumnIndex(CountryColumn.CODE.toString()))));
+        return country;
+    }
+
     public Country getCountryByID(int id) {
         String DB_Table = Table_COUNTRY;
         News found = new News();
@@ -1426,12 +1436,7 @@ public class Database {
                     c.moveToPosition(i);
                     int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(CountryColumn.ID.toString())));
                     if (cur_id == id) {
-                        Country country = new Country();
-                        country.setID(Integer.valueOf(c.getString(c.getColumnIndex(CountryColumn.ID.toString()))));
-                        country.setSerID(Integer.valueOf(c.getString(c.getColumnIndex(CountryColumn.SERID.toString()))));
-                        country.setISO3(c.getString(c.getColumnIndex(CountryColumn.ISO3.toString())));
-                        country.setName(c.getString(c.getColumnIndex(CountryColumn.NAME.toString())));
-                        country.setCode(Integer.valueOf(c.getString(c.getColumnIndex(CountryColumn.CODE.toString()))));
+                        Country country = hydrateCountryFromCursor(c);
                         return country;
                     }
                 }
@@ -1465,6 +1470,25 @@ public class Database {
             Log.e(TAG, "Failed Get getCountryBySerID by ServerID: " + e.toString());
             return null;
         }
+        return null;
+    }
+
+    public Country getCountryByISO3(String iso3) {
+        Log.d(TAG, "getCountryByISO3: " + iso3);
+        String DB_Table = Table_COUNTRY;
+        try {
+            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), "ISO3 = ?",  new String[] { iso3 }, null, null, null);
+            if (c.getCount() > 0) {
+                c.moveToFirst();
+                Country country = hydrateCountryFromCursor(c);
+                Log.d(TAG, " getCountryByISO3: Got a country: " + country.getName());
+                return country;
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "getCountryByISO3: Failed to getCountryByISO3. Error: " + e.toString());
+            return null;
+        }
+        Log.d(TAG, " getCountryByISO3: Country not found.");
         return null;
     }
 
