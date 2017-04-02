@@ -1122,68 +1122,87 @@ public class Database {
         return null;
     }
 
-    public ArrayList<WbsQuestion> getWbsParentQuestionsAndFoldersByStage(Disciple.STAGE stage) {
-        Log.i(TAG, "getWbsParentQuestionsAndFoldersByStage: " + stage.toServerId());
-        String DB_Table = Table_QUESTION_LIST;
+    public ArrayList<WbsQuestion> getAllQuestionByStage(final Disciple.STAGE stage){
+        Log.i(TAG, "getAllQuestionByStage: " + stage.toServerId());
         ArrayList<WbsQuestion> foundParentQuestions = new ArrayList<WbsQuestion>();
-        try {
-            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);  // Get ALL Questions
-            c.moveToFirst();
-            for (int i = 0; i < c.getCount(); i++) {
-                c.moveToPosition(i);
-                int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(QuestionListColumn.ID.toString())));
-                int cat_id = Integer.valueOf(c.getString(c.getColumnIndex(QuestionListColumn.CATEGORY.toString())));
-                if (cat_id == Disciple.STAGE.WIN.toServerId() || cat_id == Disciple.STAGE.BUILD.toServerId() || cat_id == Disciple.STAGE.SEND.toServerId()) {
-                    // This Questions belongs at PARENT-level of Win, Build, or Send section.
-                    if (cat_id == stage.toServerId()) {
-                        WbsQuestion wbsQuestion = getWbsQuestionByID(cur_id);
-                        if (wbsQuestion != null) {
-                            foundParentQuestions.add(wbsQuestion);
-                            Log.i(TAG, "Found WbsQuestion: " + wbsQuestion.getID());
-                        }
-
-                    }
-                } else {
-                    // This Question belongs in a FOLDER, so let's see if the Folder's "parent" is equal to the categoryID.
-                    Cursor d = myDatabase.query(Table_CATEGORIES, getColumns(Table_CATEGORIES), CategoryColumn.ID.toString() + " = '" + cat_id + "' AND " + CategoryColumn.PARENT.toString() + " = '" + stage.toServerId() + "'" , null, null, null, null);
-                    if (d.getCount() > 0) {
-                        // Then this question belongs to a folder which belongs to this categoryID
-
-                        // Get folder (or make new 1 if doesn't exist yet)
-                        WbsQuestion wbsFolder = null;
-                        for (WbsQuestion parentQuestion : foundParentQuestions) {
-                            if (parentQuestion.getType() == WbsQuestion.Type.FOLDER) {
-                                if (parentQuestion.getCategory() == cat_id) {
-                                    wbsFolder = parentQuestion;
-                                    break;  // out of for loop
-                                }
-                            }
-                        }
-
-                        if (wbsFolder == null) {
-                            Category wbsCategory = getCategoryByID(cat_id);
-
-                            // Convert category to WbsQuestion
-                            wbsFolder = new WbsQuestion();
-                            wbsFolder.setType(WbsQuestion.Type.FOLDER);
-                            wbsFolder.setCategory(wbsCategory.getID());
-                            wbsFolder.setQuestion(wbsCategory.getName());
-
-                            // Add to Parent list
-                            foundParentQuestions.add(wbsFolder);
-                        }
-
-                        wbsFolder.addChild(getWbsQuestionByID(cur_id));
-                    }
-                }
+        String DB_Question_Table = Table_QUESTION_LIST;
+        String DB_Category_Table = Table_CATEGORIES;
+        Cursor cur = myDatabase.rawQuery("select * from " + DB_Question_Table + " where "+QuestionListColumn.CATEGORY.toString()+
+                " IN (SELECT "+CategoryColumn.SERID.toString()+" FROM "+DB_Category_Table+" WHERE "+CategoryColumn.SERID.toString()+" = " + stage.toServerId() +" OR " +
+                CategoryColumn.PARENT.toString()+" IN (SELECT "+CategoryColumn.SERID+" FROM "+DB_Category_Table+" WHERE "+CategoryColumn.SERID.toString()+" = "+stage.toServerId()+"))", null);
+        if(cur.getCount()>0){
+            for(int i=0; i<cur.getCount(); i++){
+                cur.moveToPosition(i);
+                int cur_id = Integer.valueOf(cur.getString(cur.getColumnIndex(QuestionListColumn.ID.toString())));
+                WbsQuestion wbsQuestion = getWbsQuestionByID(cur_id);
+                foundParentQuestions.add(wbsQuestion);
+                Log.i(TAG, "Found WbsQuestion: " + wbsQuestion.getID());
             }
-        } catch (Exception e) {
-            foundParentQuestions = new ArrayList<WbsQuestion>();
-            Log.e(TAG, "Failed Get getWbsParentQuestionsAndFoldersByStage: " + e.toString());
-            return foundParentQuestions;
         }
         return foundParentQuestions;
     }
+//    public ArrayList<WbsQuestion> getWbsParentQuestionsAndFoldersByStage(Disciple.STAGE stage) {
+//        Log.i(TAG, "getWbsParentQuestionsAndFoldersByStage: " + stage.toServerId());
+//        String DB_Table = Table_QUESTION_LIST;
+//        ArrayList<WbsQuestion> foundParentQuestions = new ArrayList<WbsQuestion>();
+//        try {
+//            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);  // Get ALL Questions
+//            c.moveToFirst();
+//            for (int i = 0; i < c.getCount(); i++) {
+//                c.moveToPosition(i);
+//                int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(QuestionListColumn.ID.toString())));
+//                int cat_id = Integer.valueOf(c.getString(c.getColumnIndex(QuestionListColumn.CATEGORY.toString())));
+//                if (cat_id == Disciple.STAGE.WIN.toServerId() || cat_id == Disciple.STAGE.BUILD.toServerId() || cat_id == Disciple.STAGE.SEND.toServerId()) {
+//                    // This Questions belongs at PARENT-level of Win, Build, or Send section.
+//                    if (cat_id == stage.toServerId()) {
+//                        WbsQuestion wbsQuestion = getWbsQuestionByID(cur_id);
+//                        if (wbsQuestion != null) {
+//                            foundParentQuestions.add(wbsQuestion);
+//                            Log.i(TAG, "Found WbsQuestion: " + wbsQuestion.getID());
+//                        }
+//
+//                    }
+//                } else {
+//                    // This Question belongs in a FOLDER, so let's see if the Folder's "parent" is equal to the categoryID.
+//                    Cursor d = myDatabase.query(Table_CATEGORIES, getColumns(Table_CATEGORIES), CategoryColumn.ID.toString() + " = '" + cat_id + "' AND " + CategoryColumn.PARENT.toString() + " = '" + stage.toServerId() + "'" , null, null, null, null);
+//                    if (d.getCount() > 0) {
+//                        // Then this question belongs to a folder which belongs to this categoryID
+//
+//                        // Get folder (or make new 1 if doesn't exist yet)
+//                        WbsQuestion wbsFolder = null;
+//                        for (WbsQuestion parentQuestion : foundParentQuestions) {
+//                            if (parentQuestion.getType() == WbsQuestion.Type.FOLDER) {
+//                                if (parentQuestion.getCategory() == cat_id) {
+//                                    wbsFolder = parentQuestion;
+//                                    break;  // out of for loop
+//                                }
+//                            }
+//                        }
+//
+//                        if (wbsFolder == null) {
+//                            Category wbsCategory = getCategoryByID(cat_id);
+//
+//                            // Convert category to WbsQuestion
+//                            wbsFolder = new WbsQuestion();
+//                            wbsFolder.setType(WbsQuestion.Type.FOLDER);
+//                            wbsFolder.setCategory(wbsCategory.getID());
+//                            wbsFolder.setQuestion(wbsCategory.getName());
+//
+//                            // Add to Parent list
+//                            foundParentQuestions.add(wbsFolder);
+//                        }
+//
+//                        wbsFolder.addChild(getWbsQuestionByID(cur_id));
+//                    }
+//                }
+//            }
+//        } catch (Exception e) {
+//            foundParentQuestions = new ArrayList<WbsQuestion>();
+//            Log.e(TAG, "Failed Get getWbsParentQuestionsAndFoldersByStage: " + e.toString());
+//            return foundParentQuestions;
+//        }
+//        return foundParentQuestions;
+//    }
 
     public ArrayList<WbsQuestion> getWbsQuestionsByCategory(int categoryID) {
         Log.d(TAG, "getWbsQuestionsByCategory: " + categoryID);
@@ -1334,6 +1353,24 @@ public class Database {
             return null;
         }
         return null;
+    }
+    public Answer getAnswersByQuestionIDandDisciplePhone(int questionID, String disciplePhone) {
+        Log.d(TAG, "Get getAnswersByQuestionIDandDisciplePhone: ");
+        String DB_Table = Table_QUESTION_ANSWER;
+        try{
+            Cursor c = myDatabase.rawQuery("SELECT * FROM "+Table_QUESTION_ANSWER+" WHERE "+QuestionAnswerColumn.QUESTION_ID.toString()+" = "+questionID +
+                    " AND "+QuestionAnswerColumn.DISCIPLEPHONE.toString()+" = "+disciplePhone,null);
+            if(c.getCount()>0){
+                c.moveToFirst();
+                for (int i = 0; i < c.getCount(); i++) {
+                    c.moveToPosition(i);
+                    int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(QuestionAnswerColumn.ID.toString())));
+                    return getAnswerByID(cur_id);
+                }
+            }
+        }catch (Exception e){
+
+        }
     }
 
     public long updateAnswer(Answer answer) {

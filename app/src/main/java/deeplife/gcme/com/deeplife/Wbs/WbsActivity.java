@@ -61,9 +61,9 @@ public class WbsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(R.string.toolbar_title_disciple_wbs);
 
-        wbs_Win_Questions = DeepLife.myDATABASE.getWbsParentQuestionsAndFoldersByStage(Disciple.STAGE.WIN);
-        wbs_Build_Questions = DeepLife.myDATABASE.getWbsParentQuestionsAndFoldersByStage(Disciple.STAGE.BUILD);
-        wbs_Send_Questions = DeepLife.myDATABASE.getWbsParentQuestionsAndFoldersByStage(Disciple.STAGE.SEND);
+        wbs_Win_Questions = DeepLife.myDATABASE.getAllQuestionByStage(Disciple.STAGE.WIN);
+        wbs_Build_Questions = DeepLife.myDATABASE.getAllQuestionByStage(Disciple.STAGE.BUILD);
+        wbs_Send_Questions = DeepLife.myDATABASE.getAllQuestionByStage(Disciple.STAGE.SEND);
 
 
         myRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
