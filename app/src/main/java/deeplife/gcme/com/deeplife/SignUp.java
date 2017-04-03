@@ -5,6 +5,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
@@ -21,7 +22,6 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.github.kittinunf.fuel.Fuel;
 import com.github.kittinunf.fuel.core.FuelError;
@@ -35,12 +35,12 @@ import org.json.JSONTokener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import deeplife.gcme.com.deeplife.Adapters.CountryListAdapter;
 import deeplife.gcme.com.deeplife.Database.Database;
 import deeplife.gcme.com.deeplife.Models.Country;
 import deeplife.gcme.com.deeplife.Models.SignUpUser;
-import deeplife.gcme.com.deeplife.Models.User;
 import deeplife.gcme.com.deeplife.SyncService.SyncDatabase;
 import deeplife.gcme.com.deeplife.SyncService.SyncService;
 import kotlin.Pair;
@@ -105,6 +105,18 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener, A
 
         if (myCountries != null && myCountries.size()>0) {
             UserCountry.setAdapter(new CountryListAdapter(this, R.layout.login_countries_item, myCountries));
+
+            Locale locale;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                locale = getResources().getConfiguration().getLocales().get(0);
+            } else {
+                locale = getResources().getConfiguration().locale;
+            }
+            String iso3Country = locale.getISO3Country();
+            Log.d(TAG, "Signup Init: iso3Country: " + iso3Country);
+
+            int pos = DeepLife.myDATABASE.getCountryByISO3(iso3Country).getID();
+            UserCountry.setSelection(pos - 1);
         }
     }
 

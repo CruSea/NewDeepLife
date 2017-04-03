@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
@@ -38,9 +39,9 @@ import org.json.JSONTokener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import deeplife.gcme.com.deeplife.Adapters.CountryListAdapter;
-import deeplife.gcme.com.deeplife.Adapters.LoginAccess;
 import deeplife.gcme.com.deeplife.Models.Country;
 import deeplife.gcme.com.deeplife.Models.User;
 import deeplife.gcme.com.deeplife.SyncService.SyncDatabase;
@@ -58,13 +59,13 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     private SyncDatabase mySyncDatabase;
     public static List<Country> myCountries;
     public static ProgressDialog progressDialog;
-    public static Spinner mySpinner;
+    public static Spinner UserCountry;
     public static EditText TextCode, userEmail, userPass, userPhone;
     private TextView loginEmail,loginPhone;
     private LinearLayout userPhoneLayout,userEmailLayout;
     private TextInputLayout inputLayoutEmail, inputLayoutPhone, inputLayoutPhoneCode, inputLayoutPassword;
     private static boolean isEmailLogin = true;
-    private static int CountryChoicePos = 0;
+    //private static int CountryChoicePos = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -98,12 +99,12 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         Login.setOnClickListener(this);
         Forgotten = (Button) findViewById(R.id.btn_link_forgot_password);
         Forgotten.setOnClickListener(this);
-        mySpinner = (Spinner) findViewById(R.id.login_countries_spinner);
-        mySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        UserCountry = (Spinner) findViewById(R.id.login_countries_spinner);
+        UserCountry.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 TextCode.setText("+" + myCountries.get(position).getCode());
-                CountryChoicePos = position;
+                //CountryChoicePos = position;
             }
 
             @Override
@@ -114,6 +115,21 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             }
         });
         myCountries = DeepLife.myDATABASE.getAllCountries();
+        if (myCountries != null && myCountries.size() > 0) {
+            UserCountry.setAdapter(new CountryListAdapter(myContext, R.layout.login_countries_item, myCountries));
+
+            Locale locale;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                locale = getResources().getConfiguration().getLocales().get(0);
+            } else {
+                locale = getResources().getConfiguration().locale;
+            }
+            String iso3Country = locale.getISO3Country();
+            Log.d(TAG, "Login onCreate: iso3Country: " + iso3Country);
+
+            int pos = DeepLife.myDATABASE.getCountryByISO3(iso3Country).getID();
+            UserCountry.setSelection(pos - 1);
+        }
     }
     public static void GetNextActivity() {
         Toast.makeText(myContext, R.string.toast_msg_login_successful, Toast.LENGTH_LONG).show();
@@ -147,16 +163,16 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             isEmailLogin = false;
             userPhoneLayout.setVisibility(View.VISIBLE);
             userEmailLayout.setVisibility(View.GONE);
-            mySpinner.setAdapter(new CountryListAdapter(myContext, R.layout.login_countries_item, myCountries));
-            mySpinner.setSelection(CountryChoicePos);
+            //UserCountry.setAdapter(new CountryListAdapter(myContext, R.layout.login_countries_item, myCountries));
+            //UserCountry.setSelection(CountryChoicePos);
         }else {
             myCountries = DeepLife.myDATABASE.getAllCountries();
             if(myCountries != null && myCountries.size()>0){
                 isEmailLogin = false;
                 userPhoneLayout.setVisibility(View.VISIBLE);
                 userEmailLayout.setVisibility(View.GONE);
-                mySpinner.setAdapter(new CountryListAdapter(myContext, R.layout.login_countries_item, myCountries));
-                mySpinner.setSelection(CountryChoicePos);
+                //UserCountry.setAdapter(new CountryListAdapter(myContext, R.layout.login_countries_item, myCountries));
+                //UserCountry.setSelection(CountryChoicePos);
             }else {
                 metaDataRequest();
             }
@@ -289,8 +305,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             return;
         }
         User user = new User();
-        String str1 = myCountries.get(mySpinner.getSelectedItemPosition()).getCode()+""+userPhone.getText().toString();
-        String str2 = ""+myCountries.get(mySpinner.getSelectedItemPosition()).getSerID();
+        String str1 = myCountries.get(UserCountry.getSelectedItemPosition()).getCode()+""+userPhone.getText().toString();
+        String str2 = ""+myCountries.get(UserCountry.getSelectedItemPosition()).getSerID();
         user.setPhone(str1);
         user.setCountry(str2);
         user.setPass(userPass.getText().toString());

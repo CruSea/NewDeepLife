@@ -74,19 +74,21 @@
 
                     <Button
                         android:id="@+id/btn_disciple_profile_message"
+                        style="@style/AppTheme.Button1"
                         android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_weight="3"
                         android:text="@string/action_send_sms"
-                        style="@style/AppTheme.Button1"
-                        android:layout_height="wrap_content" />
+                        android:visibility="gone"/>
 
                     <Button
                         android:id="@+id/btn_disciple_profile_call"
+                        style="@style/AppTheme.Button1"
                         android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_weight="3"
                         android:text="@string/action_call_now"
-                        style="@style/AppTheme.Button1"
-                        android:layout_height="wrap_content" />
+                        android:visibility="gone"/>
                 </LinearLayout>
 
             </LinearLayout>
