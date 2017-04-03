@@ -65,26 +65,26 @@ public class ProfileEditActivity extends AppCompatActivity {
         final String extrasEmail = getIntent().getExtras().getString("Email");
 
         // Fill in text views with info from Intent
-        fullName.setText(extrasFullName);
-
-        if (extrasGender.equalsIgnoreCase("Female")) {
-            genderSpinner.setSelection(1);
-        } else {
-            genderSpinner.setSelection(0);
-        }
-
-        phoneNumber.setText(extrasPhoneNumber);
-        email.setText(extrasEmail);
-
-        myCountries = myDATABASE.getAllCountries();
-        if (myCountries != null) {
-            CountryListAdapter countryListAdapter = new CountryListAdapter(this, R.layout.login_countries_item, myCountries);
-            countrySpinner.setAdapter(countryListAdapter);
-
-            int countrySerID = Integer.valueOf(extrasCountrySerId);
-            int pos = myDATABASE.getCountryBySerID(countrySerID).getID() - 1;
-            countrySpinner.setSelection(pos);
-        }
+//        fullName.setText(extrasFullName);
+//
+//        if (extrasGender.equalsIgnoreCase("Female")) {
+//            genderSpinner.setSelection(1);
+//        } else {
+//            genderSpinner.setSelection(0);
+//        }
+//
+//        phoneNumber.setText(extrasPhoneNumber);
+//        email.setText(extrasEmail);
+//
+//        myCountries = myDATABASE.getAllCountries();
+//        if (myCountries != null) {
+//            CountryListAdapter countryListAdapter = new CountryListAdapter(this, R.layout.login_countries_item, myCountries);
+//            countrySpinner.setAdapter(countryListAdapter);
+//
+//            int countrySerID = Integer.valueOf(extrasCountrySerId);
+//            int pos = myDATABASE.getCountryBySerID(countrySerID).getID() - 1;
+//            countrySpinner.setSelection(pos);
+//        }
 
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override

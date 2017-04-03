@@ -28,6 +28,7 @@ import deeplife.gcme.com.deeplife.Home.HomeFragment;
 import deeplife.gcme.com.deeplife.LearningTools.LearningFragment;
 import deeplife.gcme.com.deeplife.Models.User;
 import deeplife.gcme.com.deeplife.News.NewsFragment;
+import deeplife.gcme.com.deeplife.Profile.ProfileEditActivity;
 import deeplife.gcme.com.deeplife.Profile.ProfileShowActivity;
 import deeplife.gcme.com.deeplife.SyncService.NewSyncService;
 import deeplife.gcme.com.deeplife.Testimony.TestimonyFragment;
@@ -157,7 +158,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         } else if (id == R.id.nav_profile) {
-            startActivity(new Intent(this, ProfileShowActivity.class));
+            Intent intent = new Intent(this, ProfileEditActivity.class);
+            Bundle b = new Bundle();
+            b.putString("FullName", " ");
+            b.putString("Email", " ");
+            b.putString("CountrySerID", " ");
+            b.putString("Phone", " ");
+            b.putString("Gender", " ");
+            intent.putExtras(b);
+            startActivity(intent);
             //startActivity(new Intent(this, ProfileEditActivity.class));
         }
 

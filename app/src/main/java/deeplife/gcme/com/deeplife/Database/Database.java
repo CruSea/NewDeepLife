@@ -1369,8 +1369,10 @@ public class Database {
                 }
             }
         }catch (Exception e){
-
+            Log.e(TAG, "Failed Get getAnswersByQuestionIDandDisciplePhone: " + e.toString());
+            return null;
         }
+        return null;
     }
 
     public long updateAnswer(Answer answer) {
