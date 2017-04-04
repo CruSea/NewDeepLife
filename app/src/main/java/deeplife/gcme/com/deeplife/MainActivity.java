@@ -158,15 +158,42 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         } else if (id == R.id.nav_profile) {
-            Intent intent = new Intent(this, ProfileEditActivity.class);
-            Bundle b = new Bundle();
-            b.putString("FullName", " ");
-            b.putString("Email", " ");
-            b.putString("CountrySerID", " ");
-            b.putString("Phone", " ");
-            b.putString("Gender", " ");
-            intent.putExtras(b);
-            startActivity(intent);
+            User main_user = DeepLife.myDATABASE.getMainUser();
+            if(main_user != null){
+                Intent intent = new Intent(this, ProfileEditActivity.class);
+                Bundle b = new Bundle();
+                if(main_user.getFullName()!= null){
+                    b.putString("FullName", main_user.getFullName());
+                }else {
+                    b.putString("FullName", "Unknown");
+                }
+
+                if(main_user.getEmail() != null){
+                    b.putString("Email", main_user.getEmail());
+                }else {
+                    b.putString("Email", "Unknown");
+                }
+
+                if(main_user.getCountry() != null){
+                    b.putString("CountrySerID", main_user.getCountry());
+                }else {
+                    b.putString("CountrySerID", "Unknown");
+                }
+
+                if(main_user.getPhone() !=null){
+                    b.putString("Phone", main_user.getPhone());
+                }else {
+                    b.putString("Phone", "Unknown");
+                }
+
+                if(main_user.getGender() != null){
+                    b.putString("Gender", main_user.getGender());
+                }else {
+                    b.putString("Gender", "Unknown");
+                }
+                intent.putExtras(b);
+                startActivity(intent);
+            }
             //startActivity(new Intent(this, ProfileEditActivity.class));
         }
 
