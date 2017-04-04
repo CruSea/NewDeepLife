@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import deeplife.gcme.com.deeplife.Disciples.Disciple;
@@ -22,6 +23,7 @@ import deeplife.gcme.com.deeplife.Models.ReportItem;
 import deeplife.gcme.com.deeplife.Models.Schedule;
 import deeplife.gcme.com.deeplife.Models.User;
 import deeplife.gcme.com.deeplife.News.News;
+import deeplife.gcme.com.deeplife.SyncService.SyncDatabase;
 import deeplife.gcme.com.deeplife.Testimony.Testimony;
 import deeplife.gcme.com.deeplife.Wbs.WbsQuestion;
 
@@ -694,6 +696,30 @@ public class Database {
     ////////  Testimonies   /////////
     /////////////////////////////////
     /////////////////////////////////
+    public Testimony addNewTestimony(Testimony testimony){
+        Log.d(TAG, "Adding Testimony: ");
+        String DB_Table = Table_TESTIMONY;
+        Testimony testimony1 = new Testimony();
+        try {
+            ContentValues cv = new ContentValues();
+            cv.put(Database.TestimonyColumn.SERID.toString(), testimony.getSerID());
+            cv.put(Database.TestimonyColumn.USERID.toString(), testimony.getUser_ID());
+            cv.put(Database.TestimonyColumn.DESCRIPTION.toString(), testimony.getContent());
+            cv.put(Database.TestimonyColumn.STATUS.toString(), Logs.TASK.SEND_TESTIMONY.toString());
+            cv.put(Database.TestimonyColumn.PUBDATE.toString(), Logs.TASK.SEND_TESTIMONY.toString());
+            cv.put(Database.TestimonyColumn.USERNAME.toString(), Logs.TASK.SEND_TESTIMONY.toString());
+            long x = myDatabase.insert(DB_Table,null,cv);
+            if(x>0){
+                testimony.setID((int)x);
+                return testimony;
+            }else{
+                return null;
+            }
+        }catch (Exception e){
+
+        }
+        return null;
+    }
     public Testimony getTestimonyByID(int id) {
         Log.d(TAG, "Get Testimony By ID: " + id);
         String DB_Table = Table_TESTIMONY;
@@ -761,6 +787,7 @@ public class Database {
             for (int i = 0; i < c.getCount(); i++) {
                 c.moveToPosition(i);
                 int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(TestimonyColumn.ID.toString())));
+                String status = c.getString(c.getColumnIndex(TestimonyColumn.STATUS.toString()));
                 Testimony newTestimony = getTestimonyByID(cur_id);
                 if (newTestimony != null) {
                     found.add(newTestimony);
@@ -770,6 +797,7 @@ public class Database {
         } catch (Exception e) {
             return null;
         }
+        Collections.reverse(found);
         return found;
     }
 
@@ -1714,7 +1742,6 @@ public class Database {
                     int Log_ID = Integer.valueOf(c.getString(c.getColumnIndex(LogsColumn.ID.toString())));
                     String Log_Task = c.getString(c.getColumnIndex(LogsColumn.TASK.toString()));
                     int Task_Value = Integer.valueOf(c.getString(c.getColumnIndex(LogsColumn.VALUE.toString())));
-
                     Log.d(TAG, "Comparing: " + Logs.TASK.SEND_TESTIMONY + " | " + Log_Task);
                     if (Logs.TASK.SEND_TESTIMONY.equalsName(Log_Task)) {
                         Log.d(TAG, "SendTestimony Count:-> " + c.getCount());
