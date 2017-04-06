@@ -75,6 +75,7 @@ public class SyncDatabase {
         DESCRIPTION("description"),
         IFRAMCODE("iframcode"),
         DEFAULT_LEARN("default_learn"),
+        ISO("iso"),
         ISO3("iso3"),
         NAME("name"),
         CODE("code"),
@@ -577,6 +578,7 @@ public class SyncDatabase {
                     JSONObject obj = json_countries.getJSONObject(i);
                     ContentValues cv = new ContentValues();
                     cv.put(Database.CountryColumn.SERID.toString(), obj.getString(ApiResponseKey.ID.toString()));
+                    cv.put(Database.CountryColumn.ISO.toString(), obj.getString(ApiResponseKey.ISO.toString()));
                     cv.put(Database.CountryColumn.ISO3.toString(), obj.getString(ApiResponseKey.ISO3.toString()));
                     cv.put(Database.CountryColumn.NAME.toString(), obj.getString(ApiResponseKey.NAME.toString()));
                     cv.put(Database.CountryColumn.CODE.toString(), obj.getString(ApiResponseKey.CODE.toString()));

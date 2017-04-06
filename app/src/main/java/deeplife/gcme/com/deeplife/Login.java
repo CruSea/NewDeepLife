@@ -1,15 +1,11 @@
 package deeplife.gcme.com.deeplife;
 
-import android.Manifest;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Address;
-import android.location.Geocoder;
-import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -47,10 +43,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import deeplife.gcme.com.deeplife.Adapters.CountryListAdapter;
 import deeplife.gcme.com.deeplife.Models.Country;
@@ -68,7 +62,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Go
     private static final int MY_PERMISSION_ACCESS_COURSE_LOCATION = 1;
 
     private GoogleApiClient mGoogleApiClient;
-    private Location mLastLocation;
 
     public static Button Login, SignUp, Forgotten;
     public static Context myContext;
@@ -133,21 +126,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Go
         myCountries = DeepLife.myDATABASE.getAllCountries();
         if (myCountries != null && myCountries.size() > 0) {
             UserCountry.setAdapter(new CountryListAdapter(myContext, R.layout.login_countries_item, myCountries));
-
-            /*Locale locale;
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                locale = getResources().getConfiguration().getLocales().get(0);
-            } else {
-                locale = getResources().getConfiguration().locale;
-            }
-            String iso3Country = locale.getISO3Country();
-            Log.d(TAG, "Login onCreate: iso3Country: " + iso3Country);
-
-            int pos = DeepLife.myDATABASE.getCountryByISO3(iso3Country).getID();
-            UserCountry.setSelection(pos - 1);
-            */
-
-
         }
 
         // Ask for Permission if we don't have it already
@@ -157,7 +135,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Go
 
         // Make sure we have permission before setting up the Google API Client
         //if (Build.VERSION.SDK_INT >= 23 && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             // Create an instance of GoogleAPIClient.
             if (mGoogleApiClient == null) {
                 mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -185,52 +163,12 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Go
 
     @Override
     public void onConnected(Bundle connectionHint) {
-        /*
-        try {
-            mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
-                    mGoogleApiClient);
-            if (mLastLocation != null) {
-                //mLatitudeText.setText(String.valueOf(mLastLocation.getLatitude()));
-                //mLongitudeText.setText(String.valueOf(mLastLocation.getLongitude()));
-                Log.d(TAG, "onConnected: Latitude: " + mLastLocation.getLatitude());
-                Log.d(TAG, "onConnected: Longitude: " + mLastLocation.getLongitude());
-            } else {
-                Log.e(TAG, "onConnected: mLastLocation is NULL!");
-            }
-        } catch (SecurityException se) {
-            Log.e(TAG, "Login onConnected(): Security Exception: " + se.getLocalizedMessage());
-        }
-        */
-
-        // If we have permission, then get Location.
-        //if (Build.VERSION.SDK_INT >= 23 && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
-                    mGoogleApiClient);
-            if (mLastLocation != null) {
-                //mLatitudeText.setText(String.valueOf(mLastLocation.getLatitude()));
-                //mLongitudeText.setText(String.valueOf(mLastLocation.getLongitude()));
-                Log.d(TAG, "onConnected: Latitude: " + mLastLocation.getLatitude());
-                Log.d(TAG, "onConnected: Longitude: " + mLastLocation.getLongitude());
-
-                Geocoder geocoder = new Geocoder(this, Locale.getDefault());
-                try {
-                    List<Address> addresses = geocoder.getFromLocation(mLastLocation.getLatitude(), mLastLocation.getLongitude(), 1);
-                    if (addresses.size() > 0) {
-                        //addresses.get(0).getCountryCode();
-                        String countryName = addresses.get(0).getCountryName();
-
-                        Log.d(TAG, "onConnected: Country Code: " + addresses.get(0).getCountryCode());
-                        Log.d(TAG, "onConnected: Country Name: " + addresses.get(0).getCountryName());
-                    }
-                } catch (IOException e) {
-                    //e.printStackTrace();
-                    Log.e(TAG, "Login: onConnected: Unable to get Country from Geocoder. Error: " + e.getLocalizedMessage());
-                }
-                UserCountry.setSelection(5);//!!!!!!!
-            } else {
-                Log.e(TAG, "onConnected: mLastLocation is NULL!");
-            }
+        Country country = Country.getCountryFromGeoLocation(this, mGoogleApiClient);
+        if (country != null) {
+            int pos = country.getID();
+            UserCountry.setSelection(pos - 1);
+        } else {
+            UserCountry.setSelection(0);
         }
     }
 
@@ -246,16 +184,36 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Go
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        //super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
             case MY_PERMISSION_ACCESS_COURSE_LOCATION: {
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // permission was granted!
-                    UserCountry.setSelection(3); // !!!!!!!!!
+                    // Permission was granted!
+
+                    // Create an instance of GoogleAPIClient.
+                    if (mGoogleApiClient == null) {
+                        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                                .addConnectionCallbacks(this)
+                                .addOnConnectionFailedListener(this)
+                                .addApi(LocationServices.API)
+                                .build();
+                    }
+
+                    // Now we can connect to Google API Client
+                    if (mGoogleApiClient != null) {
+                        mGoogleApiClient.connect();
+                    }
+
+                    Country country = Country.getCountryFromGeoLocation(this, mGoogleApiClient);
+                    if (country != null) {
+                        int pos = country.getID();
+                        UserCountry.setSelection(pos - 1);
+                    } else {
+                        UserCountry.setSelection(0);
+                    }
 
                 } else {
-                    // permission denied :-(
+                    // Permission denied :-(
                 }
                 return;
             }

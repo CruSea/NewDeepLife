@@ -23,7 +23,6 @@ import deeplife.gcme.com.deeplife.Models.ReportItem;
 import deeplife.gcme.com.deeplife.Models.Schedule;
 import deeplife.gcme.com.deeplife.Models.User;
 import deeplife.gcme.com.deeplife.News.News;
-import deeplife.gcme.com.deeplife.SyncService.SyncDatabase;
 import deeplife.gcme.com.deeplife.Testimony.Testimony;
 import deeplife.gcme.com.deeplife.Wbs.WbsQuestion;
 
@@ -207,6 +206,7 @@ public class Database {
     public enum CountryColumn {
         ID("id"),
         SERID("serid"),
+        ISO("iso"),
         ISO3("iso3"),
         NAME("name"),
         CODE("code");
@@ -1485,6 +1485,7 @@ public class Database {
         Country country = new Country();
         country.setID(Integer.valueOf(c.getString(c.getColumnIndex(CountryColumn.ID.toString()))));
         country.setSerID(Integer.valueOf(c.getString(c.getColumnIndex(CountryColumn.SERID.toString()))));
+        country.setISO(c.getString(c.getColumnIndex(CountryColumn.ISO.toString())));
         country.setISO3(c.getString(c.getColumnIndex(CountryColumn.ISO3.toString())));
         country.setName(c.getString(c.getColumnIndex(CountryColumn.NAME.toString())));
         country.setCode(Integer.valueOf(c.getString(c.getColumnIndex(CountryColumn.CODE.toString()))));
@@ -1537,6 +1538,25 @@ public class Database {
             Log.e(TAG, "Failed Get getCountryBySerID by ServerID: " + e.toString());
             return null;
         }
+        return null;
+    }
+
+    public Country getCountryByISO(String iso) {
+        Log.d(TAG, "getCountryByISO() iso: " + iso);
+        String DB_Table = Table_COUNTRY;
+        try {
+            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), "ISO = ?",  new String[] { iso }, null, null, null);
+            if (c.getCount() > 0) {
+                c.moveToFirst();
+                Country country = hydrateCountryFromCursor(c);
+                Log.d(TAG, " getCountryByISO: Got a country: " + country.getName());
+                return country;
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "getCountryByISO: Failed to getCountryByISO. Error: " + e.toString());
+            return null;
+        }
+        Log.d(TAG, " getCountryByISO: Country not found.");
         return null;
     }
 
