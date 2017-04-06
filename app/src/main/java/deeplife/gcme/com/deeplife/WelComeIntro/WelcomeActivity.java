@@ -1,5 +1,6 @@
 package deeplife.gcme.com.deeplife.WelComeIntro;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
@@ -8,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -15,14 +17,34 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.github.kittinunf.fuel.Fuel;
+import com.github.kittinunf.fuel.core.FuelError;
+import com.github.kittinunf.fuel.core.Handler;
+import com.github.kittinunf.fuel.core.Request;
+import com.github.kittinunf.fuel.core.Response;
+
+import org.jetbrains.annotations.NotNull;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONTokener;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import deeplife.gcme.com.deeplife.DeepLife;
 import deeplife.gcme.com.deeplife.Login;
 import deeplife.gcme.com.deeplife.R;
+import deeplife.gcme.com.deeplife.SyncService.SyncDatabase;
+import deeplife.gcme.com.deeplife.SyncService.SyncService;
+import kotlin.Pair;
 
 /**
  * Created by bengeos on 2/3/17.
  */
 
 public class WelcomeActivity extends AppCompatActivity {
+    private static final String TAG = "WelcomeActivity";
+
     private ViewPager viewPager;
     private WelcomeViewPager myViewPagerAdapter;
     private LinearLayout dotsLayout;
@@ -30,6 +52,9 @@ public class WelcomeActivity extends AppCompatActivity {
     private int[] layouts;
     private Button btnSkip, btnNext;
     private PrefManager prefManager;
+
+    public static ProgressDialog progressDialog;
+    private SyncDatabase mySyncDatabase;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,6 +66,11 @@ public class WelcomeActivity extends AppCompatActivity {
             finish();
         }
 
+        // Progress Dialog Init
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle(R.string.app_name);
+
+        mySyncDatabase = new SyncDatabase();
 
         // Making notification bar transparent
         if (Build.VERSION.SDK_INT >= 21) {
@@ -94,6 +124,13 @@ public class WelcomeActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        metaDataRequest();
+    }
+
     private void addBottomDots(int currentPage) {
         dots = new TextView[layouts.length];
 
@@ -156,6 +193,49 @@ public class WelcomeActivity extends AppCompatActivity {
             Window window = getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(Color.TRANSPARENT);
+        }
+    }
+
+    public void metaDataRequest(){
+        Log.i(TAG, "metaDataRequest() ");
+        List<Pair<String, String>> Send_Param;
+        Send_Param = new ArrayList<Pair<String, String>>();
+        Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.USER_NAME.toString(), ""));
+        Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.USER_PASS.toString(), ""));
+        Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.COUNTRY.toString(), ""));
+        Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.SERVICE.toString(), SyncService.API_SERVICE.META_DATA.toString()));
+        Send_Param.add(new kotlin.Pair<String, String>(SyncService.API_REQUEST.PARAM.toString(), "[]"));
+        Log.i(TAG, "Request Sent to Server (Meta Data): " + Send_Param.toString());
+        progressDialog.setCancelable(false);
+        progressDialog.setTitle(getString(R.string.dlg_msg_downloading_files));
+        progressDialog.show();
+        try {
+            Fuel.post(DeepLife.API_URL, Send_Param).responseString(new Handler<String>() {
+                @Override
+                public void success(@NotNull Request request, @NotNull Response response, String s) {
+                    progressDialog.cancel();
+                    Log.i(TAG, "Server Request (Meta Data): " + request.toString());
+                    Log.i(TAG, "Server Response (Meta Data): " + s);
+                    JSONObject myObject = null;
+                    try {
+                        myObject = (JSONObject) new JSONTokener(s).nextValue();
+                        if (!myObject.isNull(SyncDatabase.ApiResponseKey.RESPONSE.toString())) {
+                            mySyncDatabase.ProcessResponse(s);
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                @Override
+                public void failure(@NotNull Request request, @NotNull Response response, @NotNull FuelError fuelError) {
+                    Log.i(TAG, "Server Response Error Meta data-> \n" + fuelError);
+                    progressDialog.cancel();
+                }
+            });
+        } catch (Exception e) {
+            Log.i(TAG, "Fuel try catch error -> \n" + e.toString());
+            progressDialog.cancel();
         }
     }
 }
