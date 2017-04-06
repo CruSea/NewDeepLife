@@ -1,15 +1,22 @@
 package deeplife.gcme.com.deeplife;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -31,12 +38,16 @@ import com.github.kittinunf.fuel.core.FuelError;
 import com.github.kittinunf.fuel.core.Handler;
 import com.github.kittinunf.fuel.core.Request;
 import com.github.kittinunf.fuel.core.Response;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -52,8 +63,13 @@ import kotlin.Pair;
  * Created by bengeos on 12/18/16.
  */
 
-public class Login extends AppCompatActivity implements View.OnClickListener {
+public class Login extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
     private static String TAG = "Login";
+    private static final int MY_PERMISSION_ACCESS_COURSE_LOCATION = 1;
+
+    private GoogleApiClient mGoogleApiClient;
+    private Location mLastLocation;
+
     public static Button Login, SignUp, Forgotten;
     public static Context myContext;
     private SyncDatabase mySyncDatabase;
@@ -118,7 +134,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         if (myCountries != null && myCountries.size() > 0) {
             UserCountry.setAdapter(new CountryListAdapter(myContext, R.layout.login_countries_item, myCountries));
 
-            Locale locale;
+            /*Locale locale;
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 locale = getResources().getConfiguration().getLocales().get(0);
             } else {
@@ -129,8 +145,123 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
             int pos = DeepLife.myDATABASE.getCountryByISO3(iso3Country).getID();
             UserCountry.setSelection(pos - 1);
+            */
+
+
+        }
+
+        // Ask for Permission if we don't have it already
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[] {android.Manifest.permission.ACCESS_COARSE_LOCATION}, MY_PERMISSION_ACCESS_COURSE_LOCATION);
+        }
+
+        // Make sure we have permission before setting up the Google API Client
+        //if (Build.VERSION.SDK_INT >= 23 && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            // Create an instance of GoogleAPIClient.
+            if (mGoogleApiClient == null) {
+                mGoogleApiClient = new GoogleApiClient.Builder(this)
+                        .addConnectionCallbacks(this)
+                        .addOnConnectionFailedListener(this)
+                        .addApi(LocationServices.API)
+                        .build();
+            }
         }
     }
+
+    protected void onStart() {
+        if (mGoogleApiClient != null) {
+            mGoogleApiClient.connect();
+        }
+        super.onStart();
+    }
+
+    protected void onStop() {
+        if (mGoogleApiClient != null) {
+            mGoogleApiClient.disconnect();
+        }
+        super.onStop();
+    }
+
+    @Override
+    public void onConnected(Bundle connectionHint) {
+        /*
+        try {
+            mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
+                    mGoogleApiClient);
+            if (mLastLocation != null) {
+                //mLatitudeText.setText(String.valueOf(mLastLocation.getLatitude()));
+                //mLongitudeText.setText(String.valueOf(mLastLocation.getLongitude()));
+                Log.d(TAG, "onConnected: Latitude: " + mLastLocation.getLatitude());
+                Log.d(TAG, "onConnected: Longitude: " + mLastLocation.getLongitude());
+            } else {
+                Log.e(TAG, "onConnected: mLastLocation is NULL!");
+            }
+        } catch (SecurityException se) {
+            Log.e(TAG, "Login onConnected(): Security Exception: " + se.getLocalizedMessage());
+        }
+        */
+
+        // If we have permission, then get Location.
+        //if (Build.VERSION.SDK_INT >= 23 && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
+                    mGoogleApiClient);
+            if (mLastLocation != null) {
+                //mLatitudeText.setText(String.valueOf(mLastLocation.getLatitude()));
+                //mLongitudeText.setText(String.valueOf(mLastLocation.getLongitude()));
+                Log.d(TAG, "onConnected: Latitude: " + mLastLocation.getLatitude());
+                Log.d(TAG, "onConnected: Longitude: " + mLastLocation.getLongitude());
+
+                Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+                try {
+                    List<Address> addresses = geocoder.getFromLocation(mLastLocation.getLatitude(), mLastLocation.getLongitude(), 1);
+                    if (addresses.size() > 0) {
+                        //addresses.get(0).getCountryCode();
+                        String countryName = addresses.get(0).getCountryName();
+
+                        Log.d(TAG, "onConnected: Country Code: " + addresses.get(0).getCountryCode());
+                        Log.d(TAG, "onConnected: Country Name: " + addresses.get(0).getCountryName());
+                    }
+                } catch (IOException e) {
+                    //e.printStackTrace();
+                    Log.e(TAG, "Login: onConnected: Unable to get Country from Geocoder. Error: " + e.getLocalizedMessage());
+                }
+                UserCountry.setSelection(5);//!!!!!!!
+            } else {
+                Log.e(TAG, "onConnected: mLastLocation is NULL!");
+            }
+        }
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        //super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case MY_PERMISSION_ACCESS_COURSE_LOCATION: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // permission was granted!
+                    UserCountry.setSelection(3); // !!!!!!!!!
+
+                } else {
+                    // permission denied :-(
+                }
+                return;
+            }
+        }
+    }
+
     public static void GetNextActivity() {
         Toast.makeText(myContext, R.string.toast_msg_login_successful, Toast.LENGTH_LONG).show();
         Intent intent = new Intent(myContext, deeplife.gcme.com.deeplife.MainActivity.class);
