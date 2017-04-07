@@ -1906,6 +1906,71 @@ public class Database {
         return Found;
     }
 
+    public ArrayList<ReportItem> get_All_Report(){
+        String DB_Table = Table_Report_Forms;
+        ArrayList<ReportItem> found = new ArrayList<ReportItem>();
+        try{
+            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
+            c.moveToFirst();
+            for(int i=0;i<c.getCount();i++){
+                c.moveToPosition(i);
+                ReportItem dis = new ReportItem();
+                dis.setId(c.getString(c.getColumnIndex(ReportFormColumn.ID.toString())));
+                dis.setReport_ID(c.getString(c.getColumnIndex(ReportFormColumn.REPORT_ID.toString())));
+                dis.setCategory(c.getString(c.getColumnIndex(ReportFormColumn.CATEGORY.toString())));
+                dis.setQuestion(c.getString(c.getColumnIndex(ReportFormColumn.QUESTIONS.toString())));
+                found.add(dis);
+            }
+        }catch (Exception e){
+        }
+        return found;
+    }
+    public ReportItem get_Report(String Report_ID){
+        try{
+            String DB_Table = Table_Reports;
+            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
+            c.moveToFirst();
+            for(int i=0;i<c.getCount();i++){
+                c.moveToPosition(i);
+                String rep_id  = c.getString(c.getColumnIndex(ReportColumn.REPORT_ID.toString()));
+                if(rep_id.equals(Report_ID)){
+                    ReportItem dis = new ReportItem();
+                    dis.setId(c.getString(c.getColumnIndex(ReportColumn.ID.toString())));
+                    dis.setReport_ID(c.getString(c.getColumnIndex(ReportColumn.REPORT_ID.toString())));
+                    dis.setValue(c.getString(c.getColumnIndex(ReportColumn.VALUE.toString())));
+                    dis.setQuestion(c.getString(c.getColumnIndex(ReportColumn.REPORT_ID.toString())));
+                    dis.setCategory(c.getString(c.getColumnIndex(ReportColumn.REPORT_ID.toString())));
+                    return dis;
+                }
+            }
+        }catch (Exception e){
+
+        }
+        return null;
+    }
+    public ReportItem get_Report_by_id(String ID){
+        try{
+            String DB_Table = Table_Reports;
+            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
+            c.moveToFirst();
+            for(int i=0;i<c.getCount();i++){
+                c.moveToPosition(i);
+                String rep_id  = c.getString(c.getColumnIndex(ReportColumn.ID.toString()));
+                if(rep_id.equals(ID)){
+                    ReportItem dis = new ReportItem();
+                    dis.setId(c.getString(c.getColumnIndex(ReportColumn.ID.toString())));
+                    dis.setReport_ID(c.getString(c.getColumnIndex(ReportColumn.REPORT_ID.toString())));
+                    dis.setValue(c.getString(c.getColumnIndex(ReportColumn.VALUE.toString())));
+                    dis.setQuestion(c.getString(c.getColumnIndex(ReportColumn.REPORT_ID.toString())));
+                    dis.setCategory(c.getString(c.getColumnIndex(ReportColumn.REPORT_ID.toString())));
+                    return dis;
+                }
+            }
+        }catch (Exception e){
+
+        }
+        return null;
+    }
 
     /////////////////////////////////
     /////////////////////////////////

@@ -21,6 +21,7 @@
     <string name="testimony_fragment_title">Testimony</string>
     <string name="news_fragment_title">News</string>
     <string name="learning_fragment_title">Learning</string>
+    <string name="share_fragment_title">Share</string>
     <string name="dlg_btn_ok">OK</string>
     <string name="msg_authenticating_account">Authenticating the Account ...</string>
     <string name="thank_you">Thank You!</string>

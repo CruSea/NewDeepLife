@@ -26,6 +26,7 @@ public class DeepLife extends Application {
 //    public static final String DEEP_URL  = "http://deeplife.dev.192.168.1.2.xip.io";  // Mark's local server
 //    public static final String DEEP_URL  = "http://deeplife.dev.192.168.20.119.xip.io";  // Mark's local server
 
+    public static final String PREFS_LAST_SENT_DATE = "last_sent_date";
 
     public static final String FORGOTEN_URL = DEEP_URL + "/forgot";
     public static final String API_URL = DEEP_URL + "/deep_api";

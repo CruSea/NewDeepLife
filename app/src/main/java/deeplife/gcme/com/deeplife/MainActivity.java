@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.job.JobScheduler;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.NavigationView;
@@ -29,7 +30,7 @@ import deeplife.gcme.com.deeplife.LearningTools.LearningFragment;
 import deeplife.gcme.com.deeplife.Models.User;
 import deeplife.gcme.com.deeplife.News.NewsFragment;
 import deeplife.gcme.com.deeplife.Profile.ProfileEditActivity;
-import deeplife.gcme.com.deeplife.Profile.ProfileShowActivity;
+import deeplife.gcme.com.deeplife.Share.ReportListFragment;
 import deeplife.gcme.com.deeplife.SyncService.NewSyncService;
 import deeplife.gcme.com.deeplife.Testimony.TestimonyFragment;
 
@@ -76,6 +77,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         viewPageAdapter.addFragment(new TestimonyFragment(), getString(R.string.testimony_fragment_title));
         viewPageAdapter.addFragment(new NewsFragment(), getString(R.string.news_fragment_title));
         viewPageAdapter.addFragment(new LearningFragment(), getString(R.string.learning_fragment_title));
+        viewPageAdapter.addFragment(new ReportListFragment(), getString(R.string.share_fragment_title));
         myViewPager.setAdapter(viewPageAdapter);
 
         myTabLayout = (TabLayout) findViewById(R.id.tabs);
@@ -89,6 +91,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         myTabLayout.getTabAt(2).setIcon(R.drawable.nav_testimonials_icon_grey);
         myTabLayout.getTabAt(3).setIcon(R.drawable.nav_news_icon_grey);
         myTabLayout.getTabAt(4).setIcon(R.drawable.nav_learning_icon_grey);
+        myTabLayout.getTabAt(5).setIcon(R.drawable.icon_nav_share);
 //        UserName = (TextView) findViewById(R.id.txt_main_user_name);
 
         checkPermissions();
@@ -145,9 +148,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             myViewPager.setCurrentItem(1, true);
         } else if (id == R.id.nav_learning) {
             myViewPager.setCurrentItem(4, true);
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_report) {
+            myViewPager.setCurrentItem(5, true);
+        }
+        else if (id == R.id.nav_facebook) {
 
-        } else if (id == R.id.nav_logout) {
+            Intent intent = goToFacebookPage();
+            startActivity(intent);
+        }
+        else if (id == R.id.nav_about) {
+            Intent intent = new Intent(this, AboutDeepLife.class);
+            startActivity(intent);
+
+        }
+        else if (id == R.id.nav_logout) {
             DeepLife.myDATABASE.Delete_All(Database.Table_USER);
             DeepLife.myDATABASE.Delete_All(Database.Table_QUESTION_ANSWER);
             DeepLife.myDATABASE.Delete_All(Database.Table_DISCIPLES);
@@ -200,5 +214,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public Intent goToFacebookPage(){
+
+        try {
+            getPackageManager().getPackageInfo("com.facebook.katana", 0);
+            return new Intent(Intent.ACTION_VIEW, Uri.parse("fb://page/agapeTech"));
+        } catch (Exception e) {
+            return new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/deeplife1"));
+        }
     }
 }

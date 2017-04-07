@@ -49,7 +49,7 @@
     <item android:title="@string/menusub_communicate">
         <menu>
             <item
-                android:id="@+id/nav_send"
+                android:id="@+id/nav_facebook"
                 android:icon="@drawable/icon_nav_facebook"
                 android:title="@string/menu_facebook" />
             <item

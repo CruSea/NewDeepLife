@@ -273,10 +273,13 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Go
     @Override
     public void onClick(View v) {
         if(v.getId() == SignUp.getId()){
-            if(DeepLife.myDATABASE.getAllCountries().size()>0){
-                Intent intent = new Intent(deeplife.gcme.com.deeplife.Login.this, deeplife.gcme.com.deeplife.SignUp.class);
-                startActivity(intent);
-            }else {
+            if(DeepLife.myDATABASE.getAllCountries()!=null) {
+                if (DeepLife.myDATABASE.getAllCountries().size() > 0) {
+                    Intent intent = new Intent(deeplife.gcme.com.deeplife.Login.this, deeplife.gcme.com.deeplife.SignUp.class);
+                    startActivity(intent);
+                }
+            }
+             else {
                 metaDataRequest();
             }
 
