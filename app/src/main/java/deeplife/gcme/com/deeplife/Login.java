@@ -5,11 +5,14 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -31,6 +34,9 @@ import com.github.kittinunf.fuel.core.FuelError;
 import com.github.kittinunf.fuel.core.Handler;
 import com.github.kittinunf.fuel.core.Request;
 import com.github.kittinunf.fuel.core.Response;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
@@ -39,7 +45,6 @@ import org.json.JSONTokener;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import deeplife.gcme.com.deeplife.Adapters.CountryListAdapter;
 import deeplife.gcme.com.deeplife.Models.Country;
@@ -52,8 +57,12 @@ import kotlin.Pair;
  * Created by bengeos on 12/18/16.
  */
 
-public class Login extends AppCompatActivity implements View.OnClickListener {
+public class Login extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
     private static String TAG = "Login";
+    private static final int MY_PERMISSION_ACCESS_COURSE_LOCATION = 1;
+
+    private GoogleApiClient mGoogleApiClient;
+
     public static Button Login, SignUp, Forgotten;
     public static Context myContext;
     private SyncDatabase mySyncDatabase;
@@ -117,20 +126,100 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         myCountries = DeepLife.myDATABASE.getAllCountries();
         if (myCountries != null && myCountries.size() > 0) {
             UserCountry.setAdapter(new CountryListAdapter(myContext, R.layout.login_countries_item, myCountries));
+        }
 
-            Locale locale;
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                locale = getResources().getConfiguration().getLocales().get(0);
-            } else {
-                locale = getResources().getConfiguration().locale;
+        // Ask for Permission if we don't have it already
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[] {android.Manifest.permission.ACCESS_COARSE_LOCATION}, MY_PERMISSION_ACCESS_COURSE_LOCATION);
+        }
+
+        // Make sure we have permission before setting up the Google API Client
+        //if (Build.VERSION.SDK_INT >= 23 && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            // Create an instance of GoogleAPIClient.
+            if (mGoogleApiClient == null) {
+                mGoogleApiClient = new GoogleApiClient.Builder(this)
+                        .addConnectionCallbacks(this)
+                        .addOnConnectionFailedListener(this)
+                        .addApi(LocationServices.API)
+                        .build();
             }
-            String iso3Country = locale.getISO3Country();
-            Log.d(TAG, "Login onCreate: iso3Country: " + iso3Country);
-
-            int pos = DeepLife.myDATABASE.getCountryByISO3(iso3Country).getID();
-            UserCountry.setSelection(pos - 1);
         }
     }
+
+    protected void onStart() {
+        if (mGoogleApiClient != null) {
+            mGoogleApiClient.connect();
+        }
+        super.onStart();
+    }
+
+    protected void onStop() {
+        if (mGoogleApiClient != null) {
+            mGoogleApiClient.disconnect();
+        }
+        super.onStop();
+    }
+
+    @Override
+    public void onConnected(Bundle connectionHint) {
+        Country country = Country.getCountryFromGeoLocation(this, mGoogleApiClient);
+        if (country != null) {
+            int pos = country.getID();
+            UserCountry.setSelection(pos - 1);
+        } else {
+            UserCountry.setSelection(0);
+        }
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSION_ACCESS_COURSE_LOCATION: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // Permission was granted!
+
+                    // Create an instance of GoogleAPIClient.
+                    if (mGoogleApiClient == null) {
+                        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                                .addConnectionCallbacks(this)
+                                .addOnConnectionFailedListener(this)
+                                .addApi(LocationServices.API)
+                                .build();
+                    }
+
+                    // Now we can connect to Google API Client
+                    if (mGoogleApiClient != null) {
+                        mGoogleApiClient.connect();
+                    }
+
+                    Country country = Country.getCountryFromGeoLocation(this, mGoogleApiClient);
+                    if (country != null) {
+                        int pos = country.getID();
+                        UserCountry.setSelection(pos - 1);
+                    } else {
+                        UserCountry.setSelection(0);
+                    }
+
+                } else {
+                    // Permission denied :-(
+                }
+                return;
+            }
+        }
+    }
+
     public static void GetNextActivity() {
         Toast.makeText(myContext, R.string.toast_msg_login_successful, Toast.LENGTH_LONG).show();
         Intent intent = new Intent(myContext, deeplife.gcme.com.deeplife.MainActivity.class);

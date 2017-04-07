@@ -10,7 +10,6 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Base64;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.github.kittinunf.fuel.Fuel;
 import com.github.kittinunf.fuel.core.FuelError;
@@ -33,7 +32,6 @@ import java.util.List;
 import deeplife.gcme.com.deeplife.Database.Database;
 import deeplife.gcme.com.deeplife.DeepLife;
 import deeplife.gcme.com.deeplife.Disciples.Disciple;
-import deeplife.gcme.com.deeplife.FileManager.FileManager;
 import deeplife.gcme.com.deeplife.LearningTools.LearningTool;
 import deeplife.gcme.com.deeplife.Models.Answer;
 import deeplife.gcme.com.deeplife.Models.Category;
@@ -386,6 +384,7 @@ public class NewSyncService extends Service {
         DESCRIPTION("description"),
         IFRAMCODE("iframcode"),
         DEFAULT_LEARN("default_learn"),
+        ISO("iso"),
         ISO3("iso3"),
         NAME("name"),
         CODE("code"),
@@ -922,6 +921,7 @@ public class NewSyncService extends Service {
                     JSONObject obj = json_countries.getJSONObject(i);
                     ContentValues cv = new ContentValues();
                     cv.put(Database.CountryColumn.SERID.toString(), obj.getString(SyncDatabase.ApiResponseKey.ID.toString()));
+                    cv.put(Database.CountryColumn.ISO.toString(), obj.getString(SyncDatabase.ApiResponseKey.ISO.toString()));
                     cv.put(Database.CountryColumn.ISO3.toString(), obj.getString(SyncDatabase.ApiResponseKey.ISO3.toString()));
                     cv.put(Database.CountryColumn.NAME.toString(), obj.getString(SyncDatabase.ApiResponseKey.NAME.toString()));
                     cv.put(Database.CountryColumn.CODE.toString(), obj.getString(SyncDatabase.ApiResponseKey.CODE.toString()));
