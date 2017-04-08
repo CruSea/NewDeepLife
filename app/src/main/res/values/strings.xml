@@ -103,4 +103,7 @@
     <string name="welcome_intro3_verse">go and make disciples of all nation \n mathew 28:19</string>
     <string name="welcome_intro3">Lets make disciple, its our calling. \nAdd your new disciples with their full information</string>
     <string name="welcome_intro4">Start Discipling Now</string>
+    <string name="full_screen">Full Screen</string>
+    <string name="goto_home">Go Back</string>
+    <string name="learning_category">Learning Category</string>
 </resources>
