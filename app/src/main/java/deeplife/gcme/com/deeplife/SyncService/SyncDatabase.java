@@ -80,7 +80,8 @@ public class SyncDatabase {
         NAME("name"),
         CODE("code"),
         LOG_ID("Log_ID"),
-        DISCIPLE_TREE("DiscipleTree");
+        DISCIPLE_TREE("DiscipleTree"),
+        PROFILE_UPDATE("profile_update");
 
 
         private final String name;
