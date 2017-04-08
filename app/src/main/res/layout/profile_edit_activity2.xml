@@ -133,13 +133,13 @@
                 <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:inputType="textPersonName"
+                    android:inputType="phone"
                     android:ems="10"
                     android:id="@+id/profileEditPhoneNumberText"
                     android:layout_weight="1"
                     tools:text="4445551111"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginStart="16dp"/>
+                    android:layout_marginLeft="1dp"
+                    android:layout_marginStart="1dp"/>
 
             </LinearLayout>
 
