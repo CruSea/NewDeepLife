@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -27,10 +28,18 @@ public class TestimonyAddActivity extends AppCompatActivity {
     private EditText TestimonyTXT;
     private Context myContext;
     private SyncDatabase mySyncDatabase;
+    private Toolbar toolbar;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.testimony_fragment_add);
+
+        toolbar = (Toolbar) findViewById(R.id.add_dtestimony_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(R.string.toolbar_title_testimony_add);
+
+
         myContext = getApplicationContext();
         mySyncDatabase = new SyncDatabase();
         TestimonyTXT = (EditText) findViewById(R.id.txt_testimony_content);
@@ -49,6 +58,7 @@ public class TestimonyAddActivity extends AppCompatActivity {
                         Toast.makeText(myContext,"Testimony Saved!", Toast.LENGTH_SHORT).show();
                         Logs logs = new Logs();
                         logs.setTask(Logs.TASK.SEND_TESTIMONY);
+                        logs.setType(Logs.TYPE.ADD_NEW_TESTIMONY);
                         logs.setValue(""+found.getID());
                         mySyncDatabase.AddLog(logs);
                     }else {

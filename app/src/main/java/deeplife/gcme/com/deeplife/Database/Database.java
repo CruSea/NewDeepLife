@@ -705,7 +705,7 @@ public class Database {
             cv.put(Database.TestimonyColumn.SERID.toString(), testimony.getSerID());
             cv.put(Database.TestimonyColumn.USERID.toString(), testimony.getUser_ID());
             cv.put(Database.TestimonyColumn.DESCRIPTION.toString(), testimony.getContent());
-            cv.put(Database.TestimonyColumn.STATUS.toString(), Logs.TASK.SEND_TESTIMONY.toString());
+            cv.put(Database.TestimonyColumn.STATUS.toString(), 0);
             cv.put(Database.TestimonyColumn.PUBDATE.toString(), Logs.TASK.SEND_TESTIMONY.toString());
             cv.put(Database.TestimonyColumn.USERNAME.toString(), Logs.TASK.SEND_TESTIMONY.toString());
             long x = myDatabase.insert(DB_Table,null,cv);
@@ -789,7 +789,7 @@ public class Database {
                 int cur_id = Integer.valueOf(c.getString(c.getColumnIndex(TestimonyColumn.ID.toString())));
                 String status = c.getString(c.getColumnIndex(TestimonyColumn.STATUS.toString()));
                 Testimony newTestimony = getTestimonyByID(cur_id);
-                if (newTestimony != null) {
+                if (newTestimony != null && newTestimony.getStatus() != 0) {
                     found.add(newTestimony);
                     Log.d(TAG, "Get All Testimonies Populating: " + newTestimony.getID());
                 }

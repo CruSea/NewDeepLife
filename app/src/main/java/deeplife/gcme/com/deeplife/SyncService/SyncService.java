@@ -90,7 +90,7 @@ public class SyncService extends JobService {
         META_DATA("Meta_Data"),
         SEND_REPORT("Send_Report"),
         GETNEW_NEWSFEED("GetNew_NewsFeed"),
-        SEND_TESTIMONY("Send_Testimony"),
+        SEND_TESTIMONY("addnew_testimony"),
         UPLOAD_USER_PIC("Upload_User_Pic"),
         UPLOAD_DISCIPLE_PIC("Upload_Disciple_pic"),
         UPDATE_SCHEDULES("Update_Schedules"),
