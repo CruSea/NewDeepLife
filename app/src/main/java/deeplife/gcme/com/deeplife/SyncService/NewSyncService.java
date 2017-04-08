@@ -269,7 +269,6 @@ public class NewSyncService extends Service {
             myLogs.setService(SyncService.API_SERVICE.valueOf(tosync.getParam())); // briggsm: not 100% sure this will work... TODO: debug.
         } else if (DeepLife.myDATABASE.getUpdateDisciples().size() > 0) {
             Log.i(TAG, "GET DISCIPLES TO UPDATE...");
-
             ArrayList<Disciple> foundData = DeepLife.myDATABASE.getUpdateDisciples();
             for (int i = 0; i < foundData.size(); i++) {
                 myLogs.getParam().add(foundData.get(i));
