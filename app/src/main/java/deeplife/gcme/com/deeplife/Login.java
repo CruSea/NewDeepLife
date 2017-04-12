@@ -464,6 +464,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Go
         progressDialog.setTitle(getString(R.string.dlg_msg_authenticating_user));
         progressDialog.show();
         try {
+            Log.i(TAG, "Request URL:->" + DeepLife.API_URL);
+            Log.i(TAG, "Request:->" + Send_Param);
             Fuel.post(DeepLife.API_URL, Send_Param).responseString(new Handler<String>() {
                 @Override
                 public void success(@NotNull Request request, @NotNull Response response, String s) {
