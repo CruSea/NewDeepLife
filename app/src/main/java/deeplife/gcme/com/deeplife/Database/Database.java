@@ -1149,15 +1149,30 @@ public class Database {
         }
         return null;
     }
-
+    public ArrayList<WbsQuestion> getAllQuestionsByCategory(int categoryID){
+        Log.i(TAG, "getAllQuestionsByCategory: " + categoryID);
+        ArrayList<WbsQuestion> foundQuestions = new ArrayList<WbsQuestion>();
+        String DB_Question_Table = Table_QUESTION_LIST;
+        Cursor cur = myDatabase.rawQuery("select * from " + DB_Question_Table + " where "+QuestionListColumn.CATEGORY.toString()+" = "+categoryID,null);
+        if(cur.getCount()>0){
+            for(int i=0; i<cur.getCount(); i++){
+                cur.moveToPosition(i);
+                int cur_id = Integer.valueOf(cur.getString(cur.getColumnIndex(QuestionListColumn.ID.toString())));
+                WbsQuestion wbsQuestion = getWbsQuestionByID(cur_id);
+                foundQuestions.add(wbsQuestion);
+                Log.i(TAG, "Found WbsQuestion: " + wbsQuestion.getID());
+            }
+        }
+        return foundQuestions;
+    }
     public ArrayList<WbsQuestion> getAllQuestionByStage(final Disciple.STAGE stage){
         Log.i(TAG, "getAllQuestionByStage: " + stage.toServerId());
         ArrayList<WbsQuestion> foundParentQuestions = new ArrayList<WbsQuestion>();
         String DB_Question_Table = Table_QUESTION_LIST;
         String DB_Category_Table = Table_CATEGORIES;
         Cursor cur = myDatabase.rawQuery("select * from " + DB_Question_Table + " where "+QuestionListColumn.CATEGORY.toString()+
-                " IN (SELECT "+CategoryColumn.SERID.toString()+" FROM "+DB_Category_Table+" WHERE "+CategoryColumn.SERID.toString()+" = " + stage.toServerId() +" OR " +
-                CategoryColumn.PARENT.toString()+" IN (SELECT "+CategoryColumn.SERID+" FROM "+DB_Category_Table+" WHERE "+CategoryColumn.SERID.toString()+" = "+stage.toServerId()+"))", null);
+                " IN (SELECT "+CategoryColumn.SERID.toString()+" FROM "+DB_Category_Table+" WHERE "+CategoryColumn.SERID.toString()+" = " + stage.toServerId()+")",null);
+//        CategoryColumn.PARENT.toString()+" IN (SELECT "+CategoryColumn.SERID+" FROM "+DB_Category_Table+" WHERE "+CategoryColumn.SERID.toString()+" = "+stage.toServerId()+"))", null);
         if(cur.getCount()>0){
             for(int i=0; i<cur.getCount(); i++){
                 cur.moveToPosition(i);
@@ -1165,6 +1180,24 @@ public class Database {
                 WbsQuestion wbsQuestion = getWbsQuestionByID(cur_id);
                 foundParentQuestions.add(wbsQuestion);
                 Log.i(TAG, "Found WbsQuestion: " + wbsQuestion.getID());
+            }
+        }
+        Cursor cur2 = myDatabase.rawQuery("select * from "+DB_Category_Table + " where "+ CategoryColumn.PARENT.toString()+ " = "+ stage.toServerId(),null);
+        if(cur2.getCount()>0){
+            for(int i = 0; i<cur2.getCount();i++){
+                cur2.moveToPosition(i);
+                int cur_id = Integer.valueOf(cur2.getString(cur.getColumnIndex(CategoryColumn.ID.toString())));
+                String name = cur2.getString(cur2.getColumnIndex(CategoryColumn.NAME.toString()));
+                ArrayList<WbsQuestion> found = getAllQuestionsByCategory(cur_id);
+                if(found.size()>0){
+                    WbsQuestion folder_question = new WbsQuestion();
+                    folder_question.setType(WbsQuestion.Type.FOLDER);
+                    folder_question.setCategory(cur_id);
+                    folder_question.setQuestion(name);
+                    folder_question.setChildren(found);
+                    foundParentQuestions.add(folder_question);
+                }
+                WbsQuestion wbsQuestion = getWbsQuestionByID(cur_id);
             }
         }
         return foundParentQuestions;
