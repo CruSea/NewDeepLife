@@ -214,29 +214,49 @@ public class WbsActivity extends AppCompatActivity {
     private static ArrayList<WbsQuestion> wbs_Win_Questions,wbs_Build_Questions,wbs_Send_Questions;
     public static Disciple.STAGE getQuestionStage(){
         Log.d(TAG, "checkStage: Checking for Stage");
-        int stage = 3;
         for (WbsQuestion wbsQuestion : wbs_Win_Questions) {
-            if (wbsQuestion.getMandatory() != 0) {
-                Answer answer = DeepLife.myDATABASE.getAnswerByQuestionIDandDisciplePhone(wbsQuestion.getSerID(), DisciplePhone);
-                if (answer != null) {
-                    if (answer.getAnswer().equals("NO") || answer.getAnswer().equals("0")) {
-                        return Disciple.STAGE.WIN;
+            if(wbsQuestion.getType() != WbsQuestion.Type.FOLDER){
+                if (wbsQuestion.getMandatory() != 0) {
+                    Answer answer = DeepLife.myDATABASE.getAnswerByQuestionIDandDisciplePhone(wbsQuestion.getSerID(), DisciplePhone);
+                    if (answer != null) {
+                        if (answer.getAnswer().equals("NO") || answer.getAnswer().equals("0")) {
+                            return Disciple.STAGE.WIN;
+                        }
                     }
-                }else {
-                    return Disciple.STAGE.WIN;
+                }
+            }else {
+                for(WbsQuestion wbsQuestion1: wbsQuestion.getChildList()){
+                    if (wbsQuestion1.getMandatory() != 0) {
+                        Answer answer = DeepLife.myDATABASE.getAnswerByQuestionIDandDisciplePhone(wbsQuestion1.getSerID(), DisciplePhone);
+                        if (answer != null) {
+                            if (answer.getAnswer().equals("NO") || answer.getAnswer().equals("0")) {
+                                return Disciple.STAGE.WIN;
+                            }
+                        }
+                    }
                 }
             }
+
         }
-        if(stage > 1){
-            for (WbsQuestion wbsQuestion : wbs_Build_Questions) {
+        for (WbsQuestion wbsQuestion : wbs_Build_Questions) {
+            if(wbsQuestion.getType() != WbsQuestion.Type.FOLDER){
                 if (wbsQuestion.getMandatory() != 0) {
                     Answer answer = DeepLife.myDATABASE.getAnswerByQuestionIDandDisciplePhone(wbsQuestion.getSerID(), DisciplePhone);
                     if (answer != null) {
                         if (answer.getAnswer().equals("NO") || answer.getAnswer().equals("0")) {
                             return Disciple.STAGE.BUILD;
                         }
-                    }else {
-                        return Disciple.STAGE.BUILD;
+                    }
+                }
+            }else {
+                for(WbsQuestion wbsQuestion1: wbsQuestion.getChildList()){
+                    if (wbsQuestion1.getMandatory() != 0) {
+                        Answer answer = DeepLife.myDATABASE.getAnswerByQuestionIDandDisciplePhone(wbsQuestion1.getSerID(), DisciplePhone);
+                        if (answer != null) {
+                            if (answer.getAnswer().equals("NO") || answer.getAnswer().equals("0")) {
+                                return Disciple.STAGE.BUILD;
+                            }
+                        }
                     }
                 }
             }
@@ -245,57 +265,6 @@ public class WbsActivity extends AppCompatActivity {
     }
     public static Disciple.STAGE getDiscipleStage(){
         Log.d(TAG, "checkStage: Checking for Stage");
-        Disciple.STAGE curStage = Disciple.STAGE.SEND;
-        for (WbsQuestion wbsQuestion : wbs_Win_Questions) {
-            if (wbsQuestion.getMandatory() != 0) {
-                Answer answer = DeepLife.myDATABASE.getAnswerByQuestionIDandDisciplePhone(wbsQuestion.getSerID(), DisciplePhone);
-                if (answer != null) {
-                    if (answer.getAnswer().equals("NO") || answer.getAnswer().equals("0")) {
-                        curStage = Disciple.STAGE.WIN;
-                        break;
-                    }
-                }else {
-                    curStage = Disciple.STAGE.WIN;
-                    break;
-                }
-            }
-        }
-        if(curStage != Disciple.STAGE.WIN){
-            for (WbsQuestion wbsQuestion : wbs_Build_Questions) {
-                if (wbsQuestion.getMandatory() != 0) {
-                    Answer answer = DeepLife.myDATABASE.getAnswerByQuestionIDandDisciplePhone(wbsQuestion.getSerID(), DisciplePhone);
-                    if (answer != null) {
-                        if (answer.getAnswer().equals("NO") || answer.getAnswer().equals("0")) {
-                            curStage = Disciple.STAGE.BUILD;
-                            break;
-                        }
-                    }else {
-                        curStage = Disciple.STAGE.BUILD;
-                        break;
-                    }
-                }
-            }
-        }else {
-            return curStage;
-        }
-        if(curStage != Disciple.STAGE.BUILD){
-            for (WbsQuestion wbsQuestion : wbs_Send_Questions) {
-                if (wbsQuestion.getMandatory() != 0) {
-                    Answer answer = DeepLife.myDATABASE.getAnswerByQuestionIDandDisciplePhone(wbsQuestion.getSerID(), DisciplePhone);
-                    if (answer != null) {
-                        if (answer.getAnswer().equals("NO") || answer.getAnswer().equals("0")) {
-                            curStage = Disciple.STAGE.SEND;
-                            break;
-                        }
-                    }else {
-                        curStage = Disciple.STAGE.BUILD;
-                        break;
-                    }
-                }
-            }
-        }else {
-            return curStage;
-        }
-        return curStage;
+        return getQuestionStage();
     }
 }
